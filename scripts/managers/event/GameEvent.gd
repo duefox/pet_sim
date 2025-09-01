@@ -3,6 +3,7 @@ class_name GameEvent
 
 ## 宠物事件
 const PET_DEATH := "pet_death"  #宠物死亡
+const PET_GROW_UP := "pet_grow_up"  #宠物成长
 const PET_COLLISION_WALL := "pet_collision_wall"  #碰撞到墙壁
 const PET_COLLISION_TOY := "pet_collision_toy"  #碰撞到玩具
 const PET_SELECTED := "pet_selected"  #选中宠物

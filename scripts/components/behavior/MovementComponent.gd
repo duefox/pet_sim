@@ -2,7 +2,10 @@ extends Node
 class_name MovementComponent
 
 # 移动速度
-@export var speed: float = 100.0
+@export var speed: float = 100.0:
+	set(value):
+		speed = value
+		#print("update speed:", speed)
 
 var parent_pet: Pet  #宠物对象
 var target_pos: Vector2  #移动的目标位置
@@ -17,16 +20,15 @@ func initialize(pet_node: Pet):
 		speed = parent_pet.pet_data.speed
 
 
-## 动态更新视觉
+# 运动更新函数
 func update_movement(delta: float):
 	# 确保父节点已初始化
 	if not parent_pet or not parent_pet.pet_data:
 		return
 	# 如果已经到达目标，立即重置目标
-	if target_pos != Vector2.ZERO and parent_pet.position.distance_to(target_pos) < 5.0:
-		#print("已经到达目标，重置目标")
-		target_pos = Vector2.ZERO
-
+	if target_pos != Vector2.ZERO and parent_pet.position.distance_to(target_pos) < parent_pet.target_collision_distance:
+		# 修复：到达目标后，调用 clear_target 清空目标
+		clear_target()
 	# 根据是否有目标来选择转向行为
 	if target_pos != Vector2.ZERO:
 		_steer_towards(delta)
@@ -34,9 +36,15 @@ func update_movement(delta: float):
 	_baisc_movement(delta)
 
 
+# 设定移动目标
 func set_target(pos: Vector2):
 	#print("new positon:", pos)
 	target_pos = pos
+
+
+# 清空移动目标
+func clear_target():
+	target_pos = Vector2.ZERO
 
 
 # 新增：钳制角度到指定范围

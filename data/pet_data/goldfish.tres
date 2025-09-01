@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("1_rnq2n")
-live_layer = 3
+live_layer = 2
 nickname = "西瓜剑尾"
 species = 0
 level = 0
@@ -17,8 +17,9 @@ gender = 0
 initial_angle = null
 turn_rate = 0.05
 food_habit = 0
-eat_cooldown_duration = 40.0
-appetite = 0.0
+eat_cooldown_duration = 0.5
+hunger_decrease_rate = 0.5
+hunger_restore_amount = 20.0
 texture = ExtResource("2_xml5i")
 hframes = 6
 vframes = 1
@@ -32,11 +33,10 @@ mating_cooldown = 0
 mating_cooldown_duration = 1200
 egg_timer = 0
 egg_interval = 1200
-age = 0
-life_cycle = "juvenile"
-adult_age = 6000
-old_age = 12000
-death_age = 18000
+initial_age = 0.0
+adult_age = 20.0
+old_age = 60.0
+death_age = 100.0
 env_catgory = 0
 suitable_temperature = Vector2(40, 60)
 live_temperature = Vector2(0, 100)

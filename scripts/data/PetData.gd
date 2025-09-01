@@ -16,6 +16,9 @@ enum EnvCategory {
 	OTHERS,  #其它，如俩栖
 }
 
+#生命周期
+enum LifeStage { JUVENILE, ADULT, OLD, DEAD }
+
 #物种级别
 enum Level { ENTRY, MIDDLE, ADVANCED, TOP }
 
@@ -63,7 +66,7 @@ enum Gender {
 #体型大小
 @export var max_size: BodySize
 #性别
-@export var gender: Gender = Gender.MALE
+@export var gender: Gender
 #角度
 @export var initial_angle: float = randf() * PI * 2.0
 #转向率
@@ -71,7 +74,7 @@ enum Gender {
 #食性
 @export var food_habit: FoodCategory = FoodCategory.ALL
 #觅食周期单位秒，动画播放相关，实际觅食是按过天后扣除的克数为准
-@export var eat_cooldown_duration: float = 30.0
+@export var eat_cooldown_duration: float = 0.5
 #饥饿度变化率
 @export var hunger_decrease_rate: float = 0.5
 #食量，每次进食消耗量克/次，如食量是20，需要进食5次才能到100%不饿状态
@@ -107,16 +110,14 @@ enum Gender {
 
 ##成长
 @export_group("Grow up")
-#年龄
-@export var age: int = 0
-#成长时期标志，juvenile, adult, old
-@export var life_cycle: String = "juvenile"
+#生命周期参数，单位为秒
+@export var initial_age: float = 0.0
 #进入成年时间
-@export var adult_age: int = 6000
+@export var adult_age: float = 20.0
 #进入老年时间
-@export var old_age: int = 12000
+@export var old_age: float = 60.0
 #进入死亡时间
-@export var death_age: int = 18000
+@export var death_age: float = 100.0
 
 ##生存相关
 @export_group("Live evnironment")

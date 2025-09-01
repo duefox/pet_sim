@@ -29,14 +29,13 @@ var _previous_state: int = State.IDLE
 var _idle_timer: float = 0.0
 # 觅食最小距离
 var _food_detection_distance: float = 200.0
-# 觅食冷却计时器
-var _eat_cooldown_timer: float = 0.0
-
-# 食物检测计时器
-var _food_check_timer: float = 0.0
-var _food_check_interval: float = 0.5
 
 #endregion
+
+
+func _ready() -> void:
+	# 订阅宠物状态切换事件
+	pass
 
 
 func initialize(pet_node: Pet):
@@ -47,13 +46,13 @@ func initialize(pet_node: Pet):
 	_state_functions[State.SLEEPING] = _state_sleeping
 	_state_functions[State.WANDERING] = _state_wandering
 	_state_functions[State.MATING] = _state_mating
-	#运动组件
+	# 运动组件
 	_movement_comp = _parent_pet.movement_comp
-	#其他属性设定
-	_food_detection_distance = _parent_pet.wander_rank.size.x * 0.5  #觅食最小距离是漫游范围的50%
-
-	# 初始化：默认进入漫游状态，速度为正常速度
-	_movement_comp.speed = _parent_pet.pet_data.speed
+	if _parent_pet and _parent_pet.pet_data:
+		# 觅食最小距离是漫游范围的50%
+		_food_detection_distance = _parent_pet.wander_rank.size.x * 0.5
+		# 初始化：默认进入漫游状态，速度为正常速度
+		_movement_comp.speed = _parent_pet.pet_data.speed
 
 
 func update_state(delta: float):
@@ -77,13 +76,6 @@ func change_state(new_state: int):
 
 #漫游状态
 func _state_wandering(delta: float):
-	# 更新觅食冷却计时器
-	if _eat_cooldown_timer > 0:
-		_eat_cooldown_timer -= delta
-	# 如果冷却结束，则检查食物
-	else:
-		_check_food(delta)
-
 	# 检查宠物是否已经到达了当前目标位置
 	if _movement_comp and _movement_comp.target_pos.is_zero_approx():
 		# 如果没有食物，执行正常的漫游逻辑
@@ -92,48 +84,37 @@ func _state_wandering(delta: float):
 	# 检查其他状态转换条件
 
 
-# 更新食物检测计时器
-func _check_food(delta: float) -> void:
-	_food_check_timer += delta
-	# 每隔一段时间检查是否有食物，并优先处理
-	if _food_check_timer >= _food_check_interval:
-		_food_check_timer = 0
-		var closest_food = find_closest_food()
-		if closest_food and is_instance_valid(closest_food):
-			_parent_pet.target = closest_food
-			# 宠物发现食物后加速
-			_movement_comp.speed = _parent_pet.pet_data.speed * sprint_speed_multiplier
-			change_state(State.EATING)
-			return  # 找到食物，直接返回，不执行当前状态的逻辑
-
-
 # 觅食状态
 func _state_eating(delta: float):
 	# 如果有食物目标，则向其移动
 	if _parent_pet.target and is_instance_valid(_parent_pet.target):
 		_movement_comp.set_target(_parent_pet.target.position)
-
 		# 检查是否到达食物位置
-		if _parent_pet.position.distance_to(_parent_pet.target.position) < 20.0:
+		if _parent_pet.position.distance_to(_parent_pet.target.position) < _parent_pet.target_collision_distance:
+			# 喂食，增加饥饿度
+			_parent_pet.hunger_comp.feed()
 			# 宠物吃掉食物，移除食物节点
 			_parent_pet.target.queue_free()
 			_parent_pet.target = null
 			# 宠物吃掉食物后还原速度
 			_movement_comp.speed = _parent_pet.pet_data.speed
-			# 重置觅食冷却计时器
-			_eat_cooldown_timer = _parent_pet.pet_data.eat_cooldown_duration
+			# 吃完食物后，清空运动组件的目标位置
+			_movement_comp.clear_target()
+			#print("hunger_level:",_parent_pet.hunger_level)
 			# 切换回之前的状态
 			change_state(_previous_state)
 	else:
 		# 如果食物被其他宠物吃掉或已无效，切换回之前的状态
 		_movement_comp.speed = _parent_pet.pet_data.speed
-		# 没吃上重置觅食冷却计时器为0.0
-		_eat_cooldown_timer = 0.0
+		# 吃完食物后，清空运动组件的目标位置
+		_movement_comp.clear_target()
 		_parent_pet.target = null
 		change_state(_previous_state)
 
 
 func _state_idle(delta: float):
+	# 在待机状态下，不更新饥饿度，让宠物可以休息
+
 	# 检查饥饿度、配偶等条件，触发状态切换
 	# 关键修改：处理待机计时器
 	_idle_timer -= delta

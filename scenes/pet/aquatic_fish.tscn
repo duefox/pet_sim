@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://broff03m6wg2w" path="res://scripts/components/behavior/FishMovementComp.gd" id="2_p2t4i"]
 
 [node name="Aquatic" instance=ExtResource("1_hs27l")]
+gender = 0
 
 [node name="MovementComponent" parent="Components" index="0"]
 script = ExtResource("2_p2t4i")

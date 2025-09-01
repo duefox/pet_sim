@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://dl7tlg6w0eyas"]
+[gd_scene load_steps=13 format=3 uid="uid://dl7tlg6w0eyas"]
 
 [ext_resource type="Script" uid="uid://bhnyru0q25l3n" path="res://scripts/pet/Pet.gd" id="1_bpwwj"]
 [ext_resource type="Script" uid="uid://dqbx4m2xcx2bt" path="res://scripts/pet/PetStateMachine.gd" id="1_fm2pq"]
 [ext_resource type="Script" uid="uid://dkuu5mtkv38wx" path="res://scripts/components/behavior/MovementComponent.gd" id="2_wcy08"]
 [ext_resource type="Texture2D" uid="uid://tgjqgpyumgi" path="res://assets/textures/aquatic/water/fish00.png" id="3_o1l0v"]
 [ext_resource type="Script" uid="uid://cev476a751rcw" path="res://scripts/components/behavior/HungerComponent.gd" id="4_2kcnw"]
+[ext_resource type="Script" uid="uid://dqt8ko0ma20vk" path="res://scripts/components/behavior/LifecycleComponent.gd" id="5_mm5nc"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qicqd"]
 radius = 13.0
@@ -61,19 +62,36 @@ tracks/0/keys = {
 "values": [3, 4, 5]
 }
 
+[sub_resource type="Animation" id="Animation_mm5nc"]
+resource_name = "juvenile"
+length = 0.233336
+loop_mode = 1
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_o08dt"]
 _data = {
 &"RESET": SubResource("Animation_o08dt"),
+&"adult": SubResource("Animation_yef1g"),
 &"idle": SubResource("Animation_o1l0v"),
-&"move": SubResource("Animation_yef1g")
+&"juvenile": SubResource("Animation_mm5nc")
 }
 
 [node name="Pet" type="CharacterBody2D"]
 collision_mask = 4
 input_pickable = true
 script = ExtResource("1_bpwwj")
-gender = "male"
-wander_rank = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, -3.61999e-06)
@@ -90,7 +108,7 @@ frame = 4
 libraries = {
 &"": SubResource("AnimationLibrary_o08dt")
 }
-autoplay = "move"
+autoplay = "juvenile"
 
 [node name="Components" type="Node" parent="."]
 
@@ -100,7 +118,24 @@ script = ExtResource("2_wcy08")
 [node name="HungerComponent" type="Node" parent="Components"]
 script = ExtResource("4_2kcnw")
 
+[node name="LifecycleComponent" type="Node" parent="Components"]
+script = ExtResource("5_mm5nc")
+
 [node name="PetStateMachine" type="Node" parent="."]
 script = ExtResource("1_fm2pq")
+
+[node name="InfoLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -30.0
+offset_top = -48.0
+offset_right = 30.0
+offset_bottom = -23.0
+grow_horizontal = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "age:0"
+horizontal_alignment = 1
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
