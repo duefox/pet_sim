@@ -1,0 +1,106 @@
+[gd_scene load_steps=11 format=3 uid="uid://dl7tlg6w0eyas"]
+
+[ext_resource type="Script" uid="uid://bhnyru0q25l3n" path="res://scripts/pet/Pet.gd" id="1_bpwwj"]
+[ext_resource type="Script" uid="uid://dqbx4m2xcx2bt" path="res://scripts/pet/PetStateMachine.gd" id="1_fm2pq"]
+[ext_resource type="Script" uid="uid://dkuu5mtkv38wx" path="res://scripts/components/behavior/MovementComponent.gd" id="2_wcy08"]
+[ext_resource type="Texture2D" uid="uid://tgjqgpyumgi" path="res://assets/textures/aquatic/water/fish00.png" id="3_o1l0v"]
+[ext_resource type="Script" uid="uid://cev476a751rcw" path="res://scripts/components/behavior/HungerComponent.gd" id="4_2kcnw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qicqd"]
+radius = 13.0
+height = 40.0
+
+[sub_resource type="Animation" id="Animation_o08dt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_o1l0v"]
+resource_name = "idle"
+length = 0.0333366
+loop_mode = 1
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_yef1g"]
+resource_name = "move"
+length = 0.233336
+loop_mode = 1
+step = 0.0333333
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o08dt"]
+_data = {
+&"RESET": SubResource("Animation_o08dt"),
+&"idle": SubResource("Animation_o1l0v"),
+&"move": SubResource("Animation_yef1g")
+}
+
+[node name="Pet" type="CharacterBody2D"]
+collision_mask = 4
+input_pickable = true
+script = ExtResource("1_bpwwj")
+gender = "male"
+wander_rank = null
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -3.61999e-06)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_qicqd")
+debug_color = Color(0.937255, 0, 0, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_o1l0v")
+hframes = 6
+frame = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_o08dt")
+}
+autoplay = "move"
+
+[node name="Components" type="Node" parent="."]
+
+[node name="MovementComponent" type="Node" parent="Components"]
+script = ExtResource("2_wcy08")
+
+[node name="HungerComponent" type="Node" parent="Components"]
+script = ExtResource("4_2kcnw")
+
+[node name="PetStateMachine" type="Node" parent="."]
+script = ExtResource("1_fm2pq")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]

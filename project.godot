@@ -1,0 +1,63 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="萌宠经营模拟器"
+run/main_scene="uid://3ia6qn373kw0"
+config/features=PackedStringArray("4.5", "Forward Plus")
+config/icon="res://icon.svg"
+
+[autoload]
+
+PetManager="*res://scripts/managers/PetManager.gd"
+AudioManager="*res://scripts/managers/audio/AudioManager.gd"
+EventManager="*res://scripts/managers/event/EventManager.gd"
+ResManager="*res://scripts/managers/resource/ResourceManager.gd"
+SaveManager="*res://scripts/managers/save/SaveManager.gd"
+SceneManager="*res://scripts/managers/scene/SceneManager.gd"
+
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gdscript_formatter/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+
+[gui]
+
+theme/custom="uid://cwy04bxyvv2hj"
+theme/custom_font="uid://bynykvgmno8bl"
+theme/default_font_hinting=2
+
+[input]
+
+mouse_left={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+mouse_right={
+"deadzone": 0.2,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":2,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+
+[layer_names]
+
+2d_physics/layer_1="pet"
+2d_physics/layer_2="food"
+2d_physics/layer_3="walls"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

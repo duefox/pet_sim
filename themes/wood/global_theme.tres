@@ -1,0 +1,117 @@
+[gd_resource type="Theme" load_steps=41 format=3 uid="uid://cwy04bxyvv2hj"]
+
+[ext_resource type="Texture2D" uid="uid://1ksauqa5mile" path="res://themes/wood/graphics/bigBtnDisabled.png" id="1_tcyic"]
+[ext_resource type="Texture2D" uid="uid://b2o40eiwwlerl" path="res://themes/wood/graphics/bigBtnNormal.png" id="2_buxv6"]
+[ext_resource type="Texture2D" uid="uid://btrb5caht4ltk" path="res://themes/wood/graphics/bigBtnOver.png" id="3_xvvpo"]
+[ext_resource type="Texture2D" uid="uid://deojw3irwcgwh" path="res://themes/wood/graphics/bigBtnPressed.png" id="4_m47no"]
+[ext_resource type="Texture2D" uid="uid://bsask3iusjohx" path="res://themes/wood/graphics/expandBtnDisabled.png" id="5_js667"]
+[ext_resource type="Texture2D" uid="uid://d05g6gyhk8t6j" path="res://themes/wood/graphics/expandBtnOver.png" id="6_qm01m"]
+[ext_resource type="Texture2D" uid="uid://dc2dhq7qhfvec" path="res://themes/wood/graphics/expandBtnNormal.png" id="7_0inov"]
+[ext_resource type="Texture2D" uid="uid://chq8lw3dm6ppa" path="res://themes/wood/graphics/expandBtnPressed.png" id="8_i18ci"]
+[ext_resource type="Texture2D" uid="uid://8obnq3j46gym" path="res://themes/wood/graphics/middleBtnDisabled.png" id="9_f6vxr"]
+[ext_resource type="Texture2D" uid="uid://b0bp2mykkojx3" path="res://themes/wood/graphics/middleBtnOver.png" id="10_qx886"]
+[ext_resource type="Texture2D" uid="uid://c2rls50un2mhl" path="res://themes/wood/graphics/middleBtnNormal.png" id="11_brky7"]
+[ext_resource type="Texture2D" uid="uid://45y01nouliix" path="res://themes/wood/graphics/middleBtnPressed.png" id="12_u0chl"]
+[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="13_11w1c"]
+[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="14_cau3v"]
+[ext_resource type="Texture2D" uid="uid://mavihdf8alpw" path="res://themes/wood/graphics/smallBtnNormal.png" id="15_mmo6l"]
+[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="16_cjfga"]
+[ext_resource type="Texture2D" uid="uid://bg171urvx4dmu" path="res://themes/wood/graphics/btnDisbled.png" id="17_vlgto"]
+[ext_resource type="Texture2D" uid="uid://bmuoam13dwo3t" path="res://themes/wood/graphics/btnOver.png" id="18_vaolq"]
+[ext_resource type="Texture2D" uid="uid://c13f7rak78jid" path="res://themes/wood/graphics/btnNormal.png" id="19_wi548"]
+[ext_resource type="Texture2D" uid="uid://l0vcg2wih47d" path="res://themes/wood/graphics/btnPressed.png" id="20_ry3xm"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi8x4"]
+texture = ExtResource("1_tcyic")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tcyic"]
+texture = ExtResource("3_xvvpo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_buxv6"]
+texture = ExtResource("2_buxv6")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xvvpo"]
+texture = ExtResource("4_m47no")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
+texture = ExtResource("5_js667")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uf7ap"]
+texture = ExtResource("6_qm01m")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxv3c"]
+texture = ExtResource("7_0inov")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ihut6"]
+texture = ExtResource("8_i18ci")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_js667"]
+texture = ExtResource("9_f6vxr")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qm01m"]
+texture = ExtResource("10_qx886")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0inov"]
+texture = ExtResource("11_brky7")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i18ci"]
+texture = ExtResource("12_u0chl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
+texture = ExtResource("13_11w1c")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
+texture = ExtResource("14_cau3v")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_brky7"]
+texture = ExtResource("15_mmo6l")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
+texture = ExtResource("16_cjfga")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_11w1c"]
+texture = ExtResource("17_vlgto")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cau3v"]
+texture = ExtResource("18_vaolq")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mmo6l"]
+texture = ExtResource("19_wi548")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cjfga"]
+texture = ExtResource("20_ry3xm")
+
+[resource]
+Button/colors/font_color = Color(0.360784, 0.184314, 0.113725, 1)
+Button/colors/font_disabled_color = Color(0.470588, 0.439216, 0.372549, 1)
+Button/colors/font_focus_color = Color(0.360784, 0.184314, 0.113725, 1)
+Button/colors/font_hover_color = Color(0, 0, 0, 1)
+Button/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0.568627, 0.835294, 0.32549, 1)
+Button/constants/outline_size = 2
+Button/font_sizes/font_size = 24
+Label/colors/font_color = Color(0.360784, 0.184314, 0.113725, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 1
+Label/font_sizes/font_size = 24
+button_big/styles/disabled = SubResource("StyleBoxTexture_wi8x4")
+button_big/styles/hover = SubResource("StyleBoxTexture_tcyic")
+button_big/styles/normal = SubResource("StyleBoxTexture_buxv6")
+button_big/styles/pressed = SubResource("StyleBoxTexture_xvvpo")
+button_expand/styles/disabled = SubResource("StyleBoxTexture_m47no")
+button_expand/styles/hover = SubResource("StyleBoxTexture_uf7ap")
+button_expand/styles/normal = SubResource("StyleBoxTexture_hxv3c")
+button_expand/styles/pressed = SubResource("StyleBoxTexture_ihut6")
+button_middle/styles/disabled = SubResource("StyleBoxTexture_js667")
+button_middle/styles/hover = SubResource("StyleBoxTexture_qm01m")
+button_middle/styles/normal = SubResource("StyleBoxTexture_0inov")
+button_middle/styles/pressed = SubResource("StyleBoxTexture_i18ci")
+button_small/styles/disabled = SubResource("StyleBoxTexture_f6vxr")
+button_small/styles/hover = SubResource("StyleBoxTexture_qx886")
+button_small/styles/normal = SubResource("StyleBoxTexture_brky7")
+button_small/styles/pressed = SubResource("StyleBoxTexture_u0chl")
+button_square/styles/disabled = SubResource("StyleBoxTexture_11w1c")
+button_square/styles/hover = SubResource("StyleBoxTexture_cau3v")
+button_square/styles/normal = SubResource("StyleBoxTexture_mmo6l")
+button_square/styles/pressed = SubResource("StyleBoxTexture_cjfga")

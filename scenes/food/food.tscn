@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4n3jincbqwf0"]
+
+[ext_resource type="Script" uid="uid://dw5dlyov8sg3u" path="res://scripts/food/Food.gd" id="1_77ovl"]
+[ext_resource type="Resource" uid="uid://nc4ypekgcowp" path="res://data/food_data/food0.tres" id="2_4y3qy"]
+[ext_resource type="Texture2D" uid="uid://drv7fa8n4dnys" path="res://assets/textures/foods.png" id="2_dkmuf"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o4lbg"]
+radius = 7.0
+
+[node name="Food" type="RigidBody2D"]
+collision_layer = 2
+collision_mask = 4
+script = ExtResource("1_77ovl")
+food_data = ExtResource("2_4y3qy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_o4lbg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2_dkmuf")
+hframes = 4
+vframes = 4

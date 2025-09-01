@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://b3ri0juh20ywa"]
+
+[ext_resource type="Script" uid="uid://c1cfnn80q7lso" path="res://scripts/data/FishData.gd" id="1_ui6lk"]
+[ext_resource type="Texture2D" uid="uid://tgjqgpyumgi" path="res://assets/textures/aquatic/water/fish00.png" id="2_4ddce"]
+
+[resource]
+script = ExtResource("1_ui6lk")
+live_layer = 0
+nickname = "泡泡鱼"
+species = 0
+level = 0
+color = Color(0, 0, 0, 1)
+coords = Vector2(0, 0)
+speed = 100.0
+max_size = 0
+gender = 0
+initial_angle = null
+turn_rate = 0.05
+food_habit = 0
+eat_cooldown_duration = 30.0
+appetite = 0.0
+texture = ExtResource("2_4ddce")
+hframes = 6
+vframes = 1
+frame = 4
+waste_timer = 0
+waste_interval = 600
+is_mating = false
+mating_timer = 0
+mating_duration = 1200
+mating_cooldown = 0
+mating_cooldown_duration = 1200
+egg_timer = 0
+egg_interval = 1200
+age = 0
+life_cycle = "juvenile"
+adult_age = 6000
+old_age = 12000
+death_age = 18000
+env_catgory = 0
+suitable_temperature = Vector2(40, 60)
+live_temperature = Vector2(0, 100)
+light_catgory = 0
+mood = 0
+variation = {}
+metadata/_custom_type_script = "uid://c1cfnn80q7lso"
