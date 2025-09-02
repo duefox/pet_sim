@@ -1,5 +1,8 @@
 extends Node
 
+#游戏天数计时器
+@export var game_day_duration: float = 60.0  # 60秒为1游戏天
+
 var pets: Dictionary = {}  # 使用字典存储宠物，方便通过ID查找
 var pet_scene = preload("res://scenes/pet/aquatic_fish.tscn")
 var pet_id_counter = 0
@@ -24,7 +27,7 @@ func _exit_tree() -> void:
 	EventManager.unsubscribe(GameEvent.PET_IS_HUNGRY, _on_pet_hungry)
 
 
-# --- 运行时逻辑 ---
+# --- 帧更新 ---
 func _process(_delta: float):
 	# 遍历所有宠物并执行高级行为决策
 	for pet_id in pets:
@@ -35,6 +38,8 @@ func _process(_delta: float):
 			if pet.movement_comp.target_pos.is_zero_approx():
 				var new_pos: Vector2 = _create_aquatic_coords(pet)
 				pet.movement_comp.set_target(new_pos)
+	#测试
+	#_check_for_offline_growth()
 
 
 ## 创建宠物
@@ -67,6 +72,14 @@ func create_position(pet: Pet) -> Vector2:
 	return coords
 
 
+## 喂食函数，由外部UI调用
+func feed_pet(pet: Pet, food_data: FoodData):
+	if pet and pet.hunger_comp:
+		pet.hunger_comp.feed(food_data)
+	else:
+		print("Pet or hunger component not found for feeding.")
+
+
 ## 寻找最近的食物
 func find_closest_food(pet: Pet) -> Node2D:
 	# 假设所有食物节点都加入了 "food" 组
@@ -85,7 +98,12 @@ func find_closest_food(pet: Pet) -> Node2D:
 	return closest_food
 
 
-# 新增：创建水生动物漫游位置
+## 根据id查找宠物
+func get_pet_by_id(pet_id: int) -> Pet:
+	return pets.get(pet_id)
+
+
+#创建水生动物漫游位置
 func _create_aquatic_coords(pet: Pet) -> Vector2:
 	var bounds = pet.wander_rank
 	var new_pos: Vector2
@@ -126,16 +144,9 @@ func _create_aquatic_coords(pet: Pet) -> Vector2:
 	return new_pos
 
 
-func find_closest_target(_pet: Node) -> Node:
-	pass
-	return null
-
-
 # 饥饿度事件处理函数
 func _on_pet_hungry(pet: Pet):
-	# 如果宠物当前不是在进食状态，则让它去觅食
 	if pet.state_machine.current_state != pet.state_machine.State.EATING:
-		# 修复：直接调用 PetManager 中的 find_closest_food 函数
 		var closest_food = find_closest_food(pet)
 		if closest_food and is_instance_valid(closest_food):
 			pet.target = closest_food
@@ -148,11 +159,6 @@ func _on_pet_hungry(pet: Pet):
 			pass
 
 
-# 根据id查找宠物
-func get_pet_by_id(pet_id: int) -> Pet:
-	return pets.get(pet_id)
-
-
 ## 选中宠物
 func _on_pet_selected(pet: Pet) -> void:
 	if not pet:
@@ -160,9 +166,14 @@ func _on_pet_selected(pet: Pet) -> void:
 	if _current_pet:
 		#去掉描边
 		_current_pet.pet_sprite.material["shader_parameter/outlineWidth"] = 0.0
+		#恢复速度
+		_current_pet.movement_comp.speed = _current_pet.pet_data.speed
+		#之前的选中宠物恢复原来状态
+		_current_pet.state_machine.recover_state()
+
 	_current_pet = pet
 	_current_pet.pet_sprite.material["shader_parameter/outlineWidth"] = 2.0
-	#更新宠物属性面板
+	#显示宠物属性面板
 
 
 #宠物成长，由的宠物需要改变形态

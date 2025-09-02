@@ -5,7 +5,10 @@
 
 [resource]
 script = ExtResource("1_1guqx")
+name = "Basic Food"
 food_type = 0
+hunger_restore_amount = 20.0
+growth_points = 50.0
 texture = ExtResource("2_w8wuv")
 hframes = 4
 vframes = 4

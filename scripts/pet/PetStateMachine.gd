@@ -15,6 +15,8 @@ enum WanderLayer { TOP, MIDDLE, BOTTOM, ALL }
 #region 共有变量
 #当前宠物的状态
 var current_state: int = State.WANDERING
+# 待机计时器
+var idle_timer: float = 0.0
 #endregion
 
 #region 私有变量
@@ -25,8 +27,6 @@ var _state_functions: Dictionary[int,Callable] = {}
 var _movement_comp: MovementComponent
 # 记录前一个状态
 var _previous_state: int = State.IDLE
-# 待机计时器
-var _idle_timer: float = 0.0
 # 觅食最小距离
 var _food_detection_distance: float = 200.0
 
@@ -38,6 +38,7 @@ func _ready() -> void:
 	pass
 
 
+## 初始化
 func initialize(pet_node: Pet):
 	_parent_pet = pet_node
 	_state_functions[State.IDLE] = _state_idle
@@ -55,12 +56,14 @@ func initialize(pet_node: Pet):
 		_movement_comp.speed = _parent_pet.pet_data.speed
 
 
+## 更新状态
 func update_state(delta: float):
 	var function_to_call = _state_functions.get(current_state)
 	if function_to_call:
 		function_to_call.call(delta)
 
 
+## 切换状态
 func change_state(new_state: int):
 	# 这个函数只负责状态的纯粹切换，不处理任何行为
 	if current_state != new_state:
@@ -71,8 +74,12 @@ func change_state(new_state: int):
 		print("Pet state changed to: ", State.keys()[current_state])
 
 
-# --- 状态处理函数 ---
+## 恢复之前的状态
+func recover_state() -> void:
+	change_state(_previous_state)
 
+
+# --- 状态处理函数 ---
 
 #漫游状态
 func _state_wandering(delta: float):
@@ -92,7 +99,7 @@ func _state_eating(delta: float):
 		# 检查是否到达食物位置
 		if _parent_pet.position.distance_to(_parent_pet.target.position) < _parent_pet.target_collision_distance:
 			# 喂食，增加饥饿度
-			_parent_pet.hunger_comp.feed()
+			_parent_pet.hunger_comp.feed(_parent_pet.target.food_data)
 			# 宠物吃掉食物，移除食物节点
 			_parent_pet.target.queue_free()
 			_parent_pet.target = null
@@ -102,29 +109,35 @@ func _state_eating(delta: float):
 			_movement_comp.clear_target()
 			#print("hunger_level:",_parent_pet.hunger_level)
 			# 切换回之前的状态
-			change_state(_previous_state)
+			recover_state()
 	else:
 		# 如果食物被其他宠物吃掉或已无效，切换回之前的状态
 		_movement_comp.speed = _parent_pet.pet_data.speed
 		# 吃完食物后，清空运动组件的目标位置
 		_movement_comp.clear_target()
 		_parent_pet.target = null
-		change_state(_previous_state)
+		recover_state()
 
 
 func _state_idle(delta: float):
-	# 在待机状态下，不更新饥饿度，让宠物可以休息
-
-	# 检查饥饿度、配偶等条件，触发状态切换
-	# 关键修改：处理待机计时器
-	_idle_timer -= delta
-	if _idle_timer <= 0:
+	# 处理待机计时器
+	idle_timer -= delta
+	if idle_timer <= 0:
 		_parent_pet.pet_sprite.material["shader_parameter/outlineWidth"] = 0.0
 		# 从待机状态切换到漫游前，设置正常速度
 		_movement_comp.speed = _parent_pet.pet_data.speed
-		change_state(_previous_state)
+		recover_state()
 
-	pass
+
+#交配状态
+func _state_mating(delta: float):
+	# 只有成年且饥饿度在50%以下才能进行交配
+	if _parent_pet.life_stage == PetData.LifeStage.ADULT and _parent_pet.hunger_comp.hunger_level < 50.0:
+		# TODO: 实现交配逻辑
+		pass
+	else:
+		# 不满足条件则切换回之前的状态
+		recover_state()
 
 
 func _state_playing(delta: float):
@@ -132,11 +145,6 @@ func _state_playing(delta: float):
 
 
 func _state_sleeping(delta: float):
-	pass
-
-
-func _state_mating(delta: float):
-	# 调用交配组件的更新方法
 	pass
 
 

@@ -16,8 +16,8 @@ enum EnvCategory {
 	OTHERS,  #其它，如俩栖
 }
 
-#生命周期
-enum LifeStage { JUVENILE, ADULT, OLD, DEAD }
+#宠物生命阶段枚举
+enum LifeStage { JUVENILE, ADULT, DEAD }
 
 #物种级别
 enum Level { ENTRY, MIDDLE, ADVANCED, TOP }
@@ -73,12 +73,10 @@ enum Gender {
 @export var turn_rate: float = 0.05
 #食性
 @export var food_habit: FoodCategory = FoodCategory.ALL
-#觅食周期单位秒，动画播放相关，实际觅食是按过天后扣除的克数为准
-@export var eat_cooldown_duration: float = 0.5
 #饥饿度变化率
-@export var hunger_decrease_rate: float = 0.5
+@export var hunger_decrease_rate: float = 1.0
 #食量，每次进食消耗量克/次，如食量是20，需要进食5次才能到100%不饿状态
-@export var hunger_restore_amount: float = 20.0
+@export var hunger_restore_amount: float = 10.0
 
 ##动画贴图相关信息
 @export_group("Texture & Aimate")
@@ -112,12 +110,10 @@ enum Gender {
 @export_group("Grow up")
 #生命周期参数，单位为秒
 @export var initial_age: float = 0.0
-#进入成年时间
-@export var adult_age: float = 20.0
-#进入老年时间
-@export var old_age: float = 60.0
-#进入死亡时间
-@export var death_age: float = 100.0
+#成长值阈值
+@export var adult_growth_threshold: float = 100.0
+#每日自动增加的成长值
+@export var daily_growth_points: float = 5.0
 
 ##生存相关
 @export_group("Live evnironment")

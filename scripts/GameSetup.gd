@@ -4,7 +4,7 @@ extends Node2D
 @onready var fps_label: Label = $UI/Control/MarginContainer/FPSLabel
 
 
-@export var init_fish_cout: int = 1
+@export var init_fish_cout: int = 10
 # 预加载不同鱼类的数据资源
 # 在编辑器中，你可以将这些资源文件拖入到导出的变量中
 @export var goldfish_data: Resource = preload("res://data/pet_data/goldfish.tres")

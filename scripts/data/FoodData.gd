@@ -11,7 +11,12 @@ enum FoodType {
 }
 
 @export_group("Base info")
+@export var name: String = "Basic Food"
 @export var food_type: FoodType = FoodType.ALL
+#食物饱食度
+@export var hunger_restore_amount: float = 20.0
+#每种食物提供的成长值
+@export var growth_points: float = 10.0
 
 ##动画贴图相关信息
 @export_group("Texture & Aimate")
