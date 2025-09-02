@@ -64,7 +64,7 @@ enum Gender {
 #速度
 @export var speed: float = 100.0
 #体型大小
-@export var max_size: BodySize
+@export var max_size: BodySize = BodySize.SMALL
 #性别
 @export var gender: Gender
 #角度
@@ -88,10 +88,8 @@ enum Gender {
 
 ##排泄和繁殖
 @export_group("Waste & Mating")
-#排泄时间
-@export var waste_timer: int = 0
-#排泄周期单位毫秒，动画播放相关，实际排泄是按过天后这个值乘以动物数量来计算
-@export var waste_interval: int = 600
+#排泄间隔，单位为秒，60秒
+@export var excretion_interval: float = 100.0
 #是否交配
 @export var is_mating: bool = false
 #交配时间
@@ -108,8 +106,8 @@ enum Gender {
 
 ##成长
 @export_group("Grow up")
-#生命周期参数，单位为秒
-@export var initial_age: float = 0.0
+#生命周期参数，初始成长度，0~100，100表示成年
+@export var initial_growth: float = 0.0
 #成长值阈值
 @export var adult_growth_threshold: float = 100.0
 #每日自动增加的成长值

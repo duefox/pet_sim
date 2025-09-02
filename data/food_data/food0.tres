@@ -1,16 +1,18 @@
 [gd_resource type="Resource" script_class="FoodData" load_steps=3 format=3 uid="uid://nc4ypekgcowp"]
 
-[ext_resource type="Script" uid="uid://q26e3frqs21n" path="res://scripts/data/FoodData.gd" id="1_1guqx"]
+[ext_resource type="Script" uid="uid://cv102g7jtrdtl" path="res://scripts/data/FoodData.gd" id="1_1guqx"]
 [ext_resource type="Texture2D" uid="uid://drv7fa8n4dnys" path="res://assets/textures/foods.png" id="2_w8wuv"]
 
 [resource]
 script = ExtResource("1_1guqx")
-name = "Basic Food"
 food_type = 0
 hunger_restore_amount = 20.0
 growth_points = 50.0
+kind = 0
+name = ""
+lifetime = 15.0
 texture = ExtResource("2_w8wuv")
 hframes = 4
 vframes = 4
 frame = 0
-metadata/_custom_type_script = "uid://q26e3frqs21n"
+metadata/_custom_type_script = "uid://cv102g7jtrdtl"

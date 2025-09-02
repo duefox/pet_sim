@@ -3,7 +3,7 @@ extends Node
 class_name PetStateMachine
 
 ## 宠物的状态有待机、觅食、玩耍、睡觉、漫游、交配
-enum State { IDLE, EATING, PLAYING, SLEEPING, WANDERING, MATING }
+enum State { IDLE, EATING, PLAYING, SLEEPING, WANDERING, MATING, EXCRETING }
 ## 宠物漫游的水域层级
 enum WanderLayer { TOP, MIDDLE, BOTTOM, ALL }
 
@@ -70,16 +70,24 @@ func change_state(new_state: int):
 		# 在状态切换前，将当前状态保存为前一个状态
 		_previous_state = current_state
 		current_state = new_state
+	# 避免陷入死循环状态，默认切换到漫游状态
+	else:
+		current_state = State.WANDERING
 
-		print("Pet state changed to: ", State.keys()[current_state])
+	print("Pet state changed to: ", State.keys()[current_state])
 
 
 ## 恢复之前的状态
 func recover_state() -> void:
-	change_state(_previous_state)
+	#增加检测判断，避免陷入死循环
+	if current_state == _previous_state:
+		change_state(State.WANDERING)
+	else:
+		change_state(_previous_state)
 
 
 # --- 状态处理函数 ---
+
 
 #漫游状态
 func _state_wandering(delta: float):
@@ -89,6 +97,8 @@ func _state_wandering(delta: float):
 		var new_pos: Vector2 = PetManager.create_position(_parent_pet)
 		_movement_comp.set_target(new_pos)
 	# 检查其他状态转换条件
+	if _parent_pet.target:
+		print("有食物")
 
 
 # 觅食状态
@@ -99,7 +109,8 @@ func _state_eating(delta: float):
 		# 检查是否到达食物位置
 		if _parent_pet.position.distance_to(_parent_pet.target.position) < _parent_pet.target_collision_distance:
 			# 喂食，增加饥饿度
-			_parent_pet.hunger_comp.feed(_parent_pet.target.food_data)
+			# 修复：直接从 DroppableObject 获取 data
+			_parent_pet.hunger_comp.feed(_parent_pet.target.data)
 			# 宠物吃掉食物，移除食物节点
 			_parent_pet.target.queue_free()
 			_parent_pet.target = null
@@ -107,16 +118,16 @@ func _state_eating(delta: float):
 			_movement_comp.speed = _parent_pet.pet_data.speed
 			# 吃完食物后，清空运动组件的目标位置
 			_movement_comp.clear_target()
-			#print("hunger_level:",_parent_pet.hunger_level)
-			# 切换回之前的状态
-			recover_state()
+			# 修复：吃完食物后，直接切换回漫游状态，而不是上一个状态
+			change_state(State.WANDERING)
 	else:
 		# 如果食物被其他宠物吃掉或已无效，切换回之前的状态
 		_movement_comp.speed = _parent_pet.pet_data.speed
 		# 吃完食物后，清空运动组件的目标位置
 		_movement_comp.clear_target()
 		_parent_pet.target = null
-		recover_state()
+		# 修复：吃完食物后，直接切换回漫游状态，而不是上一个状态
+		change_state(State.WANDERING)
 
 
 func _state_idle(delta: float):

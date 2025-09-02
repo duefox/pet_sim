@@ -17,6 +17,7 @@ func _ready():
 	EventManager.subscribe(GameEvent.PET_DEATH, _on_pet_death)  #宠物死亡
 	EventManager.subscribe(GameEvent.PET_SELECTED, _on_pet_selected)  #宠物被点击选中
 	EventManager.subscribe(GameEvent.PET_IS_HUNGRY, _on_pet_hungry)  #宠物饥饿了
+	EventManager.subscribe(GameEvent.PET_EXCRETE, _on_pet_excrete) #宠物排泄
 
 
 ## 取消订阅事件
@@ -25,6 +26,7 @@ func _exit_tree() -> void:
 	EventManager.unsubscribe(GameEvent.PET_DEATH, _on_pet_death)
 	EventManager.unsubscribe(GameEvent.PET_SELECTED, _on_pet_selected)
 	EventManager.unsubscribe(GameEvent.PET_IS_HUNGRY, _on_pet_hungry)
+	EventManager.unsubscribe(GameEvent.PET_EXCRETE, _on_pet_excrete)
 
 
 # --- 帧更新 ---
@@ -144,7 +146,7 @@ func _create_aquatic_coords(pet: Pet) -> Vector2:
 	return new_pos
 
 
-# 饥饿度事件处理函数
+## 饥饿度事件处理函数
 func _on_pet_hungry(pet: Pet):
 	if pet.state_machine.current_state != pet.state_machine.State.EATING:
 		var closest_food = find_closest_food(pet)
@@ -176,11 +178,22 @@ func _on_pet_selected(pet: Pet) -> void:
 	#显示宠物属性面板
 
 
-#宠物成长，由的宠物需要改变形态
+## 宠物成长，由的宠物需要改变形态
 func _on_pet_grow_up(pet: Pet) -> void:
 	if not pet:
 		return
 	pet.grow_up()
+
+
+## 处理排泄事件
+func _on_pet_excrete(pet: Pet) -> void:
+	# 检查宠物当前状态，避免在关键状态下排泄（如进食、交配等）
+	if pet.state_machine.current_state != PetStateMachine.State.EATING and \
+	   pet.state_machine.current_state != PetStateMachine.State.MATING:
+		pet.state_machine.change_state(PetStateMachine.State.EXCRETING)
+		# 发出信号，通知环境处理排泄物
+		#EventManager.emit_event(GameEvent.EXCREMENT_CREATED, pet.global_position)
+		print("Pet %s just pooped, environment needs to update!" % pet.id)
 
 
 ## 宠物死亡

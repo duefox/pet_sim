@@ -20,6 +20,8 @@ var movement_comp: MovementComponent
 var hunger_comp: HungerComponent
 #生命周期组件
 var lifecycle_comp: LifecycleComponent
+#排泄组件
+var excretion_comp: ExcretionComponent
 #宠物贴图
 var pet_sprite: Sprite2D
 #食物目标
@@ -54,10 +56,14 @@ var _last_growth_timestamp: float = 0.0
 
 
 func _ready():
+	#行为组件
 	movement_comp = find_child("MovementComponent")
 	hunger_comp = find_child("HungerComponent")
 	lifecycle_comp = find_child("LifecycleComponent")
+	excretion_comp = find_child("ExcretionComponent")
+	#宠物状态机
 	state_machine = find_child("PetStateMachine")
+	#宠物属性
 	pet_sprite = find_child("Sprite2D")
 	info_label = find_child("InfoLabel")
 	# 描边shader特效
@@ -87,6 +93,9 @@ func _physics_process(delta: float) -> void:
 	#更新饥饿度
 	if hunger_comp:
 		hunger_comp.update_hunger(delta)
+	#更新排泄组件
+	if excretion_comp:
+		excretion_comp.update_excretion(delta)
 
 	#测试
 	update_info()
@@ -101,7 +110,7 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 		# 调用状态机的change_state函数，将状态切换为IDLE
 		state_machine.change_state(state_machine.State.IDLE)
 		# 设置待机时长
-		state_machine.idle_timer = 1.5
+		state_machine.idle_timer = state_machine.idle_duration
 		# 设置移动组件的速度为0
 		movement_comp.speed = 0.0
 		# 广播弹出宠物属性面板事件
@@ -123,7 +132,7 @@ func initialize_pet(assigned_id: int, data: PetData, assigned_gender: PetData.Ge
 	#贴图和动画
 	pet_sprite.texture = pet_data.texture
 	# 初始化成长值
-	growth_points = pet_data.initial_age
+	growth_points = pet_data.initial_growth
 	life_stage = PetData.LifeStage.JUVENILE
 
 	#初始化运动组件
@@ -135,6 +144,9 @@ func initialize_pet(assigned_id: int, data: PetData, assigned_gender: PetData.Ge
 	#初始生命周期组件
 	if lifecycle_comp:
 		lifecycle_comp.initialize(self)
+	#初始化排泄组件
+	if excretion_comp:
+		excretion_comp.initialize(self)
 	#初始化状态机
 	if state_machine:
 		state_machine.initialize(self)

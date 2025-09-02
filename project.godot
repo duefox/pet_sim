@@ -57,6 +57,7 @@ mouse_right={
 2d_physics/layer_1="pet"
 2d_physics/layer_2="food"
 2d_physics/layer_3="walls"
+2d_physics/layer_4="excrement"
 
 [rendering]
 

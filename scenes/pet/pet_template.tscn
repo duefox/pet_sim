@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dl7tlg6w0eyas"]
+[gd_scene load_steps=14 format=3 uid="uid://dl7tlg6w0eyas"]
 
 [ext_resource type="Script" uid="uid://bhnyru0q25l3n" path="res://scripts/pet/Pet.gd" id="1_bpwwj"]
 [ext_resource type="Script" uid="uid://dqbx4m2xcx2bt" path="res://scripts/pet/PetStateMachine.gd" id="1_fm2pq"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://tgjqgpyumgi" path="res://assets/textures/aquatic/water/fish00.png" id="3_o1l0v"]
 [ext_resource type="Script" uid="uid://cev476a751rcw" path="res://scripts/components/behavior/HungerComponent.gd" id="4_2kcnw"]
 [ext_resource type="Script" uid="uid://dqt8ko0ma20vk" path="res://scripts/components/behavior/LifecycleComponent.gd" id="5_mm5nc"]
+[ext_resource type="Script" uid="uid://clipkrlrmjxux" path="res://scripts/components/behavior/ExcretionComponent.gd" id="6_2uvqw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qicqd"]
 radius = 13.0
@@ -121,6 +122,9 @@ script = ExtResource("4_2kcnw")
 [node name="LifecycleComponent" type="Node" parent="Components"]
 script = ExtResource("5_mm5nc")
 
+[node name="ExcretionComponent" type="Node" parent="Components"]
+script = ExtResource("6_2uvqw")
+
 [node name="PetStateMachine" type="Node" parent="."]
 script = ExtResource("1_fm2pq")
 
@@ -136,7 +140,6 @@ grow_horizontal = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
 theme_override_font_sizes/font_size = 16
-text = "age:0"
 horizontal_alignment = 1
 vertical_alignment = 1
 

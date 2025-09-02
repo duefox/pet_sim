@@ -1,25 +1,23 @@
-[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://qfcdqheia6ta"]
+[gd_resource type="Resource" script_class="FishData" load_steps=2 format=3 uid="uid://cnnb60grrr712"]
 
-[ext_resource type="Script" uid="uid://c1cfnn80q7lso" path="res://scripts/data/FishData.gd" id="1_rnq2n"]
-[ext_resource type="Texture2D" uid="uid://dfmtghpflav77" path="res://assets/textures/aquatic/water/fish01.png" id="2_xml5i"]
+[ext_resource type="Script" uid="uid://c1cfnn80q7lso" path="res://scripts/data/FishData.gd" id="1_50cej"]
 
 [resource]
-script = ExtResource("1_rnq2n")
+script = ExtResource("1_50cej")
 live_layer = 3
-nickname = "西瓜剑尾"
+nickname = ""
 species = 0
 level = 0
 color = Color(0, 0, 0, 1)
 coords = Vector2(0, 0)
-speed = 50.0
+speed = 100.0
 max_size = 0
 gender = 0
 initial_angle = null
 turn_rate = 0.05
 food_habit = 0
-hunger_decrease_rate = 0.5
-hunger_restore_amount = 20.0
-texture = ExtResource("2_xml5i")
+hunger_decrease_rate = 1.0
+hunger_restore_amount = 10.0
 hframes = 6
 vframes = 1
 frame = 4
