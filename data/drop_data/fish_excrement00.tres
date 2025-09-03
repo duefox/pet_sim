@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="DroppableData" load_steps=3 format=3 uid="uid://dp85ytsnwka4m"]
+
+[ext_resource type="Script" uid="uid://cs8jqjbk2ifyw" path="res://scripts/data/DroppableData.gd" id="1_sq3td"]
+[ext_resource type="Texture2D" uid="uid://w27k75slxgk8" path="res://assets/textures/excret.png" id="2_8id0t"]
+
+[resource]
+script = ExtResource("1_sq3td")
+kind = 1
+name = "鱼便便"
+lifetime = 15.0
+texture = ExtResource("2_8id0t")
+hframes = 4
+vframes = 1
+frame = 3
+metadata/_custom_type_script = "uid://cs8jqjbk2ifyw"

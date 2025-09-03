@@ -22,10 +22,14 @@ var hunger_comp: HungerComponent
 var lifecycle_comp: LifecycleComponent
 #排泄组件
 var excretion_comp: ExcretionComponent
+#交配组件
+var mating_comp: MatingComponent
 #宠物贴图
 var pet_sprite: Sprite2D
 #食物目标
 var target: Food = null
+#交配繁殖目标
+var mate_target: Pet = null
 #食物碰撞距离
 var target_collision_distance: float = 30.0
 
@@ -39,19 +43,20 @@ var info_label: Label
 var id: int
 #资源属性集合
 @export var pet_data: PetData
+@export var excrement_scene: PackedScene
+@export var excrement_data: DroppableData
 #性别
 @export var gender: PetData.Gender
 #成长时期标志，juvenile, adult
 var life_stage: int = PetData.LifeStage.JUVENILE
 # 宠物当前的成长值
 var growth_points: float = 0.0
-#饥饿度当前值，0为不饿，100为饥饿
-var hunger_level: float = 0.0
 #endregion
 
 #region 私有变量区块
 # 上次成长的真实世界时间戳
 var _last_growth_timestamp: float = 0.0
+var _container_id: String
 #endregion
 
 
@@ -61,6 +66,7 @@ func _ready():
 	hunger_comp = find_child("HungerComponent")
 	lifecycle_comp = find_child("LifecycleComponent")
 	excretion_comp = find_child("ExcretionComponent")
+	mating_comp = find_child("MatingComponent")
 	#宠物状态机
 	state_machine = find_child("PetStateMachine")
 	#宠物属性
@@ -117,12 +123,17 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 		EventManager.emit_event(GameEvent.PET_SELECTED, self)
 
 
+## 设置容器ID
+func set_container_id(id: String):
+	_container_id = id
+
+
 ## 显示一些信息，方便查看调试
 func update_info() -> void:
-	info_label.text = "h:" + str(floori(hunger_level)) + " sex:" + str(gender) + " g:" + str(floori(growth_points))
+	info_label.text = "h:" + str(floori(hunger_comp.hunger_level)) + " sex:" + str(gender) + " g:" + str(floori(growth_points))
 
 
-# 新的初始化函数
+## 新的初始化函数
 func initialize_pet(assigned_id: int, data: PetData, assigned_gender: PetData.Gender, wander_bounds: Rect2):
 	#初始化数据
 	id = assigned_id
@@ -147,6 +158,9 @@ func initialize_pet(assigned_id: int, data: PetData, assigned_gender: PetData.Ge
 	#初始化排泄组件
 	if excretion_comp:
 		excretion_comp.initialize(self)
+	#初始化交配组件
+	if mating_comp:
+		mating_comp.initialize(self)
 	#初始化状态机
 	if state_machine:
 		state_machine.initialize(self)
@@ -157,7 +171,7 @@ func initialize_pet(assigned_id: int, data: PetData, assigned_gender: PetData.Ge
 	check_for_offline_growth()
 
 
-# 宠物成长动画切换
+## 宠物成长动画切换
 func grow_up() -> void:
 	if life_stage == PetData.LifeStage.JUVENILE:
 		animation_player.play("juvenile")
@@ -165,7 +179,17 @@ func grow_up() -> void:
 		animation_player.play("adult")
 
 
-# 宠物死亡
+## 生成宠物坐标位置
+func create_position() -> Vector2:
+	var coords: Vector2
+	# 水生动物
+	if pet_data.species == PetData.MainCategory.AQUATIC:
+		return _create_aquatic_coords()
+
+	return coords
+
+
+## 宠物死亡
 func death() -> void:
 	queue_free()
 
@@ -195,6 +219,133 @@ func check_for_offline_growth():
 			print("Pet %s was offline for %d game days and gained %f growth points." % [id, days_passed, total_growth])
 		# 更新元数据，记录新的时间戳，避免重复计算
 		set_meta("last_growth_timestamp", last_timestamp + days_passed * game_day_duration)
+
+
+# 新增：处理饥饿事件，开始觅食
+func on_pet_is_hungry():
+	# 如果宠物已经在进食，或者有其他优先级更高的行为，则不执行觅食
+	if state_machine.current_state != PetStateMachine.State.EATING:
+		var closest_food = find_closest_food()
+		if closest_food and is_instance_valid(closest_food):
+			self.target = closest_food
+			movement_comp.speed = pet_data.speed * state_machine.sprint_speed_multiplier
+			state_machine.change_state(PetStateMachine.State.EATING)
+			#print("Pet is hungry and found food!")
+		else:
+			#print("Pet is hungry but no food found in its container.")
+			pass
+
+
+## 查找范围限定在宠物所在的父节点（即容器）下
+func find_closest_food() -> Node2D:
+	if _container_id.is_empty():
+		return null
+
+	var food_group_name = "food_" + _container_id
+	var food_list = get_tree().get_nodes_in_group(food_group_name)
+	if food_list.is_empty():
+		return null
+
+	var closest_food: Node2D = null
+	var min_distance: float = INF
+
+	for food_item in food_list:
+		if is_instance_valid(food_item):
+			var distance = position.distance_to(food_item.position)
+			if distance < min_distance:
+				min_distance = distance
+				closest_food = food_item
+
+	return closest_food
+
+
+## 宠物排泄逻辑
+func on_pet_excrete():
+	state_machine.change_state(PetStateMachine.State.EXCRETING)
+
+
+## 排泄动作，由状态机调用
+func spawn_excrement():
+	# 使用容器的通用方法生成排泄物
+	var container = get_parent().get_parent()  # 获取 PetContainer 节点
+	if container is PetContainer:
+		container.spawn_droppable_object(global_position, excrement_data)
+
+	print("Pet %s just pooped!" % self.id)
+
+## 查找容器内合适的交配对象
+func find_mate() -> Pet:
+	# 1. 确保自己能交配
+	if not mating_comp.can_mate():
+		return null
+		
+	# 2. 找到同一容器内的所有宠物
+	var container_node = get_parent().get_parent()
+	if not container_node or not container_node is PetContainer:
+		return null
+
+	var all_pets = container_node.contents_node.get_children()
+	
+	var closest_mate: Pet = null
+	var min_distance: float = INF
+
+	for pet_candidate in all_pets:
+		# 3. 检查候选宠物是否为有效宠物，且满足交配条件
+		if pet_candidate != self and is_instance_valid(pet_candidate) and pet_candidate is Pet and \
+		   pet_candidate.mating_comp.can_mate() and pet_candidate.gender != self.gender:
+			var distance = position.distance_to(pet_candidate.position)
+			if distance < min_distance:
+				min_distance = distance
+				closest_mate = pet_candidate
+
+	return closest_mate
+	
+## 产蛋动作，由状态机调用
+func spawn_egg():
+	# TODO: 实现产蛋逻辑
+	print("Pet %s is spawning an egg!" % self.id)
+
+
+
+## 创建水生动物漫游位置
+func _create_aquatic_coords() -> Vector2:
+	var bounds = wander_rank
+	var new_pos: Vector2
+	# 根据当前漫游层级设置 Y 轴范围
+	var y_min: float
+	var y_max: float
+	var height = bounds.size.y
+	var start_y = bounds.position.y
+	# 从 PetData 中获取 live_layer
+	var wander_layer: int = (pet_data as FishData).live_layer
+	match wander_layer:
+		FishData.WanderLayer.TOP:
+			y_min = start_y
+			y_max = start_y + height * 0.33
+		FishData.WanderLayer.MIDDLE:
+			y_min = start_y + height * 0.34
+			y_max = start_y + height * 0.67
+		FishData.WanderLayer.BOTTOM:
+			y_min = start_y + height * 0.68
+			y_max = start_y + height
+		FishData.WanderLayer.ALL:
+			y_min = start_y
+			y_max = start_y + height
+
+	# 通过随机方向和距离计算新位置
+	var random_angle = randf_range(-PI / 4, PI / 4)
+	var n: int = randi_range(0, 2)  #默认1，4象限
+	if n == 0:  #2象限
+		random_angle = random_angle - PI
+	elif n == 1:  #3象限
+		random_angle = PI - random_angle
+	var random_distance = randf_range(200, 400)
+	var direction_vector = Vector2.from_angle(random_angle)
+	new_pos = self.position + direction_vector * random_distance
+	# 钳制新位置在 X 轴的全部范围内和 Y 轴的指定层级内
+	new_pos.x = clamp(new_pos.x, bounds.position.x, bounds.position.x + bounds.size.x)
+	new_pos.y = clamp(new_pos.y, y_min, y_max)
+	return new_pos
 
 
 # 当没有保存数据时，为宠物设置初始时间戳

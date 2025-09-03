@@ -26,6 +26,8 @@ func _ready():
 func _physics_process(delta: float) -> void:
 	# 检查食物是否静止，如果是则开始计时
 	if is_sleeping():
-		_lifetime -= delta
-		if _lifetime <= 0:
-			queue_free()
+		# 当 lifetime 为 -1 时，不进行倒计时和删除
+		if _lifetime >= 0:
+			_lifetime -= delta
+			if _lifetime <= 0:
+				queue_free()

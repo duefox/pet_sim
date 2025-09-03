@@ -16,5 +16,5 @@ enum Kind { FOOD, EXCREMENT }
 #贴图
 @export var texture: Texture2D
 @export var hframes: int = 4
-@export var vframes: int = 4
+@export var vframes: int = 2
 @export var frame: int = 0

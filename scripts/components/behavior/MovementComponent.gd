@@ -42,12 +42,17 @@ func set_target(pos: Vector2):
 	target_pos = pos
 
 
-# 清空移动目标
+## 清空移动目标
 func clear_target():
 	target_pos = Vector2.ZERO
 
 
-# 新增：钳制角度到指定范围
+## 目标位置是否无效
+func is_target_invalid() -> bool:
+	return target_pos.is_zero_approx()
+
+
+## 钳制角度到指定范围
 func clamp_angle_to_valid_ranges(angle: float, clamp_size: float = PI / 4) -> float:
 	# 将角度标准化到 -PI 到 PI
 	var normalized_angle = fmod(angle + PI, 2 * PI) - PI

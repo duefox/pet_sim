@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dphqsoc4jkmqx" path="res://scripts/droppable/DroppableObject.gd" id="1_nyd3c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_wmusn"]
+radius = 5.0
 
 [node name="DroppableItem" type="RigidBody2D"]
 collision_layer = 2

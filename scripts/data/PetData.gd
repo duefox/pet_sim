@@ -89,7 +89,7 @@ enum Gender {
 ##排泄和繁殖
 @export_group("Waste & Mating")
 #排泄间隔，单位为秒，60秒
-@export var excretion_interval: float = 100.0
+@export var excretion_interval: float = 10.0
 #是否交配
 @export var is_mating: bool = false
 #交配时间
@@ -97,7 +97,7 @@ enum Gender {
 #交配所需时间单位毫秒
 @export var mating_duration: int = 1200
 #交配冷却
-@export var mating_cooldown: int = 0
+@export var mating_cooldown: int = 10.0
 @export var mating_cooldown_duration: int = 1200
 #孵化时间
 @export var egg_timer: int = 0

@@ -2,15 +2,18 @@
 extends Node
 class_name PetStateMachine
 
-## 宠物的状态有待机、觅食、玩耍、睡觉、漫游、交配
+## 宠物的状态有待机、觅食、玩耍、睡觉、漫游、交配、排泄
 enum State { IDLE, EATING, PLAYING, SLEEPING, WANDERING, MATING, EXCRETING }
 ## 宠物漫游的水域层级
 enum WanderLayer { TOP, MIDDLE, BOTTOM, ALL }
 
 # 将待机时间作为导出变量，默认值为3秒
 @export var idle_duration: float = 1.5
-# 新增：觅食时的加速倍率
+# 排泄时的持续时间
+@export var excreting_duration: float = 0.5
+# 觅食时的加速倍率
 @export var sprint_speed_multiplier: float = 2.0
+@export var mating_duration: float = 5.0 # 交配持续时间，可按需修改
 
 #region 共有变量
 #当前宠物的状态
@@ -23,12 +26,13 @@ var idle_timer: float = 0.0
 var _parent_pet: Pet
 # 状态处理函数字典
 var _state_functions: Dictionary[int,Callable] = {}
-# 运动组件
-var _movement_comp: MovementComponent
 # 记录前一个状态
 var _previous_state: int = State.IDLE
 # 觅食最小距离
 var _food_detection_distance: float = 200.0
+var _excreting_timer: float = 0.0
+# 交配计时器和持续时间
+var _mating_timer: float = 0.0
 
 #endregion
 
@@ -47,13 +51,12 @@ func initialize(pet_node: Pet):
 	_state_functions[State.SLEEPING] = _state_sleeping
 	_state_functions[State.WANDERING] = _state_wandering
 	_state_functions[State.MATING] = _state_mating
-	# 运动组件
-	_movement_comp = _parent_pet.movement_comp
+	_state_functions[State.EXCRETING] = _state_excreting
 	if _parent_pet and _parent_pet.pet_data:
 		# 觅食最小距离是漫游范围的50%
 		_food_detection_distance = _parent_pet.wander_rank.size.x * 0.5
 		# 初始化：默认进入漫游状态，速度为正常速度
-		_movement_comp.speed = _parent_pet.pet_data.speed
+		_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
 
 
 ## 更新状态
@@ -63,18 +66,39 @@ func update_state(delta: float):
 		function_to_call.call(delta)
 
 
-## 切换状态
-func change_state(new_state: int):
-	# 这个函数只负责状态的纯粹切换，不处理任何行为
-	if current_state != new_state:
-		# 在状态切换前，将当前状态保存为前一个状态
-		_previous_state = current_state
-		current_state = new_state
-	# 避免陷入死循环状态，默认切换到漫游状态
-	else:
+## 状态切换
+func change_state(new_state: int) -> void:
+	# 容错，出错则默认切换到漫游状态
+	if current_state == new_state:
 		current_state = State.WANDERING
+		_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
+		return
 
-	print("Pet state changed to: ", State.keys()[current_state])
+	_previous_state = current_state
+	current_state = new_state
+	print("Pet %s changed state to: %s" % [_parent_pet.id, State.keys()[current_state]])
+
+	match current_state:
+		State.EATING:
+			# 觅食时将速度设置为冲刺速度
+			_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed * sprint_speed_multiplier
+		State.IDLE:
+			# 进入待机状态时，重置待机计时器
+			idle_timer = idle_duration
+			_parent_pet.movement_comp.clear_target()
+			_parent_pet.movement_comp.speed = 0
+		State.WANDERING:
+			# 从待机状态切换到漫游时，设置正常速度
+			_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
+		# 排泄状态
+		State.EXCRETING:
+			_excreting_timer = excreting_duration
+			_parent_pet.movement_comp.clear_target()
+		# 交配状态
+		State.MATING:
+			_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed * sprint_speed_multiplier
+			# 重置交配计时器
+			_mating_timer = mating_duration 
 
 
 ## 恢复之前的状态
@@ -89,93 +113,125 @@ func recover_state() -> void:
 # --- 状态处理函数 ---
 
 
-#漫游状态
-func _state_wandering(delta: float):
-	# 检查宠物是否已经到达了当前目标位置
-	if _movement_comp and _movement_comp.target_pos.is_zero_approx():
-		# 如果没有食物，执行正常的漫游逻辑
-		var new_pos: Vector2 = PetManager.create_position(_parent_pet)
-		_movement_comp.set_target(new_pos)
-	# 检查其他状态转换条件
-	if _parent_pet.target:
-		print("有食物")
-
-
-# 觅食状态
-func _state_eating(delta: float):
-	# 如果有食物目标，则向其移动
-	if _parent_pet.target and is_instance_valid(_parent_pet.target):
-		_movement_comp.set_target(_parent_pet.target.position)
-		# 检查是否到达食物位置
-		if _parent_pet.position.distance_to(_parent_pet.target.position) < _parent_pet.target_collision_distance:
-			# 喂食，增加饥饿度
-			# 修复：直接从 DroppableObject 获取 data
-			_parent_pet.hunger_comp.feed(_parent_pet.target.data)
-			# 宠物吃掉食物，移除食物节点
-			_parent_pet.target.queue_free()
-			_parent_pet.target = null
-			# 宠物吃掉食物后还原速度
-			_movement_comp.speed = _parent_pet.pet_data.speed
-			# 吃完食物后，清空运动组件的目标位置
-			_movement_comp.clear_target()
-			# 修复：吃完食物后，直接切换回漫游状态，而不是上一个状态
-			change_state(State.WANDERING)
-	else:
-		# 如果食物被其他宠物吃掉或已无效，切换回之前的状态
-		_movement_comp.speed = _parent_pet.pet_data.speed
-		# 吃完食物后，清空运动组件的目标位置
-		_movement_comp.clear_target()
-		_parent_pet.target = null
-		# 修复：吃完食物后，直接切换回漫游状态，而不是上一个状态
-		change_state(State.WANDERING)
-
-
+## 待机状态
 func _state_idle(delta: float):
 	# 处理待机计时器
 	idle_timer -= delta
 	if idle_timer <= 0:
 		_parent_pet.pet_sprite.material["shader_parameter/outlineWidth"] = 0.0
 		# 从待机状态切换到漫游前，设置正常速度
-		_movement_comp.speed = _parent_pet.pet_data.speed
+		_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
 		recover_state()
 
 
-#交配状态
-func _state_mating(delta: float):
-	# 只有成年且饥饿度在50%以下才能进行交配
-	if _parent_pet.life_stage == PetData.LifeStage.ADULT and _parent_pet.hunger_comp.hunger_level < 50.0:
-		# TODO: 实现交配逻辑
-		pass
+## 漫游状态
+## 漫游状态
+func _state_wandering(delta: float):
+	# 宠物漫游
+	# 当运动目标为空时，每隔一段时间重新寻找目标
+	if _parent_pet.movement_comp.is_target_invalid():
+		_parent_pet.movement_comp.set_target(_parent_pet.create_position())
+
+	# 检查是否需要交配
+	if _parent_pet.mating_comp.can_mate():
+		var closest_mate = _parent_pet.find_mate()
+		if is_instance_valid(closest_mate):
+			_parent_pet.mating_comp.start_mating(closest_mate)
+
+	# 检查是否饥饿
+	if _parent_pet.hunger_comp.hunger_level >= _parent_pet.hunger_comp.hunger_threshold:
+		var closest_food = _parent_pet.find_closest_food()
+		if is_instance_valid(closest_food):
+			_parent_pet.target = closest_food
+			change_state(State.EATING)
+			#print("Pet is hungry and found food! Now going to eat.")
+
+	#检查是否要排泄
+	if _parent_pet.excretion_comp.needs_to_excrete:
+		change_state(State.EXCRETING)
+		print("Pet needs to poop! Now going to excrete.")
+
+
+## 觅食状态
+func _state_eating(delta: float):
+	if _parent_pet.target and is_instance_valid(_parent_pet.target):
+		_parent_pet.movement_comp.set_target(_parent_pet.target.position)
+		# 检查是否到达食物位置
+		if _parent_pet.position.distance_to(_parent_pet.target.position) < _parent_pet.target_collision_distance:
+			# 喂食，增加饥饿度
+			# 直接从 DroppableObject 获取 data
+			_parent_pet.hunger_comp.feed(_parent_pet.target.data)
+			# 宠物吃掉食物，移除食物节点
+			_parent_pet.target.queue_free()
+			_parent_pet.target = null
+			# 宠物吃掉食物后还原速度
+			_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
+			# 吃完食物后，清空运动组件的目标位置
+			_parent_pet.movement_comp.clear_target()
+			# 修复：吃完食物后，直接切换回漫游状态，而不是上一个状态
+			change_state(State.WANDERING)
 	else:
-		# 不满足条件则切换回之前的状态
-		recover_state()
+		# 如果食物被其他宠物吃掉或已无效，切换回之前的状态
+		_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
+		# 吃完食物后，清空运动组件的目标位置
+		_parent_pet.movement_comp.clear_target()
+		_parent_pet.target = null
+		# 修复：吃完食物后，直接切换回漫游状态，而不是上一个状态
+		change_state(State.WANDERING)
 
 
+## 排泄状态
+func _state_excreting(delta: float):
+	_excreting_timer -= delta
+	if _excreting_timer <= 0:
+		# 排泄时间到，生成排泄物并切换回漫游状态
+		_parent_pet.spawn_excrement()
+		change_state(State.WANDERING)
+
+
+## 交配状态
+## 交配状态
+func _state_mating(delta: float):
+	# 如果有交配目标，则向其移动
+	if _parent_pet.mate_target and is_instance_valid(_parent_pet.mate_target):
+		_parent_pet.movement_comp.set_target(_parent_pet.mate_target.position)
+		
+		# 检查是否到达配偶位置
+		if _parent_pet.position.distance_to(_parent_pet.mate_target.position) < _parent_pet.target_collision_distance:
+			# 停止移动，开始交配计时
+			_parent_pet.movement_comp.clear_target()
+			_parent_pet.movement_comp.speed = 0
+			
+			# 同时将配偶的速度也设为0
+			if is_instance_valid(_parent_pet.mate_target.movement_comp):
+				_parent_pet.mate_target.movement_comp.speed = 0
+
+			_mating_timer -= delta
+			if _mating_timer <= 0:
+				# 交配计时结束
+				if _parent_pet.gender == PetData.Gender.FEMALE:
+					_parent_pet.spawn_egg()
+				
+				# 恢复速度
+				_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
+				if is_instance_valid(_parent_pet.mate_target.movement_comp):
+					_parent_pet.mate_target.movement_comp.speed = _parent_pet.mate_target.pet_data.speed
+					
+				# 切换回漫游状态
+				change_state(State.WANDERING)
+				# 清除交配目标
+				_parent_pet.mate_target = null 
+	else:
+		# 如果配偶消失，则切换回漫游状态
+		_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
+		change_state(State.WANDERING)
+
+
+## 游玩状态
 func _state_playing(delta: float):
 	pass
 
 
+## 睡觉状态
 func _state_sleeping(delta: float):
 	pass
-
-
-# 寻找最近的食物
-func find_closest_food() -> Node2D:
-	# 假设所有食物节点都加入了 "food" 组
-	var food_list = get_tree().get_nodes_in_group("food")
-
-	var closest_food: Node2D = null
-	var min_distance: float = INF
-
-	for food_item in food_list:
-		if is_instance_valid(food_item):
-			var distance = _parent_pet.position.distance_to(food_item.position)
-			if distance < min_distance:
-				min_distance = distance
-				closest_food = food_item
-
-	# 只有当食物在一定范围内才算找到
-	if min_distance < _food_detection_distance:
-		return closest_food
-
-	return null

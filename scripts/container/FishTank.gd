@@ -3,7 +3,10 @@ extends Node2D
 class_name FishTank
 
 @onready var water_rank: ColorRect = $WaterRank
-@onready var fish_area: Node2D = $FishArea
+@onready var contents_node: Node2D = $ContentsNode
+@onready var contents_rank: ColorRect = $ContentsRank
+
+
 
 @export var food_data: FoodData
 @export var food_scene: PackedScene
@@ -28,9 +31,8 @@ func _on_water_rank_gui_input(event: InputEvent) -> void:
 		var food:Food = food_scene.instantiate()
 		food.global_position = mouse_pos
 		food.data = food_data
-		fish_area.add_child(food)
+		contents_node.add_child(food)
 		food_list.append(food)
-		
 		#将食物节点添加到 "food" 组
 		food.add_to_group("food")
 
