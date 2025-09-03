@@ -94,11 +94,8 @@ enum Gender {
 @export var is_mating: bool = false
 #交配时间
 @export var mating_timer: int = 0
-#交配所需时间单位毫秒
-@export var mating_duration: int = 1200
 #交配冷却
-@export var mating_cooldown: int = 10.0
-@export var mating_cooldown_duration: int = 1200
+@export var mating_cooldown: int = 18.0
 #孵化时间
 @export var egg_timer: int = 0
 #孵化周期，单位毫秒,动画播放相关，实际值是按过天后这个值乘以成年动物数量来计算，分雌雄
@@ -127,3 +124,9 @@ enum Gender {
 @export var mood: int = 0
 #变异条件，包含多种因素
 @export var variation: Dictionary
+
+## 孵化相关属性
+@export_group("Hatch")
+@export var hatch_threshold: float = 100.0
+@export var hatch_rate: float = 1.0
+var hatch_level: float = 0.0

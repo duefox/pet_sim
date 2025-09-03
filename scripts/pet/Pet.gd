@@ -2,6 +2,7 @@ extends CharacterBody2D
 class_name Pet
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var mating: Node2D = $Mating
 
 ##描边着色器效果
 const OUTLINE_SHDER = preload("res://shaders/outer_line.gdshader")
@@ -30,8 +31,12 @@ var pet_sprite: Sprite2D
 var target: Food = null
 #交配繁殖目标
 var mate_target: Pet = null
+#交配锁定
+var mate_lock: bool = false
+#交配的坐标
+var mate_coords: Vector2 = Vector2.ZERO
 #食物碰撞距离
-var target_collision_distance: float = 30.0
+var target_collision_distance: float = 24.0
 
 #endregion
 
@@ -76,7 +81,8 @@ func _ready():
 	pet_sprite.material = ShaderMaterial.new()
 	pet_sprite.material.shader = OUTLINE_SHDER
 	pet_sprite.material.set_shader_parameter("outlineWidth", 0.0)
-
+	# 隐藏交配动画
+	show_mate_animate()
 	# 确保在首次运行时也保存时间戳
 	_store_initial_timestamps()
 
@@ -84,12 +90,6 @@ func _ready():
 func _exit_tree() -> void:
 	# 在宠物被移除时，保存当前时间戳到元数据
 	set_meta("last_growth_timestamp", Time.get_unix_time_from_system())
-
-
-func _process(delta: float):
-	#更新状态机，它会决定宠物的行为
-	if state_machine:
-		state_machine.update_state(delta)
 
 
 func _physics_process(delta: float) -> void:
@@ -102,7 +102,9 @@ func _physics_process(delta: float) -> void:
 	#更新排泄组件
 	if excretion_comp:
 		excretion_comp.update_excretion(delta)
-
+	#更新状态机，它会决定宠物的行为
+	if state_machine:
+		state_machine.update_state(delta)
 	#测试
 	update_info()
 	check_for_offline_growth()
@@ -130,7 +132,9 @@ func set_container_id(id: String):
 
 ## 显示一些信息，方便查看调试
 func update_info() -> void:
-	info_label.text = "h:" + str(floori(hunger_comp.hunger_level)) + " sex:" + str(gender) + " g:" + str(floori(growth_points))
+	var state_label: String = str(state_machine.State.keys()[state_machine.current_state])
+	state_label = state_label.to_lower()
+	info_label.text = "g:" + str(gender) + " s:" + state_label
 
 
 ## 新的初始化函数
@@ -179,6 +183,11 @@ func grow_up() -> void:
 		animation_player.play("adult")
 
 
+## 是否显示交配动画
+func show_mate_animate(show: bool = false) -> void:
+	mating.visible = show
+
+
 ## 生成宠物坐标位置
 func create_position() -> Vector2:
 	var coords: Vector2
@@ -221,10 +230,10 @@ func check_for_offline_growth():
 		set_meta("last_growth_timestamp", last_timestamp + days_passed * game_day_duration)
 
 
-# 新增：处理饥饿事件，开始觅食
+# 处理饥饿事件，开始觅食
 func on_pet_is_hungry():
-	# 如果宠物已经在进食，或者有其他优先级更高的行为，则不执行觅食
-	if state_machine.current_state != PetStateMachine.State.EATING:
+	# 只有在漫游状态下才会去进食
+	if state_machine.current_state == PetStateMachine.State.WANDERING:
 		var closest_food = find_closest_food()
 		if closest_food and is_instance_valid(closest_food):
 			self.target = closest_food
@@ -273,38 +282,44 @@ func spawn_excrement():
 
 	print("Pet %s just pooped!" % self.id)
 
+
 ## 查找容器内合适的交配对象
 func find_mate() -> Pet:
-	# 1. 确保自己能交配
-	if not mating_comp.can_mate():
-		return null
-		
-	# 2. 找到同一容器内的所有宠物
-	var container_node = get_parent().get_parent()
-	if not container_node or not container_node is PetContainer:
+	# 1. 确保自己能交配，并且没有被锁定
+	if not mating_comp.can_mate() or mate_lock:
 		return null
 
-	var all_pets = container_node.contents_node.get_children()
-	
+	# 2. 使用分组获取同容器内的所有宠物
+	var pet_group_name = "pet_" + _container_id
+	var all_pets = get_tree().get_nodes_in_group(pet_group_name)
+
 	var closest_mate: Pet = null
 	var min_distance: float = INF
 
-	for pet_candidate in all_pets:
+	for pet_candidate: Pet in all_pets:
 		# 3. 检查候选宠物是否为有效宠物，且满足交配条件
-		if pet_candidate != self and is_instance_valid(pet_candidate) and pet_candidate is Pet and \
-		   pet_candidate.mating_comp.can_mate() and pet_candidate.gender != self.gender:
+		if (
+			pet_candidate != self
+			and is_instance_valid(pet_candidate)
+			and pet_candidate is Pet
+			and pet_candidate.mating_comp.can_mate()
+			and pet_candidate.gender != self.gender
+			and pet_candidate.mate_target == null
+			and pet_candidate.pet_data.species == self.pet_data.species
+			and not pet_candidate.mate_lock
+		):
 			var distance = position.distance_to(pet_candidate.position)
 			if distance < min_distance:
 				min_distance = distance
 				closest_mate = pet_candidate
 
 	return closest_mate
-	
+
+
 ## 产蛋动作，由状态机调用
 func spawn_egg():
 	# TODO: 实现产蛋逻辑
-	print("Pet %s is spawning an egg!" % self.id)
-
+	print(">>>>>>>>>>Pet %s is spawning an egg!" % self.id)
 
 
 ## 创建水生动物漫游位置

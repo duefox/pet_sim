@@ -7,6 +7,9 @@ class_name MovementComponent
 		speed = value
 		#print("update speed:", speed)
 
+# 是否在到达目标后自动清除目标，交配状态下不清除
+@export var clear_on_arrival: bool = true
+
 var parent_pet: Pet  #宠物对象
 var target_pos: Vector2  #移动的目标位置
 var current_angle: float = 0  #当前角度速度
@@ -25,13 +28,15 @@ func update_movement(delta: float):
 	# 确保父节点已初始化
 	if not parent_pet or not parent_pet.pet_data:
 		return
-	# 如果已经到达目标，立即重置目标
-	if target_pos != Vector2.ZERO and parent_pet.position.distance_to(target_pos) < parent_pet.target_collision_distance:
-		# 修复：到达目标后，调用 clear_target 清空目标
-		clear_target()
-	# 根据是否有目标来选择转向行为
+
+	# 如果有目标，根据目标进行转向
 	if target_pos != Vector2.ZERO:
 		_steer_towards(delta)
+
+	# 如果设置了自动清除，并且已经到达目标，则清除目标
+	if clear_on_arrival and parent_pet.position.distance_to(target_pos) < parent_pet.target_collision_distance * 0.5:
+		clear_target()
+
 	# 基础运动
 	_baisc_movement(delta)
 
@@ -78,7 +83,7 @@ func clamp_angle_to_valid_ranges(angle: float, clamp_size: float = PI / 4) -> fl
 		var dist_c = abs(normalized_angle + clamp_size)
 		var dist_d = abs(normalized_angle + PI - clamp_size)
 		var dist_e = abs(normalized_angle - PI)
-		var dist_f = abs(normalized_angle - (-PI))
+		var dist_f = abs(normalized_angle + PI)
 
 		var min_dist = min(dist_a, dist_b, dist_c, dist_d, dist_e, dist_f)
 

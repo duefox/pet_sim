@@ -1,6 +1,6 @@
 ## 宠物状态处理
 extends Node
-class_name PetStateMachine
+class_name PetStateMachine2
 
 ## 宠物的状态有待机、觅食、玩耍、睡觉、漫游、交配、排泄
 enum State { IDLE, EATING, PLAYING, SLEEPING, WANDERING, MATING, EXCRETING }
@@ -13,8 +13,8 @@ enum WanderLayer { TOP, MIDDLE, BOTTOM, ALL }
 @export var excreting_duration: float = 0.5
 # 觅食时的加速倍率
 @export var sprint_speed_multiplier: float = 2.0
-@export var mating_duration: float = 3.0  # 交配持续时间，可按需修改
-@export var mating_timeout: float = 10.0  # 交配超时时间，防止卡死，时长至少大于mating_duration的2倍
+@export var mating_duration: float = 4.0  # 交配持续时间，可按需修改
+@export var mating_timeout: float = 8.0  # 交配超时时间，防止卡死，时长至少大于mating_duration的2倍
 
 #region 共有变量
 #当前宠物的状态
@@ -71,15 +71,15 @@ func update_state(delta: float):
 func change_state(new_state: int) -> void:
 	# 容错，出错则默认切换到漫游状态
 	if current_state == new_state:
-		#current_state = State.WANDERING
-		#_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
+		current_state = State.WANDERING
+		_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
 		return
 
 	_previous_state = current_state
 	current_state = new_state
 	#print("Pet %s changed state to: %s" % [_parent_pet.id, State.keys()[current_state]])
 	#默认情况下达到目标后自动清理
-	#_parent_pet.movement_comp.clear_on_arrival = true
+	_parent_pet.movement_comp.clear_on_arrival = true
 
 	match current_state:
 		State.EATING:
@@ -101,17 +101,18 @@ func change_state(new_state: int) -> void:
 			_parent_pet.movement_comp.clear_target()
 		# 交配状态
 		State.MATING:
+			_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed * sprint_speed_multiplier
 			# 重置交配计时器和超时计时器
 			_mating_timer = mating_duration
 			_mating_timeout_timer = mating_timeout
 			# 交配时不需要自动清除
-			#_parent_pet.movement_comp.clear_on_arrival = false
-			# 如果是雄性，将速度设置为冲刺速度
-			if _parent_pet.gender == PetData.Gender.MALE:
-				_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed * sprint_speed_multiplier
-			# 如果是雌性，保持原速度即可
-			else:
-				_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
+			_parent_pet.movement_comp.clear_on_arrival = false
+			# 如果由交配对象則计算双向奔赴的坐标
+			if is_instance_valid(_parent_pet.mate_target):
+				# 只在进入交配状态时计算一次中心点，而不是每帧都计算
+				var mate_coords: Vector2 = (_parent_pet.position + _parent_pet.mate_target.position) / 2.0
+				_parent_pet.mate_coords = mate_coords
+				_parent_pet.mate_target.mate_coords = mate_coords
 
 
 ## 恢复之前的状态
@@ -164,7 +165,7 @@ func _state_eating(delta: float):
 	if _parent_pet.target and is_instance_valid(_parent_pet.target):
 		_parent_pet.movement_comp.set_target(_parent_pet.target.position)
 		# 检查是否到达食物位置
-		if _parent_pet.position.distance_to(_parent_pet.target.position) < _parent_pet.target_collision_distance * 1.5:
+		if _parent_pet.position.distance_to(_parent_pet.target.position) < _parent_pet.target_collision_distance:
 			# 喂食，增加饥饿度
 			# 直接从 DroppableObject 获取 data
 			_parent_pet.hunger_comp.feed(_parent_pet.target.data)
@@ -207,33 +208,34 @@ func _state_mating(delta: float):
 		_parent_pet.mate_coords = Vector2.ZERO
 		_parent_pet.show_mate_animate(false)
 		change_state(State.WANDERING)
-		print("mating_timeout_timer----------------------------")
+		print("mating_timeout_timer----------parent_pet.velocity:", _parent_pet.velocity)
 		return
 
-	# 当运动目标为空时，重置目标。**注意一定要这样做，宠物碰撞墙壁反弹会把目标置为空，不这样操作宠物就没目标位置就像漂浮一样
-	if _parent_pet.movement_comp.is_target_invalid():
-		_parent_pet.movement_comp.set_target(_parent_pet.create_position())
-
-	# 雄性宠物追逐雌性宠物，雌性宠物保持原速移动
+	# 双向奔赴，求俩只宠物的向量中心点
 	var male_pet: Pet = _parent_pet
 	var female_pet: Pet = _parent_pet.mate_target
 	if _parent_pet.gender == PetData.Gender.FEMALE:
-		male_pet = _parent_pet.mate_target
-		female_pet = _parent_pet
+		#交换雌雄
+		var tmp_pet: Pet = _parent_pet
+		male_pet = tmp_pet.mate_target
+		female_pet = tmp_pet
 
 	# 假如交配对象不是交配状态则置为MATING
-	if not female_pet.state_machine.current_state == State.MATING:
-		female_pet.state_machine.change_state(State.MATING)
-	if not male_pet.state_machine.current_state == State.MATING:
-		male_pet.state_machine.change_state(State.MATING)
+	if not _parent_pet.mate_target.state_machine.current_state == State.MATING:
+		_parent_pet.mate_target.state_machine.change_state(State.MATING)
 
-	# 雄性宠物追逐雌性宠物的位置
-	male_pet.movement_comp.set_target(female_pet.position)
+	# 向双向奔赴的交配坐标移动
+	if is_instance_valid(male_pet) and is_instance_valid(female_pet):
+		male_pet.movement_comp.set_target(male_pet.mate_coords)
+		female_pet.movement_comp.set_target(female_pet.mate_coords)
 
 	# 检查是否到达配偶位置
 	var distance: float = male_pet.position.distance_to(female_pet.position)
 	#print("distance:", distance)
-	if distance < _parent_pet.target_collision_distance * 1.5:
+	# 修复：增加距离判断的容错性，使用更大的阈值
+	#if distance < _parent_pet.target_collision_distance * 1.5:
+	if distance < _parent_pet.target_collision_distance:
+		# 停止移动并开始动画
 		_stop_and_animate(male_pet)
 		_stop_and_animate(female_pet)
 		# 开始交配计时

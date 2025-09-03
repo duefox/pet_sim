@@ -6,8 +6,8 @@
 [resource]
 script = ExtResource("1_1guqx")
 food_type = 0
-hunger_restore_amount = 20.0
-growth_points = 50.0
+hunger_restore_amount = 100.0
+growth_points = 10.0
 kind = 0
 name = ""
 lifetime = -1.0

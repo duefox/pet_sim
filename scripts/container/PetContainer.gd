@@ -28,6 +28,8 @@ func add_pet(pet_instance: Pet):
 		contents_node.add_child(pet_instance)
 		# 将容器ID传递给宠物，以便它知道在哪里查找食物
 		pet_instance.set_container_id(container_id)
+		# 将宠物添加到以容器ID命名的组中
+		pet_instance.add_to_group("pet_" + container_id)
 
 
 # 从容器移除宠物

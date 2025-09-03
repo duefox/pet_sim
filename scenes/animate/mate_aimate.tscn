@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8ma0thlcyr0i"]
+
+[ext_resource type="Script" uid="uid://dg8dvf7rv1j4k" path="res://scripts/animate/AimateFollow.gd" id="1_pn8lh"]
+[ext_resource type="Texture2D" uid="uid://d2smuitrlu4qr" path="res://assets/ui/icons/icon1.png" id="2_1khn2"]
+
+[sub_resource type="Curve2D" id="Curve2D_a0awl"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 8.10402, 7.37981, -8.10402, -7.37981, 7, -16, 8.2259, 13.6375, -8.2259, -13.6375, -12, -23, 0, 0, 0, 0, -8, -48)
+}
+point_count = 4
+
+[node name="MateAimate" type="Path2D"]
+curve = SubResource("Curve2D_a0awl")
+
+[node name="AimateFollow" type="PathFollow2D" parent="."]
+rotates = false
+script = ExtResource("1_pn8lh")
+
+[node name="Sprite2D" type="Sprite2D" parent="AimateFollow"]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_1khn2")
+hframes = 8
+vframes = 2
+frame = 6

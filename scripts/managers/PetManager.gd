@@ -61,27 +61,25 @@ func feed_pet(pet: Pet, food_data: FoodData):
 
 ### 寻找最近的食物
 #func find_closest_food(pet: Pet) -> Node2D:
-	## 假设所有食物节点都加入了 "food" 组
-	#var food_list = get_tree().get_nodes_in_group("food")
+## 假设所有食物节点都加入了 "food" 组
+#var food_list = get_tree().get_nodes_in_group("food")
 #
-	#var closest_food: Node2D = null
-	#var min_distance: float = INF
+#var closest_food: Node2D = null
+#var min_distance: float = INF
 #
-	#for food_item in food_list:
-		#if is_instance_valid(food_item):
-			#var distance = pet.position.distance_to(food_item.position)
-			#if distance < min_distance:
-				#min_distance = distance
-				#closest_food = food_item
+#for food_item in food_list:
+#if is_instance_valid(food_item):
+#var distance = pet.position.distance_to(food_item.position)
+#if distance < min_distance:
+#min_distance = distance
+#closest_food = food_item
 #
-	#return closest_food
+#return closest_food
 
 
 ## 根据id查找宠物
 func get_pet_by_id(pet_id: int) -> Pet:
 	return pets.get(pet_id)
-
-
 
 
 ## 选中宠物
@@ -93,9 +91,7 @@ func _on_pet_selected(pet: Pet) -> void:
 		_current_pet.pet_sprite.material["shader_parameter/outlineWidth"] = 0.0
 		#恢复速度
 		_current_pet.movement_comp.speed = _current_pet.pet_data.speed
-		#之前的选中宠物恢复原来状态
-		_current_pet.state_machine.recover_state()
-
+	#
 	_current_pet = pet
 	_current_pet.pet_sprite.material["shader_parameter/outlineWidth"] = 2.0
 	#显示宠物属性面板

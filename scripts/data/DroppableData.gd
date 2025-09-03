@@ -1,7 +1,7 @@
 extends Resource
 class_name DroppableData
 
-enum Kind { FOOD, EXCREMENT }
+enum Kind { FOOD, EXCREMENT, EGG }
 
 @export_group("Base info")
 #种类
