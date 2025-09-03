@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("1_iql1k")
 kind = 2
-name = ""
+name = "鱼蛋"
 lifetime = -1.0
 texture = ExtResource("2_oiafp")
 hframes = 4

@@ -68,6 +68,8 @@ func complete_mating(mate: Pet):
 	# 交配产生后代，仅限雌性
 	if parent_pet.gender == PetData.Gender.FEMALE:
 		parent_pet.spawn_egg()
+	else:
+		mate.spawn_egg()
 
 	# 将自己的状态、目标和锁重置
 	parent_pet.mate_target = null
@@ -84,5 +86,4 @@ func complete_mating(mate: Pet):
 		# 隐藏交配动画
 		mate.show_mate_animate(false)
 
-	
 	print("Pet %s has completed mating." % parent_pet.id)

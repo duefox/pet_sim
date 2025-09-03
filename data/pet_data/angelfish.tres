@@ -1,5 +1,6 @@
-[gd_resource type="Resource" script_class="FishData" load_steps=3 format=3 uid="uid://b3ri0juh20ywa"]
+[gd_resource type="Resource" script_class="FishData" load_steps=4 format=3 uid="uid://b3ri0juh20ywa"]
 
+[ext_resource type="Resource" uid="uid://txupj3tcb1r5" path="res://data/drop_data/fish_egg0.tres" id="1_gpfhe"]
 [ext_resource type="Script" uid="uid://c1cfnn80q7lso" path="res://scripts/data/FishData.gd" id="1_ui6lk"]
 [ext_resource type="Texture2D" uid="uid://tgjqgpyumgi" path="res://assets/textures/aquatic/water/fish00.png" id="2_4ddce"]
 
@@ -38,4 +39,7 @@ live_temperature = Vector2(0, 100)
 light_catgory = 0
 mood = 0
 variation = {}
+descendant_res = ExtResource("1_gpfhe")
+hatch_threshold = 100.0
+hatch_rate = 1.0
 metadata/_custom_type_script = "uid://c1cfnn80q7lso"

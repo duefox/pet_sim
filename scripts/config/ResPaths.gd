@@ -1,13 +1,23 @@
 extends RefCounted
 class_name ResPaths
 
-##场景资源
-const SCENE_RES: Dictionary[StringName,String] = {
-	#游戏CG场景
-	"game_cg": "res://resource/ui/game_cg.tscn",
+## 宠物资源
+const PET_RES: Dictionary[StringName,String] = {
+	"angelfish": "res://data/pet_data/angelfish.tres",
+	"goldfish": "res://data/pet_data/goldfish.tres",
 }
 
-##音效资源
+## 场景资源
+const SCENE_RES: Dictionary[StringName,String] = {
+	#食物
+	"food": "res://scenes/droppable/food.tscn",
+	#便便
+	"excrement": "res://scenes/droppable/excrement.tscn",
+	#蛋
+	"egg": "res://scenes/droppable/egg.tscn",
+}
+
+## 音效资源
 const AUDIO_RES: Dictionary[StringName,Dictionary] = {
 	##背景音乐
 	"bgm":

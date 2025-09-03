@@ -127,6 +127,11 @@ enum Gender {
 
 ## 孵化相关属性
 @export_group("Hatch")
+#后代的资源文件
+@export var descendant_res: DroppableData
+#蛋孵化的阈值
 @export var hatch_threshold: float = 100.0
+#蛋每天的自然孵化值
 @export var hatch_rate: float = 1.0
+#蛋当前的孵化值
 var hatch_level: float = 0.0

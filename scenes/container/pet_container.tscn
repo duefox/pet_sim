@@ -52,8 +52,8 @@ size = Vector2(981, 52)
 
 [node name="PetContainer" type="Node2D"]
 script = ExtResource("1_k2uak")
-food_scene = ExtResource("3_013c3")
-food_data = ExtResource("2_jyjxn")
+drop_scene = ExtResource("3_013c3")
+drop_data = ExtResource("2_jyjxn")
 
 [node name="WallBG" type="Sprite2D" parent="."]
 position = Vector2(532, 301)

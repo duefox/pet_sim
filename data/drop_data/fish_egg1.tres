@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="EggData" load_steps=3 format=3 uid="uid://c8ulubdxek2xv"]
+
+[ext_resource type="Script" uid="uid://c615ei77is4nh" path="res://scripts/data/EggData.gd" id="1_c66aa"]
+[ext_resource type="Texture2D" uid="uid://cpfjwbn7qe2ix" path="res://assets/textures/fish_eggs.png" id="2_hb7nq"]
+
+[resource]
+script = ExtResource("1_c66aa")
+kind = 2
+name = "鱼蛋"
+lifetime = -1.0
+texture = ExtResource("2_hb7nq")
+hframes = 4
+vframes = 1
+frame = 2
+metadata/_custom_type_script = "uid://c615ei77is4nh"

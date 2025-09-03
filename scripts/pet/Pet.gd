@@ -52,6 +52,8 @@ var id: int
 @export var excrement_data: DroppableData
 #性别
 @export var gender: PetData.Gender
+#数据路径
+var data_path: StringName
 #成长时期标志，juvenile, adult
 var life_stage: int = PetData.LifeStage.JUVENILE
 # 宠物当前的成长值
@@ -134,14 +136,15 @@ func set_container_id(id: String):
 func update_info() -> void:
 	var state_label: String = str(state_machine.State.keys()[state_machine.current_state])
 	state_label = state_label.to_lower()
-	info_label.text = "g:" + str(gender) + " s:" + state_label
+	info_label.text = " g:" + str(gender) + " s:" + state_label
 
 
 ## 新的初始化函数
-func initialize_pet(assigned_id: int, data: PetData, assigned_gender: PetData.Gender, wander_bounds: Rect2):
+func initialize_pet(assigned_id: int, data: Dictionary, assigned_gender: PetData.Gender, wander_bounds: Rect2):
 	#初始化数据
 	id = assigned_id
-	pet_data = data
+	data_path = data["path"]
+	pet_data = data["res"]
 	gender = assigned_gender
 	wander_rank = wander_bounds
 	#贴图和动画
@@ -305,7 +308,7 @@ func find_mate() -> Pet:
 			and pet_candidate.mating_comp.can_mate()
 			and pet_candidate.gender != self.gender
 			and pet_candidate.mate_target == null
-			and pet_candidate.pet_data.species == self.pet_data.species
+			and pet_candidate.data_path == data_path  #物种相同，同一个资源
 			and not pet_candidate.mate_lock
 		):
 			var distance = position.distance_to(pet_candidate.position)
@@ -316,10 +319,14 @@ func find_mate() -> Pet:
 	return closest_mate
 
 
-## 产蛋动作，由状态机调用
+## 产蛋动作
 func spawn_egg():
-	# TODO: 实现产蛋逻辑
-	print(">>>>>>>>>>Pet %s is spawning an egg!" % self.id)
+	# 使用容器的通用方法生成后代
+	var container = get_parent().get_parent()  # 获取 PetContainer 节点
+	if container is PetContainer:
+		container.spawn_droppable_object(global_position, pet_data.descendant_res, pet_data)
+
+	print(">>>Pet %s is spawning an egg!" % self.id)
 
 
 ## 创建水生动物漫游位置

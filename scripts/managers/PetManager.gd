@@ -34,7 +34,7 @@ func _exit_tree() -> void:
 ## species_data宠物资源数据
 ## random_pos随机坐标
 ## wander_rank容器可漫游的范围
-func create_pet(pet_container: PetContainer, species_data: Resource, random_pos: Vector2, wander_rank: Rect2) -> Node:
+func create_pet(pet_container: PetContainer, species_data: Dictionary, random_pos: Vector2, wander_rank: Rect2) -> Node:
 	var new_pet: Pet = pet_scene.instantiate()
 	pet_id_counter += 1
 	new_pet.position = random_pos
