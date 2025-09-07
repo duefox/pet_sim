@@ -17,21 +17,24 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-PetManager="*res://scripts/managers/PetManager.gd"
-AudioManager="*res://scripts/managers/audio/AudioManager.gd"
-EventManager="*res://scripts/managers/event/EventManager.gd"
-ResManager="*res://scripts/managers/resource/ResourceManager.gd"
-SaveManager="*res://scripts/managers/save/SaveManager.gd"
-SceneManager="*res://scripts/managers/scene/SceneManager.gd"
+PetManager="*res://scripts/managers/pet_manager.gd"
+AudioManager="*res://scripts/managers/audio/audio_manager.gd"
+EventManager="*res://scripts/managers/event/event_manager.gd"
+ResManager="*res://scripts/managers/resource/resource_manager.gd"
+SaveManager="*res://scripts/managers/save/save_manager.gd"
+SceneManager="*res://scripts/managers/scene/scene_manager.gd"
+SaveSystem="*res://addons/save_system/save_manager.gd"
 
 [display]
 
+window/size/always_on_top=true
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/stretch/scale=0.6
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gdscript_formatter/plugin.cfg", "res://addons/script-ide/plugin.cfg")
+enabled=PackedStringArray("res://addons/gdscript_formatter/plugin.cfg", "res://addons/save_system/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [gui]
 
@@ -63,3 +66,8 @@ mouse_right={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+
+[save_system]
+
+defaults/save_directory="res://saves"
+defaults/serialization_format="resource"

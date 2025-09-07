@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c8ma0thlcyr0i"]
 
-[ext_resource type="Script" uid="uid://dg8dvf7rv1j4k" path="res://scripts/animate/AimateFollow.gd" id="1_pn8lh"]
+[ext_resource type="Script" uid="uid://dg8dvf7rv1j4k" path="res://scripts/animate/aimate_follow.gd" id="1_pn8lh"]
 [ext_resource type="Texture2D" uid="uid://d2smuitrlu4qr" path="res://assets/ui/icons/icon1.png" id="2_1khn2"]
 
 [sub_resource type="Curve2D" id="Curve2D_a0awl"]

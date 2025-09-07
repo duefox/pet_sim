@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="FishData" load_steps=2 format=3 uid="uid://cnnb60grrr712"]
 
-[ext_resource type="Script" uid="uid://c1cfnn80q7lso" path="res://scripts/data/FishData.gd" id="1_50cej"]
+[ext_resource type="Script" uid="uid://c1cfnn80q7lso" path="res://scripts/data/fish_data.gd" id="1_50cej"]
 
 [resource]
 script = ExtResource("1_50cej")

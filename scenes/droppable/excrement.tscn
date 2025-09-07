@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dfkq8j2ktl5js"]
 
 [ext_resource type="PackedScene" uid="uid://cgiiflmvogxef" path="res://scenes/droppable/droppable_item.tscn" id="1_y2onv"]
-[ext_resource type="Script" uid="uid://cor3p1i30pjuc" path="res://scripts/droppable/Excrement.gd" id="2_irmuj"]
+[ext_resource type="Script" uid="uid://cor3p1i30pjuc" path="res://scripts/droppable/excrement.gd" id="2_irmuj"]
 
 [node name="Excrement" instance=ExtResource("1_y2onv")]
 collision_layer = 8

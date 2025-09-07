@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var fps_label: Label = $UI/Control/MarginContainer/FPSLabel
+@onready var fps_label: Label = %FPSLabel
 @onready var fish_tank: PetContainer = $FishTank
 
 @export var init_fish_cout: int = 13
@@ -20,7 +20,6 @@ func _ready():
 	ResManager.resource_loaded.connect(_on_resource_loaded)
 	#加载资源
 	preload_res()
-
 
 func _process(_delta: float) -> void:
 	fps_label.text = "FPS:" + str(floori(Engine.get_frames_per_second()))

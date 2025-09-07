@@ -1,0 +1,15 @@
+<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+  <g transform="rotate(-90 8 8)">
+    <path
+      d="M 8,14
+         L 12,6
+         A 1 1 0 0 0 10,4
+         L 6,4
+         A 1 1 0 0 0 4,6
+         L 7,14
+         A 1 1 0 0 0 8,14
+         Z"
+      fill="#5c2f1d"
+    />
+  </g>
+</svg>

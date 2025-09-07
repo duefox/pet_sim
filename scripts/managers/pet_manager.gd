@@ -17,7 +17,6 @@ func _ready():
 	EventManager.subscribe(GameEvent.PET_DEATH, _on_pet_death)  #宠物死亡
 	EventManager.subscribe(GameEvent.PET_SELECTED, _on_pet_selected)  #宠物被点击选中
 
-
 ## 取消订阅事件
 func _exit_tree() -> void:
 	EventManager.unsubscribe(GameEvent.PET_GROW_UP, _on_pet_grow_up)

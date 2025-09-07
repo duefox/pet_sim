@@ -14,4 +14,4 @@ func _ready() -> void:
 	add_theme_stylebox_override("hover",over_style)
 	add_theme_stylebox_override("pressed",pressed_style)
 	
-	custom_minimum_size=Vector2(85.0,82.0)
+	#custom_minimum_size=Vector2(85.0,82.0)

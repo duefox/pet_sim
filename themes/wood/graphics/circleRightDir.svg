@@ -1,0 +1,10 @@
+<svg width="32" height="24" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+  <circle cx="12" cy="12" r="12" fill="#5c2f1d" />
+
+  <g transform="rotate(180 12 12)">
+    <path
+      d="M 16,8 L 8,12 L 16,16 Z"
+      fill="#f7dfbb"
+    />
+  </g>
+</svg>

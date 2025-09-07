@@ -1,0 +1,13 @@
+<svg width="40" height="24" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+  <path
+    d="M 20,18                 
+       L 28,8                  
+       A 2 2 0 0 0 26,6        
+       L 14,6                  
+       A 2 2 0 0 0 12,8        
+       L 18,18                 
+       A 2 2 0 0 0 20,18       
+       Z"
+    fill="#f7dfbb"
+  />
+</svg>

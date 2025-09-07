@@ -25,6 +25,8 @@ var lifecycle_comp: LifecycleComponent
 var excretion_comp: ExcretionComponent
 #交配组件
 var mating_comp: MatingComponent
+#心情组件
+var mood_comp: MoodComponent
 #宠物贴图
 var pet_sprite: Sprite2D
 #食物目标
@@ -74,6 +76,7 @@ func _ready():
 	lifecycle_comp = find_child("LifecycleComponent")
 	excretion_comp = find_child("ExcretionComponent")
 	mating_comp = find_child("MatingComponent")
+	mood_comp = find_child("MoodComponent")
 	#宠物状态机
 	state_machine = find_child("PetStateMachine")
 	#宠物属性
@@ -140,6 +143,10 @@ func update_info() -> void:
 
 
 ## 新的初始化函数
+## @param assigned_id:宠物的id
+## @param data:宠物数据字典，包含资源和资源的路径
+## @param assigned_gender:宠物的性别
+## @param wander_bounds:漫游范围
 func initialize_pet(assigned_id: int, data: Dictionary, assigned_gender: PetData.Gender, wander_bounds: Rect2):
 	#初始化数据
 	id = assigned_id
@@ -168,6 +175,9 @@ func initialize_pet(assigned_id: int, data: Dictionary, assigned_gender: PetData
 	#初始化交配组件
 	if mating_comp:
 		mating_comp.initialize(self)
+	#初始化心情组件
+	if mood_comp:
+		mood_comp.initialize(self)
 	#初始化状态机
 	if state_machine:
 		state_machine.initialize(self)

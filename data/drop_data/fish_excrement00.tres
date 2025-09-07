@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="DroppableData" load_steps=3 format=3 uid="uid://dp85ytsnwka4m"]
 
-[ext_resource type="Script" uid="uid://cs8jqjbk2ifyw" path="res://scripts/data/DroppableData.gd" id="1_sq3td"]
+[ext_resource type="Script" uid="uid://cs8jqjbk2ifyw" path="res://scripts/data/droppable_data.gd" id="1_sq3td"]
 [ext_resource type="Texture2D" uid="uid://w27k75slxgk8" path="res://assets/textures/excret.png" id="2_8id0t"]
 
 [resource]

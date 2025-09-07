@@ -1,0 +1,12 @@
+<svg width="36" height="36" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+  <rect x="2" y="2" width="32" height="32" rx="4" ry="4" fill="#cccccc" stroke="#dddddd" stroke-width="2" />
+
+  <path
+    d="M 9,18 L 16,25 L 28,11"
+    stroke="#aaaaaa"
+    stroke-width="4"
+    fill="none"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

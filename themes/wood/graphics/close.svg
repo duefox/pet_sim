@@ -1,0 +1,10 @@
+<svg width="16" height="16" xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges">
+  <rect x="0" y="0" width="16" height="16" fill="#f7dfbb" rx="2" ry="2" />
+
+  <path
+    d="M 4,4 L 12,12 M 12,4 L 4,12"
+    stroke="#5c2f1d"
+    stroke-width="2"
+    stroke-linecap="round"
+  />
+</svg>
