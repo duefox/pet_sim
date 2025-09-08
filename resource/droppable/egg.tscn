@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://cbrx1oqr3265"]
+
+[ext_resource type="PackedScene" uid="uid://cgiiflmvogxef" path="res://resource/droppable/droppable_item.tscn" id="1_0k3w2"]
+[ext_resource type="Script" uid="uid://dfan6ojbospd1" path="res://resource/droppable/Egg.gd" id="2_g7kgt"]
+[ext_resource type="Resource" uid="uid://txupj3tcb1r5" path="res://data/drop_data/fish_egg0.tres" id="3_avj2s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_avj2s"]
+
+[node name="Egg" instance=ExtResource("1_0k3w2")]
+collision_layer = 16
+collision_mask = 4
+script = ExtResource("2_g7kgt")
+hatch_data = null
+hatch_level = 0.0
+data = ExtResource("3_avj2s")
+
+[node name="Shape" type="CollisionShape2D" parent="." index="2"]
+shape = SubResource("CircleShape2D_avj2s")

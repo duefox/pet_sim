@@ -1,0 +1,210 @@
+[gd_scene load_steps=25 format=3 uid="uid://d00tx33i8g0xy"]
+
+[ext_resource type="Script" uid="uid://dt4r7lu3kf0fg" path="res://resource/ui/menu/main_menu.gd" id="1_7suek"]
+[ext_resource type="Texture2D" uid="uid://8obnq3j46gym" path="res://themes/wood/graphics/middleBtnDisabled.png" id="1_x2yvf"]
+[ext_resource type="Texture2D" uid="uid://b0bp2mykkojx3" path="res://themes/wood/graphics/middleBtnOver.png" id="2_uhagc"]
+[ext_resource type="Texture2D" uid="uid://45y01nouliix" path="res://themes/wood/graphics/middleBtnPressed.png" id="3_btxxm"]
+[ext_resource type="Texture2D" uid="uid://c2rls50un2mhl" path="res://themes/wood/graphics/middleBtnNormal.png" id="4_wb0q5"]
+[ext_resource type="Script" uid="uid://drmhc3abbe7ht" path="res://resource/components/ui/buttons/button_middle.gd" id="5_q85j6"]
+[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="6_8g5eo"]
+[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="7_7suek"]
+[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="8_otr3d"]
+[ext_resource type="Texture2D" uid="uid://mavihdf8alpw" path="res://themes/wood/graphics/smallBtnNormalDouble.png" id="9_8ekit"]
+[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="10_n4uci"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7suek"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
+texture = ExtResource("6_8g5eo")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
+texture = ExtResource("7_7suek")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
+texture = ExtResource("8_otr3d")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_brky7"]
+texture = ExtResource("9_8ekit")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_otr3d"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_js667"]
+texture = ExtResource("1_x2yvf")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qm01m"]
+texture = ExtResource("2_uhagc")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i18ci"]
+texture = ExtResource("3_btxxm")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0inov"]
+texture = ExtResource("4_wb0q5")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ekit"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n4uci"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_877pj"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+script = ExtResource("1_7suek")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 30
+
+[node name="RightControl" type="Control" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/RightControl"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -84.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/RightControl/MarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="BtnInfo" type="Button" parent="MarginContainer/RightControl/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7suek")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
+theme_override_styles/normal = SubResource("StyleBoxTexture_brky7")
+text = "D"
+script = ExtResource("10_n4uci")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[node name="CenterControl" type="Control" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/CenterControl"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterControl/MarginContainer"]
+layout_mode = 2
+
+[node name="BtnNew" type="Button" parent="MarginContainer/CenterControl/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 96)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_otr3d")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+text = "新建"
+script = ExtResource("5_q85j6")
+metadata/_custom_type_script = "uid://drmhc3abbe7ht"
+
+[node name="BtnLoad" type="Button" parent="MarginContainer/CenterControl/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 96)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8ekit")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+text = "加载"
+script = ExtResource("5_q85j6")
+metadata/_custom_type_script = "uid://drmhc3abbe7ht"
+
+[node name="BtnSetting" type="Button" parent="MarginContainer/CenterControl/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 96)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_n4uci")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+text = "设置"
+script = ExtResource("5_q85j6")
+metadata/_custom_type_script = "uid://drmhc3abbe7ht"
+
+[node name="BtnExit" type="Button" parent="MarginContainer/CenterControl/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 96)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_877pj")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+text = "退出"
+script = ExtResource("5_q85j6")
+metadata/_custom_type_script = "uid://drmhc3abbe7ht"
+
+[connection signal="pressed" from="MarginContainer/RightControl/MarginContainer/VBoxContainer/BtnInfo" to="." method="_on_btn_info_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterControl/MarginContainer/HBoxContainer/BtnNew" to="." method="_on_btn_new_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterControl/MarginContainer/HBoxContainer/BtnLoad" to="." method="_on_btn_load_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterControl/MarginContainer/HBoxContainer/BtnSetting" to="." method="_on_btn_setting_pressed"]
+[connection signal="pressed" from="MarginContainer/CenterControl/MarginContainer/HBoxContainer/BtnExit" to="." method="_on_btn_exit_pressed"]

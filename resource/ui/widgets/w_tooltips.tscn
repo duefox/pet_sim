@@ -1,0 +1,40 @@
+[gd_scene load_steps=4 format=3 uid="uid://cmttkodtyrf7l"]
+
+[ext_resource type="Script" uid="uid://cx316jesa7ugf" path="res://resource/ui/widgets/w_tooltips.gd" id="1_3r7ts"]
+[ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_cg11e"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b78u3"]
+atlas = ExtResource("1_cg11e")
+region = Rect2(265, 892, 58, 58)
+
+[node name="WTooltips" type="MarginContainer"]
+size_flags_vertical = 3
+script = ExtResource("1_3r7ts")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 2
+texture = SubResource("AtlasTexture_b78u3")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="SimpleLabel" type="RichTextLabel" parent="MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(140, 24)
+layout_mode = 2
+theme_override_colors/default_color = Color(0.360784, 0.184314, 0.113725, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 1
+theme_override_constants/line_separation = 8
+bbcode_enabled = true
+text = "[b]这是一个粗体的提示。[/b]"
+fit_content = true

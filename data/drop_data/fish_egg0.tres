@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EggData" load_steps=3 format=3 uid="uid://txupj3tcb1r5"]
 
-[ext_resource type="Script" uid="uid://c615ei77is4nh" path="res://scripts/data/egg_data.gd" id="1_iql1k"]
+[ext_resource type="Script" uid="uid://c615ei77is4nh" path="res://resource/data/egg_data.gd" id="1_iql1k"]
 [ext_resource type="Texture2D" uid="uid://cpfjwbn7qe2ix" path="res://assets/textures/fish_eggs.png" id="2_oiafp"]
 
 [resource]

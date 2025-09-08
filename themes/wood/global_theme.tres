@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=140 format=3 uid="uid://cwy04bxyvv2hj"]
+[gd_resource type="Theme" load_steps=145 format=3 uid="uid://cwy04bxyvv2hj"]
 
 [ext_resource type="Texture2D" uid="uid://bmhk1u7o3i7np" path="res://themes/wood/graphics/checked.svg" id="1_qafkh"]
 [ext_resource type="Texture2D" uid="uid://1ksauqa5mile" path="res://themes/wood/graphics/bigBtnDisabled.png" id="1_tcyic"]
@@ -41,14 +41,13 @@
 [ext_resource type="Texture2D" uid="uid://mavihdf8alpw" path="res://themes/wood/graphics/smallBtnNormalDouble.png" id="15_vaolq"]
 [ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="16_cjfga"]
 [ext_resource type="Texture2D" uid="uid://o0rfug114lln" path="res://themes/wood/graphics/dirRight.svg" id="16_dkawy"]
-[ext_resource type="Texture2D" uid="uid://tlnmpuw8q013" path="res://themes/wood/graphics/circleNormal.svg" id="17_dkawy"]
 [ext_resource type="Texture2D" uid="uid://bg171urvx4dmu" path="res://themes/wood/graphics/btnDisbled.png" id="17_vlgto"]
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="17_wi548"]
-[ext_resource type="Texture2D" uid="uid://c1le2b0nr2y4x" path="res://themes/wood/graphics/circleOver.svg" id="18_2b706"]
 [ext_resource type="Texture2D" uid="uid://bmuoam13dwo3t" path="res://themes/wood/graphics/btnOver.png" id="18_vaolq"]
-[ext_resource type="Texture2D" uid="uid://b4uoidk01a26p" path="res://themes/wood/graphics/circlePressed.svg" id="19_ig1ls"]
 [ext_resource type="Texture2D" uid="uid://c13f7rak78jid" path="res://themes/wood/graphics/btnNormal.png" id="19_wi548"]
+[ext_resource type="Texture2D" uid="uid://dujwhf3l3cs8i" path="res://themes/wood/graphics/lineFoucsHor.svg" id="20_8gm81"]
 [ext_resource type="Texture2D" uid="uid://l0vcg2wih47d" path="res://themes/wood/graphics/btnPressed.png" id="20_ry3xm"]
+[ext_resource type="Texture2D" uid="uid://cbpqtsub6oevp" path="res://themes/wood/graphics/lineCheckHor.svg" id="21_ppwjs"]
 [ext_resource type="Texture2D" uid="uid://btbfrdhllbxqh" path="res://themes/wood/graphics/optionDirDown.svg" id="21_x70xe"]
 [ext_resource type="Texture2D" uid="uid://bvfldrwlte1hh" path="res://themes/wood/graphics/submenu.svg" id="26_x70xe"]
 [ext_resource type="Texture2D" uid="uid://ctqtmfyxug1ff" path="res://themes/wood/graphics/submenuMirrored.svg" id="27_todax"]
@@ -57,6 +56,11 @@
 [ext_resource type="Texture2D" uid="uid://bpsadnw1kmrp6" path="res://themes/wood/graphics/close.svg" id="36_sqxe8"]
 [ext_resource type="Texture2D" uid="uid://bqfcmp1hdumfq" path="res://themes/wood/graphics/circleLeftDir.svg" id="37_gk50r"]
 [ext_resource type="Texture2D" uid="uid://3r3roar5lm7f" path="res://themes/wood/graphics/circleRightDir.svg" id="38_3jv15"]
+[ext_resource type="Texture2D" uid="uid://cov5ubcx3aod7" path="res://themes/wood/graphics/rectNormal.svg" id="40_2sl1m"]
+[ext_resource type="Texture2D" uid="uid://cfiqe3lwqcxv5" path="res://themes/wood/graphics/rectOver.svg" id="41_8gm81"]
+[ext_resource type="Texture2D" uid="uid://dka235ybcmcb" path="res://themes/wood/graphics/rectPressed.svg" id="42_ppwjs"]
+[ext_resource type="Texture2D" uid="uid://cvvjwrkxxk4q6" path="res://themes/wood/graphics/lineFoucsVer.svg" id="43_8gm81"]
+[ext_resource type="Texture2D" uid="uid://iqwkcus3bqjq" path="res://themes/wood/graphics/lineCheckVer.svg" id="44_ppwjs"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3jv15"]
 
@@ -79,31 +83,19 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ah0rl"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2b706"]
-texture = ExtResource("17_dkawy")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
+texture = ExtResource("40_2sl1m")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ig1ls"]
-texture = ExtResource("18_2b706")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
+texture = ExtResource("41_8gm81")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iggsu"]
-texture = ExtResource("19_ig1ls")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
+texture = ExtResource("42_ppwjs")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_of8qv"]
-texture = ExtResource("6_mahqx")
+texture = ExtResource("20_8gm81")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_sqxe8"]
-texture = ExtResource("5_wpiow")
+texture = ExtResource("21_ppwjs")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ry3xm"]
 texture = ExtResource("1_wi548")
@@ -216,6 +208,8 @@ texture_margin_left = 20.0
 texture_margin_top = 20.0
 texture_margin_right = 20.0
 texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_18pwa"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x70xe"]
 texture = ExtResource("15_vaolq")
@@ -357,39 +351,22 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nrban"]
-texture = ExtResource("16_cjfga")
-texture_margin_left = 10.0
-texture_margin_top = 10.0
-texture_margin_right = 10.0
-texture_margin_bottom = 10.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nlbft"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gk50r"]
-texture = ExtResource("17_dkawy")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
+texture = ExtResource("40_2sl1m")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3jv15"]
-texture = ExtResource("18_2b706")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
+texture = ExtResource("41_8gm81")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r73r0"]
-texture = ExtResource("19_ig1ls")
-texture_margin_left = 8.0
-texture_margin_top = 8.0
-texture_margin_right = 8.0
-texture_margin_bottom = 8.0
+texture = ExtResource("42_ppwjs")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_k6185"]
-texture = ExtResource("9_qhrbg")
+texture = ExtResource("43_8gm81")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2sl1m"]
-texture = ExtResource("8_7o8x3")
+texture = ExtResource("44_ppwjs")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iippm"]
 texture = ExtResource("2_ry3xm")
@@ -625,6 +602,7 @@ OptionButton/styles/normal = SubResource("StyleBoxTexture_0gu7k")
 OptionButton/styles/normal_mirrored = SubResource("StyleBoxTexture_6n8qt")
 OptionButton/styles/pressed = SubResource("StyleBoxTexture_0aqtc")
 OptionButton/styles/pressed_mirrored = SubResource("StyleBoxTexture_vimpg")
+PanelContainer/styles/panel = SubResource("StyleBoxEmpty_18pwa")
 PopupMenu/colors/font_color = Color(0.360784, 0.184314, 0.113725, 1)
 PopupMenu/icons/checked = ExtResource("1_qafkh")
 PopupMenu/icons/checked_disabled = ExtResource("2_28qxn")
@@ -685,7 +663,7 @@ TextEdit/styles/focus = SubResource("StyleBoxTexture_wnpab")
 TextEdit/styles/normal = SubResource("StyleBoxTexture_gyycx")
 TextEdit/styles/read_only = SubResource("StyleBoxTexture_ah0rl")
 TooltipPanel/colors/title_color = Color(1, 0, 0, 1)
-TooltipPanel/styles/panel = SubResource("StyleBoxTexture_nrban")
+TooltipPanel/styles/panel = SubResource("StyleBoxEmpty_nlbft")
 VScrollBar/icons/decrement = ExtResource("34_of8qv")
 VScrollBar/icons/decrement_highlight = ExtResource("34_of8qv")
 VScrollBar/icons/decrement_pressed = ExtResource("34_of8qv")

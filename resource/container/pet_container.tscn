@@ -1,0 +1,117 @@
+[gd_scene load_steps=13 format=3 uid="uid://btkafvb6kvaga"]
+
+[ext_resource type="Script" uid="uid://b1q1oyetm8dd8" path="res://resource/container/pet_container.gd" id="1_k2uak"]
+[ext_resource type="Resource" uid="uid://nc4ypekgcowp" path="res://data/drop_data/fish_food0.tres" id="2_jyjxn"]
+[ext_resource type="PackedScene" uid="uid://ytui6fhuudad" path="res://resource/droppable/food.tscn" id="3_013c3"]
+[ext_resource type="Texture2D" uid="uid://4qsn7ar88663" path="res://assets/images/wall/Wall_01.png" id="4_4o1vb"]
+[ext_resource type="Shader" uid="uid://c25wsf7t3on1f" path="res://shaders/water_wave.gdshader" id="5_ueymg"]
+[ext_resource type="Texture2D" uid="uid://cfac0ov46o7qx" path="res://assets/images/water/Water_63.png" id="6_fll12"]
+[ext_resource type="Texture2D" uid="uid://dsydxx25ntx36" path="res://assets/images/tank/fishTank1.png" id="7_b0sr5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jyhfs"]
+shader = ExtResource("5_ueymg")
+shader_parameter/wave_color = Color(0, 0.5, 1, 1)
+shader_parameter/edge_color = Color(1, 1, 1, 1)
+shader_parameter/wave_texture = ExtResource("6_fll12")
+shader_parameter/wave_opacity = 0.5
+shader_parameter/water_alpha = 0.6
+shader_parameter/texture_blend = 0.2
+shader_parameter/speed = 1.0
+shader_parameter/wave_frequency = 1.0
+shader_parameter/wave_offset = 0.06
+shader_parameter/peak_amplitude = 0.01
+shader_parameter/trough_amplitude = 0.01
+shader_parameter/secondary_ripple_blend = 0.1
+shader_parameter/tertiary_ripple_blend = 0.1
+shader_parameter/edge_width = 0.02
+shader_parameter/edge_pixel_size = 0.004
+shader_parameter/bubble_color = Color(1, 1, 1, 1)
+shader_parameter/bubble_count = 10
+shader_parameter/bubble_opacity = 0.5
+shader_parameter/bubble_speed_min = 1.0
+shader_parameter/bubble_speed_max = 4.0
+shader_parameter/bubble_radius_min = 0.004
+shader_parameter/bubble_radius_max = 0.01
+shader_parameter/bubble_spawn_x_min = 0.0
+shader_parameter/bubble_spawn_x_max = 1.0
+shader_parameter/bubble_spawn_y_min = 0.0
+shader_parameter/bubble_spawn_y_max = 1.0
+shader_parameter/bubble_pixel_size = 0.002
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbgi4"]
+size = Vector2(31.5, 565)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o6xl0"]
+size = Vector2(42, 563)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tefeu"]
+size = Vector2(980, 34)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tipki"]
+size = Vector2(981, 52)
+
+[node name="PetContainer" type="Node2D"]
+script = ExtResource("1_k2uak")
+drop_scene = ExtResource("3_013c3")
+drop_data = ExtResource("2_jyjxn")
+
+[node name="WallBG" type="Sprite2D" parent="."]
+position = Vector2(532, 301)
+scale = Vector2(0.677315, 0.677315)
+texture = ExtResource("4_4o1vb")
+metadata/_edit_lock_ = true
+
+[node name="ContentsNode" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="ContentsRank" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_jyhfs")
+offset_left = 116.0
+offset_top = 119.0
+offset_right = 1023.0
+offset_bottom = 589.0
+mouse_filter = 1
+
+[node name="ContentsSprite" type="Sprite2D" parent="."]
+position = Vector2(574, 341)
+scale = Vector2(0.509603, 0.44043)
+texture = ExtResource("7_b0sr5")
+metadata/_edit_lock_ = true
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="WallLeft" type="StaticBody2D" parent="Walls"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallLeft"]
+position = Vector2(99.75, 340.5)
+shape = SubResource("RectangleShape2D_tbgi4")
+debug_color = Color(0.560784, 0.407843, 0.968627, 0.419608)
+
+[node name="WallRight" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, -1)
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallRight"]
+position = Vector2(1043, 339.5)
+shape = SubResource("RectangleShape2D_o6xl0")
+debug_color = Color(0.560784, 0.407843, 0.968627, 0.419608)
+
+[node name="WallBottom" type="StaticBody2D" parent="Walls"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallBottom"]
+position = Vector2(574, 604.5)
+shape = SubResource("RectangleShape2D_tefeu")
+debug_color = Color(0.560784, 0.407843, 0.968627, 0.419608)
+
+[node name="WallTop" type="StaticBody2D" parent="Walls"]
+collision_layer = 4
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/WallTop"]
+position = Vector2(573.5, 122)
+shape = SubResource("RectangleShape2D_tipki")

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="FishData" load_steps=4 format=3 uid="uid://qfcdqheia6ta"]
 
-[ext_resource type="Script" uid="uid://c1cfnn80q7lso" path="res://scripts/data/fish_data.gd" id="1_rnq2n"]
+[ext_resource type="Script" uid="uid://c1cfnn80q7lso" path="res://resource/data/fish_data.gd" id="1_rnq2n"]
 [ext_resource type="Resource" uid="uid://c8ulubdxek2xv" path="res://data/drop_data/fish_egg1.tres" id="1_vrjb7"]
 [ext_resource type="Texture2D" uid="uid://dfmtghpflav77" path="res://assets/textures/aquatic/water/fish01.png" id="2_xml5i"]
 

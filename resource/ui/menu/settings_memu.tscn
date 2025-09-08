@@ -1,0 +1,371 @@
+[gd_scene load_steps=20 format=3 uid="uid://bye7ywm4i53dk"]
+
+[ext_resource type="Script" uid="uid://cpd8quwynt5xe" path="res://resource/ui/menu/settings_memu.gd" id="1_a37kn"]
+[ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="2_bfd6o"]
+[ext_resource type="Texture2D" uid="uid://d2smuitrlu4qr" path="res://assets/ui/icons/icon1.png" id="3_hd0uk"]
+[ext_resource type="Texture2D" uid="uid://8obnq3j46gym" path="res://themes/wood/graphics/middleBtnDisabled.png" id="4_r0yd5"]
+[ext_resource type="Texture2D" uid="uid://b0bp2mykkojx3" path="res://themes/wood/graphics/middleBtnOver.png" id="5_h1ry0"]
+[ext_resource type="Texture2D" uid="uid://45y01nouliix" path="res://themes/wood/graphics/middleBtnPressed.png" id="6_o5ieq"]
+[ext_resource type="Texture2D" uid="uid://c2rls50un2mhl" path="res://themes/wood/graphics/middleBtnNormal.png" id="7_8mrdw"]
+[ext_resource type="Script" uid="uid://drmhc3abbe7ht" path="res://resource/components/ui/buttons/button_middle.gd" id="8_fglrq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_choun"]
+atlas = ExtResource("2_bfd6o")
+region = Rect2(9, 301, 481, 157)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ya4ey"]
+atlas = ExtResource("3_hd0uk")
+region = Rect2(80, 16, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eb6dy"]
+atlas = ExtResource("3_hd0uk")
+region = Rect2(401, 19, 30, 25)
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_jkv2x"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_jbj1t"]
+
+[sub_resource type="ButtonGroup" id="ButtonGroup_muem4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7fe2v"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_js667"]
+texture = ExtResource("4_r0yd5")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qm01m"]
+texture = ExtResource("5_h1ry0")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i18ci"]
+texture = ExtResource("6_o5ieq")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0inov"]
+texture = ExtResource("7_8mrdw")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[node name="SettingsMemu" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_a37kn")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.705882)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 150
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
+custom_minimum_size = Vector2(500, 610)
+layout_mode = 2
+texture = SubResource("AtlasTexture_choun")
+patch_margin_left = 20
+patch_margin_top = 60
+patch_margin_right = 20
+patch_margin_bottom = 30
+
+[node name="LabelMargin" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_top = 12
+
+[node name="Label" type="Label" parent="MarginContainer/LabelMargin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "设置"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 64
+theme_override_constants/margin_right = 24
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="AudioMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin"]
+layout_mode = 2
+
+[node name="LabelMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer/LabelMargin"]
+layout_mode = 2
+text = "音量"
+
+[node name="LineMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer/LineMargin"]
+layout_mode = 2
+
+[node name="MusicMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer/MusicMargin"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer/MusicMargin/HBoxContainer"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer/MusicMargin/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_ya4ey")
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer/MusicMargin/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 6
+
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer/MusicMargin/HBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 4
+value = 80.0
+
+[node name="SoundMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer/SoundMargin"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer/SoundMargin/HBoxContainer2"]
+custom_minimum_size = Vector2(36, 36)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer/SoundMargin/HBoxContainer2/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("AtlasTexture_eb6dy")
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer/SoundMargin/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 6
+
+[node name="SoundSlider" type="HSlider" parent="MarginContainer/MarginContainer/VBoxContainer/AudioMargin/VBoxContainer/SoundMargin/HBoxContainer2/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+value = 80.0
+
+[node name="LanguageMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/LanguageMargin"]
+layout_mode = 2
+
+[node name="LabelMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/LanguageMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/LanguageMargin/VBoxContainer/LabelMargin"]
+layout_mode = 2
+text = "语言"
+
+[node name="LineMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/LanguageMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/MarginContainer/VBoxContainer/LanguageMargin/VBoxContainer/LineMargin"]
+layout_mode = 2
+
+[node name="LanguageMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/LanguageMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 5
+
+[node name="LanguageOptBtn" type="OptionButton" parent="MarginContainer/MarginContainer/VBoxContainer/LanguageMargin/VBoxContainer/LanguageMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "中文"
+popup/item_0/id = 0
+popup/item_1/text = "英文"
+popup/item_1/id = 1
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/LanguageMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="DisplayMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/DisplayMargin"]
+layout_mode = 2
+
+[node name="LabelMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/DisplayMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="MarginContainer/MarginContainer/VBoxContainer/DisplayMargin/VBoxContainer/LabelMargin"]
+layout_mode = 2
+text = "画质"
+
+[node name="LineMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/DisplayMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/MarginContainer/VBoxContainer/DisplayMargin/VBoxContainer/LineMargin"]
+layout_mode = 2
+
+[node name="ResolutionMargin" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/DisplayMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_right = 5
+
+[node name="ResolutionOptBtn" type="OptionButton" parent="MarginContainer/MarginContainer/VBoxContainer/DisplayMargin/VBoxContainer/ResolutionMargin"]
+unique_name_in_owner = true
+layout_mode = 2
+selected = 3
+item_count = 6
+popup/item_0/text = "1366*768"
+popup/item_0/id = 0
+popup/item_1/text = "1440*900"
+popup/item_1/id = 1
+popup/item_2/text = "1600*900"
+popup/item_2/id = 2
+popup/item_3/text = "1920*1080"
+popup/item_3/id = 3
+popup/item_4/text = "2560*1440"
+popup/item_4/id = 4
+popup/item_5/text = "3840*2160"
+popup/item_5/id = 5
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/VBoxContainer/DisplayMargin/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer/VBoxContainer/DisplayMargin/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="FullChecked" type="CheckBox" parent="MarginContainer/MarginContainer/VBoxContainer/DisplayMargin/VBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "点击选中后立马切换到全屏状体。
+"
+button_pressed = true
+button_group = SubResource("ButtonGroup_jkv2x")
+text = "全屏"
+
+[node name="NoborderChecked" type="CheckBox" parent="MarginContainer/MarginContainer/VBoxContainer/DisplayMargin/VBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+button_group = SubResource("ButtonGroup_jbj1t")
+text = "无边框"
+
+[node name="WindowsCheck" type="CheckBox" parent="MarginContainer/MarginContainer/VBoxContainer/DisplayMargin/VBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+button_group = SubResource("ButtonGroup_muem4")
+text = "窗口
+"
+
+[node name="BottomMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 20
+
+[node name="BtnBack" type="Button" parent="BottomMargin"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7fe2v")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+text = "返  回"
+script = ExtResource("8_fglrq")
+metadata/_custom_type_script = "uid://drmhc3abbe7ht"
