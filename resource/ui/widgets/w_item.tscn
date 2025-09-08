@@ -1,0 +1,60 @@
+[gd_scene load_steps=4 format=3 uid="uid://dd0inoc7map8p"]
+
+[ext_resource type="PackedScene" uid="uid://1x07fx41u2or" path="res://resource/ui/widgets/w_item_texture.tscn" id="1_na5v1"]
+[ext_resource type="Script" uid="uid://c2ajuecivfspg" path="res://resource/ui/widgets/w_item.gd" id="1_onl2l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d5k1n"]
+
+[node name="WItem" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
+script = ExtResource("1_onl2l")
+
+[node name="ItemContainer" type="MarginContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
+
+[node name="BGColor" type="ColorRect" parent="ItemContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+color = Color(1, 1, 1, 0.211765)
+
+[node name="TextureContainer" type="PanelContainer" parent="ItemContainer/BGColor"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d5k1n")
+
+[node name="ItemTexture" parent="ItemContainer/BGColor/TextureContainer" instance=ExtResource("1_na5v1")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ItemContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_bottom = -1
+
+[node name="ItemNumLabel" type="Label" parent="ItemContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 14
+text = "1
+"
+horizontal_alignment = 2
+
+[node name="ItemNameLabel" type="Label" parent="ItemContainer/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 14
+text = "null"
+vertical_alignment = 2

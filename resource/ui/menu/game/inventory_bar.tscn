@@ -1,0 +1,181 @@
+[gd_scene load_steps=14 format=3 uid="uid://d0rx71av14m2k"]
+
+[ext_resource type="Script" uid="uid://besw2npnjcopg" path="res://resource/ui/menu/game/inventory_bar.gd" id="1_5lsvp"]
+[ext_resource type="PackedScene" uid="uid://cs2wpwfuk23x3" path="res://resource/ui/widgets/multi_grid_container.tscn" id="1_j0ego"]
+[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="3_baqoa"]
+[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="4_8y67h"]
+[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="5_8pwcu"]
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="6_83ei1"]
+[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="7_dgnhu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_baqoa"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
+texture = ExtResource("3_baqoa")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
+texture = ExtResource("4_8y67h")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
+texture = ExtResource("5_8pwcu")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("6_83ei1")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8y67h"]
+
+[node name="InventoryBar" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+mouse_filter = 1
+script = ExtResource("1_5lsvp")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.0
+offset_right = 28.0
+offset_bottom = 99.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+current_tab = 0
+
+[node name="Pets" type="PanelContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+layout_mode = 2
+mouse_filter = 1
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer/Pets"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer"]
+layout_mode = 2
+
+[node name="CheckBoxMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="AquaticCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "水生"
+
+[node name="TerrestrialCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "陆生"
+
+[node name="AerialCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "空中"
+
+[node name="CheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "普通"
+
+[node name="CheckBox2" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "稀有"
+
+[node name="CheckBox3" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "罕见"
+
+[node name="CheckBox4" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "传说"
+
+[node name="LineMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 8
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/LineMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="GridMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="InventoryContainer" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/GridMargin" instance=ExtResource("1_j0ego")]
+unique_name_in_owner = true
+layout_mode = 2
+grid_row = 10
+grid_col = 14
+max_scroll_grid = 6
+
+[node name="Foods" type="PanelContainer" parent="MarginContainer/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="BtnsMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BtnsMargin"]
+layout_mode = 2
+
+[node name="ButtonSmall" type="Button" parent="MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_baqoa")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+text = "批量操作1"
+script = ExtResource("7_dgnhu")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[node name="ButtonSmall2" type="Button" parent="MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8y67h")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+text = "批量操作2"
+script = ExtResource("7_dgnhu")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/TabContainer/Pets" to="." method="_on_pets_mouse_entered"]

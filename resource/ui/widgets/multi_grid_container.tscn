@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://cs2wpwfuk23x3"]
+
+[ext_resource type="Script" uid="uid://dy0kqp5cqsf00" path="res://resource/ui/widgets/multi_grid_container.gd" id="1_wvw8i"]
+[ext_resource type="PackedScene" uid="uid://cyns0gvci50ah" path="res://resource/ui/widgets/w_grid.tscn" id="2_hhgv0"]
+[ext_resource type="PackedScene" uid="uid://dd0inoc7map8p" path="res://resource/ui/widgets/w_item.tscn" id="3_6knnh"]
+
+[node name="MultiGridContainer" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1009.0
+offset_bottom = 631.0
+script = ExtResource("1_wvw8i")
+grid_scene = ExtResource("2_hhgv0")
+item_scene = ExtResource("3_6knnh")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PanelContainer" type="PanelContainer" parent="ScrollContainer"]
+layout_mode = 2
+mouse_filter = 1
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/h_separation = -1
+theme_override_constants/v_separation = -1
+
+[node name="ItemsContainer" type="Control" parent="ScrollContainer/PanelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PlacementOverlay" type="ColorRect" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+mouse_filter = 2
+color = Color(1, 1, 1, 0)
+
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

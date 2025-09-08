@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyns0gvci50ah"]
+
+[ext_resource type="Texture2D" uid="uid://dakrm7nbtwiyq" path="res://assets/ui/ui2.png" id="1_pq2jl"]
+[ext_resource type="Script" uid="uid://dpnyqbco2k80b" path="res://resource/ui/widgets/w_grid.gd" id="2_6jrdl"]
+
+[node name="WGrid" type="TextureRect"]
+offset_right = 32.0
+offset_bottom = 32.0
+texture = ExtResource("1_pq2jl")
+script = ExtResource("2_6jrdl")
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]

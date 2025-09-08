@@ -1,124 +1,186 @@
 extends Control
+class_name GameMenu
 
-@onready var gold_label: Label = %GoldLabel
-@onready var date_label: Label = %DateLabel
-@onready var icon_season: TextureRect = %IconSeason
-@onready var weather_label: Label = %WeatherLabel
-@onready var icon_weather: TextureRect = %IconWeather
-@onready var left_button_expand: ButtonEmpty = %LeftButtonExpand
-@onready var right_button_expand: ButtonExpand = %RightButtonExpand
-@onready var backpack_box: Control = $UI/BackpackBox
-@onready var info_box: Control = $UI/InfoBox
+## 物品场景
+const ITEM_SCENE: PackedScene = preload("res://resource/ui/widgets/w_item.tscn")
 
+@onready var gold_bar: Control = $GoldBar
+@onready var equipment_bar: Control = $EquipmentBar
+@onready var info_bar: Control = $InfoBar
+@onready var inventory_bar: InventoryBar = $InventoryBar
 
-var _leftMenuExpanded: bool = true
-var _rightMenuExpanded: bool = true
-var _isRightTween: bool = false
-var _isLeftTween: bool = false
+## 仓库的多格子容器
+var inventory_container: MultiGridContainer
+## 抓取的物品
+var held_item: WItem
 
 
-
+# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	
-	#订阅UI事件
-	#EventManager.subscribe(UIEvent.PACK_EXPAND,_on_pack_expand)
-	#EventManager.subscribe(UIEvent.PACK_CONTRACT,_on_pack_contract)
-	
-
-	pass
-	
-func _exit_tree() -> void:
-	#EventManager.unsubscribe(UIEvent.PACK_EXPAND,_on_pack_expand)
-	#EventManager.unsubscribe(UIEvent.PACK_CONTRACT,_on_pack_contract)
-	pass
-
-
-#region 按钮事件
-
-func _on_button_profile_pressed() -> void:
-	pass  # Replace with function body.
+	get_tree().process_frame
+	GlobalData.ui = self
+	#获得仓库的容器
+	inventory_container = inventory_bar.get_item_container()
+	#初始化抓取物品
+	_init_held_item()
+	#放置初始物品
+	inventory_container.add_new_item_at(Vector2(0, 0), 1)
+	inventory_container.add_new_item_at(Vector2(1, 0), 2)
+	inventory_container.add_new_item_at(Vector2(3, 0), 3)
+	inventory_container.add_new_item_at(Vector2(5, 0), 4)
+	inventory_container.add_new_item_at(Vector2(5, 1), 4)
 
 
-func _on_button_map_pressed() -> void:
-	pass  # Replace with function body.
+#设置抓取物品的坐标(中心点模式)
+func set_held_item_position(p: Vector2) -> void:
+	held_item.position = p - held_item.get_item_size() / 2
 
 
-func _on_button_task_pressed() -> void:
-	pass  # Replace with function body.
+#隐匿抓取的物品节点
+func hide_held_item() -> void:
+	held_item.visible = false
+	held_item.position = Vector2(-900, -900)
+
+#设置抓取的物品节点数据
+func set_held_item_data(data: Dictionary) -> void:
+	held_item.set_data(data)
+	held_item.setup()
+	held_item.set_texture_container_offset_and_rotation()
 
 
-func _on_button_visitor_pressed() -> void:
-	pass  # Replace with function body.
+#将抓取的物品进行旋转同步(显示层)
+func sync_held_item_rotation(org_item: WItem) -> void:
+	var orientation: int = org_item.orientation
+	if held_item.orientation != orientation:
+		held_item.rotation_item()
 
 
-func _on_button_build_pressed() -> void:
-	pass  # Replace with function body.
+#放置提示框的处理逻辑(显示层)
+func placement_overlay_process() -> void:
+	#计算首部坐标偏移
+	var hand_pos: Vector2 = MouseEvent.mouse_cell_matrix._get_first_cell_pos_offset(held_item, MouseEvent.mouse_cell_pos)
+	#创建默认的放置提示颜色为红色
+	var color_type: int = MultiGridContainer.TYPE_COLOR.ERROR
+
+	#检查坐标是不是合法的，即不超出边界
+	if MouseEvent.mouse_cell_matrix.check_grid_map_item(hand_pos):
+		#检查坐标内的格子是不是空的
+		if MouseEvent.mouse_cell_matrix.check_cell(hand_pos):
+			#获取映射表中对应的单个格子数据
+			var item_data: ItemData = MouseEvent.mouse_cell_matrix.get_grid_map_item(hand_pos)
+			var item: WItem = item_data.link_item
+			#先判断是不是可堆叠的物品
+			var temp_bool: bool = item.stackable && held_item.stackable == item.stackable
+
+			#抓取物品和目标物品id一致且都可堆叠，将放置提示设置为绿色
+			if item.id == held_item.id && temp_bool:
+				color_type = MultiGridContainer.TYPE_COLOR.SUCCESS
+		else:
+			#如果格子是空的，则对 映射表 按照 首部坐标 和 物品的宽高 所形成的矩形进行范围内扫描
+			if MouseEvent.mouse_cell_matrix.scan_grid_map_area(hand_pos, held_item):
+				#扫描范围内的格子都为空，即代表允许放置物品，设提示为绿色
+				color_type = MultiGridContainer.TYPE_COLOR.SUCCESS
+	#设置对应inventory_container内的放置提示框
+	MouseEvent.mouse_cell_matrix.set_placement_overlay(color_type, held_item, hand_pos)
+	#显示该放置提示框
+	MouseEvent.mouse_cell_matrix.startup_placement_overlay()
+	#获取UI节点下的第一层子节点，遍历它们
+	for child in get_children():
+		#将与目标不一致的inventory_container节点的放置提示框设置为不可见
+		if child != MouseEvent.mouse_cell_matrix && child is MultiGridContainer:
+			child.off_placement_overlay()
 
 
-func _on_button_layout_pressed() -> void:
-	pass  # Replace with function body.
+#鼠标移动事件
+func _on_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		MouseEvent.mouse_position = event.position
+		#当鼠标按下且鼠标状态为抓取物品时执行
+		if MouseEvent.is_mouse_down == true && MouseEvent.is_mouse_drag():
+			#将抓取物品的中心点与鼠标进行跟随(显示层)
+			set_held_item_position(event.position)
+			#set_held_item_position(event.global_position)
+			#当鼠标所点击的地方是不是无物品的时候执行
+			if MouseEvent.mouse_is_effective:
+				#设置抓取物品的可视为真
+				held_item.visible = true
+				#隐藏抓取物品的背景颜色
+				held_item.hide_bg_color()
+				#当进入的inventory_container不一致或格子坐标和上一次不一致时，更新放置提示框(用于减少触发频率，显示层)
+				var bool_value: bool = MouseEvent.mouse_cell_matrix != GlobalData.previous_cell_matrix
+				if MouseEvent.mouse_cell_pos != GlobalData.prent_cell_pos || bool_value:
+					GlobalData.prent_cell_pos = MouseEvent.mouse_cell_pos
+					placement_overlay_process()
 
 
-func _on_button_lanscape_pressed() -> void:
-	pass  # Replace with function body.
+#处理其他输入事件
+func _input(event: InputEvent) -> void:
+	#处理键盘按键输入
+	if event is InputEventKey && MouseEvent.is_mouse_drag():
+		#正在抓取物品时，按下键盘R键，进行旋转物品的操作
+		if event.pressed && event.keycode == 82:
+			held_item.rotation_item()
+			set_held_item_position(MouseEvent.mouse_position)
+			#按下R键后更新放置提示框
+			placement_overlay_process()
+	#当鼠标左键松开时，取消抓取状态
+	elif event.is_action_pressed("mouse_left"):
+	#elif event is InputEventMouseButton && !event.is_pressed() && event.button_index == MOUSE_BUTTON_LEFT:
+		#重置鼠标按下状态
+		MouseEvent.is_mouse_down = false
+		#关闭放置提示框
+		MouseEvent.mouse_cell_matrix.off_placement_overlay()
+		#鼠标松开时，若状态为"默认"则直接返回，不执行后续操作
+		if !MouseEvent.is_mouse_drag():
+			hide_held_item()
+			return
+		MouseEvent.mouse_state = MouseEvent.CONTROLS_TYPE.DEF
+
+		#获取上一次操作的物品节点
+		var cur_item: WItem = GlobalData.previous_item
+		#获取鼠标进入的格子坐标
+		var mouse_cell_pos: Vector2 = MouseEvent.mouse_cell_pos
+		#获取鼠标所在的inventory_container节点
+		var mouse_cell_matrix: MultiGridContainer = MouseEvent.mouse_cell_matrix
+		#获取鼠标所在的inventory_container内的单个格子映射表数据
+		var mouse_item_data: ItemData = mouse_cell_matrix.get_grid_map_item(mouse_cell_pos)
+
+		if cur_item != null && mouse_item_data.link_item is WItem:
+			var item: WItem = mouse_item_data.link_item
+			#上一个物品不能等于鼠标当前进入格子内的物品
+			if !cur_item == item:
+				var bool_value: bool = item.stackable && cur_item.stackable == item.stackable
+				if cur_item.id == item.id && bool_value:
+					item.add_num(cur_item.num)
+					#数量合并完毕后，移除原节点，并隐藏抓取物品节点
+					GlobalData.previous_cell_matrix.remove_item(cur_item)
+					hide_held_item()
+					return
+
+		#计算放置时的首部坐标偏移，得到置入坐标
+		var first_cell_pos: Vector2 = mouse_cell_matrix._get_first_cell_pos_offset(held_item, mouse_cell_pos)
+
+		#鼠标松开时，尝试放置物品
+		if mouse_cell_matrix.add_new_item_in_data(first_cell_pos, held_item.get_data()):
+			var item_data: ItemData = mouse_cell_matrix.get_grid_map_item(first_cell_pos)
+			#放下后矫正该物品的纹理位置和旋转
+			item_data.link_item.set_texture_container_offset_and_rotation()
+			#放置成功后,移除原节点
+			GlobalData.previous_cell_matrix.remove_item(cur_item)
+		else:
+			#放置失败时，将原物品可见设为真，且将其在映射表中的所在区域设置回"已占用"
+			if cur_item != null && cur_item is WItem:
+				cur_item.visible = true
+				GlobalData.previous_cell_matrix.set_item_placed(cur_item, true)
+		held_item.show_bg_color()  #这行代码其实可以不要的，并不影响什么
+		#隐藏抓取物品节点(显示层)
+		hide_held_item()
 
 
-func _on_button_setting_pressed() -> void:
-	pass  # Replace with function body.
-
-
-func _on_left_button_expand_pressed() -> void:
-	AudioManager.play_sound(ResPaths.AUDIO_RES.sfx.menu)
-	_leftMenuExpanded = !_leftMenuExpanded
-	var icon: AtlasTexture = left_button_expand.icon
-	if _leftMenuExpanded:
-		icon.region = Rect2(384.0, 0.0, 64.0, 64.0)
-	else:
-		icon.region = Rect2(320.0, 0.0, 64.0, 64.0)
-	_left_box_expand(_leftMenuExpanded)
-
-
-func _on_right_button_expand_pressed() -> void:
-	AudioManager.play_sound(ResPaths.AUDIO_RES.sfx.menu)
-	_rightMenuExpanded = !_rightMenuExpanded
-	var icon: AtlasTexture = right_button_expand.icon
-	if _rightMenuExpanded:
-		icon.region = Rect2(192.0, 0.0, 64.0, 64.0)
-	else:
-		icon.region = Rect2(256.0, 0.0, 64.0, 64.0)
-	_right_box_expand(_rightMenuExpanded)
-	
-	
-
-
-#endregion
-
-#region 私有方法
-
-
-func _left_box_expand(expand: bool = true) -> void:
-	var coords: Vector2 = Vector2.ZERO
-	if !expand:
-		coords = Vector2(0.0, 200 - info_box.find_child("InfoBG").size.y)
-	if _isLeftTween:
-		return
-	_isLeftTween = await _tween_box_position(info_box, coords)
-
-
-func _right_box_expand(expand: bool = true) -> void:
-	var winSize = get_viewport_rect().size
-	var coords: Vector2 = Vector2(winSize.x, 0.0)
-	if !expand:
-		coords = Vector2(winSize.x + backpack_box.find_child("BackpackBG").size.x + 12, 0.0)
-	if _isRightTween:
-		return
-	_isRightTween = await _tween_box_position(backpack_box, coords)
-
-
-func _tween_box_position(box: Control, coords: Vector2 = Vector2.ZERO, dt: float = 0.3) -> bool:
-	var tween: Tween = create_tween()
-	tween.set_parallel()
-	tween.tween_property(box, "position", coords, dt)
-	await tween.finished
-	return false
-#endregion
+## 初始化被抓取的物品
+func _init_held_item() -> void:
+	held_item = ITEM_SCENE.instantiate()
+	add_child(held_item)
+	hide_held_item()
+	held_item.set_data(AutoLoad.find_item_data(2))
+	held_item.setup()

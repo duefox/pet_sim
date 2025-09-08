@@ -25,6 +25,9 @@ SaveManager="*res://resource/managers/save/save_manager.gd"
 SceneManager="*res://resource/managers/scene/scene_manager.gd"
 SaveSystem="*res://addons/save_system/save_manager.gd"
 Tooltips="*res://resource/utils/tooltips_manager.gd"
+MouseEvent="*res://resource/managers/event/mouse_event.gd"
+AutoLoad="*res://resource/managers/global/auto_load.gd"
+GlobalData="*res://resource/managers/global/global_data.gd"
 
 [display]
 
