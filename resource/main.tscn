@@ -1,13 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://3ia6qn373kw0"]
+[gd_scene load_steps=3 format=3 uid="uid://3ia6qn373kw0"]
 
 [ext_resource type="Script" uid="uid://oswiqnmdn3ch" path="res://resource/game_setup.gd" id="1_7fe2v"]
 [ext_resource type="PackedScene" uid="uid://btkafvb6kvaga" path="res://resource/container/pet_container.tscn" id="2_xpw5q"]
-[ext_resource type="Script" uid="uid://byqk5dvvbey4x" path="res://resource/ui/ui_state_machine.gd" id="3_irivq"]
-[ext_resource type="Texture2D" uid="uid://4qsn7ar88663" path="res://assets/images/wall/Wall_01.png" id="4_uilii"]
-[ext_resource type="PackedScene" uid="uid://d00tx33i8g0xy" path="res://resource/ui/menu/main_menu.tscn" id="5_atn44"]
-[ext_resource type="PackedScene" uid="uid://jqirj776gcme" path="res://resource/ui/menu/save_load_menu.tscn" id="6_bcior"]
-[ext_resource type="PackedScene" uid="uid://bye7ywm4i53dk" path="res://resource/ui/menu/settings_memu.tscn" id="7_iti55"]
-[ext_resource type="PackedScene" uid="uid://edyetri7sblk" path="res://resource/ui/menu/game_menu.tscn" id="15_cshiu"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_7fe2v")
@@ -21,6 +15,7 @@ visible = false
 layer = 128
 
 [node name="Control" type="Control" parent="UI"]
+z_index = 999
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
@@ -40,49 +35,3 @@ theme_override_constants/margin_bottom = 10
 unique_name_in_owner = true
 layout_mode = 2
 text = "FPS:60"
-
-[node name="UIStateMachine" type="Node" parent="UI"]
-script = ExtResource("3_irivq")
-
-[node name="MainBG" type="Control" parent="UI/UIStateMachine"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_lock_ = true
-
-[node name="ParallaxBG" type="Parallax2D" parent="UI/UIStateMachine/MainBG"]
-repeat_size = Vector2(3840, 0)
-autoscroll = Vector2(128, 0)
-metadata/_edit_lock_ = true
-
-[node name="TextureRect" type="TextureRect" parent="UI/UIStateMachine/MainBG/ParallaxBG"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -1920.0
-offset_top = -1080.0
-offset_right = 1920.0
-offset_bottom = 1080.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_uilii")
-stretch_mode = 1
-metadata/_edit_use_anchors_ = true
-metadata/_edit_lock_ = true
-
-[node name="MainMenu" parent="UI/UIStateMachine" instance=ExtResource("5_atn44")]
-visible = false
-offset_top = -1.0
-offset_bottom = -1.0
-
-[node name="SaveLoadMenu" parent="UI/UIStateMachine" instance=ExtResource("6_bcior")]
-visible = false
-
-[node name="SettingsMemu" parent="UI/UIStateMachine" instance=ExtResource("7_iti55")]
-
-[node name="GameMenu" parent="UI/UIStateMachine" instance=ExtResource("15_cshiu")]

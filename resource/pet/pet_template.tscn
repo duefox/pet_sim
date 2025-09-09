@@ -1,12 +1,12 @@
-[gd_scene load_steps=19 format=3 uid="uid://dl7tlg6w0eyas"]
+[gd_scene load_steps=17 format=3 uid="uid://dl7tlg6w0eyas"]
 
 [ext_resource type="Script" uid="uid://bhnyru0q25l3n" path="res://resource/pet/Pet.gd" id="1_bpwwj"]
 [ext_resource type="Script" uid="uid://dqbx4m2xcx2bt" path="res://resource/pet/pet_state_machine.gd" id="1_fm2pq"]
 [ext_resource type="PackedScene" uid="uid://dfkq8j2ktl5js" path="res://resource/droppable/excrement.tscn" id="2_bte7q"]
 [ext_resource type="Resource" uid="uid://dp85ytsnwka4m" path="res://data/drop_data/fish_excrement00.tres" id="2_nfquc"]
 [ext_resource type="Script" uid="uid://dkuu5mtkv38wx" path="res://resource/components/behavior/movement_component.gd" id="2_wcy08"]
-[ext_resource type="Texture2D" uid="uid://tgjqgpyumgi" path="res://assets/textures/aquatic/water/fish00.png" id="3_o1l0v"]
 [ext_resource type="Script" uid="uid://cev476a751rcw" path="res://resource/components/behavior/hunger_component.gd" id="4_2kcnw"]
+[ext_resource type="Texture2D" uid="uid://cewk86mrkx1pw" path="res://assets/textures/aquatic/water/bubblefish_48x48.png" id="4_nu6g7"]
 [ext_resource type="Script" uid="uid://dqt8ko0ma20vk" path="res://resource/components/behavior/lifecycle_component.gd" id="5_mm5nc"]
 [ext_resource type="Script" uid="uid://clipkrlrmjxux" path="res://resource/components/behavior/excretion_component.gd" id="6_2uvqw"]
 [ext_resource type="Script" uid="uid://cai0eti3te8xw" path="res://resource/components/behavior/mating_component.gd" id="9_1ifs6"]
@@ -17,59 +17,8 @@
 radius = 13.0
 height = 40.0
 
-[sub_resource type="Animation" id="Animation_o08dt"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [4]
-}
-
-[sub_resource type="Animation" id="Animation_yef1g"]
+[sub_resource type="Animation" id="Animation_nu6g7"]
 resource_name = "move"
-length = 0.233336
-loop_mode = 1
-step = 0.0333333
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.2),
-"transitions": PackedFloat32Array(1, 1, 1),
-"update": 1,
-"values": [3, 4, 5]
-}
-
-[sub_resource type="Animation" id="Animation_o1l0v"]
-resource_name = "idle"
-length = 0.0333366
-loop_mode = 1
-step = 0.0333333
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [4]
-}
-
-[sub_resource type="Animation" id="Animation_mm5nc"]
-resource_name = "juvenile"
 length = 0.233336
 loop_mode = 1
 step = 0.0333333
@@ -86,12 +35,25 @@ tracks/0/keys = {
 "values": [0, 1, 2]
 }
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_o08dt"]
+[sub_resource type="Animation" id="Animation_307r2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_307r2"]
 _data = {
-&"RESET": SubResource("Animation_o08dt"),
-&"adult": SubResource("Animation_yef1g"),
-&"idle": SubResource("Animation_o1l0v"),
-&"juvenile": SubResource("Animation_mm5nc")
+&"RESET": SubResource("Animation_307r2"),
+&"move": SubResource("Animation_nu6g7")
 }
 
 [node name="Pet" type="CharacterBody2D"]
@@ -108,9 +70,8 @@ shape = SubResource("CapsuleShape2D_qicqd")
 debug_color = Color(0.937255, 0, 0, 0.419608)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("3_o1l0v")
-hframes = 6
-frame = 4
+texture = ExtResource("4_nu6g7")
+hframes = 3
 
 [node name="Mating" parent="." instance=ExtResource("11_g0k6o")]
 visible = false
@@ -118,9 +79,9 @@ position = Vector2(0, -19)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-&"": SubResource("AnimationLibrary_o08dt")
+&"": SubResource("AnimationLibrary_307r2")
 }
-autoplay = "juvenile"
+autoplay = "move"
 
 [node name="Components" type="Node" parent="."]
 

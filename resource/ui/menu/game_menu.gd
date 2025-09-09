@@ -15,7 +15,6 @@ var inventory_container: MultiGridContainer
 var held_item: WItem
 
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	get_tree().process_frame
 	GlobalData.ui = self
@@ -24,11 +23,10 @@ func _ready() -> void:
 	#初始化抓取物品
 	_init_held_item()
 	#放置初始物品
-	inventory_container.add_new_item_at(Vector2(0, 0), 1)
-	inventory_container.add_new_item_at(Vector2(1, 0), 2)
-	inventory_container.add_new_item_at(Vector2(3, 0), 3)
-	inventory_container.add_new_item_at(Vector2(5, 0), 4)
-	inventory_container.add_new_item_at(Vector2(5, 1), 4)
+	inventory_container.add_new_item_at(Vector2(0, 0), "1001")
+	inventory_container.add_new_item_at(Vector2(0, 2), "1001")
+	inventory_container.add_new_item_at(Vector2(2, 0), "1002")
+	inventory_container.add_new_item_at(Vector2(0, 4), "1002")
 
 
 #设置抓取物品的坐标(中心点模式)
@@ -40,6 +38,7 @@ func set_held_item_position(p: Vector2) -> void:
 func hide_held_item() -> void:
 	held_item.visible = false
 	held_item.position = Vector2(-900, -900)
+
 
 #设置抓取的物品节点数据
 func set_held_item_data(data: Dictionary) -> void:
@@ -95,6 +94,7 @@ func placement_overlay_process() -> void:
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		MouseEvent.mouse_position = event.position
+		#print("event.position:",event.position)
 		#当鼠标按下且鼠标状态为抓取物品时执行
 		if MouseEvent.is_mouse_down == true && MouseEvent.is_mouse_drag():
 			#将抓取物品的中心点与鼠标进行跟随(显示层)
@@ -124,8 +124,7 @@ func _input(event: InputEvent) -> void:
 			#按下R键后更新放置提示框
 			placement_overlay_process()
 	#当鼠标左键松开时，取消抓取状态
-	elif event.is_action_pressed("mouse_left"):
-	#elif event is InputEventMouseButton && !event.is_pressed() && event.button_index == MOUSE_BUTTON_LEFT:
+	elif event is InputEventMouseButton && !event.is_pressed() && event.button_index == MOUSE_BUTTON_LEFT:
 		#重置鼠标按下状态
 		MouseEvent.is_mouse_down = false
 		#关闭放置提示框
@@ -182,5 +181,5 @@ func _init_held_item() -> void:
 	held_item = ITEM_SCENE.instantiate()
 	add_child(held_item)
 	hide_held_item()
-	held_item.set_data(AutoLoad.find_item_data(2))
+	held_item.set_data(GlobalData.find_item_data("1001"))
 	held_item.setup()

@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=145 format=3 uid="uid://cwy04bxyvv2hj"]
+[gd_resource type="Theme" load_steps=144 format=3 uid="uid://cwy04bxyvv2hj"]
 
 [ext_resource type="Texture2D" uid="uid://bmhk1u7o3i7np" path="res://themes/wood/graphics/checked.svg" id="1_qafkh"]
 [ext_resource type="Texture2D" uid="uid://1ksauqa5mile" path="res://themes/wood/graphics/bigBtnDisabled.png" id="1_tcyic"]
@@ -56,7 +56,6 @@
 [ext_resource type="Texture2D" uid="uid://bpsadnw1kmrp6" path="res://themes/wood/graphics/close.svg" id="36_sqxe8"]
 [ext_resource type="Texture2D" uid="uid://bqfcmp1hdumfq" path="res://themes/wood/graphics/circleLeftDir.svg" id="37_gk50r"]
 [ext_resource type="Texture2D" uid="uid://3r3roar5lm7f" path="res://themes/wood/graphics/circleRightDir.svg" id="38_3jv15"]
-[ext_resource type="Texture2D" uid="uid://cov5ubcx3aod7" path="res://themes/wood/graphics/rectNormal.svg" id="40_2sl1m"]
 [ext_resource type="Texture2D" uid="uid://cfiqe3lwqcxv5" path="res://themes/wood/graphics/rectOver.svg" id="41_8gm81"]
 [ext_resource type="Texture2D" uid="uid://dka235ybcmcb" path="res://themes/wood/graphics/rectPressed.svg" id="42_ppwjs"]
 [ext_resource type="Texture2D" uid="uid://cvvjwrkxxk4q6" path="res://themes/wood/graphics/lineFoucsVer.svg" id="43_8gm81"]
@@ -83,10 +82,10 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ah0rl"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2b706"]
-texture = ExtResource("40_2sl1m")
+texture = ExtResource("41_8gm81")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ig1ls"]
-texture = ExtResource("41_8gm81")
+texture = ExtResource("42_ppwjs")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_iggsu"]
 texture = ExtResource("42_ppwjs")
@@ -354,10 +353,10 @@ texture_margin_bottom = 10.0
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nlbft"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gk50r"]
-texture = ExtResource("40_2sl1m")
+texture = ExtResource("41_8gm81")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3jv15"]
-texture = ExtResource("41_8gm81")
+texture = ExtResource("42_ppwjs")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_r73r0"]
 texture = ExtResource("42_ppwjs")

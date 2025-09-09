@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cyns0gvci50ah"]
 
-[ext_resource type="Texture2D" uid="uid://dakrm7nbtwiyq" path="res://assets/ui/ui2.png" id="1_pq2jl"]
+[ext_resource type="Texture2D" uid="uid://de5de3tyeiyts" path="res://assets/ui/grid_48.png" id="1_pq2jl"]
 [ext_resource type="Script" uid="uid://dpnyqbco2k80b" path="res://resource/ui/widgets/w_grid.gd" id="2_6jrdl"]
 
 [node name="WGrid" type="TextureRect"]

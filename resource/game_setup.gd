@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var fps_label: Label = %FPSLabel
 @onready var fish_tank: PetContainer = $FishTank
+@onready var ui: CanvasLayer = $UI
 
 @export var init_fish_cout: int = 13
 # 存放所有鱼类数据资源的数组
@@ -21,33 +22,60 @@ func _ready():
 	#加载资源
 	preload_res()
 
+
 func _process(_delta: float) -> void:
 	fps_label.text = "FPS:" + str(floori(Engine.get_frames_per_second()))
 
 
+## 预加载资源文件
 func preload_res() -> void:
-	var res_normal: Array = [ResPaths.PET_RES, ResPaths.SCENE_RES]
-	#加载普通资源
+	var res_normal: Array = [ResPaths.PET_RES, ResPaths.DROP_RES, ResPaths.SCENE_RES]
+	# 处理加载资源文件
 	var res: Array = []
 	for res_dic: Dictionary in res_normal:
 		for i: String in res_dic:
 			var res_path: String = res_dic[i]
 			res.append(res_path)
 	_count = res.size()
+	# 加载资源文件
 	for j in res:
 		ResManager.load_resource(j)
 
 
-##资源加载完成
+## 资源加载完成
 func _on_resource_loaded(_path: String, _resource: Resource) -> void:
 	_complete_count += 1
-	if _complete_count >= _count:
+	if _complete_count >= _count - 1:
 		_complete_count = 0
+		# 预设纹理资源
+		_preset_all_textures()
+		# 设置UI
+		_init_game_ui()
 		# 调用 PetManager 创建初始鱼群
 		#initialize_fish_population()
 	else:
 		#更新资源加载进度条
+		#print("load:", _complete_count)
 		pass
+
+
+## 设置挂载游戏界面到UI节点
+func _init_game_ui() -> void:
+	print("_init_game_ui")
+	var ui_scene: PackedScene = ResManager.get_cached_resource(ResPaths.SCENE_RES.main_ui)
+	var game_ui = ui_scene.instantiate()
+	ui.add_child(game_ui)
+
+
+## 预加载资源文件中所有的纹理文件（在item_base_data定义了对应的变量）
+func _preset_all_textures() -> void:
+	# 宠物，掉落物，建筑，造景等资源归一化纹理数据
+	var res_normal: Array = [ResPaths.PET_RES, ResPaths.DROP_RES]
+	for res_dic: Dictionary in res_normal:
+		for i: String in res_dic:
+			var res_path: String = res_dic[i]
+			var res: Resource = ResManager.get_cached_resource(res_path)
+			GlobalData.create_textures_item(res)
 
 
 func initialize_fish_population():

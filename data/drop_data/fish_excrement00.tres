@@ -5,6 +5,7 @@
 
 [resource]
 script = ExtResource("1_sq3td")
+id = &"2003"
 kind = 1
 name = "鱼便便"
 lifetime = 15.0

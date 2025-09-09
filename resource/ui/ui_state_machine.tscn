@@ -1,0 +1,56 @@
+[gd_scene load_steps=7 format=3 uid="uid://3ydrwtquwhps"]
+
+[ext_resource type="Script" uid="uid://byqk5dvvbey4x" path="res://resource/ui/ui_state_machine.gd" id="1_cgcw0"]
+[ext_resource type="Texture2D" uid="uid://4qsn7ar88663" path="res://assets/images/wall/Wall_01.png" id="2_xyexs"]
+[ext_resource type="PackedScene" uid="uid://d00tx33i8g0xy" path="res://resource/ui/menu/main_menu.tscn" id="3_b16ew"]
+[ext_resource type="PackedScene" uid="uid://jqirj776gcme" path="res://resource/ui/menu/save_load_menu.tscn" id="4_ptpn0"]
+[ext_resource type="PackedScene" uid="uid://bye7ywm4i53dk" path="res://resource/ui/menu/settings_memu.tscn" id="5_6t8os"]
+[ext_resource type="PackedScene" uid="uid://edyetri7sblk" path="res://resource/ui/menu/game_menu.tscn" id="6_0tvg2"]
+
+[node name="UIStateMachine" type="Node"]
+script = ExtResource("1_cgcw0")
+
+[node name="MainBG" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="ParallaxBG" type="Parallax2D" parent="MainBG"]
+repeat_size = Vector2(3840, 0)
+autoscroll = Vector2(128, 0)
+metadata/_edit_lock_ = true
+
+[node name="TextureRect" type="TextureRect" parent="MainBG/ParallaxBG"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1920.0
+offset_top = -1080.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_xyexs")
+stretch_mode = 1
+metadata/_edit_use_anchors_ = true
+metadata/_edit_lock_ = true
+
+[node name="MainMenu" parent="." instance=ExtResource("3_b16ew")]
+visible = false
+offset_top = -1.0
+offset_bottom = -1.0
+
+[node name="SaveLoadMenu" parent="." instance=ExtResource("4_ptpn0")]
+visible = false
+
+[node name="SettingsMemu" parent="." instance=ExtResource("5_6t8os")]
+visible = false
+
+[node name="GameMenu" parent="." instance=ExtResource("6_0tvg2")]

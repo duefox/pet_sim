@@ -16,7 +16,6 @@ grow_vertical = 2
 script = ExtResource("1_hlcy5")
 
 [node name="GoldBar" parent="." instance=ExtResource("1_atan1")]
-visible = false
 layout_mode = 1
 
 [node name="EquipmentBar" parent="." instance=ExtResource("2_pvav3")]
@@ -27,3 +26,5 @@ layout_mode = 1
 
 [node name="InventoryBar" parent="." instance=ExtResource("4_1qdxe")]
 layout_mode = 1
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

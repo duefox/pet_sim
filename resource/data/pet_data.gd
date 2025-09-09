@@ -1,13 +1,14 @@
-extends Resource
+extends ItemBaseData
 class_name PetData
 
 #region 枚举类型
-#动物主类型
+## 动物主类型
 enum MainCategory {
 	AQUATIC,  #水生动物
 	TERRESTRIAL,  #陆生动物
+	AERIAL,  #空中动物
 }
-#环境类型
+## 环境类型
 enum EnvCategory {
 	WATER,  #水里
 	LAND,  #陆地
@@ -16,16 +17,16 @@ enum EnvCategory {
 	OTHERS,  #其它，如俩栖
 }
 
-#宠物生命阶段枚举
+## 宠物生命阶段枚举
 enum LifeStage { JUVENILE, ADULT, DEAD }
 
-#物种级别
+## 物种级别
 enum Level { ENTRY, MIDDLE, ADVANCED, TOP }
 
-#体型大小
+## 体型大小
 enum BodySize { SMALL, MIDDLE, BIG }
 
-#灯光类型
+## 灯光类型
 enum LightCategory {
 	ALL,  #所有
 	WHITE,  #白光
@@ -34,7 +35,7 @@ enum LightCategory {
 	RED,  #红光
 	DARKEN,  #暗光，无光
 }
-#食性
+## 食性
 enum FoodCategory {
 	ALL,
 	OMNIVORES,  #杂食性
@@ -42,7 +43,7 @@ enum FoodCategory {
 	HERBIVORES,  #草食性
 	SCAVENGERS,  #腐食性
 }
-#性别
+## 性别
 enum Gender {
 	MALE,  #雄性
 	FEMALE,  #雌性
@@ -51,8 +52,6 @@ enum Gender {
 
 ##基本信息
 @export_group("Base Info")
-#昵称
-@export var nickname: String
 #种类
 @export var species: MainCategory
 #物种级别，入门级，中级，高级，顶级
@@ -77,14 +76,6 @@ enum Gender {
 @export var hunger_decrease_rate: float = 1.0
 #食量，每次进食消耗量克/次，如食量是20，需要进食5次才能到100%不饿状态
 @export var hunger_restore_amount: float = 10.0
-
-##动画贴图相关信息
-@export_group("Texture & Aimate")
-#贴图
-@export var texture: Texture2D
-@export var hframes: int = 6
-@export var vframes: int = 1
-@export var frame: int = 4
 
 ##排泄和繁殖
 @export_group("Waste & Mating")

@@ -4,6 +4,7 @@ class_name Pet
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var mating: Node2D = $Mating
 
+
 ##描边着色器效果
 const OUTLINE_SHDER = preload("res://shaders/outer_line.gdshader")
 
@@ -188,12 +189,12 @@ func initialize_pet(assigned_id: int, data: Dictionary, assigned_gender: PetData
 	check_for_offline_growth()
 
 
-## 宠物成长动画切换
+## 宠物成长动画,切换贴图
 func grow_up() -> void:
 	if life_stage == PetData.LifeStage.JUVENILE:
-		animation_player.play("juvenile")
+		pet_sprite.texture=pet_data.texture
 	else:
-		animation_player.play("adult")
+		pet_sprite.texture=pet_data.adult_texture
 
 
 ## 是否显示交配动画
