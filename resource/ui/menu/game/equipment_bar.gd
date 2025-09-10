@@ -7,7 +7,7 @@ class_name EquipmentBar
 
 func _ready() -> void:
 	var grid_size: Vector2 = equipment_container.grid_size
-	equipment_bg.custom_minimum_size = grid_size + Vector2(10.0, 2.0)
+	equipment_bg.custom_minimum_size = grid_size + Vector2(8.0, 10.0)
 
 
 ## 获取背包容器

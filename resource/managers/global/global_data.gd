@@ -1,13 +1,20 @@
 ## 全局资源和变量管理类
 extends Node
 
+## 全局多格容器的格子大小
 var cell_size: int = 48
-var ui: GameMenu  # 游戏中菜单UI节点的引用
-var previous_item: WItem  # 上一次操作的物品节点(引用)
-var previous_cell_matrix: MultiGridContainer  # 上一次操作的MultiGridContainer(引用)
-var placement_overlay_type: int  # 放置提示框的颜色类型
-var prent_cell_pos: Vector2  # 存储上一次的格子坐标
-
+## 游戏中菜单UI节点的引用
+var ui: GameMenu
+## 上一次操作的物品节点(引用)
+var previous_item: WItem
+## 上一次操作的MultiGridContainer(引用)
+var previous_cell_matrix: MultiGridContainer
+## 放置提示框的颜色类型
+var placement_overlay_type: int
+## 存储上一次的格子坐标
+var prent_cell_pos: Vector2
+## 当前选中的物品(引用)
+var cur_selected_item: WItem
 ## 物品所对应的纹理表
 var textures: Dictionary[String,Dictionary]
 ## 基础的物品数据，格式如下
@@ -85,4 +92,4 @@ func find_item_data(id: String) -> Variant:
 ## 规则是用成年的大小除以2向上取整
 func _get_juvenile_space(space: int = 1) -> int:
 	space = ceili(space / 2.0)
-	return clamp(space, 1, 3)
+	return clamp(space, 1, 4)

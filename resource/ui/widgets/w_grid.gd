@@ -9,11 +9,12 @@ func _ready() -> void:
 	MouseEvent.mouse_cell_matrix = parent_cell_matrix
 
 
-func get_grid_size()->Vector2:
-	return self.size
+func get_grid_size() -> Vector2:
+	return size
+
 
 ## 更新tooltips文本
-func update_tooltip(text: String) -> void:
+func update_tooltip(text: String = "") -> void:
 	tooltip_text = text
 
 

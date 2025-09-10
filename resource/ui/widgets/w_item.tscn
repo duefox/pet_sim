@@ -14,9 +14,13 @@ script = ExtResource("1_onl2l")
 [node name="ItemContainer" type="MarginContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
-offset_right = 32.0
-offset_bottom = 32.0
+offset_right = 48.0
+offset_bottom = 50.0
 mouse_filter = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
 
 [node name="BGColor" type="ColorRect" parent="ItemContainer"]
 unique_name_in_owner = true
@@ -42,15 +46,15 @@ mouse_filter = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_bottom = -1
 
-[node name="MarginContainer" type="MarginContainer" parent="ItemContainer/MarginContainer"]
+[node name="NumMargin" type="MarginContainer" parent="ItemContainer/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
 
-[node name="ItemNumLabel" type="Label" parent="ItemContainer/MarginContainer/MarginContainer"]
+[node name="ItemNumLabel" type="Label" parent="ItemContainer/MarginContainer/NumMargin"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 1
@@ -60,20 +64,20 @@ theme_override_constants/shadow_offset_x = 1
 theme_override_constants/shadow_offset_y = 1
 theme_override_constants/outline_size = 1
 theme_override_constants/shadow_outline_size = 1
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 20
 text = "1
 "
 horizontal_alignment = 2
 
-[node name="MarginContainer2" type="MarginContainer" parent="ItemContainer/MarginContainer"]
+[node name="NameMargin" type="MarginContainer" parent="ItemContainer/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
 
-[node name="ItemNameLabel" type="Label" parent="ItemContainer/MarginContainer/MarginContainer2"]
+[node name="ItemNameLabel" type="Label" parent="ItemContainer/MarginContainer/NameMargin"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2

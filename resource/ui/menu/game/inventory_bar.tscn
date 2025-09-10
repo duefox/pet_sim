@@ -91,33 +91,37 @@ mouse_filter = 2
 layout_mode = 2
 mouse_filter = 2
 
-[node name="AquaticCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+[node name="AllCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
 layout_mode = 2
-text = "水生"
+text = "All"
 
-[node name="TerrestrialCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+[node name="AquaCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
 layout_mode = 2
-text = "陆生"
+text = "Aqua"
 
-[node name="AerialCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+[node name="LandCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
 layout_mode = 2
-text = "空中"
+text = "Land"
 
-[node name="CheckBox" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+[node name="AirCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
 layout_mode = 2
-text = "普通"
+text = "Air"
 
-[node name="CheckBox2" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+[node name="BasicCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
 layout_mode = 2
-text = "稀有"
+text = "Basic"
 
-[node name="CheckBox3" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+[node name="MagicBox" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
 layout_mode = 2
-text = "罕见"
+text = "Magic"
 
-[node name="CheckBox4" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+[node name="EpicCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
 layout_mode = 2
-text = "传说"
+text = "Epic"
+
+[node name="MythicCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Mythic"
 
 [node name="LineMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/TabContainer/Pets/MarginContainer/VBoxContainer"]
 layout_mode = 2

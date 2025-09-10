@@ -4,13 +4,15 @@ class_name GameMenu
 ## 物品场景
 const ITEM_SCENE: PackedScene = preload("res://resource/ui/widgets/w_item.tscn")
 
-@onready var gold_bar: Control = $GoldBar
-@onready var equipment_bar: Control = $EquipmentBar
-@onready var info_bar: Control = $InfoBar
-@onready var inventory_bar: InventoryBar = $InventoryBar
+@onready var gold_bar: Control = %GoldBar
+@onready var equipment_bar: EquipmentBar = %EquipmentBar
+@onready var info_bar: Control = %InfoBar
+@onready var inventory_bar: InventoryBar = %InventoryBar
 
 ## 仓库的多格子容器
 var inventory_container: MultiGridContainer
+## 装备工具栏
+var equipment_container: MultiGridContainer
 ## 抓取的物品
 var held_item: WItem
 
@@ -20,13 +22,16 @@ func _ready() -> void:
 	GlobalData.ui = self
 	#获得仓库的容器
 	inventory_container = inventory_bar.get_item_container()
+	equipment_container = equipment_bar.get_item_container()
 	#初始化抓取物品
 	_init_held_item()
 	#放置初始物品
-	inventory_container.add_new_item_at(Vector2(0, 0), "1001")
-	inventory_container.add_new_item_at(Vector2(0, 2), "1001")
-	inventory_container.add_new_item_at(Vector2(2, 0), "1002")
-	inventory_container.add_new_item_at(Vector2(0, 4), "1002")
+	inventory_container.add_new_item_at(Vector2(2, 0), "1001")
+	inventory_container.add_new_item_at(Vector2(4, 2), "1001")
+	inventory_container.add_new_item_at(Vector2(0, 0), "1002")
+	inventory_container.add_new_item_at(Vector2(0, 1), "1002")
+	#
+	equipment_container.add_new_item_at(Vector2(0, 0), "1001")
 
 
 #设置抓取物品的坐标(中心点模式)
@@ -63,7 +68,6 @@ func placement_overlay_process() -> void:
 
 	#检查坐标是不是合法的，即不超出边界
 	if MouseEvent.mouse_cell_matrix.check_grid_map_item(hand_pos):
-		print(">>>>:",MouseEvent.mouse_cell_matrix.check_cell(hand_pos))
 		#检查坐标内的格子是不是空的
 		if MouseEvent.mouse_cell_matrix.check_cell(hand_pos):
 			#获取映射表中对应的单个格子数据
@@ -71,12 +75,6 @@ func placement_overlay_process() -> void:
 			var item: WItem = item_data.link_item
 			#先判断是不是可堆叠的物品
 			var temp_bool: bool = item.stackable && held_item.stackable == item.stackable
-
-			print("是否堆叠物品")
-
-			if MouseEvent.mouse_cell_matrix is SingleGridContainer:
-				print(temp_bool)
-
 			#抓取物品和目标物品id一致且都可堆叠，将放置提示设置为绿色
 			if item.id == held_item.id && temp_bool:
 				color_type = MultiGridContainer.TYPE_COLOR.SUCCESS
@@ -100,7 +98,6 @@ func placement_overlay_process() -> void:
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		MouseEvent.mouse_position = event.position
-		#print("event.position:",event.position)
 		#当鼠标按下且鼠标状态为抓取物品时执行
 		if MouseEvent.is_mouse_down == true && MouseEvent.is_mouse_drag():
 			#将抓取物品的中心点与鼠标进行跟随(显示层)
@@ -123,70 +120,94 @@ func _on_gui_input(event: InputEvent) -> void:
 func _input(event: InputEvent) -> void:
 	# 处理键盘按键输入
 	if event is InputEventKey && MouseEvent.is_mouse_drag():
-		#正在抓取物品时，按下键盘R键，进行旋转物品的操作
+		# 正在抓取物品时，按下键盘R键，进行旋转物品的操作
 		#if event.pressed && event.keycode == 82:
 		if event.is_action_pressed("keyboard_r"):
 			held_item.rotation_item()
 			set_held_item_position(MouseEvent.mouse_position)
-			#按下R键后更新放置提示框
+			# 按下R键后更新放置提示框
 			placement_overlay_process()
-	#当鼠标左键松开时，取消抓取状态，放下抓取物品
+	# 当鼠标左键松开时，取消抓取状态，放下抓取物品
 	elif event is InputEventMouseButton && !event.is_pressed() && event.button_index == MOUSE_BUTTON_LEFT:
-		#重置鼠标按下状态
+		#elif Input.is_action_just_released("mouse_left"):
+		# 重置鼠标按下状态
 		MouseEvent.is_mouse_down = false
-		#关闭放置提示框
+		# 关闭放置提示框
 		MouseEvent.mouse_cell_matrix.off_placement_overlay()
-		#鼠标松开时，若状态为"默认"则直接返回，不执行后续操作
+		# 鼠标松开时，若状态为"默认"则直接返回，不执行后续操作
 		if !MouseEvent.is_mouse_drag():
 			hide_held_item()
 			return
 		MouseEvent.mouse_state = MouseEvent.CONTROLS_TYPE.DEF
-		## 处理放置物品
+		# 处理放置物品
 		_handle_drop_item()
 
 
 ## 放置物品到多格容器
 func _handle_drop_item() -> void:
-	#获取上一次操作的物品节点
+	# 获取上一次操作的物品节点
 	var cur_item: WItem = GlobalData.previous_item
-	#获取鼠标进入的格子坐标
+	# 获取鼠标进入的格子坐标
 	var mouse_cell_pos: Vector2 = MouseEvent.mouse_cell_pos
-	#获取鼠标所在的inventory_container节点
+	# 获取鼠标所在的格子容器节点
 	var mouse_cell_matrix: MultiGridContainer = MouseEvent.mouse_cell_matrix
-	#获取鼠标所在的inventory_container内的单个格子映射表数据
+	# 获取鼠标所在的格子容器内的单个格子映射表数据
 	var mouse_item_data: ItemData = mouse_cell_matrix.get_grid_map_item(mouse_cell_pos)
-
+	# 物品堆叠判定
 	if cur_item != null && mouse_item_data.link_item is WItem:
 		var item: WItem = mouse_item_data.link_item
-		#上一个物品不能等于鼠标当前进入格子内的物品
+		# 上一个物品不能等于鼠标当前进入格子内的物品
 		if !cur_item == item:
 			var bool_value: bool = item.stackable && cur_item.stackable == item.stackable
 			if cur_item.id == item.id && bool_value:
 				item.add_num(cur_item.num)
-				#数量合并完毕后，移除原节点，并隐藏抓取物品节点
+				# 数量合并完毕后，移除原节点，并隐藏抓取物品节点
 				GlobalData.previous_cell_matrix.remove_item(cur_item)
 				hide_held_item()
 				return
 
-	#计算放置时的首部坐标偏移，得到置入坐标
+	# 计算放置时的首部坐标偏移，得到置入坐标
 	var first_cell_pos: Vector2 = mouse_cell_matrix.get_first_cell_pos_offset(held_item, mouse_cell_pos)
 
-	#鼠标松开时，尝试放置物品
+	# 鼠标松开时，尝试放置物品
 	if mouse_cell_matrix.add_new_item_in_data(first_cell_pos, held_item.get_data()):
 		var item_data: ItemData = mouse_cell_matrix.get_grid_map_item(first_cell_pos)
-		#放下后矫正该物品的纹理位置和旋转
+		# 放下后矫正该物品的纹理位置和旋转
 		item_data.link_item.set_texture_container_offset_and_rotation()
-		#放置成功后,移除原节点
+		# 处理选中物品
+		_handle_selected_item(item_data.link_item)
+		# 放置成功后,移除原节点
 		GlobalData.previous_cell_matrix.remove_item(cur_item)
+		#print("pre_item:",cur_item)
+		#print("当前被放置的对象:",GlobalData.previous_cell_matrix.get_item_at(first_cell_pos))
+		## 测试映射表
+		#print("重置映射表后------>first_cell_pos：",first_cell_pos,",mouse_cell_pos:",mouse_cell_pos)
+		#GlobalData.previous_cell_matrix._look_grip_map()
 	else:
-		print("放置失败")
 		#放置失败时，将原物品可见设为真，且将其在映射表中的所在区域设置回"已占用"
-		if cur_item != null && cur_item is WItem:
-			cur_item.visible = true
-			GlobalData.previous_cell_matrix.set_item_placed(cur_item, true)
-	held_item.show_bg_color()  #这行代码其实可以不要的，并不影响什么
-	#隐藏抓取物品节点(显示层)
+		_item_put_back(cur_item)
+	# 这行代码其实可以不要的，并不影响什么
+	held_item.show_bg_color()
+	# 隐藏抓取物品节点(显示层)
 	hide_held_item()
+
+## 物品摆放回原位
+func _item_put_back(cur_item: WItem) -> void:
+	#放置失败时，将原物品可见设为真，且将其在映射表中的所在区域设置回"已占用"
+	if cur_item != null:
+		cur_item.visible = true
+		GlobalData.previous_cell_matrix.set_item_placed(cur_item, true)
+		# 处理选中物品
+		_handle_selected_item(cur_item)
+
+
+## 处理选中物品的标记状态
+func _handle_selected_item(item: WItem) -> void:
+	if GlobalData.cur_selected_item:
+		GlobalData.cur_selected_item.hide_bg_color()
+	# 标记物品为选中状态
+	GlobalData.cur_selected_item = item
+	GlobalData.cur_selected_item.set_selected_bg_color()
 
 
 ## 初始化被抓取的物品

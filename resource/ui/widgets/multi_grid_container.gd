@@ -6,7 +6,7 @@ class_name MultiGridContainer
 ## 摆放覆盖颜色区块
 @onready var placement_overlay: ColorRect = %PlacementOverlay
 ## 滚动容器
-@onready var scroll_container: ScrollContainer = $ScrollContainer
+@onready var scroll_container: ScrollContainer = %ScrollContainer
 ## 物品容器
 @onready var item_container: Control = %ItemContainer
 
@@ -31,7 +31,8 @@ var cell_size: int = 48  #  容器的格子尺寸
 var grid_size: Vector2  #  多格子容器的大小
 var w_grid_size: Vector2  # 格子的大小
 var items: Dictionary[Vector2,WItem] = {}
-var grid_map: Array[Array] = []  ##  格子映射表
+##  格子映射表, key为格子坐标，value为ItemData
+var grid_map: Dictionary[Vector2, ItemData] = {}
 
 
 func _ready() -> void:
@@ -99,10 +100,6 @@ func _init_rend() -> void:
 	# 更新列数
 	grid_container.columns = grid_col
 
-	for row in range(grid_row):
-		##  创建每一行的空数组
-		grid_map.append([])
-
 	for i in range(grid_row * grid_col):
 		var cell: WGrid = _create_cell()
 		cell.parent_cell_matrix = self
@@ -115,7 +112,7 @@ func _init_rend() -> void:
 		var item_data: ItemData = ItemData.new(cell.cell_pos, cell, null)
 
 		##  存储格子引用到映射表
-		grid_map[row].append(item_data)
+		grid_map.set(cell.cell_pos, item_data)
 
 		##  添加到背包网格的节点中
 		grid_container.add_child(cell)
@@ -130,23 +127,10 @@ func _clear_grid_container() -> void:
 		child.queue_free()
 
 
-## 在控制台打印映射表数据
-func _look_cell_array():
-	var print_str: String = &""
-	for row in grid_map:
-		for col in row:
-			var n: String
-			if col && col.link_item is WItem:
-				n = col.link_item.item_name
-			print_str += &"(%d, %d)%s  " % [col.cell_pos.x, col.cell_pos.y, n]
-
-		print(print_str)
-		print_str = &""
-
-
 ## 检查格子是否已被占用
 func check_cell(cell_pos: Vector2) -> bool:
-	return get_grid_map_item(cell_pos).is_placed
+	var item_data: ItemData = grid_map.get(cell_pos)
+	return item_data.is_placed
 
 
 ## 扫描物品映射表的某块矩形区域，查看是否符合放置条件
@@ -177,7 +161,7 @@ func check_grid_map_item(cell_pos: Vector2):
 
 ## 获取格子数据映射表的某项数据
 func get_grid_map_item(cell_pos: Vector2) -> ItemData:
-	return grid_map[cell_pos.y][cell_pos.x]
+	return grid_map.get(cell_pos)
 
 
 ## 设置格子映射表的数据
@@ -187,7 +171,7 @@ func set_grid_map_item(cell_pos: Vector2, item: WItem) -> void:
 
 	for row in range(height):
 		for col in range(width):
-			var temp: ItemData = get_grid_map_item(Vector2(cell_pos.x + col, cell_pos.y + row))
+			var temp: ItemData = grid_map.get(Vector2(cell_pos.x + col, cell_pos.y + row))
 			temp.is_placed = true
 			temp.link_item = item
 			# 更新相应格子的tool tips文本
@@ -232,6 +216,7 @@ func add_new_item_at(cell_pos: Vector2, item_id: String) -> bool:
 
 ## 根据data新建一个物品并放置到多格子容器中
 func add_new_item_in_data(cell_pos: Vector2, data: Dictionary) -> bool:
+	# 是否超边界
 	if !check_grid_map_item(cell_pos):
 		return false
 	var item: WItem = _create_item()
@@ -282,11 +267,15 @@ func remove_item(cur_item: WItem) -> void:
 			items.erase(coords)
 			break
 	## 移除映射表的对应数据
-	for row in grid_map:
-		for col in row:
-			if cur_item == col.link_item:
-				col.link_item = null
-				col.is_placed = false
+	for y in range(int(cur_item.height)):
+		for x in range(int(cur_item.width)):
+			var cell_pos: Vector2 = cur_item.head_position + Vector2(x, y)
+			var item_data: ItemData = grid_map.get(cell_pos)
+			# 注意这里需要移除的是有链接对象但是空间未占用的映射对象
+			if item_data and !item_data.is_placed:
+				item_data.link_item = null
+				item_data.is_placed = false
+				item_data.link_grid.update_tooltip()
 	## 释放该物品的实例化对象
 	cur_item.queue_free()
 	cur_item = null
@@ -300,7 +289,7 @@ func set_item_placed(item: WItem, value: bool) -> void:
 
 	for row in range(height):
 		for col in range(width):
-			get_grid_map_item(Vector2(col + head.x, row + head.y)).is_placed = value
+			grid_map.get(Vector2(col + head.x, row + head.y)).is_placed = value
 
 
 ## 鼠标离开
@@ -313,3 +302,11 @@ func _on_mouse_exited() -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton && !event.is_pressed() && event.button_index == MOUSE_BUTTON_LEFT:
 		off_placement_overlay()
+
+
+## 查看映射表
+func _look_grip_map() -> void:
+	for coords: Vector2 in grid_map:
+		var item_data: ItemData = grid_map.get(coords)
+		print("coords:", coords, ",cell_pos:", item_data.cell_pos)
+		print("is_placed:", item_data.is_placed, ",item:", item_data.link_item)

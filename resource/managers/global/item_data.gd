@@ -1,4 +1,6 @@
-class_name ItemData extends Node
+## 背包物品关联类
+extends Node
+class_name ItemData
 
 var cell_pos: Vector2
 var is_placed: bool  # 此空间是否已占用

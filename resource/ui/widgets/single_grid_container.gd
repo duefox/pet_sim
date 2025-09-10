@@ -11,7 +11,7 @@ func set_scroll_container() -> void:
 
 ## 设置放置提示框数据
 ## 重写父类的 set_placement_overlay 方法，单格容器颜色提示区的大小为格子的大小
-func set_placement_overlay(type: int, item: WItem, cell_pos: Vector2) -> void:
+func set_placement_overlay(type: int, _item: WItem, cell_pos: Vector2) -> void:
 	var placement_size: Vector2 = w_grid_size
 	placement_size -= Vector2.ONE
 	placement_overlay.color = get_type_color(type)
@@ -25,7 +25,6 @@ func add_item_at(cell_pos: Vector2, item: WItem) -> bool:
 	var is_placed: bool = check_cell(cell_pos)
 	## 格子为未被占用时
 	if !is_placed:
-		# 矩形区域扫描通过时
 		item.head_position = cell_pos
 		# 重置物品的旋转为默认竖直方向
 		item.orientation = WItem.ORI.VER
@@ -38,15 +37,19 @@ func add_item_at(cell_pos: Vector2, item: WItem) -> bool:
 		# 将显示层的对应物品位置进行调整，根据传入的格子坐标
 		set_item_comput_position(cell_pos, item)
 		# 调整物品纹理以适配单格大小，注意一定要在添加到渲染树之后调用这个方法
-		item.fit_to_container(Vector2(64.0, 64.0))
+		item.fit_to_container(w_grid_size)
+		# 测试
+		#print("放下物品------------->")
+		#_look_grip_map()
 		return true
+
 	return false
 
 
 ## 重写父类的 set_grid_map_item 方法，单格容器只需设置自己本身坐标格的信息
 ## 设置格子映射表的数据
 func set_grid_map_item(cell_pos: Vector2, item: WItem) -> void:
-	var temp: ItemData = get_grid_map_item(cell_pos)
+	var temp: ItemData = grid_map.get(cell_pos)
 	temp.is_placed = true
 	temp.link_item = item
 	# 更新相应格子的tool tips文本
@@ -71,3 +74,31 @@ func scan_grid_map_area(cell_pos: Vector2, _item: WItem) -> bool:
 	if check_cell(cell_pos):
 		return false
 	return true
+
+
+## 将物品所对应的映射表格子占用进行更改
+## 重写父类的 set_item_placed 方法，单格容器只用判断当前坐标位置即可
+func set_item_placed(item: WItem, value: bool) -> void:
+	var head: Vector2 = item.head_position
+	get_grid_map_item(head).is_placed = value
+
+
+## 移除物品
+## 重写父类的 remove_item 方法，单格容器只用删掉当前坐标的物品即可
+func remove_item(cur_item: WItem) -> void:
+	## 移除背包物品记录
+	for coords: Vector2 in items:
+		var item: WItem = items[coords]
+		if item == cur_item:
+			items.erase(coords)
+			break
+	## 移除映射表的对应数据
+	var item_data: ItemData = grid_map.get(cur_item.head_position)
+	# 注意这里需要移除的是有链接对象但是空间未占用的映射对象
+	if item_data and !item_data.is_placed:
+		item_data.link_item = null
+		item_data.is_placed = false
+		item_data.link_grid.update_tooltip()
+	## 释放该物品的实例化对象
+	cur_item.queue_free()
+	cur_item = null

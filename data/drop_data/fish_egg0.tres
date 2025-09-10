@@ -5,12 +5,17 @@
 
 [resource]
 script = ExtResource("1_iql1k")
-id = &"2001"
 kind = 2
-name = "鱼蛋"
 lifetime = -1.0
+id = &"2001"
+nickname = ""
+descrip = ""
 texture = ExtResource("2_oiafp")
 hframes = 4
 vframes = 1
 frame = 0
+width = 1
+height = 1
+orientation = 0
+stackable = true
 metadata/_custom_type_script = "uid://c615ei77is4nh"
