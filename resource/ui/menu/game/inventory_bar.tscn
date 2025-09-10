@@ -167,7 +167,7 @@ theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
 theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-text = "批量操作1"
+text = "自动合并"
 script = ExtResource("7_dgnhu")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 

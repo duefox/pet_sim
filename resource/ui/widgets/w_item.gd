@@ -1,4 +1,5 @@
-class_name WItem extends Control
+extends Control
+class_name WItem
 
 @onready var item_container: MarginContainer = %ItemContainer
 @onready var bg_color: ColorRect = %BGColor
@@ -25,6 +26,7 @@ var height: int  # 物品的高度
 var orientation: int = ORI.VER  # 初始方向为竖着
 var stackable: bool  # 物品是否可堆叠
 var num: int = 1  # 物品数量
+var max_stack_size: int = 9  # 物品最大堆叠数量
 var more_data: Resource  #更多详细数据
 #endregion
 
@@ -124,7 +126,8 @@ func get_data() -> Dictionary:
 ## 增减物品数量(可堆叠的前提下)
 func add_num(n: int) -> void:
 	if stackable:
-		num += n
+		# 确保数量不会超过最大堆叠上限
+		num = min(num + n, max_stack_size)
 		#更新标签数据
 		set_label_data()
 

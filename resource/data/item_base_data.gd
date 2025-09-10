@@ -29,3 +29,5 @@ class_name ItemBaseData
 @export var orientation: int = 0
 # 是否可堆叠
 @export var stackable: bool = true
+# 最大堆叠数量
+@export var max_stack_size: int = 9

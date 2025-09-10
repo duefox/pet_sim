@@ -48,6 +48,18 @@ func _ready() -> void:
 	placement_overlay.color = get_type_color()
 
 
+## 鼠标离开
+func _on_mouse_exited() -> void:
+	if placement_overlay_mode == MultiGridContainer.MODE_PLACEMENT_OVERTLAY.DEF:
+		off_placement_overlay()
+
+
+## 处理其他输入事件
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton && !event.is_pressed() && event.button_index == MOUSE_BUTTON_LEFT:
+		off_placement_overlay()
+
+
 ## 获取背景颜色
 func get_type_color(type: int = 0) -> Color:
 	var color_arr: Array[Color] = [Color(&"00be0b62"), Color(&"ff000063"), Color(&"989f9a62")]
@@ -81,50 +93,108 @@ func set_scroll_container() -> void:
 	scroll_container.custom_minimum_size = grid_size
 
 
-## 创建实例化的WGrid
-func _create_cell() -> WGrid:
-	var cell: WGrid = grid_scene.instantiate()
-	return cell
+## 新增物品，如果可堆叠则尝试合并，否则自动寻找空位
+func add_item_with_merge(item_id: String) -> bool:
+	var item_data: Dictionary = GlobalData.find_item_data(item_id)
+
+	if not item_data:
+		push_error("Item data not found for ID: " + item_id)
+		return false
+
+	# 如果物品可堆叠，尝试与已存在的同类物品合并
+	if item_data.get("stackable", false):
+		for stack_item in items.values():
+			# 检查物品ID是否相同且未达到最大堆叠数量
+			if stack_item.id == item_id and stack_item.num < stack_item.max_stack_size:
+				# 找到可合并的物品，进行合并
+				stack_item.add_num(1)
+				#print("Successfully merged item " + item_id + " to stack at " + str(stack_item.head_position))
+				return true
+
+	# 如果物品不可堆叠，或者没有找到可合并的物品，则寻找空位放置
+	return add_new_item(item_id)
 
 
-## 创建实例化的WItem
-func _create_item() -> WItem:
-	var item: WItem = item_scene.instantiate()
-	return item
+## 新增物品，并自动查找最近的可用位置
+func add_new_item(item_id: String) -> bool:
+	var item_data: Dictionary = GlobalData.find_item_data(item_id)
+
+	if not item_data:
+		push_error("Item data not found for ID: " + item_id)
+		return false
+
+	# 模拟创建一个临时的 WItem 实例以获取其尺寸，之后不会添加到场景中
+	var temp_item: WItem = item_scene.instantiate()
+	temp_item.set_data(item_data)
+
+	for y in range(grid_row):
+		for x in range(grid_col):
+			var first_cell_pos: Vector2 = Vector2(x, y)
+
+			# 使用新函数检查该位置是否可以放置
+			if can_place_item(temp_item, first_cell_pos):
+				# 找到合适位置后，调用现有函数放置物品并返回
+				add_new_item_at(first_cell_pos, item_id)
+				temp_item.queue_free()
+				return true
+
+	temp_item.queue_free()
+	# 如果没有找到任何可用位置，发出信号
+	EventManager.emit_event(UIEvent.INVENTORY_FULL, self)
+	return false
 
 
-## 初始的格子渲染
-func _init_rend() -> void:
-	# 清空grid container
-	_clear_grid_container()
-	# 更新列数
-	grid_container.columns = grid_col
+## 自动合并所有可堆叠的物品
+func auto_stack_existing_items() -> void:
+	# 使用一个临时字典按物品ID分组
+	var stackable_items: Dictionary = {}
 
-	for i in range(grid_row * grid_col):
-		var cell: WGrid = _create_cell()
-		cell.parent_cell_matrix = self
-		##  自动计算行和列
-		var col: int = i % grid_col
-		var row: int = floori(i / float(grid_col))
+	# 遍历items字典，将可堆叠物品按ID分组
+	for item_coords in items:
+		var item: WItem = items[item_coords]
+		if item.stackable:
+			if not stackable_items.has(item.id):
+				stackable_items[item.id] = []
+			stackable_items[item.id].append(item)
 
-		##  设置格子的行列位置
-		cell.cell_pos = Vector2(col, row)
-		var item_data: ItemData = ItemData.new(cell.cell_pos, cell, null)
+	# 遍历分组后的物品，进行合并
+	for item_id in stackable_items:
+		var item_list: Array = stackable_items[item_id]
+		# 对物品列表进行排序，确保处理顺序
+		item_list.sort_custom(func(a, b): return a.num > b.num)
 
-		##  存储格子引用到映射表
-		grid_map.set(cell.cell_pos, item_data)
+		# 遍历列表中的每个物品，作为合并的源头
+		for i in range(item_list.size()):
+			var source_item: WItem = item_list[i]
+			# 只要源头物品还有数量，就继续尝试合并
+			if source_item.num <= 0:
+				continue
 
-		##  添加到背包网格的节点中
-		grid_container.add_child(cell)
+			# 尝试将源头物品合并到其他同类堆叠中
+			for j in range(item_list.size()):
+				if i == j:
+					continue
 
-	##  control节点不会自动更新，需手动更新size
-	size = Vector2(grid_col * GlobalData.cell_size, grid_row * GlobalData.cell_size)
+				var target_item: WItem = item_list[j]
 
+				# 如果目标堆叠已满，跳过
+				if target_item.num >= target_item.max_stack_size:
+					continue
 
-## 清空格子容器的格子
-func _clear_grid_container() -> void:
-	for child in grid_container.get_children():
-		child.queue_free()
+				# 计算可合并的数量
+				var amount_to_merge: int = min(target_item.max_stack_size - target_item.num, source_item.num)
+
+				if amount_to_merge > 0:
+					# 增加目标堆叠的数量
+					target_item.add_num(amount_to_merge)
+					# 减少源头物品的数量
+					source_item.add_num(-amount_to_merge)
+
+					# 如果源头物品数量归零，则移除该物品
+					if source_item.num <= 0:
+						print("####这里有bug————————————————————————————————")
+						#remove_item(source_item)
+						break
 
 
 ## 检查格子是否已被占用
@@ -245,8 +315,6 @@ func set_item_comput_position(cell_pos: Vector2, item: WItem) -> void:
 
 ## 获取对应格子坐标在显示层中的实际坐标
 func get_comput_position(cell_pos: Vector2) -> Vector2:
-	#var base: Vector2 = Vector2(cell_pos.x * GlobalData.cell_size, cell_pos.y * GlobalData.cell_size)
-	#return Vector2(base.x - cell_pos.x, base.y - cell_pos.y)
 	var base: Vector2 = cell_pos * w_grid_size
 	return Vector2(base.x - cell_pos.x, base.y - cell_pos.y)
 
@@ -260,12 +328,9 @@ func get_first_cell_pos_offset(item: WItem, cell_pos: Vector2) -> Vector2:
 
 ## 移除物品
 func remove_item(cur_item: WItem) -> void:
-	## 移除背包物品记录
-	for coords: Vector2 in items:
-		var item: WItem = items[coords]
-		if item == cur_item:
-			items.erase(coords)
-			break
+	if not is_instance_valid(cur_item):
+		return
+
 	## 移除映射表的对应数据
 	for y in range(int(cur_item.height)):
 		for x in range(int(cur_item.width)):
@@ -276,6 +341,8 @@ func remove_item(cur_item: WItem) -> void:
 				item_data.link_item = null
 				item_data.is_placed = false
 				item_data.link_grid.update_tooltip()
+	## 移除背包物品记录
+	items.erase(cur_item.head_position)
 	## 释放该物品的实例化对象
 	cur_item.queue_free()
 	cur_item = null
@@ -292,16 +359,71 @@ func set_item_placed(item: WItem, value: bool) -> void:
 			grid_map.get(Vector2(col + head.x, row + head.y)).is_placed = value
 
 
-## 鼠标离开
-func _on_mouse_exited() -> void:
-	if placement_overlay_mode == MultiGridContainer.MODE_PLACEMENT_OVERTLAY.DEF:
-		off_placement_overlay()
+## 检查一个物品是否可以放置在指定位置
+func can_place_item(item: WItem, first_cell_pos: Vector2) -> bool:
+	# 检查所有被物品占用的格子
+	for y in range(int(item.height)):
+		for x in range(int(item.width)):
+			var current_cell_pos: Vector2 = first_cell_pos + Vector2(x, y)
+
+			# 检查坐标是否超出网格边界
+			if current_cell_pos.x >= grid_col or current_cell_pos.y >= grid_row:
+				return false
+
+			# 检查字典中是否已存在该位置的映射数据
+			var item_data: ItemData = grid_map.get(current_cell_pos)
+
+			# 如果该位置的is_placed为true，则表示格子被占用，不能放置
+			if item_data and item_data.is_placed:
+				return false
+
+	return true
 
 
-## 处理其他输入事件
-func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton && !event.is_pressed() && event.button_index == MOUSE_BUTTON_LEFT:
-		off_placement_overlay()
+## 创建实例化的WGrid
+func _create_cell() -> WGrid:
+	var cell: WGrid = grid_scene.instantiate()
+	return cell
+
+
+## 创建实例化的WItem
+func _create_item() -> WItem:
+	var item: WItem = item_scene.instantiate()
+	return item
+
+
+## 初始的格子渲染
+func _init_rend() -> void:
+	# 清空grid container
+	_clear_grid_container()
+	# 更新列数
+	grid_container.columns = grid_col
+
+	for i in range(grid_row * grid_col):
+		var cell: WGrid = _create_cell()
+		cell.parent_cell_matrix = self
+		##  自动计算行和列
+		var col: int = i % grid_col
+		var row: int = floori(i / float(grid_col))
+
+		##  设置格子的行列位置
+		cell.cell_pos = Vector2(col, row)
+		var item_data: ItemData = ItemData.new(cell.cell_pos, cell, null)
+
+		##  存储格子引用到映射表
+		grid_map.set(cell.cell_pos, item_data)
+
+		##  添加到背包网格的节点中
+		grid_container.add_child(cell)
+
+	##  control节点不会自动更新，需手动更新size
+	size = Vector2(grid_col * GlobalData.cell_size, grid_row * GlobalData.cell_size)
+
+
+## 清空格子容器的格子
+func _clear_grid_container() -> void:
+	for child in grid_container.get_children():
+		child.queue_free()
 
 
 ## 查看映射表

@@ -20,46 +20,66 @@ var held_item: WItem
 func _ready() -> void:
 	await get_tree().process_frame
 	GlobalData.ui = self
-	#获得仓库的容器
+	# 订阅事件
+	EventManager.subscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
+
+	# 获得仓库的容器
 	inventory_container = inventory_bar.get_item_container()
 	equipment_container = equipment_bar.get_item_container()
-	#初始化抓取物品
+	# 初始化抓取物品
 	_init_held_item()
-	#放置初始物品
+	# 放置初始物品
 	inventory_container.add_new_item_at(Vector2(2, 0), "1001")
-	inventory_container.add_new_item_at(Vector2(4, 2), "1001")
-	inventory_container.add_new_item_at(Vector2(0, 0), "1002")
-	inventory_container.add_new_item_at(Vector2(0, 1), "1002")
+	#inventory_container.add_new_item_at(Vector2(4, 2), "1001")
+	#inventory_container.add_new_item_at(Vector2(0, 0), "1002")
+	#inventory_container.add_new_item_at(Vector2(0, 1), "1002")
 	#
-	equipment_container.add_new_item_at(Vector2(0, 0), "1001")
+	equipment_container.add_new_item_at(Vector2(0, 0), "1002")
+	equipment_container.add_new_item("1001")
+
+	for i in range(8):
+		inventory_container.add_new_item("1001")
+		inventory_container.add_new_item("1002")
+		equipment_container.add_new_item("1001")
+		
+	await get_tree().create_timer(3.0).timeout
+	#
+	equipment_container.auto_stack_existing_items()
+	
 
 
-#设置抓取物品的坐标(中心点模式)
+
+## 退出处理订阅事件
+func _exit_tree() -> void:
+	EventManager.unsubscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
+
+
+## 设置抓取物品的坐标(中心点模式)
 func set_held_item_position(p: Vector2) -> void:
 	held_item.position = p - held_item.get_item_size() / 2
 
 
-#隐匿抓取的物品节点
+## 隐匿抓取的物品节点
 func hide_held_item() -> void:
 	held_item.visible = false
 	held_item.position = Vector2(-900, -900)
 
 
-#设置抓取的物品节点数据
+## 设置抓取的物品节点数据
 func set_held_item_data(data: Dictionary) -> void:
 	held_item.set_data(data)
 	held_item.setup()
 	held_item.set_texture_container_offset_and_rotation()
 
 
-#将抓取的物品进行旋转同步(显示层)
+## 将抓取的物品进行旋转同步(显示层)
 func sync_held_item_rotation(org_item: WItem) -> void:
 	var orientation: int = org_item.orientation
 	if held_item.orientation != orientation:
 		held_item.rotation_item()
 
 
-#放置提示框的处理逻辑(显示层)
+## 放置提示框的处理逻辑(显示层)
 func placement_overlay_process() -> void:
 	#计算首部坐标偏移
 	var hand_pos: Vector2 = MouseEvent.mouse_cell_matrix.get_first_cell_pos_offset(held_item, MouseEvent.mouse_cell_pos)
@@ -94,7 +114,7 @@ func placement_overlay_process() -> void:
 			child.off_placement_overlay()
 
 
-#鼠标移动事件
+## 鼠标移动事件
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		MouseEvent.mouse_position = event.position
@@ -191,6 +211,7 @@ func _handle_drop_item() -> void:
 	# 隐藏抓取物品节点(显示层)
 	hide_held_item()
 
+
 ## 物品摆放回原位
 func _item_put_back(cur_item: WItem) -> void:
 	#放置失败时，将原物品可见设为真，且将其在映射表中的所在区域设置回"已占用"
@@ -217,3 +238,9 @@ func _init_held_item() -> void:
 	hide_held_item()
 	held_item.set_data(GlobalData.find_item_data("1001"))
 	held_item.setup()
+
+
+## 物品栏满了或者自动摆放不下了
+func _on_inventory_full(container: MultiGridContainer) -> void:
+	print(container, " is full")
+	pass

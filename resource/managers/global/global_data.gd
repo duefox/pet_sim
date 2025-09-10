@@ -68,6 +68,7 @@ func create_textures_item(res_data: Resource = null) -> void:
 		"orientation": res_data.orientation,
 		"stackable": res_data.stackable,
 		"num": 1,
+		"max_stack_size": res_data.max_stack_size,
 		"more_data": res_data,
 	}
 

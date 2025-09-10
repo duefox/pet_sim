@@ -102,3 +102,14 @@ func remove_item(cur_item: WItem) -> void:
 	## 释放该物品的实例化对象
 	cur_item.queue_free()
 	cur_item = null
+
+
+## 检查一个物品是否可以放置在指定位置
+## 重写父类的 can_place_item 方法，单格容器只用判定当前坐标即可
+func can_place_item(item: WItem, first_cell_pos: Vector2) -> bool:
+	# 检查字典中是否已存在该位置的映射数据
+	var item_data: ItemData = grid_map.get(first_cell_pos)
+	# 如果该位置的is_placed为true，则表示格子被占用，不能放置
+	if item_data and item_data.is_placed:
+		return false
+	return true
