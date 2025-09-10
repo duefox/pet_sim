@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="PetData" load_steps=2 format=3 uid="uid://c8bqn3w8a70r5"]
+
+[ext_resource type="Script" uid="uid://hboy5t34ly3t" path="res://resource/data/pet_data.gd" id="1_x2ce6"]
+
+[resource]
+script = ExtResource("1_x2ce6")
+species = 0
+level = 0
+color = Color(0, 0, 0, 1)
+coords = Vector2(0, 0)
+speed = 100.0
+max_size = 0
+gender = 0
+initial_angle = null
+turn_rate = 0.05
+food_habit = 0
+hunger_decrease_rate = 1.0
+hunger_restore_amount = 10.0
+excretion_interval = 10.0
+is_mating = false
+mating_timer = 0
+mating_cooldown = 18
+egg_timer = 0
+egg_interval = 1200
+initial_growth = 0.0
+adult_growth_threshold = 100.0
+daily_growth_points = 5.0
+env_catgory = 0
+suitable_temperature = Vector2(40, 60)
+live_temperature = Vector2(0, 100)
+light_catgory = 0
+mood = 0
+variation = {}
+hatch_threshold = 100.0
+hatch_rate = 1.0
+id = &"1000"
+nickname = ""
+descrip = ""
+hframes = 3
+vframes = 1
+frame = 1
+width = 1
+height = 1
+orientation = 0
+stackable = true
+metadata/_custom_type_script = "uid://hboy5t34ly3t"

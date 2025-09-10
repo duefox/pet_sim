@@ -7,8 +7,6 @@
 [node name="MultiGridContainer" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1009.0
-offset_bottom = 631.0
 mouse_filter = 1
 script = ExtResource("1_wvw8i")
 grid_scene = ExtResource("2_hhgv0")
@@ -29,7 +27,7 @@ layout_mode = 2
 theme_override_constants/h_separation = -1
 theme_override_constants/v_separation = -1
 
-[node name="ItemsContainer" type="Control" parent="ScrollContainer/PanelContainer"]
+[node name="ItemContainer" type="Control" parent="ScrollContainer/PanelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2

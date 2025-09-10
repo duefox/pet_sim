@@ -8,7 +8,7 @@ class_name MultiGridContainer
 ## 滚动容器
 @onready var scroll_container: ScrollContainer = $ScrollContainer
 ## 物品容器
-@onready var items_container: Control = %ItemsContainer
+@onready var item_container: Control = %ItemContainer
 
 ## 类型颜色枚举
 enum TYPE_COLOR { SUCCESS, ERROR, DEF }  ## 绿色，代表允许放置  ## 红色，代表不允许放置  ## 默认颜色
@@ -21,23 +21,28 @@ enum MODE_PLACEMENT_OVERTLAY {
 
 @export var grid_row: int = 5  ##  容器的格子行数
 @export var grid_col: int = 6  ##  容器的格子列数
+
 @export var max_scroll_grid: int = 4  ##  最多显示多少格
 @export var placement_overlay_mode: MODE_PLACEMENT_OVERTLAY = MODE_PLACEMENT_OVERTLAY.DEF  ## 放置提示框显示模式
 @export var grid_scene: PackedScene
 @export var item_scene: PackedScene
 
-var cell_size: int = 32  ##  容器的格子尺寸
-var grid_size: Vector2  ##  多格子容器的大小
+var cell_size: int = 48  #  容器的格子尺寸
+var grid_size: Vector2  #  多格子容器的大小
+var w_grid_size: Vector2  # 格子的大小
 var items: Dictionary[Vector2,WItem] = {}
 var grid_map: Array[Array] = []  ##  格子映射表
 
 
 func _ready() -> void:
 	cell_size = GlobalData.cell_size
-	##  设置滚动区域
-	_set_scroll_container()
 	##  渲染格子
 	_init_rend()
+	# 获取格子场景的大小
+	var w_grid: WGrid = grid_container.get_child(0)
+	w_grid_size = w_grid.get_grid_size()
+	##  设置滚动区域
+	set_scroll_container()
 	##  放置区的底色
 	placement_overlay.color = get_type_color()
 
@@ -69,6 +74,12 @@ func off_placement_overlay() -> void:
 	placement_overlay.visible = false
 
 
+##  设置滚动区域
+func set_scroll_container() -> void:
+	grid_size = Vector2(grid_col + 0.3, max_scroll_grid + 0.5) * w_grid_size
+	scroll_container.custom_minimum_size = grid_size
+
+
 ## 创建实例化的WGrid
 func _create_cell() -> WGrid:
 	var cell: WGrid = grid_scene.instantiate()
@@ -83,6 +94,9 @@ func _create_item() -> WItem:
 
 ## 初始的格子渲染
 func _init_rend() -> void:
+	# 清空grid container
+	_clear_grid_container()
+	# 更新列数
 	grid_container.columns = grid_col
 
 	for row in range(grid_row):
@@ -110,10 +124,10 @@ func _init_rend() -> void:
 	size = Vector2(grid_col * GlobalData.cell_size, grid_row * GlobalData.cell_size)
 
 
-##  设置滚动区域
-func _set_scroll_container() -> void:
-	grid_size = Vector2((grid_col + 0.3) * GlobalData.cell_size, (max_scroll_grid + 0.5) * GlobalData.cell_size)
-	scroll_container.custom_minimum_size = grid_size
+## 清空格子容器的格子
+func _clear_grid_container() -> void:
+	for child in grid_container.get_children():
+		child.queue_free()
 
 
 ## 在控制台打印映射表数据
@@ -236,7 +250,7 @@ func set_item_data_at_id(item: WItem, item_id: String) -> void:
 
 ## 将物品节点添加至多格子容器(显示层)
 func append_item_in_cell_matrix(item: WItem) -> void:
-	items_container.add_child(item)
+	item_container.add_child(item)
 
 
 ## 将显示层的对应物品位置进行调整，根据传入的格子坐标
@@ -246,12 +260,14 @@ func set_item_comput_position(cell_pos: Vector2, item: WItem) -> void:
 
 ## 获取对应格子坐标在显示层中的实际坐标
 func get_comput_position(cell_pos: Vector2) -> Vector2:
-	var base: Vector2 = Vector2(cell_pos.x * cell_size, cell_pos.y * cell_size)
+	#var base: Vector2 = Vector2(cell_pos.x * GlobalData.cell_size, cell_pos.y * GlobalData.cell_size)
+	#return Vector2(base.x - cell_pos.x, base.y - cell_pos.y)
+	var base: Vector2 = cell_pos * w_grid_size
 	return Vector2(base.x - cell_pos.x, base.y - cell_pos.y)
 
 
 ## 计算首部坐标的偏移
-func _get_first_cell_pos_offset(item: WItem, cell_pos: Vector2) -> Vector2:
+func get_first_cell_pos_offset(item: WItem, cell_pos: Vector2) -> Vector2:
 	var width: int = item.width
 	var height: int = item.height
 	return Vector2(cell_pos.x - floori(width / 2.0), cell_pos.y - floori(height / 2.0))

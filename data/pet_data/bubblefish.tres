@@ -49,5 +49,5 @@ frame = 1
 width = 2
 height = 2
 orientation = 0
-stackable = false
+stackable = true
 metadata/_custom_type_script = "uid://c1cfnn80q7lso"

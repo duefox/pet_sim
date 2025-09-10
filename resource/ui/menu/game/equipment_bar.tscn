@@ -1,5 +1,6 @@
-[gd_scene load_steps=14 format=3 uid="uid://cvoygtt76yv4j"]
+[gd_scene load_steps=16 format=3 uid="uid://cvoygtt76yv4j"]
 
+[ext_resource type="Script" uid="uid://brcl2x0yro6es" path="res://resource/ui/menu/game/equipment_bar.gd" id="1_lkgqv"]
 [ext_resource type="Texture2D" uid="uid://bsask3iusjohx" path="res://themes/wood/graphics/expandBtnDisabled.png" id="1_sdyvl"]
 [ext_resource type="Texture2D" uid="uid://d05g6gyhk8t6j" path="res://themes/wood/graphics/expandBtnOver.png" id="2_lkgqv"]
 [ext_resource type="Texture2D" uid="uid://chq8lw3dm6ppa" path="res://themes/wood/graphics/expandBtnPressed.png" id="3_durjl"]
@@ -7,8 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://syyp8krxy8jp" path="res://assets/ui/icons/icon2.png" id="5_j3hhw"]
 [ext_resource type="Script" uid="uid://g0cotbm5t03y" path="res://resource/components/ui/buttons/button_expand.gd" id="6_g1iac"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="7_abnvl"]
+[ext_resource type="PackedScene" uid="uid://b1ihuvsoodjhc" path="res://resource/ui/widgets/single_grid_container.tscn" id="9_durjl"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i8p7q"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_durjl"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
 texture = ExtResource("1_sdyvl")
@@ -33,6 +35,8 @@ anchor_left = 1.0
 anchor_right = 1.0
 grow_horizontal = 0
 size_flags_horizontal = 8
+mouse_filter = 1
+script = ExtResource("1_lkgqv")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -42,6 +46,7 @@ anchor_right = 1.0
 offset_left = -140.0
 offset_bottom = 600.0
 grow_horizontal = 0
+mouse_filter = 2
 theme_override_constants/margin_top = 100
 theme_override_constants/margin_right = 10
 
@@ -52,13 +57,14 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+mouse_filter = 2
 theme_override_constants/margin_right = -20
 
 [node name="RightButtonExpand" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_i8p7q")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_durjl")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
 theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
@@ -70,20 +76,30 @@ metadata/_custom_type_script = "uid://g0cotbm5t03y"
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
+mouse_filter = 2
 
-[node name="BackpackBG" type="NinePatchRect" parent="MarginContainer/HBoxContainer/MarginContainer2"]
-custom_minimum_size = Vector2(120, 600)
+[node name="EquipmentBG" type="NinePatchRect" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(52, 500)
 layout_mode = 2
 texture = ExtResource("7_abnvl")
-region_rect = Rect2(372, 476, 101, 582)
-patch_margin_left = 30
-patch_margin_top = 40
-patch_margin_right = 30
-patch_margin_bottom = 40
+region_rect = Rect2(76, 726, 58, 58)
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer2"]
 layout_mode = 2
-theme_override_constants/margin_left = 26
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 36
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="EquipmentContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/MarginContainer" instance=ExtResource("9_durjl")]
+unique_name_in_owner = true
+layout_mode = 2
+grid_row = 10
+grid_col = 1
+max_scroll_grid = 10

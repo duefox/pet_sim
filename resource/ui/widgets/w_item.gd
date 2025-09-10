@@ -14,6 +14,8 @@ enum ORI { VER, HOR }  # 代表竖直方向  # 代表横向方向
 const DEF_BG_COLOR: Color = Color(&"ffffff36")
 
 var head_position: Vector2  # 首部坐标
+
+#region 要和全局加载配置的字典key值对应
 var id: String  # 唯一标识符
 var item_name: String  # 物品名称
 var descrip: String  # 物品描述
@@ -23,6 +25,7 @@ var orientation: int = ORI.VER  # 初始方向为竖着
 var stackable: bool  # 物品是否可堆叠
 var num: int = 1  # 物品数量
 var more_data: Resource  #更多详细数据
+#endregion
 
 
 func _ready() -> void:
@@ -133,3 +136,22 @@ func hide_bg_color() -> void:
 ## 显示背景颜色
 func show_bg_color() -> void:
 	bg_color.color = WItem.DEF_BG_COLOR
+
+
+## 适配容器大小，并缩放纹理
+func fit_to_container(container_size: Vector2) -> void:
+	# 调整物品自身大小以匹配容器
+	self.custom_minimum_size = container_size
+	self.size = container_size
+	# 确保纹理容器和纹理节点也随之调整
+	item_container.custom_minimum_size = container_size
+	item_container.size = container_size
+	texture_container.custom_minimum_size = container_size
+	texture_container.size = container_size
+	# ItemTexture 节点会根据其容器自动缩放，确保其 stretch_mode 正确设置
+	item_texture.custom_minimum_size = container_size
+	item_texture.size = container_size
+	item_texture.item_texture.size = container_size
+	item_texture.item_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	# 缩放
+	item_texture.scale_texture(container_size)

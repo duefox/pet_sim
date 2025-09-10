@@ -9,6 +9,9 @@ func _ready() -> void:
 	MouseEvent.mouse_cell_matrix = parent_cell_matrix
 
 
+func get_grid_size()->Vector2:
+	return self.size
+
 ## 更新tooltips文本
 func update_tooltip(text: String) -> void:
 	tooltip_text = text
@@ -26,7 +29,6 @@ func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		## 鼠标在物品节点范围内，按下左键，则更改鼠标的状态为抓取物品
 		if event.is_action_pressed("mouse_left") and not MouseEvent.is_mouse_drag():
-			#if event.button_index == MOUSE_BUTTON_LEFT && event.is_pressed() && !MouseEvent.is_mouse_drag():
 			GlobalData.previous_cell_matrix = parent_cell_matrix
 			var cur_item_data: ItemData = parent_cell_matrix.get_grid_map_item(cell_pos)
 			MouseEvent.is_mouse_down = true

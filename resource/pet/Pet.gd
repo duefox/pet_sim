@@ -132,8 +132,8 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 
 
 ## 设置容器ID
-func set_container_id(id: String):
-	_container_id = id
+func set_container_id(cid: String):
+	_container_id = cid
 
 
 ## 显示一些信息，方便查看调试
