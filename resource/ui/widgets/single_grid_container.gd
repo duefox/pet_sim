@@ -49,7 +49,7 @@ func add_item_at(cell_pos: Vector2, item: WItem) -> bool:
 ## 重写父类的 set_grid_map_item 方法，单格容器只需设置自己本身坐标格的信息
 ## 设置格子映射表的数据
 func set_grid_map_item(cell_pos: Vector2, item: WItem) -> void:
-	var temp: ItemData = grid_map.get(cell_pos)
+	var temp: WItemData = grid_map.get(cell_pos)
 	temp.is_placed = true
 	temp.link_item = item
 	# 更新相应格子的tool tips文本
@@ -93,7 +93,7 @@ func remove_item(cur_item: WItem) -> void:
 			items.erase(coords)
 			break
 	## 移除映射表的对应数据
-	var item_data: ItemData = grid_map.get(cur_item.head_position)
+	var item_data: WItemData = grid_map.get(cur_item.head_position)
 	# 注意这里需要移除的是有链接对象但是空间未占用的映射对象
 	if item_data and !item_data.is_placed:
 		item_data.link_item = null
@@ -108,7 +108,7 @@ func remove_item(cur_item: WItem) -> void:
 ## 重写父类的 can_place_item 方法，单格容器只用判定当前坐标即可
 func can_place_item(_item: WItem, first_cell_pos: Vector2) -> bool:
 	# 检查字典中是否已存在该位置的映射数据
-	var item_data: ItemData = grid_map.get(first_cell_pos)
+	var item_data: WItemData = grid_map.get(first_cell_pos)
 	# 如果该位置的is_placed为true，则表示格子被占用，不能放置
 	if item_data and item_data.is_placed:
 		return false

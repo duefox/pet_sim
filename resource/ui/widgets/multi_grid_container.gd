@@ -31,8 +31,8 @@ var cell_size: int = 48  #  容器的格子尺寸
 var grid_size: Vector2  #  多格子容器的大小
 var w_grid_size: Vector2  # 格子的大小
 var items: Dictionary[Vector2,WItem] = {}
-##  格子映射表, key为格子坐标，value为ItemData
-var grid_map: Dictionary[Vector2, ItemData] = {}
+##  格子映射表, key为格子坐标，value为WItemData
+var grid_map: Dictionary[Vector2, WItemData] = {}
 
 
 func _ready() -> void:
@@ -144,62 +144,9 @@ func add_new_item(item_id: String) -> bool:
 	return false
 
 
-## 自动合并所有可堆叠的物品
-func auto_stack_existing_items() -> void:
-	# 使用一个临时字典按物品ID分组
-	var stackable_items: Dictionary = {}
-
-	# 遍历items字典，将可堆叠物品按ID分组
-	for item_coords in items:
-		var item: WItem = items[item_coords]
-		if item.stackable:
-			if not stackable_items.has(item.id):
-				stackable_items[item.id] = []
-			stackable_items[item.id].append(item)
-
-	# 遍历分组后的物品，进行合并
-	for item_id in stackable_items:
-		var item_list: Array = stackable_items[item_id]
-		# 对物品列表进行排序，确保处理顺序
-		item_list.sort_custom(func(a, b): return a.num > b.num)
-
-		# 遍历列表中的每个物品，作为合并的源头
-		for i in range(item_list.size()):
-			var source_item: WItem = item_list[i]
-			# 只要源头物品还有数量，就继续尝试合并
-			if source_item.num <= 0:
-				continue
-
-			# 尝试将源头物品合并到其他同类堆叠中
-			for j in range(item_list.size()):
-				if i == j:
-					continue
-
-				var target_item: WItem = item_list[j]
-
-				# 如果目标堆叠已满，跳过
-				if target_item.num >= target_item.max_stack_size:
-					continue
-
-				# 计算可合并的数量
-				var amount_to_merge: int = min(target_item.max_stack_size - target_item.num, source_item.num)
-
-				if amount_to_merge > 0:
-					# 增加目标堆叠的数量
-					target_item.add_num(amount_to_merge)
-					# 减少源头物品的数量
-					source_item.add_num(-amount_to_merge)
-
-					# 如果源头物品数量归零，则移除该物品
-					if source_item.num <= 0:
-						print("####这里有bug————————————————————————————————")
-						#remove_item(source_item)
-						break
-
-
 ## 检查格子是否已被占用
 func check_cell(cell_pos: Vector2) -> bool:
-	var item_data: ItemData = grid_map.get(cell_pos)
+	var item_data: WItemData = grid_map.get(cell_pos)
 	return item_data.is_placed
 
 
@@ -230,7 +177,7 @@ func check_grid_map_item(cell_pos: Vector2):
 
 
 ## 获取格子数据映射表的某项数据
-func get_grid_map_item(cell_pos: Vector2) -> ItemData:
+func get_grid_map_item(cell_pos: Vector2) -> WItemData:
 	return grid_map.get(cell_pos)
 
 
@@ -241,7 +188,7 @@ func set_grid_map_item(cell_pos: Vector2, item: WItem) -> void:
 
 	for row in range(height):
 		for col in range(width):
-			var temp: ItemData = grid_map.get(Vector2(cell_pos.x + col, cell_pos.y + row))
+			var temp: WItemData = grid_map.get(Vector2(cell_pos.x + col, cell_pos.y + row))
 			temp.is_placed = true
 			temp.link_item = item
 			# 更新相应格子的tool tips文本
@@ -335,7 +282,7 @@ func remove_item(cur_item: WItem) -> void:
 	for y in range(int(cur_item.height)):
 		for x in range(int(cur_item.width)):
 			var cell_pos: Vector2 = cur_item.head_position + Vector2(x, y)
-			var item_data: ItemData = grid_map.get(cell_pos)
+			var item_data: WItemData = grid_map.get(cell_pos)
 			# 注意这里需要移除的是有链接对象但是空间未占用的映射对象
 			if item_data and !item_data.is_placed:
 				item_data.link_item = null
@@ -371,7 +318,7 @@ func can_place_item(item: WItem, first_cell_pos: Vector2) -> bool:
 				return false
 
 			# 检查字典中是否已存在该位置的映射数据
-			var item_data: ItemData = grid_map.get(current_cell_pos)
+			var item_data: WItemData = grid_map.get(current_cell_pos)
 
 			# 如果该位置的is_placed为true，则表示格子被占用，不能放置
 			if item_data and item_data.is_placed:
@@ -408,7 +355,7 @@ func _init_rend() -> void:
 
 		##  设置格子的行列位置
 		cell.cell_pos = Vector2(col, row)
-		var item_data: ItemData = ItemData.new(cell.cell_pos, cell, null)
+		var item_data: WItemData = WItemData.new(cell.cell_pos, cell, null)
 
 		##  存储格子引用到映射表
 		grid_map.set(cell.cell_pos, item_data)
@@ -429,6 +376,6 @@ func _clear_grid_container() -> void:
 ## 查看映射表
 func _look_grip_map() -> void:
 	for coords: Vector2 in grid_map:
-		var item_data: ItemData = grid_map.get(coords)
+		var item_data: WItemData = grid_map.get(coords)
 		print("coords:", coords, ",cell_pos:", item_data.cell_pos)
 		print("is_placed:", item_data.is_placed, ",item:", item_data.link_item)

@@ -31,7 +31,7 @@ func _on_gui_input(event: InputEvent) -> void:
 		## 鼠标在物品节点范围内，按下左键，则更改鼠标的状态为抓取物品
 		if event.is_action_pressed("mouse_left") and not MouseEvent.is_mouse_drag():
 			GlobalData.previous_cell_matrix = parent_cell_matrix
-			var cur_item_data: ItemData = parent_cell_matrix.get_grid_map_item(cell_pos)
+			var cur_item_data: WItemData = parent_cell_matrix.get_grid_map_item(cell_pos)
 			MouseEvent.is_mouse_down = true
 			MouseEvent.mouse_is_effective = cur_item_data.is_placed
 

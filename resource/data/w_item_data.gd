@@ -1,6 +1,6 @@
 ## 背包物品关联类
 extends Node
-class_name ItemData
+class_name WItemData
 
 var cell_pos: Vector2
 var is_placed: bool  # 此空间是否已占用

@@ -39,7 +39,7 @@ func _ready() -> void:
 	# 蛋
 	inventory_container.add_new_item("2001")
 	#inventory_container.add_new_item("2001")
-	#inventory_container.add_new_item("2002")
+	inventory_container.add_new_item("2002")
 	#inventory_container.add_new_item("2002")
 
 	for i in range(8):
@@ -49,7 +49,7 @@ func _ready() -> void:
 
 	await get_tree().create_timer(3.0).timeout
 	#
-	equipment_container.auto_stack_existing_items()
+	#equipment_container.auto_stack_existing_items()
 
 
 ## 退出处理订阅事件
@@ -95,7 +95,7 @@ func placement_overlay_process() -> void:
 		#检查坐标内的格子是不是空的
 		if MouseEvent.mouse_cell_matrix.check_cell(hand_pos):
 			#获取映射表中对应的单个格子数据
-			var item_data: ItemData = MouseEvent.mouse_cell_matrix.get_grid_map_item(hand_pos)
+			var item_data: WItemData = MouseEvent.mouse_cell_matrix.get_grid_map_item(hand_pos)
 			var item: WItem = item_data.link_item
 			#先判断是不是可堆叠的物品
 			var temp_bool: bool = item.stackable && held_item.stackable == item.stackable
@@ -176,7 +176,7 @@ func _handle_drop_item() -> void:
 	# 获取鼠标所在的格子容器节点
 	var mouse_cell_matrix: MultiGridContainer = MouseEvent.mouse_cell_matrix
 	# 获取鼠标所在的格子容器内的单个格子映射表数据
-	var mouse_item_data: ItemData = mouse_cell_matrix.get_grid_map_item(mouse_cell_pos)
+	var mouse_item_data: WItemData = mouse_cell_matrix.get_grid_map_item(mouse_cell_pos)
 	# 物品堆叠判定
 	if cur_item != null && mouse_item_data.link_item is WItem:
 		var item: WItem = mouse_item_data.link_item
@@ -195,7 +195,7 @@ func _handle_drop_item() -> void:
 
 	# 鼠标松开时，尝试放置物品
 	if mouse_cell_matrix.add_new_item_in_data(first_cell_pos, held_item.get_data()):
-		var item_data: ItemData = mouse_cell_matrix.get_grid_map_item(first_cell_pos)
+		var item_data: WItemData = mouse_cell_matrix.get_grid_map_item(first_cell_pos)
 		# 放下后矫正该物品的纹理位置和旋转
 		item_data.link_item.set_texture_container_offset_and_rotation()
 		# 处理选中物品
