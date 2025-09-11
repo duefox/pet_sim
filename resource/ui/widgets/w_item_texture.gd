@@ -12,10 +12,12 @@ func set_texture(texture_data: Variant) -> void:
 		atlas_texture.atlas = texture
 		item_texture.texture = atlas_texture
 		var atlas_size: Vector2 = atlas_texture.get_size()
-		var atlas_cell_size: Vector2i = Vector2i(atlas_size / Vector2(texture_data.hframes, texture_data.vframes))
-		var region: Rect2 = Rect2(Vector2(0.0, 0.0), Vector2(texture_data.width, texture_data.height) * GlobalData.cell_size)
-		if atlas_cell_size.x < GlobalData.cell_size:
-			region = Rect2(Vector2(0.0, 0.0), Vector2(texture_data.width, texture_data.height) * Vector2(atlas_cell_size))
+		var atlas_cell_size: int = int(atlas_size.x / texture_data.hframes)
+		# 取其中较小的值作为系数
+		var cell_size: int = mini(atlas_cell_size, GlobalData.cell_size)
+		# 纹理裁剪位置
+		var region_coords: Vector2 = Vector2(atlas_cell_size * (texture_data.frame % texture_data.hframes), atlas_cell_size * (texture_data.frame / texture_data.hframes))
+		var region: Rect2 = Rect2(region_coords, Vector2(texture_data.width, texture_data.height) * Vector2(cell_size, cell_size))
 		atlas_texture.region = region
 
 	elif texture_data is CompressedTexture2D:

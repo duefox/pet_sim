@@ -32,6 +32,7 @@ func create_textures_item(res_data: Resource = null) -> void:
 		"name": res_data.nickname,
 		"hframes": res_data.hframes,  # 行
 		"vframes": res_data.vframes,  # 列
+		"frame": res_data.frame,  # 所在帧的序号
 	}
 	var space_width: int = res_data.width
 	var space_height: int = res_data.height
