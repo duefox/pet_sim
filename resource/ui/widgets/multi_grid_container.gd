@@ -93,26 +93,91 @@ func set_scroll_container() -> void:
 	scroll_container.custom_minimum_size = grid_size
 
 
-## 新增物品，如果可堆叠则尝试合并，否则自动寻找空位
-func add_item_with_merge(item_id: String) -> bool:
-	var item_data: Dictionary = GlobalData.find_item_data(item_id)
+## 自动合并所有可堆叠的物品并重新排列
+func auto_stack_existing_items() -> void:
+	# 1. 临时存储合并后的物品数据，分别用两个变量存储
+	var merged_stackable_items: Dictionary[String, Dictionary] = {}
+	var non_stackable_items: Array[Dictionary] = []
 
-	if not item_data:
-		push_error("Item data not found for ID: " + item_id)
-		return false
+	for item_coords in items:
+		var item: WItem = items[item_coords]
+		var item_data: Dictionary = item.get_data().duplicate(true)
+		if item.stackable:
+			if not merged_stackable_items.has(item.id):
+				merged_stackable_items[item.id] = item_data
+			else:
+				merged_stackable_items[item.id].num += item_data.num
+		else:
+			non_stackable_items.append(item_data)
 
-	# 如果物品可堆叠，尝试与已存在的同类物品合并
-	if item_data.get("stackable", false):
-		for stack_item in items.values():
-			# 检查物品ID是否相同且未达到最大堆叠数量
-			if stack_item.id == item_id and stack_item.num < stack_item.max_stack_size:
-				# 找到可合并的物品，进行合并
-				stack_item.add_num(1)
-				#print("Successfully merged item " + item_id + " to stack at " + str(stack_item.head_position))
-				return true
+	# 2. 清空当前容器的所有物品和映射表
+	_clear_all_items()
 
-	# 如果物品不可堆叠，或者没有找到可合并的物品，则寻找空位放置
-	return add_new_item(item_id)
+	# 3. 按照合并后的数据重新创建并放置物品
+	var sorted_stackable_items: Array[Dictionary] = merged_stackable_items.values()
+	# 4. 按id排序
+	sorted_stackable_items.sort_custom(func(a, b): return a.id > b.id)
+	#print("sorted_stackable_items:", sorted_stackable_items)
+	#print("non_stackable_items:", non_stackable_items)
+	# 5. 调用add_item_with_merge添加到容器中
+	# 5.1 处理可堆叠物品
+	for stack_item: Dictionary in sorted_stackable_items:
+		add_item_with_merge(stack_item.id, stack_item.num)
+	# 5.2 处理不可堆叠物品
+	for no_stack_item: Dictionary in non_stackable_items:
+		add_item_with_merge(no_stack_item.id, no_stack_item.num)
+
+
+## 新增物品，如果可合并则堆叠，不需要指定位置
+## @param item_id: 物品的唯一id
+## @param num: 物品的数量
+func add_item_with_merge(item_id: String, num: int = 1) -> bool:
+	var remaining_items: int = num
+
+	# 步骤1: 遍历所有格子，尝试合并到现有物品堆叠中
+	for item_data in grid_map.values():
+		if item_data and item_data.link_item:
+			var item: WItem = item_data.link_item
+			# 检查是否为同种物品且可堆叠
+			if item.id == item_id and item.stackable:
+				remaining_items = item.add_num(remaining_items)
+				if remaining_items == 0:
+					return true  # 全部合并成功
+
+	# 步骤2: 如果还有剩余物品，则寻找空位并添加新物品
+	while remaining_items > 0:
+		var empty_pos: Vector2 = get_next_available_position()
+		if empty_pos == -Vector2.ONE:
+			return false  # 没有空位了
+
+		var new_item_data: Dictionary = GlobalData.find_item_data(item_id)
+		if not new_item_data:
+			push_error("Item data not found for id: ", item_id)
+			return false
+
+		var num_to_add: int = min(remaining_items, WItem.new().max_stack_size)
+		new_item_data.num = num_to_add
+
+		# 放置新物品
+		var success: bool = add_new_item_in_data(empty_pos, new_item_data)
+		if not success:
+			return false  # 放置失败，中断
+
+		remaining_items -= num_to_add
+
+	return true
+
+
+## 查找下一个可用的空位
+func get_next_available_position() -> Vector2:
+	# 遍历所有格子，寻找第一个is_placed为false的空位
+	for y in range(grid_row):
+		for x in range(grid_col):
+			var cell_pos: Vector2 = Vector2(x, y)
+			var item_data: WItemData = get_grid_map_item(cell_pos)
+			if item_data and not item_data.is_placed:
+				return cell_pos
+	return -Vector2.ONE  # 没有找到可用的位置
 
 
 ## 新增物品，并自动查找最近的可用位置
@@ -233,6 +298,10 @@ func add_new_item_at(cell_pos: Vector2, item_id: String) -> bool:
 
 ## 根据data新建一个物品并放置到多格子容器中
 func add_new_item_in_data(cell_pos: Vector2, data: Dictionary) -> bool:
+	# 检查格子是否已被占用
+	var item_data: WItemData = grid_map.get(cell_pos)
+	if item_data and item_data.is_placed:
+		return false
 	# 是否超边界
 	if !check_grid_map_item(cell_pos):
 		return false
@@ -379,3 +448,20 @@ func _look_grip_map() -> void:
 		var item_data: WItemData = grid_map.get(coords)
 		print("coords:", coords, ",cell_pos:", item_data.cell_pos)
 		print("is_placed:", item_data.is_placed, ",item:", item_data.link_item)
+
+
+## 清除所有物品节点和数据
+func _clear_all_items() -> void:
+	for item in items.values():
+		if is_instance_valid(item):
+			item.queue_free()
+
+	items.clear()
+
+	# 移除映射表的对应数据
+	for item_data in grid_map.values():
+		if item_data:
+			item_data.is_placed = false
+			item_data.link_item = null
+			if is_instance_valid(item_data.link_grid):
+				item_data.link_grid.update_tooltip("")

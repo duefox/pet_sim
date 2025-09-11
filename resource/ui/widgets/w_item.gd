@@ -129,13 +129,23 @@ func get_data() -> Dictionary:
 
 
 ## 增减物品数量(可堆叠的前提下)
-func add_num(n: int) -> void:
-	if stackable:
-		# 确保数量不会超过最大堆叠上限
-		num = min(num + n, max_stack_size)
-		#更新标签数据
-		set_label_data()
+## @return int 返回堆叠后剩余的数量，如果全部堆叠成功则返回0
+func add_num(n: int) -> int:
+	if not stackable:
+		return n
 
+	var remaining_space: int = max_stack_size - num
+	if n <= remaining_space:
+		# 如果新增数量未超过剩余空间，则全部堆叠
+		num += n
+		set_label_data()
+		return 0
+	else:
+		# 如果新增数量超过了剩余空间，则填满当前堆叠，并返回剩余数量
+		var remaining_items: int = n - remaining_space
+		num = max_stack_size
+		set_label_data()
+		return remaining_items
 
 ## 隐藏背景颜色
 func hide_bg_color() -> void:

@@ -36,20 +36,23 @@ func _ready() -> void:
 	# 鱼
 	equipment_container.add_new_item_at(Vector2(0, 0), "1002")
 	equipment_container.add_new_item("1001")
+	equipment_container.add_new_item("2001")
 	# 蛋
 	inventory_container.add_new_item("2001")
 	#inventory_container.add_new_item("2001")
 	inventory_container.add_new_item("2002")
 	#inventory_container.add_new_item("2002")
+	inventory_container.add_item_with_merge("1001", 10)
 
-	for i in range(8):
+	for i in range(5):
 		inventory_container.add_new_item("1001")
-		inventory_container.add_new_item("1002")
-		equipment_container.add_new_item("1001")
+		#inventory_container.add_new_item("1002")
+		equipment_container.add_item_with_merge("1001", 3)
 
 	await get_tree().create_timer(3.0).timeout
-	#
+	# 测试整理功能
 	#equipment_container.auto_stack_existing_items()
+	#inventory_container.auto_stack_existing_items()
 
 
 ## 退出处理订阅事件
