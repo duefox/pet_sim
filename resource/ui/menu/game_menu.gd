@@ -34,20 +34,22 @@ func _ready() -> void:
 	#inventory_container.add_new_item_at(Vector2(0, 0), "1002")
 	#inventory_container.add_new_item_at(Vector2(0, 1), "1002")
 	# 鱼
-	equipment_container.add_new_item_at(Vector2(0, 0), "1002")
-	equipment_container.add_new_item("1001")
-	equipment_container.add_new_item("2001")
+	#equipment_container.add_new_item_at(Vector2(0, 0), "1002")
+	#equipment_container.add_item("1001")
+	#equipment_container.add_item("2001")
 	# 蛋
-	inventory_container.add_new_item("2001")
-	#inventory_container.add_new_item("2001")
-	inventory_container.add_new_item("2002")
-	#inventory_container.add_new_item("2002")
-	inventory_container.add_item_with_merge("1001", 10)
+	#inventory_container.add_item("2001")
+	#inventory_container.add_item("2001")
+	#inventory_container.add_item("2002")
+	#inventory_container.add_item("2002")
+	inventory_container.add_item_with_merge("1001", 11)
 
-	for i in range(5):
-		inventory_container.add_new_item("1001")
-		#inventory_container.add_new_item("1002")
-		equipment_container.add_item_with_merge("1001", 3)
+	for i in range(2):
+		inventory_container.add_item("1001")
+		inventory_container.add_item("2001")
+		inventory_container.add_item("2002")
+		inventory_container.add_item("1002")
+		equipment_container.add_item_with_merge("1001", 5)
 
 	await get_tree().create_timer(3.0).timeout
 	# 测试整理功能
@@ -101,9 +103,9 @@ func placement_overlay_process() -> void:
 			var item_data: WItemData = MouseEvent.mouse_cell_matrix.get_grid_map_item(hand_pos)
 			var item: WItem = item_data.link_item
 			#先判断是不是可堆叠的物品
-			var temp_bool: bool = item.stackable && held_item.stackable == item.stackable
-			#抓取物品和目标物品id一致且都可堆叠，将放置提示设置为绿色
-			if item.id == held_item.id && temp_bool:
+			var temp_bool: bool = item.stackable and held_item.stackable == item.stackable
+			#抓取物品和目标物品id一致且都可堆叠并且没有达到最大堆叠数量，将放置提示设置为绿色
+			if item.id == held_item.id and temp_bool and item.num < item.max_stack_size:
 				color_type = MultiGridContainer.TYPE_COLOR.SUCCESS
 		else:
 			#如果格子是空的，则对 映射表 按照 首部坐标 和 物品的宽高 所形成的矩形进行范围内扫描
@@ -171,7 +173,7 @@ func _input(event: InputEvent) -> void:
 
 
 ## 放置物品到多格容器
-func _handle_drop_item() -> void:
+func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 	# 获取上一次操作的物品节点
 	var cur_item: WItem = GlobalData.previous_item
 	# 获取鼠标进入的格子坐标
@@ -186,12 +188,22 @@ func _handle_drop_item() -> void:
 		# 上一个物品不能等于鼠标当前进入格子内的物品
 		if !cur_item == item:
 			var bool_value: bool = item.stackable && cur_item.stackable == item.stackable
+			# 物品堆叠处理
 			if cur_item.id == item.id && bool_value:
-				item.add_num(cur_item.num)
-				# 数量合并完毕后，移除原节点，并隐藏抓取物品节点
-				GlobalData.previous_cell_matrix.remove_item(cur_item)
-				hide_held_item()
-				return
+				# 调用 add_num 函数并获取剩余物品数量
+				var remaining_items: int = item.add_num(cur_item.num)
+				if remaining_items == 0:
+					# 如果剩余数量为0，表示全部合并成功
+					GlobalData.previous_cell_matrix.remove_item(cur_item)
+					hide_held_item()
+					return
+				else:
+					# 如果有剩余数量，更新原物品数量并将其放回原位
+					cur_item.num = remaining_items
+					cur_item.set_label_data()
+					_item_put_back(cur_item)
+					hide_held_item()
+					return
 
 	# 计算放置时的首部坐标偏移，得到置入坐标
 	var first_cell_pos: Vector2 = mouse_cell_matrix.get_first_cell_pos_offset(held_item, mouse_cell_pos)

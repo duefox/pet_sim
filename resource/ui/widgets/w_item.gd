@@ -53,7 +53,8 @@ func set_label_data() -> void:
 
 ## 强制显示数量
 func show_item_num() -> void:
-	item_num_label.visible = true
+	if stackable:
+		item_num_label.visible = true
 
 
 ## 旋转物品
@@ -146,6 +147,7 @@ func add_num(n: int) -> int:
 		num = max_stack_size
 		set_label_data()
 		return remaining_items
+
 
 ## 隐藏背景颜色
 func hide_bg_color() -> void:

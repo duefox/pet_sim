@@ -148,6 +148,8 @@ func add_item_with_merge(item_id: String, num: int = 1) -> bool:
 	while remaining_items > 0:
 		var empty_pos: Vector2 = get_next_available_position()
 		if empty_pos == -Vector2.ONE:
+			# 如果没有找到任何可用位置，发出信号
+			EventManager.emit_event(UIEvent.INVENTORY_FULL, self)
 			return false  # 没有空位了
 
 		var new_item_data: Dictionary = GlobalData.find_item_data(item_id)
@@ -180,13 +182,17 @@ func get_next_available_position() -> Vector2:
 	return -Vector2.ONE  # 没有找到可用的位置
 
 
-## 新增物品，并自动查找最近的可用位置
-func add_new_item(item_id: String) -> bool:
+## 新增一个物品，并自动查找最近的可用位置。
+## 新增的个数固定为1个，一般用于不可堆叠物品，可堆叠物品请用add_item_with_merge
+## @param item_id: 物品的唯一id
+func add_item(item_id: String) -> bool:
 	var item_data: Dictionary = GlobalData.find_item_data(item_id)
-
+	
 	if not item_data:
 		push_error("Item data not found for ID: " + item_id)
 		return false
+	# 新增的个数固定为1
+	item_data.num = 1
 
 	# 模拟创建一个临时的 WItem 实例以获取其尺寸，之后不会添加到场景中
 	var temp_item: WItem = item_scene.instantiate()
@@ -199,7 +205,8 @@ func add_new_item(item_id: String) -> bool:
 			# 使用新函数检查该位置是否可以放置
 			if can_place_item(temp_item, first_cell_pos):
 				# 找到合适位置后，调用现有函数放置物品并返回
-				add_new_item_at(first_cell_pos, item_id)
+				#add_new_item_at(first_cell_pos, item_id)
+				add_new_item_in_data(first_cell_pos, item_data)
 				temp_item.queue_free()
 				return true
 
