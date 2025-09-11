@@ -33,20 +33,23 @@ func _ready() -> void:
 	#inventory_container.add_new_item_at(Vector2(4, 2), "1001")
 	#inventory_container.add_new_item_at(Vector2(0, 0), "1002")
 	#inventory_container.add_new_item_at(Vector2(0, 1), "1002")
-	#
+	# 鱼
 	equipment_container.add_new_item_at(Vector2(0, 0), "1002")
 	equipment_container.add_new_item("1001")
+	# 蛋
+	inventory_container.add_new_item("2001")
+	#inventory_container.add_new_item("2001")
+	#inventory_container.add_new_item("2002")
+	#inventory_container.add_new_item("2002")
 
 	for i in range(8):
 		inventory_container.add_new_item("1001")
 		inventory_container.add_new_item("1002")
 		equipment_container.add_new_item("1001")
-		
+
 	await get_tree().create_timer(3.0).timeout
 	#
 	equipment_container.auto_stack_existing_items()
-	
-
 
 
 ## 退出处理订阅事件
@@ -70,6 +73,7 @@ func set_held_item_data(data: Dictionary) -> void:
 	held_item.set_data(data)
 	held_item.setup()
 	held_item.set_texture_container_offset_and_rotation()
+	held_item.show_item_num()
 
 
 ## 将抓取的物品进行旋转同步(显示层)

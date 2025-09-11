@@ -29,14 +29,14 @@ func create_textures_item(res_data: Resource = null) -> void:
 	# 资源数据
 	res_data = res_data as ItemBaseData
 	var texture_data: Dictionary = {
-		#"id": res_data.id.to_int(),
 		"name": res_data.nickname,
+		"hframes": res_data.hframes,  # 行
+		"vframes": res_data.vframes,  # 列
 	}
 	var space_width: int = res_data.width
 	var space_height: int = res_data.height
-	# 宠物有成长值，可能不同阶段的贴图不一样，体型和占用空间也不一样
-	if res_data is PetData:
-		res_data = res_data as PetData
+	# 有成长值，可能不同阶段的贴图不一样，体型和占用空间也不一样
+	if res_data is PetData or res_data is EggData:
 		var initial_growth: float = res_data.initial_growth
 		# 成年了
 		if initial_growth == res_data.adult_growth_threshold:
@@ -47,13 +47,14 @@ func create_textures_item(res_data: Resource = null) -> void:
 			# 重置占用空间大小
 			space_width = _get_juvenile_space(res_data.width)
 			space_height = _get_juvenile_space(res_data.height)
-
 		# 默认贴图
 		else:
 			texture_data.set("texture", res_data.texture)
 			# 重置占用空间大小
 			space_width = _get_juvenile_space(res_data.width)
 			space_height = _get_juvenile_space(res_data.height)
+	else:
+		texture_data.set("texture", res_data.texture)
 
 	texture_data.set("width", space_width)
 	texture_data.set("height", space_height)

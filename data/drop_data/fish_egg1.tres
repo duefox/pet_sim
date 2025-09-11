@@ -5,12 +5,18 @@
 
 [resource]
 script = ExtResource("1_c66aa")
-id = &"2002"
 kind = 2
-name = "鱼蛋"
 lifetime = -1.0
+id = &"2002"
+nickname = "鱼蛋2"
+descrip = "这是一颗杂色的蛋"
 texture = ExtResource("2_hb7nq")
 hframes = 4
 vframes = 1
 frame = 2
+width = 1
+height = 1
+orientation = 0
+stackable = false
+max_stack_size = 9
 metadata/_custom_type_script = "uid://c615ei77is4nh"

@@ -11,7 +11,11 @@ func set_texture(texture_data: Variant) -> void:
 		var texture: CompressedTexture2D = texture_data.get("texture", item_texture.texture)
 		atlas_texture.atlas = texture
 		item_texture.texture = atlas_texture
+		var atlas_size: Vector2 = atlas_texture.get_size()
+		var atlas_cell_size: Vector2i = Vector2i(atlas_size / Vector2(texture_data.hframes, texture_data.vframes))
 		var region: Rect2 = Rect2(Vector2(0.0, 0.0), Vector2(texture_data.width, texture_data.height) * GlobalData.cell_size)
+		if atlas_cell_size.x < GlobalData.cell_size:
+			region = Rect2(Vector2(0.0, 0.0), Vector2(texture_data.width, texture_data.height) * Vector2(atlas_cell_size))
 		atlas_texture.region = region
 
 	elif texture_data is CompressedTexture2D:

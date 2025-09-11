@@ -51,6 +51,11 @@ func set_label_data() -> void:
 		item_num_label.visible = false
 
 
+## 强制显示数量
+func show_item_num() -> void:
+	item_num_label.visible = true
+
+
 ## 旋转物品
 func rotation_item() -> void:
 	if orientation == WItem.ORI.HOR:
