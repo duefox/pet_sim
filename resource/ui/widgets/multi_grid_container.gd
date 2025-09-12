@@ -120,7 +120,7 @@ func auto_stack_existing_items() -> void:
 	# 3. 按照合并后的数据重新创建并放置物品
 	var sorted_stackable_items: Array[Dictionary] = merged_stackable_items.values()
 	# 4. 按id排序
-	sorted_stackable_items.sort_custom(func(a, b): return a.id > b.id)
+	sorted_stackable_items.sort_custom(func(a, b): return a.id < b.id)
 	#print("sorted_stackable_items:", sorted_stackable_items)
 	#print("non_stackable_items:", non_stackable_items)
 	# 5. 调用add_item_with_merge添加到容器中

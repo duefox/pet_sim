@@ -2,11 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://ixsr2gblswwt" path="res://resource/ui/menu/game/gold_bar.tscn" id="1_atan1"]
 [ext_resource type="Script" uid="uid://xamfug8ggsyt" path="res://resource/ui/menu/game_menu.gd" id="1_hlcy5"]
-[ext_resource type="PackedScene" uid="uid://cvoygtt76yv4j" path="res://resource/ui/menu/game/equipment_bar.tscn" id="2_pvav3"]
+[ext_resource type="PackedScene" uid="uid://dd0inoc7map8p" path="res://resource/ui/widgets/container/w_item.tscn" id="2_hlcy5"]
 [ext_resource type="PackedScene" uid="uid://bisaxuna7ri5q" path="res://resource/ui/menu/game/info_bar.tscn" id="3_wuobc"]
-[ext_resource type="PackedScene" uid="uid://d0rx71av14m2k" path="res://resource/ui/menu/game/inventory_bar.tscn" id="4_1qdxe"]
 [ext_resource type="PackedScene" uid="uid://ca4yfgr8p3gi" path="res://resource/ui/menu/game/navigation_bar.tscn" id="6_hlcy5"]
-[ext_resource type="PackedScene" uid="uid://c07s5fxqsda0i" path="res://resource/ui/menu/game/packback_bar.tscn" id="7_jgqhp"]
+[ext_resource type="PackedScene" uid="uid://dxacgbdobqbph" path="res://resource/ui/menu/game/grid_box_bar.tscn" id="6_jgqhp"]
+[ext_resource type="Script" uid="uid://d075t7ogwalmn" path="res://resource/ui/menu/game/grid_box_bar.gd" id="7_jgqhp"]
 
 [node name="GameMenu" type="Control"]
 layout_mode = 3
@@ -16,6 +16,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hlcy5")
+held_scene = ExtResource("2_hlcy5")
 
 [node name="BGColor" type="ColorRect" parent="."]
 layout_mode = 1
@@ -32,32 +33,20 @@ unique_name_in_owner = true
 layout_mode = 1
 metadata/_edit_lock_ = true
 
-[node name="EquipmentBar" parent="." instance=ExtResource("2_pvav3")]
-unique_name_in_owner = true
-layout_mode = 1
-
 [node name="InfoBar" parent="." instance=ExtResource("3_wuobc")]
 unique_name_in_owner = true
 layout_mode = 1
 metadata/_edit_lock_ = true
 
-[node name="InventoryBar" parent="." instance=ExtResource("4_1qdxe")]
-unique_name_in_owner = true
-layout_mode = 1
-metadata/_edit_lock_ = true
-
 [node name="NavigationBar" parent="." instance=ExtResource("6_hlcy5")]
+unique_name_in_owner = true
+visible = false
 layout_mode = 0
 metadata/_edit_lock_ = true
 
-[node name="BackpackBar" parent="." instance=ExtResource("7_jgqhp")]
-visible = false
+[node name="GridBoxBar" parent="." instance=ExtResource("6_jgqhp")]
+unique_name_in_owner = true
 layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = -20.0
-offset_bottom = 20.0
-grow_vertical = 2
+script = ExtResource("7_jgqhp")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

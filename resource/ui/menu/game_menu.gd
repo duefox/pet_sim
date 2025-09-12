@@ -1,18 +1,23 @@
+## 游戏主场景菜单，管理游戏内主场景内所有菜单栏，快捷栏，背包栏，仓库栏等等
 extends Control
 class_name GameMenu
 
-## 物品场景
-const ITEM_SCENE: PackedScene = preload("res://resource/ui/widgets/w_item.tscn")
-
 @onready var gold_bar: Control = %GoldBar
-@onready var equipment_bar: EquipmentBar = %EquipmentBar
 @onready var info_bar: Control = %InfoBar
-@onready var inventory_bar: InventoryBar = %InventoryBar
+@onready var navigation_bar: Control = %NavigationBar
+@onready var grid_box_bar: GridBoxBar = %GridBoxBar
+
+
+
+## held item场景
+@export var held_scene: PackedScene
 
 ## 仓库的多格子容器
-var inventory_container: MultiGridContainer
-## 装备工具栏
-var equipment_container: MultiGridContainer
+var inventory: MultiGridContainer
+## 背包
+var backpack: MultiGridContainer
+## 快捷工具栏
+var quick_tools: MultiGridContainer
 ## 抓取的物品
 var held_item: WItem
 
@@ -24,37 +29,31 @@ func _ready() -> void:
 	EventManager.subscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
 
 	# 获得仓库的容器
-	inventory_container = inventory_bar.get_item_container()
-	equipment_container = equipment_bar.get_item_container()
+	inventory = grid_box_bar.get_inventory()
+	backpack = grid_box_bar.get_backpack()
+	quick_tools = grid_box_bar.get_quick_tool()
 	# 初始化抓取物品
 	_init_held_item()
-	# 放置初始物品
-	inventory_container.add_new_item_at(Vector2(2, 0), "1001")
-	#inventory_container.add_new_item_at(Vector2(4, 2), "1001")
-	#inventory_container.add_new_item_at(Vector2(0, 0), "1002")
-	#inventory_container.add_new_item_at(Vector2(0, 1), "1002")
-	# 鱼
-	#equipment_container.add_new_item_at(Vector2(0, 0), "1002")
-	#equipment_container.add_item("1001")
-	#equipment_container.add_item("2001")
-	# 蛋
-	#inventory_container.add_item("2001")
-	#inventory_container.add_item("2001")
-	#inventory_container.add_item("2002")
-	#inventory_container.add_item("2002")
-	inventory_container.add_item_with_merge("1001", 11)
+	# 仓库
+	inventory.add_new_item_at(Vector2(2, 0), "1001")
+	inventory.add_item("1001")
+	#inventory.add_item("2002")
+	# 快捷栏
+	quick_tools.add_new_item_at(Vector2(0, 0), "1002")
+	quick_tools.add_item("1001")
+	quick_tools.add_item("2001")
+	# 背包
+	backpack.add_item("1002")
+	backpack.add_item("2001")
+	backpack.add_item_with_merge("1001", 11)
 
 	for i in range(2):
-		inventory_container.add_item("1001")
-		inventory_container.add_item("2001")
-		inventory_container.add_item("2002")
-		inventory_container.add_item("1002")
-		equipment_container.add_item_with_merge("1001", 5)
-
-	await get_tree().create_timer(3.0).timeout
-	# 测试整理功能
-	#equipment_container.auto_stack_existing_items()
-	#inventory_container.auto_stack_existing_items()
+		inventory.add_item("1001")
+		inventory.add_item("2001")
+		inventory.add_item("2002")
+		inventory.add_item("1002")
+		backpack.add_item("2002")
+		quick_tools.add_item_with_merge("1001", 5)
 
 
 ## 退出处理订阅事件
@@ -112,13 +111,13 @@ func placement_overlay_process() -> void:
 			if MouseEvent.mouse_cell_matrix.scan_grid_map_area(hand_pos, held_item):
 				#扫描范围内的格子都为空，即代表允许放置物品，设提示为绿色
 				color_type = MultiGridContainer.TYPE_COLOR.SUCCESS
-	#设置对应inventory_container内的放置提示框
+	#设置对应inventory内的放置提示框
 	MouseEvent.mouse_cell_matrix.set_placement_overlay(color_type, held_item, hand_pos)
 	#显示该放置提示框
 	MouseEvent.mouse_cell_matrix.startup_placement_overlay()
 	#获取UI节点下的第一层子节点，遍历它们
 	for child in get_children():
-		#将与目标不一致的inventory_container节点的放置提示框设置为不可见
+		#将与目标不一致的inventory节点的放置提示框设置为不可见
 		if child != MouseEvent.mouse_cell_matrix && child is MultiGridContainer:
 			child.off_placement_overlay()
 
@@ -138,7 +137,7 @@ func _on_gui_input(event: InputEvent) -> void:
 				held_item.visible = true
 				#隐藏抓取物品的背景颜色
 				held_item.hide_bg_color()
-				#当进入的inventory_container不一致或格子坐标和上一次不一致时，更新放置提示框(用于减少触发频率，显示层)
+				#当进入的inventory不一致或格子坐标和上一次不一致时，更新放置提示框(用于减少触发频率，显示层)
 				var bool_value: bool = MouseEvent.mouse_cell_matrix != GlobalData.previous_cell_matrix
 				if MouseEvent.mouse_cell_pos != GlobalData.prent_cell_pos || bool_value:
 					GlobalData.prent_cell_pos = MouseEvent.mouse_cell_pos
@@ -252,7 +251,7 @@ func _handle_selected_item(item: WItem) -> void:
 
 ## 初始化被抓取的物品
 func _init_held_item() -> void:
-	held_item = ITEM_SCENE.instantiate()
+	held_item = held_scene.instantiate()
 	add_child(held_item)
 	hide_held_item()
 	held_item.set_data(GlobalData.find_item_data("1001"))

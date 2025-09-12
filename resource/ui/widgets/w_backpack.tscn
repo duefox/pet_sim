@@ -1,0 +1,165 @@
+[gd_scene load_steps=24 format=3 uid="uid://c07s5fxqsda0i"]
+
+[ext_resource type="Script" uid="uid://cjx1t15khjhdn" path="res://resource/ui/widgets/w_backpack.gd" id="1_1fi2c"]
+[ext_resource type="Texture2D" uid="uid://bsask3iusjohx" path="res://themes/wood/graphics/expandBtnDisabled.png" id="1_ld7vg"]
+[ext_resource type="Texture2D" uid="uid://d05g6gyhk8t6j" path="res://themes/wood/graphics/expandBtnOver.png" id="2_1fi2c"]
+[ext_resource type="Texture2D" uid="uid://chq8lw3dm6ppa" path="res://themes/wood/graphics/expandBtnPressed.png" id="3_vrtja"]
+[ext_resource type="Texture2D" uid="uid://dc2dhq7qhfvec" path="res://themes/wood/graphics/expandBtnNormal.png" id="4_8uq2e"]
+[ext_resource type="Script" uid="uid://g0cotbm5t03y" path="res://resource/components/ui/buttons/button_expand.gd" id="5_l5v4x"]
+[ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="6_i78eo"]
+[ext_resource type="PackedScene" uid="uid://cs2wpwfuk23x3" path="res://resource/ui/widgets/multi_grid_container.tscn" id="7_pytgu"]
+[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="9_pytgu"]
+[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="10_km6t3"]
+[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="11_128hq"]
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="12_n80vg"]
+[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="13_4sgyt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1fi2c"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
+texture = ExtResource("1_ld7vg")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uf7ap"]
+texture = ExtResource("2_1fi2c")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ihut6"]
+texture = ExtResource("3_vrtja")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxv3c"]
+texture = ExtResource("4_8uq2e")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dmtpy"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
+texture = ExtResource("9_pytgu")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
+texture = ExtResource("10_km6t3")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
+texture = ExtResource("11_128hq")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("12_n80vg")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[node name="WBackpack" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+mouse_filter = 1
+script = ExtResource("1_1fi2c")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -288.0
+offset_right = 288.0
+offset_bottom = 82.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="IconContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_right = -16
+
+[node name="IconDescrip" type="Button" parent="MarginContainer/HBoxContainer/IconContainer"]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+tooltip_text = "背包工具栏
+快捷键 [b][color=white]B[/color][/b]"
+theme_override_font_sizes/font_size = 18
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1fi2c")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
+theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
+theme_override_styles/normal = SubResource("StyleBoxTexture_hxv3c")
+text = "背
+包"
+icon_alignment = 1
+script = ExtResource("5_l5v4x")
+metadata/_custom_type_script = "uid://g0cotbm5t03y"
+
+[node name="PackbackMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PackbackBG" type="NinePatchRect" parent="MarginContainer/HBoxContainer/PackbackMargin"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 52)
+layout_mode = 2
+texture = ExtResource("6_i78eo")
+region_rect = Rect2(76, 726, 58, 58)
+patch_margin_left = 20
+patch_margin_top = 20
+patch_margin_right = 20
+patch_margin_bottom = 20
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/PackbackMargin"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="PackbackContainer" parent="MarginContainer/HBoxContainer/PackbackMargin/MarginContainer" instance=ExtResource("7_pytgu")]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+grid_row = 6
+grid_col = 12
+max_scroll_grid = 6
+
+[node name="BtnsMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/BtnsMargin"]
+layout_mode = 2
+
+[node name="BtnSort" type="Button" parent="MarginContainer/HBoxContainer/BtnsMargin/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dmtpy")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+text = "整理"
+script = ExtResource("13_4sgyt")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/BtnsMargin/HBoxContainer/BtnSort" to="." method="_on_btn_sort_pressed"]

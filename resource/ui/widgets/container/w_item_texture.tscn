@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://1x07fx41u2or"]
 
-[ext_resource type="Script" uid="uid://bjfsgn4dptug1" path="res://resource/ui/widgets/w_item_texture.gd" id="1_n7s3b"]
+[ext_resource type="Script" uid="uid://bjfsgn4dptug1" path="res://resource/ui/widgets/container/w_item_texture.gd" id="1_n7s3b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1r2yy"]
 region = Rect2(0, 0, 48, 48)

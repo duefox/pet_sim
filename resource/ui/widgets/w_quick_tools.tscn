@@ -1,29 +1,29 @@
 [gd_scene load_steps=14 format=3 uid="uid://cvoygtt76yv4j"]
 
-[ext_resource type="Script" uid="uid://brcl2x0yro6es" path="res://resource/ui/menu/game/equipment_bar.gd" id="1_lkgqv"]
-[ext_resource type="Texture2D" uid="uid://bsask3iusjohx" path="res://themes/wood/graphics/expandBtnDisabled.png" id="1_sdyvl"]
-[ext_resource type="Texture2D" uid="uid://d05g6gyhk8t6j" path="res://themes/wood/graphics/expandBtnOver.png" id="2_lkgqv"]
-[ext_resource type="Texture2D" uid="uid://chq8lw3dm6ppa" path="res://themes/wood/graphics/expandBtnPressed.png" id="3_durjl"]
-[ext_resource type="Texture2D" uid="uid://dc2dhq7qhfvec" path="res://themes/wood/graphics/expandBtnNormal.png" id="4_a3nrd"]
-[ext_resource type="Script" uid="uid://g0cotbm5t03y" path="res://resource/components/ui/buttons/button_expand.gd" id="6_g1iac"]
-[ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="7_abnvl"]
-[ext_resource type="PackedScene" uid="uid://b1ihuvsoodjhc" path="res://resource/ui/widgets/single_grid_container.tscn" id="9_durjl"]
+[ext_resource type="Script" uid="uid://ds2hvp1yfju06" path="res://resource/ui/widgets/w_quick_tools.gd" id="1_kth44"]
+[ext_resource type="Texture2D" uid="uid://bsask3iusjohx" path="res://themes/wood/graphics/expandBtnDisabled.png" id="2_ycsxv"]
+[ext_resource type="Texture2D" uid="uid://d05g6gyhk8t6j" path="res://themes/wood/graphics/expandBtnOver.png" id="3_nijvm"]
+[ext_resource type="Texture2D" uid="uid://chq8lw3dm6ppa" path="res://themes/wood/graphics/expandBtnPressed.png" id="4_2g7nd"]
+[ext_resource type="Texture2D" uid="uid://dc2dhq7qhfvec" path="res://themes/wood/graphics/expandBtnNormal.png" id="5_rb4uc"]
+[ext_resource type="Script" uid="uid://g0cotbm5t03y" path="res://resource/components/ui/buttons/button_expand.gd" id="6_j1uao"]
+[ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="7_2is3u"]
+[ext_resource type="PackedScene" uid="uid://b1ihuvsoodjhc" path="res://resource/ui/widgets/single_grid_container.tscn" id="8_mkisp"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lkgqv"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kth44"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
-texture = ExtResource("1_sdyvl")
+texture = ExtResource("2_ycsxv")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uf7ap"]
-texture = ExtResource("2_lkgqv")
+texture = ExtResource("3_nijvm")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ihut6"]
-texture = ExtResource("3_durjl")
+texture = ExtResource("4_2g7nd")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxv3c"]
-texture = ExtResource("4_a3nrd")
+texture = ExtResource("5_rb4uc")
 
-[node name="EquipmentBar" type="Control"]
+[node name="WQuickTools" type="Control"]
 layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
@@ -34,7 +34,7 @@ grow_horizontal = 2
 grow_vertical = 0
 size_flags_horizontal = 8
 mouse_filter = 1
-script = ExtResource("1_lkgqv")
+script = ExtResource("1_kth44")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -43,15 +43,16 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -286.0
-offset_top = -82.0
-offset_right = 286.0
+offset_left = -288.0
+offset_top = -88.0
+offset_right = 288.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_bottom = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -68,7 +69,7 @@ custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
 tooltip_text = "快捷工具栏"
 theme_override_font_sizes/font_size = 18
-theme_override_styles/focus = SubResource("StyleBoxEmpty_lkgqv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kth44")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
 theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
@@ -76,32 +77,32 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_hxv3c")
 text = "快
 捷"
 icon_alignment = 1
-script = ExtResource("6_g1iac")
+script = ExtResource("6_j1uao")
 metadata/_custom_type_script = "uid://g0cotbm5t03y"
 
-[node name="EqMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="QTMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="EquipmentBG" type="NinePatchRect" parent="MarginContainer/HBoxContainer/EqMargin"]
+[node name="QTBG" type="NinePatchRect" parent="MarginContainer/HBoxContainer/QTMargin"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(500, 52)
 layout_mode = 2
-texture = ExtResource("7_abnvl")
+texture = ExtResource("7_2is3u")
 region_rect = Rect2(76, 726, 58, 58)
 patch_margin_left = 20
 patch_margin_top = 20
 patch_margin_right = 20
 patch_margin_bottom = 20
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/EqMargin"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/QTMargin"]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="EquipmentContainer" parent="MarginContainer/HBoxContainer/EqMargin/MarginContainer" instance=ExtResource("9_durjl")]
+[node name="QTContainer" parent="MarginContainer/HBoxContainer/QTMargin/MarginContainer" instance=ExtResource("8_mkisp")]
 unique_name_in_owner = true
 layout_mode = 2
 grid_row = 1

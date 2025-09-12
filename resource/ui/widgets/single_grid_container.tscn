@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://b1ihuvsoodjhc"]
 
 [ext_resource type="PackedScene" uid="uid://cs2wpwfuk23x3" path="res://resource/ui/widgets/multi_grid_container.tscn" id="1_hgu5e"]
-[ext_resource type="PackedScene" uid="uid://p65cysrlasfq" path="res://resource/ui/widgets/w_grid_single.tscn" id="2_agq3m"]
+[ext_resource type="PackedScene" uid="uid://p65cysrlasfq" path="res://resource/ui/widgets/container/w_grid_single.tscn" id="2_agq3m"]
 [ext_resource type="Script" uid="uid://ctra2iovqiukx" path="res://resource/ui/widgets/single_grid_container.gd" id="2_hmdrv"]
 
 [node name="SingleGridContainer" instance=ExtResource("1_hgu5e")]

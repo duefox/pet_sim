@@ -1,0 +1,70 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxacgbdobqbph"]
+
+[ext_resource type="PackedScene" uid="uid://d0rx71av14m2k" path="res://resource/ui/widgets/w_Inventory.tscn" id="1_tkl6e"]
+[ext_resource type="PackedScene" uid="uid://c07s5fxqsda0i" path="res://resource/ui/widgets/w_backpack.tscn" id="2_l87dt"]
+[ext_resource type="PackedScene" uid="uid://cvoygtt76yv4j" path="res://resource/ui/widgets/w_quick_tools.tscn" id="3_1nciw"]
+
+[node name="GridBoxBar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="InventoryMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+mouse_filter = 2
+
+[node name="WInventory" parent="InventoryMargin" instance=ExtResource("1_tkl6e")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="BackpackMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 20
+
+[node name="WBackpack" parent="BackpackMargin" instance=ExtResource("2_l87dt")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="QuickToolMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_right = 128
+
+[node name="WQuickTools" parent="QuickToolMargin" instance=ExtResource("3_1nciw")]
+unique_name_in_owner = true
+layout_mode = 2

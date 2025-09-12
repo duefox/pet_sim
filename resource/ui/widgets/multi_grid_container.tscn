@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=3 uid="uid://cs2wpwfuk23x3"]
 
 [ext_resource type="Script" uid="uid://dy0kqp5cqsf00" path="res://resource/ui/widgets/multi_grid_container.gd" id="1_wvw8i"]
-[ext_resource type="PackedScene" uid="uid://cyns0gvci50ah" path="res://resource/ui/widgets/w_grid.tscn" id="2_hhgv0"]
-[ext_resource type="PackedScene" uid="uid://dd0inoc7map8p" path="res://resource/ui/widgets/w_item.tscn" id="3_6knnh"]
+[ext_resource type="PackedScene" uid="uid://cyns0gvci50ah" path="res://resource/ui/widgets/container/w_grid.tscn" id="2_hhgv0"]
+[ext_resource type="PackedScene" uid="uid://dd0inoc7map8p" path="res://resource/ui/widgets/container/w_item.tscn" id="3_6knnh"]
 
 [node name="MultiGridContainer" type="Control"]
 layout_mode = 3
