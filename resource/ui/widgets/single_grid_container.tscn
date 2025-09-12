@@ -7,9 +7,3 @@
 [node name="SingleGridContainer" instance=ExtResource("1_hgu5e")]
 script = ExtResource("2_hmdrv")
 grid_scene = ExtResource("2_agq3m")
-
-[node name="ScrollContainer_PanelContainer_GridContainer#WGrid" parent="." index="0" instance=ExtResource("2_agq3m")]
-layout_mode = 0
-
-[node name="WGrid" parent="CenterContainer/ScrollContainer/PanelContainer/GridContainer" index="0" instance=ExtResource("2_agq3m")]
-layout_mode = 2

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://d0rx71av14m2k"]
+[gd_scene load_steps=14 format=3 uid="uid://d0rx71av14m2k"]
 
 [ext_resource type="Script" uid="uid://besw2npnjcopg" path="res://resource/ui/menu/game/inventory_bar.gd" id="1_5lsvp"]
 [ext_resource type="PackedScene" uid="uid://cs2wpwfuk23x3" path="res://resource/ui/widgets/multi_grid_container.tscn" id="1_j0ego"]
@@ -7,8 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="5_8pwcu"]
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="6_83ei1"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="7_dgnhu"]
+[ext_resource type="PackedScene" uid="uid://c07s5fxqsda0i" path="res://resource/ui/menu/game/packback_bar.tscn" id="8_8y67h"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_baqoa"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8y67h"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
 texture = ExtResource("3_baqoa")
@@ -160,7 +161,7 @@ layout_mode = 2
 
 [node name="ButtonSmall" type="Button" parent="MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_baqoa")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8y67h")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
 theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
@@ -168,5 +169,18 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 text = "整理"
 script = ExtResource("7_dgnhu")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[node name="PackbackMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer/PackbackMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="BackpackBar" parent="MarginContainer/VBoxContainer/PackbackMargin/CenterContainer" instance=ExtResource("8_8y67h")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/TabContainer/Pets" to="." method="_on_pets_mouse_entered"]

@@ -1,0 +1,191 @@
+[gd_scene load_steps=29 format=3 uid="uid://ca4yfgr8p3gi"]
+
+[ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_wsgeo"]
+[ext_resource type="Texture2D" uid="uid://d2smuitrlu4qr" path="res://assets/ui/icons/icon1.png" id="2_xq0vp"]
+[ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="3_qf67f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jgqhp"]
+atlas = ExtResource("1_wsgeo")
+region = Rect2(753, 234, 225, 64)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wsgeo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xq0vp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qf67f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n5nyd"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s2dyo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ju00n"]
+atlas = ExtResource("2_xq0vp")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kr4y5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_77by8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lpbpn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yltgt"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eue6h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cprv1"]
+atlas = ExtResource("2_xq0vp")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h2pqm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jgbs2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ye31"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fkqjn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xd726"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8p7q"]
+atlas = ExtResource("2_xq0vp")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mmqwy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1b1eg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q00r5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6qwrv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qmtau"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_id4uk"]
+atlas = ExtResource("2_xq0vp")
+region = Rect2(320, 0, 64, 64)
+
+[node name="NavigationBar" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_jgqhp")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="BtnProfile" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(104, 72)
+layout_mode = 2
+tooltip_text = "查看用户信息
+快捷键 [b][color=white]I[/color][/b] "
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/focus = SubResource("StyleBoxEmpty_wsgeo")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xq0vp")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qf67f")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_n5nyd")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_s2dyo")
+text = "Info"
+icon = SubResource("AtlasTexture_ju00n")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+script = ExtResource("3_qf67f")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="BtnOutdoor" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+custom_minimum_size = Vector2(104, 72)
+layout_mode = 2
+tooltip_text = "打开探索地图
+快捷键 [b][color=white]M[/color][/b] "
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kr4y5")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_77by8")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_lpbpn")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_yltgt")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_eue6h")
+text = "Map"
+icon = SubResource("AtlasTexture_cprv1")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+script = ExtResource("3_qf67f")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="BtnTask" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer3"]
+custom_minimum_size = Vector2(104, 72)
+layout_mode = 2
+tooltip_text = "查看当前任务
+快捷键 [b][color=white]T[/color][/b] "
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/focus = SubResource("StyleBoxEmpty_h2pqm")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_jgbs2")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_2ye31")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_fkqjn")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xd726")
+text = "Task"
+icon = SubResource("AtlasTexture_i8p7q")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+script = ExtResource("3_qf67f")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="BtnVisitor" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer4"]
+custom_minimum_size = Vector2(104, 72)
+layout_mode = 2
+tooltip_text = "查看来访者
+快捷键 [b][color=white]V[/color][/b] "
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 22
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mmqwy")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1b1eg")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_q00r5")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_6qwrv")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_qmtau")
+text = "Visitor"
+icon = SubResource("AtlasTexture_id4uk")
+icon_alignment = 1
+vertical_icon_alignment = 0
+expand_icon = true
+script = ExtResource("3_qf67f")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"

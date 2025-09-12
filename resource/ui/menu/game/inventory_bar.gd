@@ -6,11 +6,10 @@ class_name InventoryBar
 @onready var tab_container: TabContainer = %TabContainer
 
 
-
 func _ready() -> void:
 	var grid_size: Vector2 = inventory_container.grid_size
 	for child in tab_container.get_children():
-		child.custom_minimum_size = grid_size + Vector2(20, 84)
+		child.custom_minimum_size = grid_size + Vector2(20, 100)
 
 
 ## 获取背包容器

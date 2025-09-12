@@ -36,6 +36,8 @@ var grid_map: Dictionary[Vector2, WItemData] = {}
 
 
 func _ready() -> void:
+	# 清空grid container
+	_clear_grid_container()
 	cell_size = GlobalData.cell_size
 	##  渲染格子
 	_init_rend()
@@ -89,8 +91,10 @@ func off_placement_overlay() -> void:
 
 ##  设置滚动区域
 func set_scroll_container() -> void:
-	grid_size = Vector2(grid_col + 0.3, max_scroll_grid + 0.5) * w_grid_size
-	scroll_container.custom_minimum_size = grid_size
+	#grid_size = Vector2(grid_col + 0.3, max_scroll_grid + 0.5) * w_grid_size
+	grid_size = Vector2(grid_col, max_scroll_grid) * w_grid_size
+	# 有滚动条，则需要给滚动条留空间
+	scroll_container.custom_minimum_size = grid_size + Vector2(0.5, 0.5) * w_grid_size
 
 
 ## 自动合并所有可堆叠的物品并重新排列
@@ -187,7 +191,7 @@ func get_next_available_position() -> Vector2:
 ## @param item_id: 物品的唯一id
 func add_item(item_id: String) -> bool:
 	var item_data: Dictionary = GlobalData.find_item_data(item_id)
-	
+
 	if not item_data:
 		push_error("Item data not found for ID: " + item_id)
 		return false
@@ -417,8 +421,6 @@ func _create_item() -> WItem:
 
 ## 初始的格子渲染
 func _init_rend() -> void:
-	# 清空grid container
-	_clear_grid_container()
 	# 更新列数
 	grid_container.columns = grid_col
 

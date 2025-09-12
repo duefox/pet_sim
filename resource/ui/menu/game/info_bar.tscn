@@ -142,7 +142,8 @@ theme_override_constants/margin_right = 8
 
 [node name="ButtonSmall" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer3"]
 layout_mode = 2
-tooltip_text = "传输速度卡死"
+tooltip_text = "即刻切换到下一天
+快捷键 [b][color=white]N[/color][/b]"
 theme_override_styles/focus = SubResource("StyleBoxEmpty_mjnsh")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
 theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
