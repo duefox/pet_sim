@@ -1,0 +1,145 @@
+[gd_scene load_steps=15 format=3 uid="uid://b8enko0du1yd1"]
+
+[ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_jckig"]
+[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="2_gaguq"]
+[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="3_u3b0f"]
+[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="4_llukx"]
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="5_3auqv"]
+[ext_resource type="Texture2D" uid="uid://di4o8cnge1hlb" path="res://assets/ui/icons/icon3.png" id="6_lxnp4"]
+[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="7_g5rs6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0qi4"]
+atlas = ExtResource("1_jckig")
+region = Rect2(76, 726, 58, 58)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hl32f"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
+texture = ExtResource("2_gaguq")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
+texture = ExtResource("3_u3b0f")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
+texture = ExtResource("4_llukx")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("5_3auqv")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8vwas"]
+atlas = ExtResource("6_lxnp4")
+region = Rect2(64, 0, 32, 32)
+
+[node name="LayoutBar" type="Control"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -40.0
+offset_right = 36.0
+offset_bottom = -4.0
+grow_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="BuildsMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/margin_bottom = 4
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/BuildsMargin"]
+custom_minimum_size = Vector2(760, 0)
+layout_mode = 2
+current_tab = 0
+
+[node name="Builds" type="MarginContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer/Builds"]
+custom_minimum_size = Vector2(320, 100)
+layout_mode = 2
+texture = SubResource("AtlasTexture_c0qi4")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer/Builds"]
+layout_mode = 2
+
+[node name="Device" type="PanelContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer/Device"]
+custom_minimum_size = Vector2(320, 100)
+layout_mode = 2
+texture = SubResource("AtlasTexture_c0qi4")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="Lanscape" type="PanelContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer/Lanscape"]
+custom_minimum_size = Vector2(320, 100)
+layout_mode = 2
+texture = SubResource("AtlasTexture_c0qi4")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="BtnMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="BtnLayout" type="Button" parent="MarginContainer/VBoxContainer/BtnMargin"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hl32f")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+icon = SubResource("AtlasTexture_8vwas")
+icon_alignment = 1
+script = ExtResource("7_g5rs6")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"

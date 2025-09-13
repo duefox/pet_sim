@@ -1,0 +1,88 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3vidahpc4hvj"]
+
+[ext_resource type="Script" uid="uid://x8qrawl26t3p" path="res://resource/ui/menu/game/profile_bar.gd" id="1_2pmal"]
+[ext_resource type="PackedScene" uid="uid://c07s5fxqsda0i" path="res://resource/ui/widgets/w_backpack.tscn" id="1_8m0ij"]
+
+[node name="ProfileBar" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+script = ExtResource("1_2pmal")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -380.0
+offset_right = 380.0
+offset_bottom = 207.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 160
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer"]
+custom_minimum_size = Vector2(760, 0)
+layout_mode = 2
+current_tab = 0
+
+[node name="Profile" type="PanelContainer" parent="MarginContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Profile"]
+layout_mode = 2
+
+[node name="ProfileMargin" type="MarginContainer" parent="MarginContainer/TabContainer/Profile/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 10
+
+[node name="Panel" type="Panel" parent="MarginContainer/TabContainer/Profile/VBoxContainer/ProfileMargin"]
+custom_minimum_size = Vector2(400, 160)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Profile/VBoxContainer/ProfileMargin/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -252.0
+offset_top = -20.0
+offset_right = 252.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="MarginContainer/TabContainer/Profile/VBoxContainer/ProfileMargin/Panel/MarginContainer"]
+layout_mode = 2
+text = "待规划，显示人物信息，等级和装备物品的容器"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BagMargin" type="MarginContainer" parent="MarginContainer/TabContainer/Profile/VBoxContainer"]
+layout_mode = 2
+
+[node name="WBackpack" parent="MarginContainer/TabContainer/Profile/VBoxContainer/BagMargin" instance=ExtResource("1_8m0ij")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="百科" type="PanelContainer" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="成就" type="PanelContainer" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="其他" type="PanelContainer" parent="MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3

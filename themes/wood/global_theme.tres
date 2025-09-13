@@ -287,12 +287,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_2rx2r"]
-texture = ExtResource("18_vaolq")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3dbh7"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kddhf"]
 texture = ExtResource("13_11w1c")
@@ -465,38 +460,38 @@ texture_margin_bottom = 30.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
 texture = ExtResource("13_11w1c")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
 texture = ExtResource("17_wi548")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
 texture = ExtResource("14_cau3v")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_brky7"]
 texture = ExtResource("15_vaolq")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
 texture = ExtResource("16_cjfga")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_11w1c"]
 texture = ExtResource("17_vlgto")
@@ -650,7 +645,7 @@ TabContainer/icons/decrement = ExtResource("37_gk50r")
 TabContainer/icons/decrement_highlight = ExtResource("37_gk50r")
 TabContainer/icons/increment = ExtResource("38_3jv15")
 TabContainer/icons/increment_highlight = ExtResource("38_3jv15")
-TabContainer/styles/panel = SubResource("StyleBoxTexture_2rx2r")
+TabContainer/styles/panel = SubResource("StyleBoxEmpty_3dbh7")
 TabContainer/styles/tab_disabled = SubResource("StyleBoxTexture_kddhf")
 TabContainer/styles/tab_focus = SubResource("StyleBoxTexture_hhwiw")
 TabContainer/styles/tab_hovered = SubResource("StyleBoxTexture_8fno2")

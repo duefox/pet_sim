@@ -9,8 +9,6 @@
 atlas = ExtResource("1_wsgeo")
 region = Rect2(753, 234, 225, 64)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wsgeo"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xq0vp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qf67f"]
@@ -18,6 +16,8 @@ region = Rect2(753, 234, 225, 64)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n5nyd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s2dyo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kr4y5"]
 
 [sub_resource type="InputEventKey" id="InputEventKey_xq0vp"]
 device = -1
@@ -30,8 +30,6 @@ events = [SubResource("InputEventKey_xq0vp")]
 atlas = ExtResource("2_xq0vp")
 region = Rect2(256, 0, 64, 64)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kr4y5"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_77by8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lpbpn"]
@@ -40,11 +38,11 @@ region = Rect2(256, 0, 64, 64)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eue6h"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h2pqm"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_cprv1"]
 atlas = ExtResource("2_xq0vp")
 region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h2pqm"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jgbs2"]
 
@@ -54,11 +52,11 @@ region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xd726"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mmqwy"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_i8p7q"]
 atlas = ExtResource("2_xq0vp")
 region = Rect2(192, 64, 64, 64)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mmqwy"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1b1eg"]
 
@@ -67,6 +65,8 @@ region = Rect2(192, 64, 64, 64)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6qwrv"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qmtau"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uiu16"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_id4uk"]
 atlas = ExtResource("2_xq0vp")
@@ -111,13 +111,13 @@ tooltip_text = "查看用户信息
 快捷键 [b][color=white]TAB[/color][/b] "
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 22
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wsgeo")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_xq0vp")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_qf67f")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_n5nyd")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_s2dyo")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xq0vp")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_qf67f")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_n5nyd")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_s2dyo")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kr4y5")
 shortcut = SubResource("Shortcut_qf67f")
-text = "Info"
+text = "Profile"
 icon = SubResource("AtlasTexture_ju00n")
 icon_alignment = 1
 vertical_icon_alignment = 0
@@ -137,11 +137,11 @@ tooltip_text = "打开探索地图
 快捷键 [b][color=white]M[/color][/b] "
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 22
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kr4y5")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_77by8")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_lpbpn")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_yltgt")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_eue6h")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_77by8")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_lpbpn")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_yltgt")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_eue6h")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_h2pqm")
 text = "Map"
 icon = SubResource("AtlasTexture_cprv1")
 icon_alignment = 1
@@ -162,11 +162,11 @@ tooltip_text = "查看当前任务
 快捷键 [b][color=white]T[/color][/b] "
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 22
-theme_override_styles/focus = SubResource("StyleBoxEmpty_h2pqm")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_jgbs2")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_2ye31")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_fkqjn")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_xd726")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jgbs2")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_2ye31")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_fkqjn")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_xd726")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_mmqwy")
 text = "Task"
 icon = SubResource("AtlasTexture_i8p7q")
 icon_alignment = 1
@@ -187,11 +187,11 @@ tooltip_text = "查看来访者
 快捷键 [b][color=white]V[/color][/b] "
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 22
-theme_override_styles/focus = SubResource("StyleBoxEmpty_mmqwy")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_1b1eg")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_q00r5")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_6qwrv")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_qmtau")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1b1eg")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_q00r5")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6qwrv")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qmtau")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_uiu16")
 text = "Visitor"
 icon = SubResource("AtlasTexture_id4uk")
 icon_alignment = 1
