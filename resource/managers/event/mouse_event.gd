@@ -4,6 +4,7 @@ extends Node
 enum CONTROLS_TYPE { DEF, DRAG }  # 默认状态  # 拿起物品时的状态
 
 var is_mouse_down: bool = false  # 记录鼠标是否按下
+var is_mouse_right_down: bool = false  # 记录鼠标是否右击
 var mouse_position: Vector2  # 记录鼠标位置
 var mouse_state: int = self.CONTROLS_TYPE.DEF  # 鼠标当前的操作状态
 var mouse_cell_pos: Vector2  # 鼠标进入的格子坐标

@@ -27,6 +27,7 @@ SaveSystem="*res://addons/save_system/save_manager.gd"
 Tooltips="*res://resource/utils/tooltips_manager.gd"
 MouseEvent="*res://resource/managers/event/mouse_event.gd"
 GlobalData="*res://resource/managers/global/global_data.gd"
+Utils="*res://resource/utils/utils.gd"
 
 [display]
 

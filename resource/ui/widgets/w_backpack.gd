@@ -22,4 +22,5 @@ func get_item() -> void:
 
 
 func _on_btn_sort_pressed() -> void:
+	print("_on_btn_sort_pressed")
 	packback_container.auto_stack_existing_items()

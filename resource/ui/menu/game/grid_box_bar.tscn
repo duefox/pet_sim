@@ -1,8 +1,46 @@
-[gd_scene load_steps=4 format=3 uid="uid://dxacgbdobqbph"]
+[gd_scene load_steps=20 format=3 uid="uid://dxacgbdobqbph"]
 
+[ext_resource type="Script" uid="uid://d075t7ogwalmn" path="res://resource/ui/menu/game/grid_box_bar.gd" id="1_084rm"]
 [ext_resource type="PackedScene" uid="uid://d0rx71av14m2k" path="res://resource/ui/widgets/w_Inventory.tscn" id="1_tkl6e"]
+[ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="2_406wf"]
 [ext_resource type="PackedScene" uid="uid://c07s5fxqsda0i" path="res://resource/ui/widgets/w_backpack.tscn" id="2_l87dt"]
 [ext_resource type="PackedScene" uid="uid://cvoygtt76yv4j" path="res://resource/ui/widgets/w_quick_tools.tscn" id="3_1nciw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_406wf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n26ji"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_546is"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6yqcx"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_whe50"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_ycsxv"]
+device = -1
+keycode = 66
+unicode = 98
+
+[sub_resource type="Shortcut" id="Shortcut_1q7as"]
+events = [SubResource("InputEventKey_ycsxv")]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ppo52"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1q7as"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2r06w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nskuy"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5mela"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_nijvm"]
+device = -1
+keycode = 67
+unicode = 99
+
+[sub_resource type="Shortcut" id="Shortcut_otn31"]
+events = [SubResource("InputEventKey_nijvm")]
 
 [node name="GridBoxBar" type="Control"]
 layout_mode = 3
@@ -12,6 +50,32 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+script = ExtResource("1_084rm")
+
+[node name="EmptyBtnsToShortcut" type="MarginContainer" parent="."]
+layout_mode = 1
+
+[node name="BtnBag" type="Button" parent="EmptyBtnsToShortcut"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_406wf")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_n26ji")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_546is")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_6yqcx")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_whe50")
+shortcut = SubResource("Shortcut_1q7as")
+script = ExtResource("2_406wf")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
+
+[node name="BtnInventory" type="Button" parent="EmptyBtnsToShortcut"]
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ppo52")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1q7as")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_2r06w")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nskuy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5mela")
+shortcut = SubResource("Shortcut_otn31")
+script = ExtResource("2_406wf")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
 
 [node name="InventoryMargin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -26,6 +90,7 @@ mouse_filter = 2
 
 [node name="WInventory" parent="InventoryMargin" instance=ExtResource("1_tkl6e")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="BackpackMargin" type="MarginContainer" parent="."]
@@ -48,6 +113,7 @@ theme_override_constants/margin_bottom = 20
 
 [node name="WBackpack" parent="BackpackMargin" instance=ExtResource("2_l87dt")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 
 [node name="QuickToolMargin" type="MarginContainer" parent="."]
@@ -68,3 +134,6 @@ theme_override_constants/margin_right = 128
 [node name="WQuickTools" parent="QuickToolMargin" instance=ExtResource("3_1nciw")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[connection signal="pressed" from="EmptyBtnsToShortcut/BtnBag" to="." method="_on_btn_bag_pressed"]
+[connection signal="pressed" from="EmptyBtnsToShortcut/BtnInventory" to="." method="_on_btn_inventory_pressed"]

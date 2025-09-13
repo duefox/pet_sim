@@ -18,3 +18,5 @@ func get_grid_container() -> MultiGridContainer:
 ## 获取背包物品
 func get_item() -> void:
 	pass
+	
+	

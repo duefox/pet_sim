@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://d0rx71av14m2k"]
+[gd_scene load_steps=25 format=3 uid="uid://d0rx71av14m2k"]
 
 [ext_resource type="Script" uid="uid://besw2npnjcopg" path="res://resource/ui/widgets/w_inventory.gd" id="1_5lsvp"]
 [ext_resource type="PackedScene" uid="uid://cs2wpwfuk23x3" path="res://resource/ui/widgets/multi_grid_container.tscn" id="1_j0ego"]
@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://g0cotbm5t03y" path="res://resource/components/ui/buttons/button_expand.gd" id="6_uvtc5"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="7_dgnhu"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_540x2"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hlw07"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
 texture = ExtResource("2_hlw07")
@@ -27,7 +27,7 @@ texture = ExtResource("4_05d2a")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxv3c"]
 texture = ExtResource("5_422mk")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4ymne"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_thbo5"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
 texture = ExtResource("3_baqoa")
@@ -56,6 +56,15 @@ texture_margin_left = 20.0
 texture_margin_top = 20.0
 texture_margin_right = 20.0
 texture_margin_bottom = 20.0
+
+[sub_resource type="InputEventKey" id="InputEventKey_hlw07"]
+device = -1
+shift_pressed = true
+keycode = 82
+unicode = 82
+
+[sub_resource type="Shortcut" id="Shortcut_thbo5"]
+events = [SubResource("InputEventKey_hlw07")]
 
 [node name="WInventory" type="Control"]
 layout_mode = 3
@@ -95,9 +104,10 @@ theme_override_constants/margin_right = -20
 [node name="IconDescrip" type="Button" parent="MarginContainer/HBoxContainer/IconContainer"]
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-tooltip_text = "快捷工具栏"
+tooltip_text = "仓库
+快捷键 [b][color=white]C[/color][/b] "
 theme_override_font_sizes/font_size = 18
-theme_override_styles/focus = SubResource("StyleBoxEmpty_540x2")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hlw07")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
 theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
@@ -466,11 +476,14 @@ layout_mode = 2
 
 [node name="BtnSort" type="Button" parent="MarginContainer/HBoxContainer/BtnsMargin/HBoxContainer"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_4ymne")
+tooltip_text = "快速整理堆叠
+快捷键 [b][color=white]SHIFT + R[/color][/b] "
+theme_override_styles/focus = SubResource("StyleBoxEmpty_thbo5")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
 theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+shortcut = SubResource("Shortcut_thbo5")
 text = "整理"
 script = ExtResource("7_dgnhu")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"

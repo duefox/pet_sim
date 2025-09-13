@@ -7,8 +7,6 @@ class_name GameMenu
 @onready var navigation_bar: Control = %NavigationBar
 @onready var grid_box_bar: GridBoxBar = %GridBoxBar
 
-
-
 ## held item场景
 @export var held_scene: PackedScene
 
@@ -54,6 +52,17 @@ func _ready() -> void:
 		inventory.add_item("1002")
 		backpack.add_item("2002")
 		quick_tools.add_item_with_merge("1001", 5)
+
+	## 设置背包模式
+	#grid_box_bar.grid_mode = GridBoxBar.GridDisplayMode.BACKPACK
+	#grid_box_bar.grid_mode = GridBoxBar.GridDisplayMode.INVENTORY
+	
+	await get_tree().create_timer(8.0).timeout
+	
+	#quick_tools.sub_item_at(Vector2(0, 0))
+	#quick_tools.sub_item("1001")
+	#quick_tools.sub_item("2003")
+	
 
 
 ## 退出处理订阅事件
@@ -127,7 +136,7 @@ func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		MouseEvent.mouse_position = event.position
 		#当鼠标按下且鼠标状态为抓取物品时执行
-		if MouseEvent.is_mouse_down == true && MouseEvent.is_mouse_drag():
+		if MouseEvent.is_mouse_down and MouseEvent.is_mouse_drag():
 			#将抓取物品的中心点与鼠标进行跟随(显示层)
 			set_held_item_position(event.position)
 			#set_held_item_position(event.global_position)
@@ -156,8 +165,8 @@ func _input(event: InputEvent) -> void:
 			# 按下R键后更新放置提示框
 			placement_overlay_process()
 	# 当鼠标左键松开时，取消抓取状态，放下抓取物品
-	elif event is InputEventMouseButton && !event.is_pressed() && event.button_index == MOUSE_BUTTON_LEFT:
-		#elif Input.is_action_just_released("mouse_left"):
+	#elif event is InputEventMouseButton && !event.is_pressed() && event.button_index == MOUSE_BUTTON_LEFT:
+	elif Input.is_action_just_released("mouse_left"):
 		# 重置鼠标按下状态
 		MouseEvent.is_mouse_down = false
 		# 关闭放置提示框
@@ -169,6 +178,10 @@ func _input(event: InputEvent) -> void:
 		MouseEvent.mouse_state = MouseEvent.CONTROLS_TYPE.DEF
 		# 处理放置物品
 		_handle_drop_item()
+	# 当鼠标右键键松开时，把抓取1个物品放置对应的容器中
+	elif Input.is_action_just_released("mouse_right"):
+		print("mouse right released")
+		MouseEvent.is_mouse_right_down = false
 
 
 ## 放置物品到多格容器

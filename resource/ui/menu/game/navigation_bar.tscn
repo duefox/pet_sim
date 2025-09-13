@@ -1,6 +1,7 @@
-[gd_scene load_steps=29 format=3 uid="uid://ca4yfgr8p3gi"]
+[gd_scene load_steps=32 format=3 uid="uid://ca4yfgr8p3gi"]
 
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_wsgeo"]
+[ext_resource type="Script" uid="uid://c32yvmbjsyuec" path="res://resource/ui/menu/game/navigation_bar.gd" id="1_xq0vp"]
 [ext_resource type="Texture2D" uid="uid://d2smuitrlu4qr" path="res://assets/ui/icons/icon1.png" id="2_xq0vp"]
 [ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="3_qf67f"]
 
@@ -17,6 +18,13 @@ region = Rect2(753, 234, 225, 64)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n5nyd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s2dyo"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_xq0vp"]
+device = -1
+keycode = 4194306
+
+[sub_resource type="Shortcut" id="Shortcut_qf67f"]
+events = [SubResource("InputEventKey_xq0vp")]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ju00n"]
 atlas = ExtResource("2_xq0vp")
@@ -69,6 +77,7 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+script = ExtResource("1_xq0vp")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
@@ -99,7 +108,7 @@ theme_override_constants/margin_bottom = 10
 custom_minimum_size = Vector2(104, 72)
 layout_mode = 2
 tooltip_text = "查看用户信息
-快捷键 [b][color=white]I[/color][/b] "
+快捷键 [b][color=white]TAB[/color][/b] "
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 22
 theme_override_styles/focus = SubResource("StyleBoxEmpty_wsgeo")
@@ -107,6 +116,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_xq0vp")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_qf67f")
 theme_override_styles/pressed = SubResource("StyleBoxEmpty_n5nyd")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_s2dyo")
+shortcut = SubResource("Shortcut_qf67f")
 text = "Info"
 icon = SubResource("AtlasTexture_ju00n")
 icon_alignment = 1
@@ -120,7 +130,7 @@ layout_mode = 2
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="BtnOutdoor" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+[node name="BtnMap" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer2"]
 custom_minimum_size = Vector2(104, 72)
 layout_mode = 2
 tooltip_text = "打开探索地图
@@ -189,3 +199,8 @@ vertical_icon_alignment = 0
 expand_icon = true
 script = ExtResource("3_qf67f")
 metadata/_custom_type_script = "uid://hmattcwq4j3c"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/BtnProfile" to="." method="_on_btn_profile_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer2/BtnMap" to="." method="_on_btn_map_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer3/BtnTask" to="." method="_on_btn_task_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer4/BtnVisitor" to="." method="_on_btn_visitor_pressed"]

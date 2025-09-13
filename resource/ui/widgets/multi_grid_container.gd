@@ -220,6 +220,27 @@ func add_item(item_id: String) -> bool:
 	return false
 
 
+## 扣除指定id的物品数量
+## @param item_id: 物品的id
+## @param num: 扣除的数量，默认为1
+func sub_item(item_id: String, num: int = 1) -> bool:
+	# 遍历所有已放置的物品
+	for item in items.values():
+		# 检查物品ID是否匹配
+		if item.id == item_id:
+			item.num -= num
+			if item.num <= 0:
+				# 如果数量小于等于0，则移除物品
+				remove_item(item)
+			else:
+				# 否则，更新物品标签显示
+				item.set_label_data()
+			return true  # 找到并扣除成功，返回真
+
+	print("找不到指定ID的物品:", item_id)
+	return false  # 没有找到该物品，返回假
+
+
 ## 检查格子是否已被占用
 func check_cell(cell_pos: Vector2) -> bool:
 	var item_data: WItemData = grid_map.get(cell_pos)
@@ -300,7 +321,25 @@ func add_item_at(cell_pos: Vector2, item: WItem) -> bool:
 	return false
 
 
+## 扣除指定位置物品的数量
+## @param cell_pos: 物品的网格位置
+## @param num: 扣除的数量，默认为1
+func sub_item_at(cell_pos: Vector2, num: int = 1) -> void:
+	var item_data: WItemData = get_grid_map_item(cell_pos)
+	if item_data and item_data.is_placed:
+		var item: WItem = item_data.link_item
+		item.num -= num
+		if item.num <= 0:
+			# 如果数量小于等于0，则移除物品
+			remove_item(item)
+		else:
+			# 否则，更新物品标签显示
+			item.set_label_data()
+
+
 ## 根据id新建物品并放置到多格子容器中
+## @param cell_pos: 物品的网格位置
+## @param item_id: 物品的id
 func add_new_item_at(cell_pos: Vector2, item_id: String) -> bool:
 	var item: WItem = _create_item()
 	set_item_data_at_id(item, item_id)

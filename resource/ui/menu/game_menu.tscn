@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://edyetri7sblk"]
+[gd_scene load_steps=7 format=3 uid="uid://edyetri7sblk"]
 
 [ext_resource type="PackedScene" uid="uid://ixsr2gblswwt" path="res://resource/ui/menu/game/gold_bar.tscn" id="1_atan1"]
 [ext_resource type="Script" uid="uid://xamfug8ggsyt" path="res://resource/ui/menu/game_menu.gd" id="1_hlcy5"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://bisaxuna7ri5q" path="res://resource/ui/menu/game/info_bar.tscn" id="3_wuobc"]
 [ext_resource type="PackedScene" uid="uid://ca4yfgr8p3gi" path="res://resource/ui/menu/game/navigation_bar.tscn" id="6_hlcy5"]
 [ext_resource type="PackedScene" uid="uid://dxacgbdobqbph" path="res://resource/ui/menu/game/grid_box_bar.tscn" id="6_jgqhp"]
-[ext_resource type="Script" uid="uid://d075t7ogwalmn" path="res://resource/ui/menu/game/grid_box_bar.gd" id="7_jgqhp"]
 
 [node name="GameMenu" type="Control"]
 layout_mode = 3
@@ -31,22 +30,17 @@ metadata/_edit_lock_ = true
 [node name="GoldBar" parent="." instance=ExtResource("1_atan1")]
 unique_name_in_owner = true
 layout_mode = 1
-metadata/_edit_lock_ = true
 
 [node name="InfoBar" parent="." instance=ExtResource("3_wuobc")]
 unique_name_in_owner = true
 layout_mode = 1
-metadata/_edit_lock_ = true
 
 [node name="NavigationBar" parent="." instance=ExtResource("6_hlcy5")]
 unique_name_in_owner = true
-visible = false
 layout_mode = 0
-metadata/_edit_lock_ = true
 
 [node name="GridBoxBar" parent="." instance=ExtResource("6_jgqhp")]
 unique_name_in_owner = true
 layout_mode = 1
-script = ExtResource("7_jgqhp")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

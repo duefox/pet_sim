@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://c07s5fxqsda0i"]
+[gd_scene load_steps=25 format=3 uid="uid://c07s5fxqsda0i"]
 
 [ext_resource type="Script" uid="uid://cjx1t15khjhdn" path="res://resource/ui/widgets/w_backpack.gd" id="1_1fi2c"]
 [ext_resource type="Texture2D" uid="uid://bsask3iusjohx" path="res://themes/wood/graphics/expandBtnDisabled.png" id="1_ld7vg"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="11_128hq"]
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="12_n80vg"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="13_4sgyt"]
+[ext_resource type="Shortcut" uid="uid://qnvn1ktro8o" path="res://data/input/r_sort.tres" id="13_km6t3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1fi2c"]
 
@@ -99,7 +100,7 @@ theme_override_constants/margin_right = -16
 [node name="IconDescrip" type="Button" parent="MarginContainer/HBoxContainer/IconContainer"]
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-tooltip_text = "背包工具栏
+tooltip_text = "背包
 快捷键 [b][color=white]B[/color][/b]"
 theme_override_font_sizes/font_size = 18
 theme_override_styles/focus = SubResource("StyleBoxEmpty_1fi2c")
@@ -153,11 +154,14 @@ layout_mode = 2
 
 [node name="BtnSort" type="Button" parent="MarginContainer/HBoxContainer/BtnsMargin/HBoxContainer"]
 layout_mode = 2
+tooltip_text = "快速整理堆叠
+快捷键 [b][color=white]R[/color][/b] "
 theme_override_styles/focus = SubResource("StyleBoxEmpty_dmtpy")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
 theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+shortcut = ExtResource("13_km6t3")
 text = "整理"
 script = ExtResource("13_4sgyt")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
