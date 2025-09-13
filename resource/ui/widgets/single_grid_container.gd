@@ -86,27 +86,25 @@ func set_item_placed(item: WItem, value: bool) -> void:
 ## 移除物品
 ## 重写父类的 remove_item 方法，单格容器只用删掉当前坐标的物品即可
 func remove_item(cur_item: WItem) -> void:
-	## 移除背包物品记录
-	for coords: Vector2 in items:
-		var item: WItem = items[coords]
-		if item == cur_item:
-			items.erase(coords)
-			break
-	## 移除映射表的对应数据
+	if not is_instance_valid(cur_item):
+		return
+	# 移除映射表的对应数据
 	var item_data: WItemData = grid_map.get(cur_item.head_position)
 	# 注意这里需要移除的是有链接对象但是空间未占用的映射对象
 	if item_data and !item_data.is_placed:
 		item_data.link_item = null
 		item_data.is_placed = false
 		item_data.link_grid.update_tooltip()
-	## 释放该物品的实例化对象
+	# 移除背包物品记录
+	items.erase(cur_item.head_position)
+	# 释放该物品的实例化对象
 	cur_item.queue_free()
 	cur_item = null
 
 
 ## 检查一个物品是否可以放置在指定位置
 ## 重写父类的 can_place_item 方法，单格容器只用判定当前坐标即可
-func can_place_item(_item: WItem, first_cell_pos: Vector2) -> bool:
+func can_place_item(_item: Dictionary, first_cell_pos: Vector2) -> bool:
 	# 检查字典中是否已存在该位置的映射数据
 	var item_data: WItemData = grid_map.get(first_cell_pos)
 	# 如果该位置的is_placed为true，则表示格子被占用，不能放置

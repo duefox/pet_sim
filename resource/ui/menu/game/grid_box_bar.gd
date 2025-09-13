@@ -9,21 +9,30 @@ class_name GridBoxBar
 ## 网格容器的节点显示模式：DEFAULT-只显示快捷栏，INVENTORY-显示仓库和背包，BACKPACK-显示背包和快捷栏
 enum GridDisplayMode { DEFAULT, INVENTORY, BACKPACK }
 
+## 仓库容器
+var _inventory: MultiGridContainer
+## 背包容器
+var _backpack: MultiGridContainer
+## 快捷栏容器
+var _quick_tools: MultiGridContainer
+
 ## 设置网格容器的显示模式
 var grid_mode: GridDisplayMode = GridDisplayMode.DEFAULT:
 	set = set_grid_mode
 
 
 func _ready() -> void:
-	grid_mode = GridDisplayMode.DEFAULT
+	#grid_mode = GridDisplayMode.DEFAULT
+	grid_mode = GridDisplayMode.BACKPACK
+	_inventory = get_inventory()
+	_backpack = get_backpack()
+	_quick_tools = get_quick_tools()
 	# 订阅事件
 	EventManager.subscribe(UIEvent.SUB_ITEM, _on_sub_item)
-	pass
 
 
 func _exit_tree() -> void:
 	EventManager.unsubscribe(UIEvent.SUB_ITEM, _on_sub_item)
-	pass
 
 
 ## 获得仓库容器
@@ -37,7 +46,7 @@ func get_backpack() -> MultiGridContainer:
 
 
 ## 获得快捷工具容器
-func get_quick_tool() -> MultiGridContainer:
+func get_quick_tools() -> MultiGridContainer:
 	return w_quick_tools.get_grid_container()
 
 
@@ -65,13 +74,40 @@ func _on_sub_item() -> void:
 		return
 	var cell_pos: Vector2 = MouseEvent.mouse_cell_pos
 	var item_data: WItemData = GlobalData.previous_cell_matrix.get_grid_map_item(cell_pos)
-	print(GlobalData.previous_cell_matrix.name)
+	var item: WItem = item_data.link_item
+	var succ: bool = false
 	# 背包和工具的物品之间进行分割
 	if grid_mode == GridDisplayMode.BACKPACK:
-		pass
+		if GlobalData.previous_cell_matrix.name == "QuickTools":
+			# 快捷栏物品分隔到背包
+			succ = _backpack.add_item_with_merge(item.id)
+			if succ:
+				_quick_tools.sub_item_at(cell_pos)
+			else:
+				print("add_item_with_merge failed")
+		else:
+			# 背包物品分割到快捷栏
+			succ = _quick_tools.add_item_with_merge(item.id)
+			if succ:
+				_backpack.sub_item_at(cell_pos)
+			else:
+				print("add_item_with_merge failed")
 	# 背包和仓库的物品之间进行分割
 	elif grid_mode == GridDisplayMode.INVENTORY:
-		pass
+		if GlobalData.previous_cell_matrix.name == "Packback":
+			# 背包物品分割到仓库
+			succ = _inventory.add_item_with_merge(item.id)
+			if succ:
+				_backpack.sub_item_at(cell_pos)
+			else:
+				print("add_item_with_merge failed")
+		else:
+			# 仓库物品分割到背包
+			succ = _backpack.add_item_with_merge(item.id)
+			if succ:
+				_inventory.sub_item_at(cell_pos)
+			else:
+				print("add_item_with_merge failed")
 
 
 ## 打开背包（隐藏的按钮，方便绑定快捷键）

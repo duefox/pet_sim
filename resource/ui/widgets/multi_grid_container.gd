@@ -150,23 +150,22 @@ func add_item_with_merge(item_id: String, num: int = 1) -> bool:
 
 	# 步骤2: 如果还有剩余物品，则寻找空位并添加新物品
 	while remaining_items > 0:
-		var empty_pos: Vector2 = get_next_available_position()
-		if empty_pos == -Vector2.ONE:
-			# 如果没有找到任何可用位置，发出信号
-			EventManager.emit_event(UIEvent.INVENTORY_FULL, self)
-			return false  # 没有空位了
-
 		var new_item_data: Dictionary = GlobalData.find_item_data(item_id)
 		if not new_item_data:
 			push_error("Item data not found for id: ", item_id)
 			return false
-
+		var empty_pos: Vector2 = get_next_available_position(new_item_data)
+		if empty_pos == -Vector2.ONE:
+			# 如果没有找到任何可用位置，发出信号
+			EventManager.emit_event(UIEvent.INVENTORY_FULL, self)
+			return false  # 没有空位了
 		var num_to_add: int = min(remaining_items, WItem.new().max_stack_size)
 		new_item_data.num = num_to_add
 
 		# 放置新物品
 		var success: bool = add_new_item_in_data(empty_pos, new_item_data)
 		if not success:
+			print("放置失败，中断->empty_pos:", empty_pos)
 			return false  # 放置失败，中断
 
 		remaining_items -= num_to_add
@@ -175,13 +174,12 @@ func add_item_with_merge(item_id: String, num: int = 1) -> bool:
 
 
 ## 查找下一个可用的空位
-func get_next_available_position() -> Vector2:
+func get_next_available_position(item_data: Dictionary) -> Vector2:
 	# 遍历所有格子，寻找第一个is_placed为false的空位
 	for y in range(grid_row):
 		for x in range(grid_col):
 			var cell_pos: Vector2 = Vector2(x, y)
-			var item_data: WItemData = get_grid_map_item(cell_pos)
-			if item_data and not item_data.is_placed:
+			if can_place_item(item_data, cell_pos):
 				return cell_pos
 	return -Vector2.ONE  # 没有找到可用的位置
 
@@ -207,9 +205,8 @@ func add_item(item_id: String) -> bool:
 			var first_cell_pos: Vector2 = Vector2(x, y)
 
 			# 使用新函数检查该位置是否可以放置
-			if can_place_item(temp_item, first_cell_pos):
+			if can_place_item(item_data, first_cell_pos):
 				# 找到合适位置后，调用现有函数放置物品并返回
-				#add_new_item_at(first_cell_pos, item_id)
 				add_new_item_in_data(first_cell_pos, item_data)
 				temp_item.queue_free()
 				return true
@@ -239,6 +236,24 @@ func sub_item(item_id: String, num: int = 1) -> bool:
 
 	print("找不到指定ID的物品:", item_id)
 	return false  # 没有找到该物品，返回假
+
+
+## 扣除指定位置物品的数量
+## @param cell_pos: 物品的网格位置
+## @param num: 扣除的数量，默认为1
+func sub_item_at(cell_pos: Vector2, num: int = 1) -> void:
+	var item_data: WItemData = get_grid_map_item(cell_pos)
+	if item_data and item_data.is_placed:
+		var item: WItem = item_data.link_item
+		item.num -= num
+		# 如果数量小于等于0，则移除物品
+		if item.num <= 0:
+			# 设置映射数据为未被占用
+			set_item_placed(item, false)
+			remove_item(item)
+		else:
+			# 否则，更新物品标签显示
+			item.set_label_data()
 
 
 ## 检查格子是否已被占用
@@ -321,22 +336,6 @@ func add_item_at(cell_pos: Vector2, item: WItem) -> bool:
 	return false
 
 
-## 扣除指定位置物品的数量
-## @param cell_pos: 物品的网格位置
-## @param num: 扣除的数量，默认为1
-func sub_item_at(cell_pos: Vector2, num: int = 1) -> void:
-	var item_data: WItemData = get_grid_map_item(cell_pos)
-	if item_data and item_data.is_placed:
-		var item: WItem = item_data.link_item
-		item.num -= num
-		if item.num <= 0:
-			# 如果数量小于等于0，则移除物品
-			remove_item(item)
-		else:
-			# 否则，更新物品标签显示
-			item.set_label_data()
-
-
 ## 根据id新建物品并放置到多格子容器中
 ## @param cell_pos: 物品的网格位置
 ## @param item_id: 物品的id
@@ -396,7 +395,6 @@ func get_first_cell_pos_offset(item: WItem, cell_pos: Vector2) -> Vector2:
 func remove_item(cur_item: WItem) -> void:
 	if not is_instance_valid(cur_item):
 		return
-
 	## 移除映射表的对应数据
 	for y in range(int(cur_item.height)):
 		for x in range(int(cur_item.width)):
@@ -426,7 +424,7 @@ func set_item_placed(item: WItem, value: bool) -> void:
 
 
 ## 检查一个物品是否可以放置在指定位置
-func can_place_item(item: WItem, first_cell_pos: Vector2) -> bool:
+func can_place_item(item: Dictionary, first_cell_pos: Vector2) -> bool:
 	# 检查所有被物品占用的格子
 	for y in range(int(item.height)):
 		for x in range(int(item.width)):

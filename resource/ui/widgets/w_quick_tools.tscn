@@ -102,7 +102,7 @@ theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="QTContainer" parent="MarginContainer/HBoxContainer/QTMargin/MarginContainer" instance=ExtResource("8_mkisp")]
+[node name="QuickTools" parent="MarginContainer/HBoxContainer/QTMargin/MarginContainer" instance=ExtResource("8_mkisp")]
 unique_name_in_owner = true
 layout_mode = 2
 grid_row = 1

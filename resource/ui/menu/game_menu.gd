@@ -29,7 +29,7 @@ func _ready() -> void:
 	# 获得仓库的容器
 	inventory = grid_box_bar.get_inventory()
 	backpack = grid_box_bar.get_backpack()
-	quick_tools = grid_box_bar.get_quick_tool()
+	quick_tools = grid_box_bar.get_quick_tools()
 	# 初始化抓取物品
 	_init_held_item()
 	# 仓库
@@ -51,18 +51,17 @@ func _ready() -> void:
 		inventory.add_item("2002")
 		inventory.add_item("1002")
 		backpack.add_item("2002")
-		quick_tools.add_item_with_merge("1001", 5)
+		quick_tools.add_item_with_merge("1001", 6)
 
 	## 设置背包模式
 	#grid_box_bar.grid_mode = GridBoxBar.GridDisplayMode.BACKPACK
 	#grid_box_bar.grid_mode = GridBoxBar.GridDisplayMode.INVENTORY
-	
+
 	await get_tree().create_timer(8.0).timeout
-	
+
 	#quick_tools.sub_item_at(Vector2(0, 0))
 	#quick_tools.sub_item("1001")
 	#quick_tools.sub_item("2003")
-	
 
 
 ## 退出处理订阅事件
@@ -178,10 +177,11 @@ func _input(event: InputEvent) -> void:
 		MouseEvent.mouse_state = MouseEvent.CONTROLS_TYPE.DEF
 		# 处理放置物品
 		_handle_drop_item()
-	# 当鼠标右键键松开时，把抓取1个物品放置对应的容器中
+	# 当鼠标右键键松开时，重置右键状态值
 	elif Input.is_action_just_released("mouse_right"):
-		print("mouse right released")
 		MouseEvent.is_mouse_right_down = false
+		# 关闭放置提示框
+		MouseEvent.mouse_cell_matrix.off_placement_overlay()
 
 
 ## 放置物品到多格容器

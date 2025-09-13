@@ -1,0 +1,496 @@
+[gd_scene load_steps=25 format=3 uid="uid://q45i1vw1iybx"]
+
+[ext_resource type="Script" uid="uid://besw2npnjcopg" path="res://resource/ui/widgets/w_inventory.gd" id="1_6ivst"]
+[ext_resource type="Texture2D" uid="uid://bsask3iusjohx" path="res://themes/wood/graphics/expandBtnDisabled.png" id="2_csywl"]
+[ext_resource type="Texture2D" uid="uid://d05g6gyhk8t6j" path="res://themes/wood/graphics/expandBtnOver.png" id="3_iwhnu"]
+[ext_resource type="Texture2D" uid="uid://chq8lw3dm6ppa" path="res://themes/wood/graphics/expandBtnPressed.png" id="4_hiv7n"]
+[ext_resource type="Texture2D" uid="uid://dc2dhq7qhfvec" path="res://themes/wood/graphics/expandBtnNormal.png" id="5_e8u3w"]
+[ext_resource type="Script" uid="uid://g0cotbm5t03y" path="res://resource/components/ui/buttons/button_expand.gd" id="6_pft6r"]
+[ext_resource type="PackedScene" uid="uid://cs2wpwfuk23x3" path="res://resource/ui/widgets/multi_grid_container.tscn" id="7_pusp7"]
+[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="8_ole4d"]
+[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="9_mdftu"]
+[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="10_jqpxr"]
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="11_5mi6v"]
+[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="12_23bn0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hlw07"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
+texture = ExtResource("2_csywl")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uf7ap"]
+texture = ExtResource("3_iwhnu")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ihut6"]
+texture = ExtResource("4_hiv7n")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxv3c"]
+texture = ExtResource("5_e8u3w")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_thbo5"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
+texture = ExtResource("8_ole4d")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
+texture = ExtResource("9_mdftu")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
+texture = ExtResource("10_jqpxr")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("11_5mi6v")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="InputEventKey" id="InputEventKey_hlw07"]
+device = -1
+shift_pressed = true
+keycode = 82
+unicode = 82
+
+[sub_resource type="Shortcut" id="Shortcut_thbo5"]
+events = [SubResource("InputEventKey_hlw07")]
+
+[node name="WInventory" type="Control"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+grow_horizontal = 2
+mouse_filter = 1
+script = ExtResource("1_6ivst")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -28.0
+offset_right = 28.0
+offset_bottom = 99.0
+grow_horizontal = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="IconContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = -20
+
+[node name="IconDescrip" type="Button" parent="MarginContainer/HBoxContainer/IconContainer"]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+tooltip_text = "仓库
+快捷键 [b][color=white]C[/color][/b] "
+theme_override_font_sizes/font_size = 18
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hlw07")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
+theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
+theme_override_styles/normal = SubResource("StyleBoxTexture_hxv3c")
+text = "仓
+库"
+icon_alignment = 1
+script = ExtResource("6_pft6r")
+metadata/_custom_type_script = "uid://g0cotbm5t03y"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+current_tab = 0
+
+[node name="All" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer"]
+custom_minimum_size = Vector2(910, 0)
+layout_mode = 2
+mouse_filter = 1
+metadata/_tab_index = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All/MarginContainer"]
+layout_mode = 2
+
+[node name="CheckBoxMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All/MarginContainer/VBoxContainer/CheckBoxMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="AllCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "全部"
+
+[node name="AnimalCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "动物"
+
+[node name="FoodCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "食物"
+
+[node name="MaterialCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "材料"
+
+[node name="OthersCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "其他"
+
+[node name="LineMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 8
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All/MarginContainer/VBoxContainer/LineMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="GridMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="InventoryAll" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All/MarginContainer/VBoxContainer/GridMargin" instance=ExtResource("7_pusp7")]
+unique_name_in_owner = true
+layout_mode = 2
+grid_row = 10
+grid_col = 16
+max_scroll_grid = 6
+
+[node name="Animals" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(910, 0)
+layout_mode = 2
+mouse_filter = 1
+metadata/_tab_index = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer"]
+layout_mode = 2
+
+[node name="CheckBoxMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer/CheckBoxMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="AllCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "All"
+
+[node name="AquaCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Aqua"
+
+[node name="LandCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Land"
+
+[node name="AirCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Air"
+
+[node name="BasicCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Basic"
+
+[node name="MagicBox" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Magic"
+
+[node name="EpicCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Epic"
+
+[node name="MythicCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Mythic"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer/CheckBoxMargin"]
+layout_mode = 2
+
+[node name="LineMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 8
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer/LineMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="GridMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="InventoryPets" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals/MarginContainer/VBoxContainer/GridMargin" instance=ExtResource("7_pusp7")]
+unique_name_in_owner = true
+layout_mode = 2
+grid_row = 10
+grid_col = 16
+max_scroll_grid = 6
+
+[node name="Foods" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(910, 0)
+layout_mode = 2
+mouse_filter = 1
+metadata/_tab_index = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods/MarginContainer"]
+layout_mode = 2
+
+[node name="CheckBoxMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods/MarginContainer/VBoxContainer/CheckBoxMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="AllCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "All"
+
+[node name="BasicCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Basic"
+
+[node name="MagicBox" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Magic"
+
+[node name="EpicCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Epic"
+
+[node name="MythicCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Mythic"
+
+[node name="LineMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 8
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods/MarginContainer/VBoxContainer/LineMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="GridMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="InventoryFoods" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods/MarginContainer/VBoxContainer/GridMargin" instance=ExtResource("7_pusp7")]
+unique_name_in_owner = true
+layout_mode = 2
+grid_row = 10
+grid_col = 16
+max_scroll_grid = 6
+
+[node name="Materials" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(910, 0)
+layout_mode = 2
+mouse_filter = 1
+metadata/_tab_index = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials/MarginContainer"]
+layout_mode = 2
+
+[node name="CheckBoxMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials/MarginContainer/VBoxContainer/CheckBoxMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="AllCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "All"
+
+[node name="BasicCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Basic"
+
+[node name="MagicBox" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Magic"
+
+[node name="EpicCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Epic"
+
+[node name="MythicCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Mythic"
+
+[node name="LineMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 8
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials/MarginContainer/VBoxContainer/LineMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="GridMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="InventoryMaterisal" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials/MarginContainer/VBoxContainer/GridMargin" instance=ExtResource("7_pusp7")]
+unique_name_in_owner = true
+layout_mode = 2
+grid_row = 10
+grid_col = 16
+max_scroll_grid = 6
+
+[node name="Others" type="PanelContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer"]
+visible = false
+custom_minimum_size = Vector2(910, 0)
+layout_mode = 2
+mouse_filter = 1
+metadata/_tab_index = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others/MarginContainer"]
+layout_mode = 2
+
+[node name="CheckBoxMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others/MarginContainer/VBoxContainer/CheckBoxMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="AllCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "All"
+
+[node name="BasicCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Basic"
+
+[node name="MagicBox" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Magic"
+
+[node name="EpicCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Epic"
+
+[node name="MythicCheck" type="CheckBox" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others/MarginContainer/VBoxContainer/CheckBoxMargin/HBoxContainer"]
+layout_mode = 2
+text = "Mythic"
+
+[node name="LineMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others/MarginContainer/VBoxContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_top = 8
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others/MarginContainer/VBoxContainer/LineMargin"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="GridMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="InventoryOthers" parent="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others/MarginContainer/VBoxContainer/GridMargin" instance=ExtResource("7_pusp7")]
+unique_name_in_owner = true
+layout_mode = 2
+grid_row = 10
+grid_col = 16
+max_scroll_grid = 6
+
+[node name="BtnsMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+theme_override_constants/margin_top = 48
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/BtnsMargin"]
+layout_mode = 2
+
+[node name="BtnSort" type="Button" parent="MarginContainer/HBoxContainer/BtnsMargin/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "快速整理堆叠
+快捷键 [b][color=white]SHIFT + R[/color][/b] "
+theme_override_styles/focus = SubResource("StyleBoxEmpty_thbo5")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+shortcut = SubResource("Shortcut_thbo5")
+text = "整理"
+script = ExtResource("12_23bn0")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/All" to="." method="_on_pets_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Animals" to="." method="_on_pets_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Foods" to="." method="_on_pets_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Materials" to="." method="_on_pets_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/HBoxContainer/VBoxContainer/TabContainer/Others" to="." method="_on_pets_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer/BtnsMargin/HBoxContainer/BtnSort" to="." method="_on_btn_sort_pressed"]

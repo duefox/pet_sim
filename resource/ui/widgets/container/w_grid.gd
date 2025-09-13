@@ -13,7 +13,7 @@ func _ready() -> void:
 	MouseEvent.mouse_cell_matrix = parent_cell_matrix
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# 只在鼠标所在的格子实例上执行逻辑
 	if not cell_pos == MouseEvent.mouse_cell_pos:
 		return

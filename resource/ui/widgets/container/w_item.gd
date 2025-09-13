@@ -8,10 +8,10 @@ class_name WItem
 @onready var item_num_label: Label = %ItemNumLabel
 @onready var item_name_label: Label = %ItemNameLabel
 
-#旋转方向
+## 旋转方向
 enum ORI { VER, HOR }  # 代表竖直方向  # 代表横向方向
 
-#默认的背景颜色
+## 默认的背景颜色
 const DEF_BG_COLOR: Color = Color(&"ffffff36")
 const SELECTED_BG_COLOR: Color = Color(&"91d553")
 
@@ -25,7 +25,8 @@ var width: int  # 物品的宽度
 var height: int  # 物品的高度
 var orientation: int = ORI.VER  # 初始方向为竖着
 var stackable: bool  # 物品是否可堆叠
-var num: int = 1  # 物品数量
+var num: int = 1:  # 物品数量
+	set = _setter_num
 var max_stack_size: int = 9  # 物品最大堆叠数量
 var more_data: Resource  #更多详细数据
 #endregion
@@ -46,7 +47,7 @@ func setup() -> void:
 func set_label_data() -> void:
 	item_name_label.text = item_name
 	item_num_label.text = str(num)
-	#如果物品不可堆叠，则不显示物品数量标签
+	# 如果物品不可堆叠，则不显示物品数量标签
 	if !stackable:
 		item_num_label.visible = false
 
@@ -135,6 +136,7 @@ func add_num(n: int) -> int:
 	if not stackable:
 		return n
 
+	# 剩余可叠加的数量
 	var remaining_space: int = max_stack_size - num
 	if n <= remaining_space:
 		# 如果新增数量未超过剩余空间，则全部堆叠
@@ -170,3 +172,15 @@ func fit_to_container(container_size: Vector2) -> void:
 	item_container.size = container_size
 	# 缩放纹理
 	item_texture.scale_texture(container_size, self)
+
+
+## 改变num的值
+func _setter_num(value) -> void:
+	num = value
+	if not is_instance_valid(item_num_label) or num == max_stack_size:
+		return
+	# 字体动画
+	var tween: Tween = create_tween()
+	tween.tween_property(item_num_label, "theme_override_font_sizes/font_size", 22, 0.08)
+	tween.tween_interval(0.05)
+	tween.tween_property(item_num_label, "theme_override_font_sizes/font_size", 20, 0.08)
