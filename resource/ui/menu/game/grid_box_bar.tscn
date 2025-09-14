@@ -1,28 +1,15 @@
-[gd_scene load_steps=20 format=3 uid="uid://dxacgbdobqbph"]
+[gd_scene load_steps=30 format=3 uid="uid://dxacgbdobqbph"]
 
 [ext_resource type="Script" uid="uid://d075t7ogwalmn" path="res://resource/ui/menu/game/grid_box_bar.gd" id="1_084rm"]
 [ext_resource type="PackedScene" uid="uid://d0rx71av14m2k" path="res://resource/ui/widgets/w_Inventory.tscn" id="1_tkl6e"]
 [ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="2_406wf"]
 [ext_resource type="PackedScene" uid="uid://c07s5fxqsda0i" path="res://resource/ui/widgets/w_backpack.tscn" id="2_l87dt"]
 [ext_resource type="PackedScene" uid="uid://cvoygtt76yv4j" path="res://resource/ui/widgets/w_quick_tools.tscn" id="3_1nciw"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_406wf"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n26ji"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_546is"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6yqcx"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_whe50"]
-
-[sub_resource type="InputEventKey" id="InputEventKey_ycsxv"]
-device = -1
-keycode = 66
-unicode = 98
-
-[sub_resource type="Shortcut" id="Shortcut_1q7as"]
-events = [SubResource("InputEventKey_ycsxv")]
+[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="6_ppo52"]
+[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="7_1q7as"]
+[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="8_2r06w"]
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="9_nskuy"]
+[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="10_5mela"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ppo52"]
 
@@ -34,6 +21,24 @@ events = [SubResource("InputEventKey_ycsxv")]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5mela"]
 
+[sub_resource type="InputEventKey" id="InputEventKey_ycsxv"]
+device = -1
+keycode = 66
+unicode = 98
+
+[sub_resource type="Shortcut" id="Shortcut_1q7as"]
+events = [SubResource("InputEventKey_ycsxv")]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tvj87"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sbkum"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_otn31"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mh84u"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_130et"]
+
 [sub_resource type="InputEventKey" id="InputEventKey_nijvm"]
 device = -1
 keycode = 67
@@ -41,6 +46,36 @@ unicode = 99
 
 [sub_resource type="Shortcut" id="Shortcut_otn31"]
 events = [SubResource("InputEventKey_nijvm")]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pt6yy"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
+texture = ExtResource("6_ppo52")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
+texture = ExtResource("7_1q7as")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
+texture = ExtResource("8_2r06w")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("9_nskuy")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
 
 [node name="GridBoxBar" type="Control"]
 layout_mode = 3
@@ -57,22 +92,22 @@ layout_mode = 1
 
 [node name="BtnBag" type="Button" parent="EmptyBtnsToShortcut"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_406wf")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_n26ji")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_546is")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_6yqcx")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_whe50")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ppo52")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_1q7as")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_2r06w")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_nskuy")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_5mela")
 shortcut = SubResource("Shortcut_1q7as")
 script = ExtResource("2_406wf")
 metadata/_custom_type_script = "uid://hmattcwq4j3c"
 
 [node name="BtnInventory" type="Button" parent="EmptyBtnsToShortcut"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_ppo52")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_1q7as")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_2r06w")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nskuy")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_5mela")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_tvj87")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_sbkum")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_otn31")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_mh84u")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_130et")
 shortcut = SubResource("Shortcut_otn31")
 script = ExtResource("2_406wf")
 metadata/_custom_type_script = "uid://hmattcwq4j3c"
@@ -135,5 +170,96 @@ theme_override_constants/margin_right = 128
 unique_name_in_owner = true
 layout_mode = 2
 
+[node name="CMDMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -249.0
+offset_top = -165.0
+offset_right = 249.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_right = 72
+theme_override_constants/margin_bottom = 100
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CMDMargin"]
+layout_mode = 2
+
+[node name="BagMargin" type="MarginContainer" parent="CMDMargin/HBoxContainer"]
+layout_mode = 2
+
+[node name="BagOption" type="OptionButton" parent="CMDMargin/HBoxContainer/BagMargin"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "快捷栏"
+popup/item_0/id = 0
+popup/item_1/text = "背包"
+popup/item_1/id = 1
+popup/item_2/text = "仓库"
+popup/item_2/id = 2
+
+[node name="LevelMargin" type="MarginContainer" parent="CMDMargin/HBoxContainer"]
+layout_mode = 2
+
+[node name="LevelOption" type="OptionButton" parent="CMDMargin/HBoxContainer/LevelMargin"]
+custom_minimum_size = Vector2(132, 0)
+layout_mode = 2
+selected = 0
+item_count = 4
+popup/item_0/text = "普通"
+popup/item_0/id = 0
+popup/item_1/text = "稀有"
+popup/item_1/id = 1
+popup/item_2/text = "罕见"
+popup/item_2/id = 2
+popup/item_3/text = "传说"
+popup/item_3/id = 3
+
+[node name="IDMargin" type="MarginContainer" parent="CMDMargin/HBoxContainer"]
+layout_mode = 2
+
+[node name="IDEdit" type="LineEdit" parent="CMDMargin/HBoxContainer/IDMargin"]
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+theme_override_colors/font_placeholder_color = Color(0.136826, 0.136826, 0.136826, 0.6)
+placeholder_text = "输入物品代码"
+alignment = 1
+
+[node name="NumSpinMargin" type="MarginContainer" parent="CMDMargin/HBoxContainer"]
+layout_mode = 2
+
+[node name="NumSpin" type="SpinBox" parent="CMDMargin/HBoxContainer/NumSpinMargin"]
+layout_mode = 2
+min_value = 1.0
+max_value = 999.0
+value = 1.0
+alignment = 1
+
+[node name="BtnMargin" type="MarginContainer" parent="CMDMargin/HBoxContainer"]
+layout_mode = 2
+
+[node name="BtnAdd" type="Button" parent="CMDMargin/HBoxContainer/BtnMargin"]
+custom_minimum_size = Vector2(72, 0)
+layout_mode = 2
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pt6yy")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+text = "添加"
+script = ExtResource("10_5mela")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
 [connection signal="pressed" from="EmptyBtnsToShortcut/BtnBag" to="." method="_on_btn_bag_pressed"]
 [connection signal="pressed" from="EmptyBtnsToShortcut/BtnInventory" to="." method="_on_btn_inventory_pressed"]
+[connection signal="item_selected" from="CMDMargin/HBoxContainer/BagMargin/BagOption" to="." method="_on_bag_option_item_selected"]
+[connection signal="item_selected" from="CMDMargin/HBoxContainer/LevelMargin/LevelOption" to="." method="_on_level_option_item_selected"]
+[connection signal="text_changed" from="CMDMargin/HBoxContainer/IDMargin/IDEdit" to="." method="_on_id_edit_text_changed"]
+[connection signal="value_changed" from="CMDMargin/HBoxContainer/NumSpinMargin/NumSpin" to="." method="_on_num_spin_value_changed"]
+[connection signal="pressed" from="CMDMargin/HBoxContainer/BtnMargin/BtnAdd" to="." method="_on_btn_add_pressed"]

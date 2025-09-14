@@ -11,15 +11,23 @@ class_name WItem
 ## 旋转方向
 enum ORI { VER, HOR }  # 代表竖直方向  # 代表横向方向
 
-## 默认的背景颜色
-const DEF_BG_COLOR: Color = Color(&"ffffff36")
-const SELECTED_BG_COLOR: Color = Color(&"91d553")
+## 物品级别背景色
+const LEVEL_BG_COLOR: Dictionary = {
+	0: Color("ffffff80"),  # 普通
+	1: Color("ffff0080"),  # 稀有
+	2: Color("0000ff80"),  # 罕见
+	3: Color("ff00ff80"),  # 传说
+}
 
-var head_position: Vector2  # 首部坐标
+## 默认的选中颜色
+const SELECTED_BG_COLOR: Color = Color(&"91d553")
+## 首部坐标
+var head_position: Vector2
 
 #region 要和全局加载配置的字典key值对应
 var id: String  # 唯一标识符
 var item_name: String  # 物品名称
+var item_type: int  # 物品类型
 var descrip: String  # 物品描述
 var width: int  # 物品的宽度
 var height: int  # 物品的高度
@@ -28,8 +36,11 @@ var stackable: bool  # 物品是否可堆叠
 var num: int = 1:  # 物品数量
 	set = _setter_num
 var max_stack_size: int = 9  # 物品最大堆叠数量
-var more_data: Resource  #更多详细数据
+var more_data: ItemBaseData  #更多详细数据
 #endregion
+
+## 默认背景颜色
+var _def_bg_color: Color = LEVEL_BG_COLOR[0]
 
 
 func _ready() -> void:
@@ -41,6 +52,9 @@ func setup() -> void:
 	set_container_size()
 	set_texture()
 	set_label_data()
+	# 设置物品稀有度色值，级别颜色值
+	if more_data:
+		_def_bg_color = LEVEL_BG_COLOR[more_data.item_level]
 
 
 ## 设置全部标签的数据
@@ -153,12 +167,12 @@ func add_num(n: int) -> int:
 
 ## 隐藏背景颜色
 func hide_bg_color() -> void:
-	bg_color.color = WItem.DEF_BG_COLOR
+	bg_color.color = _def_bg_color
 
 
 ## 显示背景颜色
 func show_bg_color() -> void:
-	bg_color.color = WItem.DEF_BG_COLOR
+	bg_color.color = _def_bg_color
 
 
 ## 设置选中颜色

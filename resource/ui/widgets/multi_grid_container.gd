@@ -91,10 +91,17 @@ func off_placement_overlay() -> void:
 
 ##  设置滚动区域
 func set_scroll_container() -> void:
-	#grid_size = Vector2(grid_col + 0.3, max_scroll_grid + 0.5) * w_grid_size
 	grid_size = Vector2(grid_col, max_scroll_grid) * w_grid_size
 	# 有滚动条，则需要给滚动条留空间
 	scroll_container.custom_minimum_size = grid_size + Vector2(0.5, 0.5) * w_grid_size
+
+
+## 命令行添加物品
+## @param item_id: 物品id
+## @param item_num: 物品数量
+## @param extra_args: 物品额外参数
+func cmd_add_item(item_id: String, item_num: int, extra_args: Dictionary = {}) -> void:
+	add_item_with_merge(item_id, item_num, extra_args)
 
 
 ## 自动合并所有可堆叠的物品并重新排列
@@ -135,7 +142,7 @@ func auto_stack_existing_items() -> void:
 ## 新增物品，如果可合并则堆叠，不需要指定位置
 ## @param item_id: 物品的唯一id
 ## @param num: 物品的数量
-func add_item_with_merge(item_id: String, num: int = 1) -> bool:
+func add_item_with_merge(item_id: String, num: int = 1, extra_args: Dictionary = {}) -> bool:
 	var remaining_items: int = num
 
 	# 步骤1: 遍历所有格子，尝试合并到现有物品堆叠中
@@ -150,7 +157,7 @@ func add_item_with_merge(item_id: String, num: int = 1) -> bool:
 
 	# 步骤2: 如果还有剩余物品，则寻找空位并添加新物品
 	while remaining_items > 0:
-		var new_item_data: Dictionary = GlobalData.find_item_data(item_id)
+		var new_item_data: Variant = GlobalData.find_item_data(item_id)
 		if not new_item_data:
 			push_error("Item data not found for id: ", item_id)
 			return false
@@ -188,7 +195,7 @@ func get_next_available_position(item_data: Dictionary) -> Vector2:
 ## 新增的个数固定为1个，一般用于不可堆叠物品，可堆叠物品请用add_item_with_merge
 ## @param item_id: 物品的唯一id
 func add_item(item_id: String) -> bool:
-	var item_data: Dictionary = GlobalData.find_item_data(item_id)
+	var item_data: Variant = GlobalData.find_item_data(item_id)
 
 	if not item_data:
 		push_error("Item data not found for ID: " + item_id)
@@ -361,7 +368,7 @@ func add_new_item_in_data(cell_pos: Vector2, data: Dictionary) -> bool:
 
 ## 根据id给WItem设置基础数据
 func set_item_data_at_id(item: WItem, item_id: String) -> void:
-	var data: Dictionary = GlobalData.find_item_data(item_id)
+	var data: Variant = GlobalData.find_item_data(item_id)
 	if data:
 		item.set_data(data)
 	else:

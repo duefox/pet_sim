@@ -16,6 +16,18 @@ var _backpack: MultiGridContainer
 ## 快捷栏容器
 var _quick_tools: MultiGridContainer
 
+#region 命令行相关变量
+## 当前要添加物品的背包
+var _cur_bag: MultiGridContainer
+## 物品id
+var _item_id: String = ""
+## 物品数量
+var _item_num: int = 1
+## 物品级别
+var _item_level: int = 0
+
+#endregion
+
 ## 设置网格容器的显示模式
 var grid_mode: GridDisplayMode = GridDisplayMode.DEFAULT:
 	set = set_grid_mode
@@ -27,6 +39,8 @@ func _ready() -> void:
 	_inventory = get_inventory()
 	_backpack = get_backpack()
 	_quick_tools = get_quick_tools()
+	# 命令行设置快捷栏为当前背包
+	_cur_bag = _quick_tools
 	# 订阅事件
 	EventManager.subscribe(UIEvent.SUB_ITEM, _on_sub_item)
 
@@ -110,6 +124,9 @@ func _on_sub_item() -> void:
 				print("add_item_with_merge failed")
 
 
+#region 网格容器事件
+
+
 ## 打开背包（隐藏的按钮，方便绑定快捷键）
 func _on_btn_bag_pressed() -> void:
 	#print("_on_btn_bag_pressed")
@@ -126,3 +143,48 @@ func _on_btn_inventory_pressed() -> void:
 		grid_mode = GridDisplayMode.DEFAULT
 	else:
 		grid_mode = GridDisplayMode.INVENTORY
+
+
+#endregion
+
+#region 命令行事件
+
+
+func _on_bag_option_item_selected(index: int) -> void:
+	if index == 0:
+		_cur_bag = _quick_tools
+	elif index == 1:
+		_cur_bag = _backpack
+	elif index == 2:
+		_cur_bag = _inventory
+
+
+func _on_level_option_item_selected(index: int) -> void:
+	_item_level = index
+
+
+func _on_id_edit_text_changed(new_text: String) -> void:
+	_item_id = new_text
+
+
+func _on_num_spin_value_changed(value: float) -> void:
+	_item_num = int(value)
+
+
+## 提交命令行代码
+func _on_btn_add_pressed() -> void:
+	# 1001
+	if not _item_id.length() == 4:
+		push_warning("代码错误，请输入4位数字代码！")
+		return
+	_cmd_add_item(_item_id, _item_num, _item_level)
+
+
+#endregion
+
+
+## 命令行添加物品
+func _cmd_add_item(item_id: String, item_num: int, item_level: int) -> void:
+	# 附加额外属性
+	var extra_args: Dictionary = {"item_level": item_level}
+	_cur_bag.cmd_add_item(item_id, item_num, extra_args)

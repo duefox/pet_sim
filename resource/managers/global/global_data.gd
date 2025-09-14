@@ -62,16 +62,17 @@ func create_textures_item(res_data: Resource = null) -> void:
 	textures[res_data.id] = texture_data
 	# 属性数据
 	var base_data: Dictionary = {
-		"id": res_data.id,
-		"item_name": res_data.nickname,
-		"descrip": res_data.descrip,
-		"width": space_width,
-		"height": space_height,
-		"orientation": res_data.orientation,
-		"stackable": res_data.stackable,
-		"num": 1,
-		"max_stack_size": res_data.max_stack_size,
-		"more_data": res_data,
+		"id": res_data.id,  # id
+		"item_name": res_data.nickname,  # 昵称
+		"item_type": res_data.item_type,  # 类型
+		"descrip": res_data.descrip,  # 描述
+		"width": space_width,  # 占用宽度
+		"height": space_height,  # 占用高度
+		"orientation": res_data.orientation,  # 方向
+		"stackable": res_data.stackable,  # 是否可堆叠
+		"num": 1,  # 数量
+		"max_stack_size": res_data.max_stack_size,  # 最大堆叠数
+		"more_data": res_data,  # 详细数据（包含以上）
 	}
 
 	data[res_data.id] = base_data

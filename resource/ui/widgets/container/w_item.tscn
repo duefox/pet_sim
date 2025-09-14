@@ -26,7 +26,7 @@ theme_override_constants/margin_bottom = 2
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-color = Color(1, 1, 1, 0.211765)
+color = Color(1, 1, 1, 0.501961)
 
 [node name="TextureContainer" type="PanelContainer" parent="ItemContainer/BGColor"]
 unique_name_in_owner = true
