@@ -25,8 +25,6 @@ var placement_overlay_type: int
 var prent_cell_pos: Vector2
 ## 当前选中的物品(引用)
 var cur_selected_item: WItem
-## 物品所对应的纹理表
-var textures: Dictionary[String,Dictionary]
 ## 基础的物品数据，格式如下
 var data: Dictionary[String,Dictionary]
 #endregion
@@ -39,44 +37,16 @@ func create_textures_item(res_data: Resource = null) -> void:
 		return
 	# 资源数据
 	res_data = res_data as ItemBaseData
-	var texture_data: Dictionary = {
-		"name": res_data.nickname,
-		"hframes": res_data.hframes,  # 行
-		"vframes": res_data.vframes,  # 列
-		"frame": res_data.frame,  # 所在帧的序号
-	}
 	var space_width: int = res_data.width
 	var space_height: int = res_data.height
-	# 有成长值，可能不同阶段的贴图不一样，体型和占用空间也不一样
-	if res_data is PetData or res_data is EggData:
-		var initial_growth: float = res_data.initial_growth
-		# 成年了
-		if initial_growth == res_data.adult_growth_threshold:
-			texture_data.set("texture", res_data.adult_texture)
-		# 有的宠物有第二阶段，比如蝴蝶的虫蛹状态，这种动物的成年阈值为200
-		elif initial_growth >= 100 and initial_growth < res_data.adult_growth_threshold:
-			texture_data.set("texture", res_data.pupa_texture)
-			# 重置占用空间大小
-			space_width = _get_juvenile_space(res_data.width)
-			space_height = _get_juvenile_space(res_data.height)
-		# 幼年默认贴图
-		else:
-			texture_data.set("texture", res_data.texture)
-			# 重置占用空间大小
-			space_width = _get_juvenile_space(res_data.width)
-			space_height = _get_juvenile_space(res_data.height)
-	else:
-		texture_data.set("texture", res_data.texture)
-
-	texture_data.set("width", space_width)
-	texture_data.set("height", space_height)
-	textures[res_data.id] = texture_data
 	# 属性数据
 	var base_data: Dictionary = {
 		"id": res_data.id,  # id
 		"item_name": res_data.nickname,  # 昵称
 		"item_type": res_data.item_type,  # 类型
 		"item_level": res_data.item_level,  # 级别
+		"growth": res_data.growth,  # 成长度
+		"base_price": res_data.base_price,  # 基础价格
 		"descrip": res_data.descrip,  # 描述
 		"width": space_width,  # 占用宽度
 		"height": space_height,  # 占用高度
@@ -84,17 +54,10 @@ func create_textures_item(res_data: Resource = null) -> void:
 		"stackable": res_data.stackable,  # 是否可堆叠
 		"num": 1,  # 数量
 		"max_stack_size": res_data.max_stack_size,  # 最大堆叠数
-		"more_data": res_data,  # 详细数据（包含以上）
+		"item_info": res_data,  # 详细数据（包含以上）
 	}
 
 	data[res_data.id] = base_data
-
-
-## 根据物品id获取对应纹理
-func get_texture_resources(id: String) -> Variant:
-	if textures.has(id):
-		return textures[id]
-	return false
 
 
 ## 根据物品id找对应的物品data

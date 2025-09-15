@@ -28,6 +28,7 @@ Tooltips="*res://resource/utils/tooltips_manager.gd"
 MouseEvent="*res://resource/managers/event/mouse_event.gd"
 GlobalData="*res://resource/managers/global/global_data.gd"
 Utils="*res://resource/utils/utils.gd"
+PriceManager="*res://resource/managers/price_manager.gd"
 
 [display]
 

@@ -34,12 +34,22 @@ var items: Dictionary[Vector2,WItem] = {}
 ##  格子映射表, key为格子坐标，value为WItemData
 var grid_map: Dictionary[Vector2, WItemData] = {}
 
+## 整理的排序方法
+var _sort_func: Dictionary
+## 整理点击的次数
+var _sort_timers: int = 0
+
 
 #region 内部方法
 func _ready() -> void:
 	# 清空grid container
 	_clear_grid_container()
 	cell_size = GlobalData.cell_size
+	# 整理的排序方法
+	_sort_func = {
+		0: _sort_by_id,
+		1: _sort_by_price,
+	}
 	##  渲染格子
 	_init_rend()
 	# 获取格子场景的大小
@@ -84,16 +94,11 @@ func add_new_item_at(cell_pos: Vector2, item_id: String, extra_args: Dictionary 
 ## @param extra_args: 物品的额外属性
 func add_item(item_id: String, extra_args: Dictionary = {}) -> bool:
 	var item_data: Variant = GlobalData.find_item_data(item_id)
-
 	if not item_data:
 		push_error("Item data not found for ID: " + item_id)
 		return false
 	# 新增的个数固定为1
 	item_data.num = 1
-
-	# 模拟创建一个临时的 WItem 实例以获取其尺寸，之后不会添加到场景中
-	var temp_item: WItem = item_scene.instantiate()
-	temp_item.set_data(item_data, extra_args)
 
 	for y in range(grid_row):
 		for x in range(grid_col):
@@ -103,10 +108,8 @@ func add_item(item_id: String, extra_args: Dictionary = {}) -> bool:
 			if _can_place_item(item_data, first_cell_pos):
 				# 找到合适位置后，调用现有函数放置物品并返回
 				add_new_item_in_data(first_cell_pos, item_data, extra_args)
-				temp_item.queue_free()
 				return true
 
-	temp_item.queue_free()
 	# 如果没有找到任何可用位置，发出信号
 	EventManager.emit_event(UIEvent.INVENTORY_FULL, self)
 	return false
@@ -118,13 +121,19 @@ func add_item(item_id: String, extra_args: Dictionary = {}) -> bool:
 ## @param extra_args: 物品的额外属性
 func add_item_with_merge(item_id: String, num: int = 1, extra_args: Dictionary = {}) -> bool:
 	var remaining_items: int = num
+	# 默认是0级别普通物品
+	var new_item_level: int = 0
+	if not extra_args.is_empty() and extra_args.has("item_level"):
+		new_item_level = extra_args["item_level"]
 	# 步骤1: 遍历所有格子，尝试合并到现有物品堆叠中
 	for item_data: WItemData in grid_map.values():
 		# 如果有物品则堆叠
 		if item_data and item_data.link_item:
 			var item: WItem = item_data.link_item
 			# 检查是否为同种物品、同级别
-			if item.id == item_id and item.stackable:
+			#if item.id == item_id and item.stackable:
+			# 检查是否为同种物品、可堆叠且物品级别相同
+			if item.id == item_id and item.stackable and item.item_level == new_item_level:
 				remaining_items = item.add_num(remaining_items)
 				if remaining_items == 0:
 					return true  # 全部合并成功
@@ -172,10 +181,12 @@ func auto_stack_existing_items() -> void:
 		var item: WItem = items[item_coords]
 		var item_data: Dictionary = item.get_data().duplicate(true)
 		if item.stackable:
-			if not merged_stackable_items.has(item.id):
-				merged_stackable_items[item.id] = item_data
+			# 构造唯一的复合键 (ID + 等级)
+			var key: String = item.id + "_" + str(item.item_level)
+			if not merged_stackable_items.has(key):
+				merged_stackable_items[key] = item_data
 			else:
-				merged_stackable_items[item.id].num += item_data.num
+				merged_stackable_items[key].num += item_data.num
 		else:
 			non_stackable_items.append(item_data)
 
@@ -184,14 +195,22 @@ func auto_stack_existing_items() -> void:
 	# 3. 按照合并后的数据重新创建并放置物品
 	var sorted_items: Array[Dictionary] = merged_stackable_items.values()
 	sorted_items.append_array(non_stackable_items)
-	# 4. 按id排序
-	sorted_items.sort_custom(func(a, b): return int(a.id) < int(b.id))
+	# 4. 按id和级别排序，优先id是升序，相同id级别按降序排序
+	#sorted_items.sort_custom(func(a, b): return int(a.id) * 10 - a.item_level < int(b.id) * 10 - b.item_level)
+	_sort_timers += 1
+	_sort_timers = _sort_timers % _sort_func.values().size()
+	sorted_items.sort_custom(_sort_func[_sort_timers])
 	# 5. 处理物品重新添加
 	for sorted_item: Dictionary in sorted_items:
+		# 6. 注意额外属性，级别和当前成长点
+		var extra_args: Dictionary = {
+			"item_level": sorted_item["item_level"],
+			"growth": sorted_item["growth"],
+		}
 		if sorted_item.stackable:
-			add_item_with_merge(sorted_item.id, sorted_item.num)
+			add_item_with_merge(sorted_item.id, sorted_item.num, extra_args)
 		else:
-			add_item(sorted_item.id)
+			add_item(sorted_item.id, extra_args)
 
 
 ## 扣除指定id的物品数量
@@ -553,3 +572,13 @@ func _clear_all_items() -> void:
 			item_data.link_item = null
 			if is_instance_valid(item_data.link_grid):
 				item_data.link_grid.update_tooltip("")
+
+
+## 按id升序排序
+func _sort_by_id(a, b) -> bool:
+	return int(a.id) * 10 - a.item_level < int(b.id) * 10 - b.item_level
+
+
+## 按价格降序排序
+func _sort_by_price(a, b) -> bool:
+	return int(a.base_price) * (a.item_level + 1) > int(b.base_price) * (b.item_level + 1)

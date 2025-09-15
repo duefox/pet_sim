@@ -36,3 +36,21 @@ func get_files(path: String) -> PackedStringArray:
 	if dir:
 		return dir.get_files()
 	return []
+
+
+## 从资源中把属性赋值给节点
+## @param resource: 属性的资源来源
+## @return 返回资源导出变量为key对应的字典
+func get_properties_from_res(resource: Resource) -> Dictionary:
+	var dic: Dictionary[String,Variant] = {}
+	# 获取资源的属性列表
+	var properties: Array = resource.get_property_list()
+	for prop in properties:
+		# 只遍历导出的变量
+		# `PROPERTY_USAGE_SCRIPT_VARIABLE` 表示它是脚本中的变量
+		# `PROPERTY_USAGE_EDITOR` 表示它在编辑器中可见
+		if (prop.usage & PROPERTY_USAGE_SCRIPT_VARIABLE) and (prop.usage & PROPERTY_USAGE_EDITOR):
+			var key_name = prop.name
+			var key_value = resource.get(key_name)
+			dic.set(key_name, key_value)
+	return dic

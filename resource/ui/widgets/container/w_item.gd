@@ -29,6 +29,8 @@ var id: String  # 唯一标识符
 var item_name: String  # 物品名称
 var item_type: int  # 物品类型
 var item_level: int = 0  # 物品级别
+var growth: float = 0.0  # 物品的成长值
+var base_price: float = 1.0  # 物品的基础价格
 var descrip: String  # 物品描述
 var width: int  # 物品的宽度
 var height: int  # 物品的高度
@@ -37,12 +39,19 @@ var stackable: bool  # 物品是否可堆叠
 var num: int = 1:  # 物品数量
 	set = _setter_num
 var max_stack_size: int = 1  # 物品最大堆叠数量
-var more_data: ItemBaseData  #更多详细数据
+var item_info: Dictionary  #更多详细的物品原始信息数据
 #endregion
+## 物品贴图数据
+var texture_data: Dictionary = {}
+## 物品购买价格，和活动以及人物好感相关（具体表现为打折优惠度）
+var purchase_price: int = 1:
+	get = _getter_purchase_price
+## 物品出售价格，和物品的级别、成长度相关
+var sale_price: int = 1:
+	get = _getter_sale_price
 
 ## 默认背景颜色
 var _def_bg_color: Color = LEVEL_BG_COLOR[0]
-var _texture_data: Variant = null
 
 
 func _ready() -> void:
@@ -52,8 +61,8 @@ func _ready() -> void:
 ## 初始化设置
 func setup() -> void:
 	# 设置物品稀有度色值，级别颜色值
-	if more_data:
-		_def_bg_color = LEVEL_BG_COLOR[more_data.item_level]
+	if item_info:
+		_def_bg_color = LEVEL_BG_COLOR[item_info.item_level]
 	# 初始化设置
 	set_container_size()
 	set_texture()
@@ -119,19 +128,8 @@ func get_item_size() -> Vector2:
 
 
 ## 设置纹理
-func set_texture(item_id: String = "0") -> void:
-	var this_id: String
-	if item_id != "0":
-		this_id = item_id
-	else:
-		this_id = id
-	var texture_data: Variant
-	if _texture_data:
-		texture_data = _texture_data
-	else:
-		texture_data = GlobalData.get_texture_resources(this_id)
-
-	if texture_data:
+func set_texture() -> void:
+	if not texture_data.is_empty():
 		item_texture.set_texture(texture_data)
 	else:
 		print(name, &"纹理设置失败")
@@ -141,61 +139,82 @@ func set_texture(item_id: String = "0") -> void:
 ## @param data: 基本数据
 ## @param extra_args: 额外数据，当额外数据不为空时候需要覆盖基础数据
 func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
+	# 拷贝一份数据
+	data = data.duplicate()
+	# 详细信息数据字典
+	var item_info_dic: Dictionary
+	if data["item_info"] is Resource:
+		# 第一次载入是资源的话标准化为字典
+		item_info_dic = Utils.get_properties_from_res(data["item_info"]).duplicate()
+	else:
+		# 拖拽过来的物品数据
+		item_info_dic = data["item_info"].duplicate()
+
 	# 设置基本数据
-	for key in data:
-		self[key] = data[key]
+	for key: String in data:
+		if key == "item_info":
+			# 原始数据字典
+			item_info = item_info_dic
+		else:
+			# 物品当前数据
+			self[key] = data[key]
 
+	# 设置默认纹理数据
+	texture_data = {
+		"id": id,
+		"hframes": item_info.hframes,  # 原始数据的行
+		"vframes": item_info.vframes,  # 原始数据的列
+		"frame": item_info.frame,  # 原始数据的所在帧的序号
+		"width": width,  # 占用空间宽
+		"height": height,  # 占用空间高度
+		"texture": item_info.texture,  # 原始数据的纹理贴图
+	}
+
+	# 动物类型需要根据成长值显示不同的贴图
+	if item_info.item_type == ItemBaseData.ItemType.ANIMAL:
+		var pet_growth: float = growth
+		if not extra_args.is_empty() and extra_args.has("growth"):
+			pet_growth = extra_args["growth"]
+		var pettexture_data: Dictionary = _get_texture_by_growth(item_info, pet_growth)
+		texture_data = texture_data.merged(pettexture_data, true)
+		# 设置成长值
+		growth = pet_growth
+		# 重置物品的宽高
+		width = texture_data["width"]
+		height = texture_data["height"]
+
+	if extra_args.is_empty():
+		return
 	# 当额外数据不为空时候需要覆盖基础数据
-	if not extra_args.is_empty():
-		#print("extra_args:", extra_args)
-		# 稀有度级别覆盖重置
-		if extra_args.has("item_level"):
-			more_data.item_level = extra_args["item_level"]
-			item_level = extra_args["item_level"]
-			_def_bg_color = LEVEL_BG_COLOR[item_level]
+	#print("extra_args:", extra_args)
+	# 稀有度级别覆盖重置
+	if extra_args.has("item_level"):
+		item_info["item_level"] = extra_args["item_level"]
+		item_level = extra_args["item_level"]
+		_def_bg_color = LEVEL_BG_COLOR[item_level]
 
-		# TO DO 其他属性覆盖
-
-		# 是动物并且有成长值，需要重置占用宽和高和纹理贴图
-		if extra_args.has("initial_growth") and more_data.item_type == ItemBaseData.ItemType.ANIMAL:
-			var initial_growth: float = extra_args["initial_growth"]
-			var adult_threshold: float = more_data.adult_growth_threshold
-			var space_width: int = more_data.width
-			var space_height: int = more_data.height
-			var texture_data: Variant = GlobalData.get_texture_resources(id)
-			# 默认贴图
-			texture_data.set("texture", more_data.texture)
-			if not texture_data:
-				push_error("not found this id's texture.")
-				return
-			# 成年了
-			if initial_growth == adult_threshold:
-				texture_data.set("texture", more_data.adult_texture)
-			# 有的宠物有第二阶段，比如蝴蝶的虫蛹状态，这种动物的成年阈值为200
-			elif initial_growth >= 100 and initial_growth < adult_threshold:
-				texture_data.set("texture", more_data.pupa_texture)
-				## 重置占用空间大小
-				space_width = Utils.get_juvenile_space(more_data.width)
-				space_height = Utils.get_juvenile_space(more_data.height)
-			# 幼年
-			else:
-				## 重置占用空间大小
-				space_width = Utils.get_juvenile_space(more_data.width)
-				space_height = Utils.get_juvenile_space(more_data.height)
-			# 更新物品的占用空间大小,纹理
-			width = space_width
-			height = space_height
-			texture_data.set("width", space_width)
-			texture_data.set("height", space_height)
-			_texture_data = texture_data
+	# TO DO 其他属性覆盖
 
 
 ## 获取基本数据
 func get_data() -> Dictionary:
-	var result: Dictionary
-	var data: Dictionary = GlobalData.find_item_data(id)
-	for key in data.keys():
-		result[key] = self[key]
+	var result: Dictionary = {
+		"id": id,  # 唯一标识符
+		"item_name": item_name,  # 物品名称
+		"item_type": item_type,  # 物品类型
+		"item_level": item_level,  # 物品级别
+		"growth": growth,  # 物品的成长值
+		"base_price": base_price,  # 物品的基础价格
+		"descrip": descrip,  # 物品描述
+		"width": width,  # 物品的宽度
+		"height": height,  # 物品的高度
+		"orientation": orientation,  # 初始方向为竖着
+		"stackable": stackable,  # 物品是否可堆叠
+		"num": num,  # 物品数量
+		"max_stack_size": max_stack_size,  # 物品最大堆叠数量
+		"item_info": item_info,  #更多详细的物品信息数据
+		"texture_data": texture_data,  #更多详细的物品信息数据
+	}
 	return result
 
 
@@ -243,6 +262,38 @@ func fit_to_container(container_size: Vector2) -> void:
 	item_texture.scale_texture(container_size, self)
 
 
+## 根据成长值获取贴图
+func _get_texture_by_growth(data_info: Dictionary, pet_growth: float) -> Dictionary:
+	var result_dic: Dictionary = {}
+	# 贴图和占用空间
+	var adult_threshold: float = data_info.adult_growth_threshold
+	var space_width: int = data_info.width
+	var space_height: int = data_info.height
+	# 默认贴图
+	var item_texture: CompressedTexture2D = data_info.texture
+	# 成年了
+	if pet_growth == adult_threshold:
+		item_texture = data_info.adult_texture
+	# 有的宠物有第二阶段，比如蝴蝶的虫蛹状态，这种动物的成年阈值为200
+	elif pet_growth >= 100 and pet_growth < adult_threshold:
+		item_texture = data_info.pupa_texture
+		## 重置占用空间大小
+		space_width = Utils.get_juvenile_space(data_info.width)
+		space_height = Utils.get_juvenile_space(data_info.height)
+	# 幼年
+	else:
+		item_texture = data_info.texture
+		## 重置占用空间大小
+		space_width = Utils.get_juvenile_space(data_info.width)
+		space_height = Utils.get_juvenile_space(data_info.height)
+
+	result_dic.set("width", space_width)
+	result_dic.set("height", space_height)
+	result_dic.set("texture", item_texture)
+
+	return result_dic
+
+
 ## 改变num的值
 func _setter_num(value) -> void:
 	num = value
@@ -253,3 +304,13 @@ func _setter_num(value) -> void:
 	tween.tween_property(item_num_label, "theme_override_font_sizes/font_size", 22, 0.08)
 	tween.tween_interval(0.05)
 	tween.tween_property(item_num_label, "theme_override_font_sizes/font_size", 20, 0.08)
+
+
+## 获取购买价格
+func _getter_purchase_price() -> int:
+	return PriceManager.get_purchase_price(get_data())
+
+
+## 获取出售价格
+func _getter_sale_price() -> int:
+	return PriceManager.get_sale_price(get_data())

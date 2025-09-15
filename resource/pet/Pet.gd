@@ -158,7 +158,7 @@ func initialize_pet(assigned_id: int, data: Dictionary, assigned_gender: PetData
 	#贴图和动画
 	pet_sprite.texture = pet_data.texture
 	# 初始化成长值
-	growth_points = pet_data.initial_growth
+	growth_points = pet_data.growth
 	life_stage = PetData.LifeStage.JUVENILE
 
 	#初始化运动组件

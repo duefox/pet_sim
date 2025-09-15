@@ -197,6 +197,6 @@ func _cmd_add_item(item_id: String, item_num: int, item_level: int, item_grow: f
 	# 附加额外属性
 	var extra_args: Dictionary = {
 		"item_level": item_level,
-		"initial_growth": item_grow,
+		"growth": item_grow,
 	}
 	_cur_bag.cmd_add_item(item_id, item_num, extra_args)

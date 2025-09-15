@@ -5,11 +5,12 @@ class_name ItemTexture extends Control
 
 
 func set_texture(texture_data: Variant) -> void:
-	#print(texture_data)
+	#print("---------------->texture_data:", texture_data)
 	if texture_data is Dictionary:
 		# 图集
 		var atlas_texture: AtlasTexture = AtlasTexture.new()
 		var texture: CompressedTexture2D = texture_data.get("texture", item_texture.texture)
+		#print("load_path:",texture.load_path)
 		atlas_texture.atlas = texture
 		item_texture.texture = atlas_texture
 		var atlas_size: Vector2 = atlas_texture.get_size()

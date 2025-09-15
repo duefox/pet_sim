@@ -33,7 +33,9 @@ enum ItemLevel {
 ## 描述
 @export var descrip: String
 ## 生命周期参数，初始成长度，0~100，100表示成年
-@export var initial_growth: float = 0.0
+@export var growth: float = 0.0
+## 物品基础价格，实际出售价格和级别、成长度相关
+@export var base_price: float = 1.0
 
 ##  动画贴图相关信息
 @export_group("Texture & Aimate")

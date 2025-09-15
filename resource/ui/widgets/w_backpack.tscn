@@ -156,7 +156,8 @@ layout_mode = 2
 [node name="BtnSort" type="Button" parent="MarginContainer/HBoxContainer/BtnsMargin/HBoxContainer"]
 layout_mode = 2
 tooltip_text = "快速整理堆叠
-快捷键 [b][color=white]R[/color][/b] "
+快捷键 [b][color=white]R[/color][/b] 
+多次点击按物品ID和价格切换排序"
 theme_override_styles/focus = SubResource("StyleBoxEmpty_128hq")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
 theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")

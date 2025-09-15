@@ -32,6 +32,7 @@ func _ready() -> void:
 	quick_tools = grid_box_bar.get_quick_tools()
 	# 初始化抓取物品
 	_init_held_item()
+	#return
 	## 仓库
 	inventory.add_new_item_at(Vector2(2, 0), "1001")
 	inventory.add_item("1001")
