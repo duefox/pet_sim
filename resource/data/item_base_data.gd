@@ -5,6 +5,7 @@ class_name ItemBaseData
 ## 物品类型
 enum ItemType {
 	ANIMAL,  # 动物
+	ANIMALEGG,  # 动物蛋
 	FOOD,  # 食物
 	EQUIPMENT,  # 装备
 	MATERIAL,  # 材料
@@ -31,6 +32,8 @@ enum ItemLevel {
 @export var nickname: String
 ## 描述
 @export var descrip: String
+## 生命周期参数，初始成长度，0~100，100表示成年
+@export var initial_growth: float = 0.0
 
 ##  动画贴图相关信息
 @export_group("Texture & Aimate")
@@ -51,6 +54,6 @@ enum ItemLevel {
 ##  方向，默认水平0
 @export var orientation: int = 0
 ##  是否可堆叠
-@export var stackable: bool = true
+@export var stackable: bool = false
 ##  最大堆叠数量
-@export var max_stack_size: int = 9
+@export var max_stack_size: int = 1

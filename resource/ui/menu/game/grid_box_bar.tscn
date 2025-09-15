@@ -195,7 +195,7 @@ layout_mode = 2
 [node name="BagOption" type="OptionButton" parent="CMDMargin/HBoxContainer/BagMargin"]
 custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
-selected = 0
+selected = 1
 item_count = 3
 popup/item_0/text = "快捷栏"
 popup/item_0/id = 0
@@ -241,6 +241,18 @@ max_value = 999.0
 value = 1.0
 alignment = 1
 
+[node name="GrowMargin" type="MarginContainer" parent="CMDMargin/HBoxContainer"]
+layout_mode = 2
+
+[node name="GrowOption" type="OptionButton" parent="CMDMargin/HBoxContainer/GrowMargin"]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "成年"
+popup/item_0/id = 0
+popup/item_1/text = "幼体"
+popup/item_1/id = 1
+
 [node name="BtnMargin" type="MarginContainer" parent="CMDMargin/HBoxContainer"]
 layout_mode = 2
 
@@ -262,4 +274,5 @@ metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 [connection signal="item_selected" from="CMDMargin/HBoxContainer/LevelMargin/LevelOption" to="." method="_on_level_option_item_selected"]
 [connection signal="text_changed" from="CMDMargin/HBoxContainer/IDMargin/IDEdit" to="." method="_on_id_edit_text_changed"]
 [connection signal="value_changed" from="CMDMargin/HBoxContainer/NumSpinMargin/NumSpin" to="." method="_on_num_spin_value_changed"]
+[connection signal="item_selected" from="CMDMargin/HBoxContainer/GrowMargin/GrowOption" to="." method="_on_grow_option_item_selected"]
 [connection signal="pressed" from="CMDMargin/HBoxContainer/BtnMargin/BtnAdd" to="." method="_on_btn_add_pressed"]

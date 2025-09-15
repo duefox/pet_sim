@@ -25,6 +25,8 @@ var _item_id: String = ""
 var _item_num: int = 1
 ## 物品级别
 var _item_level: int = 0
+## 成长值
+var _item_grow: float = 100.0
 
 #endregion
 
@@ -40,7 +42,7 @@ func _ready() -> void:
 	_backpack = get_backpack()
 	_quick_tools = get_quick_tools()
 	# 命令行设置快捷栏为当前背包
-	_cur_bag = _quick_tools
+	_cur_bag = _backpack
 	# 订阅事件
 	EventManager.subscribe(UIEvent.SUB_ITEM, _on_sub_item)
 
@@ -171,20 +173,30 @@ func _on_num_spin_value_changed(value: float) -> void:
 	_item_num = int(value)
 
 
+func _on_grow_option_item_selected(index: int) -> void:
+	if index == 0:
+		_item_grow = 100.0
+	else:
+		_item_grow = 0.0
+
+
 ## 提交命令行代码
 func _on_btn_add_pressed() -> void:
 	# 1001
 	if not _item_id.length() == 4:
 		push_warning("代码错误，请输入4位数字代码！")
 		return
-	_cmd_add_item(_item_id, _item_num, _item_level)
+	_cmd_add_item(_item_id, _item_num, _item_level, _item_grow)
 
 
 #endregion
 
 
 ## 命令行添加物品
-func _cmd_add_item(item_id: String, item_num: int, item_level: int) -> void:
+func _cmd_add_item(item_id: String, item_num: int, item_level: int, item_grow: float) -> void:
 	# 附加额外属性
-	var extra_args: Dictionary = {"item_level": item_level}
+	var extra_args: Dictionary = {
+		"item_level": item_level,
+		"initial_growth": item_grow,
+	}
 	_cur_bag.cmd_add_item(item_id, item_num, extra_args)

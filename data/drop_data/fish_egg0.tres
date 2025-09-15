@@ -5,14 +5,17 @@
 
 [resource]
 script = ExtResource("1_iql1k")
-initial_growth = 0.0
+eid = "1001"
 adult_growth_threshold = 100.0
 daily_growth_points = 5.0
 kind = 2
 lifetime = -1.0
 id = &"2001"
+item_type = 1
+item_level = 0
 nickname = "鱼蛋0"
 descrip = "绿色中间有黄色横纹"
+initial_growth = 0.0
 texture = ExtResource("2_oiafp")
 hframes = 4
 vframes = 1
@@ -21,5 +24,5 @@ width = 1
 height = 1
 orientation = 0
 stackable = false
-max_stack_size = 9
+max_stack_size = 1
 metadata/_custom_type_script = "uid://c615ei77is4nh"

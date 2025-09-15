@@ -2,48 +2,14 @@ extends MultiGridContainer
 class_name SingleGridContainer
 
 
-## 重写父类的 set_scroll_container 方法
-## 设置滚动区域
-func set_scroll_container() -> void:
-	grid_size = Vector2(grid_col, max_scroll_grid) * w_grid_size
-	scroll_container.custom_minimum_size = grid_size
-
-
 ## 设置放置提示框数据
 ## 重写父类的 set_placement_overlay 方法，单格容器颜色提示区的大小为格子的大小
 func set_placement_overlay(type: int, _item: WItem, cell_pos: Vector2) -> void:
 	var placement_size: Vector2 = w_grid_size
 	placement_size -= Vector2.ONE
-	placement_overlay.color = get_type_color(type)
+	placement_overlay.color = _get_type_color(type)
 	placement_overlay.size = placement_size
-	placement_overlay.position = get_comput_position(cell_pos)
-
-
-## 重写父类的 add_item_at 方法
-## 这个方法将处理单格物品的特殊放置和缩放
-func add_item_at(cell_pos: Vector2, item: WItem) -> bool:
-	var is_placed: bool = check_cell(cell_pos)
-	## 格子为未被占用时
-	if !is_placed:
-		item.head_position = cell_pos
-		# 重置物品的旋转为默认竖直方向
-		item.orientation = WItem.ORI.VER
-		# 把物品添加到items字典
-		items.set(cell_pos, item)
-		# 设置格子映射表的数据
-		set_grid_map_item(cell_pos, item)
-		# 将物品节点添加至多格子容器(显示层)
-		append_item_in_cell_matrix(item)
-		# 将显示层的对应物品位置进行调整，根据传入的格子坐标
-		set_item_comput_position(cell_pos, item)
-		# 调整物品纹理以适配单格大小，注意一定要在添加到渲染树之后调用这个方法
-		item.fit_to_container(w_grid_size)
-		# 测试
-		#print("放下物品------------->")
-		#_look_grip_map()
-		return true
-
-	return false
+	placement_overlay.position = _get_comput_position(cell_pos)
 
 
 ## 重写父类的 set_grid_map_item 方法，单格容器只需设置自己本身坐标格的信息
@@ -102,9 +68,43 @@ func remove_item(cur_item: WItem) -> void:
 	cur_item = null
 
 
+## 重写父类的 _set_scroll_container 方法
+## 设置滚动区域
+func _set_scroll_container() -> void:
+	grid_size = Vector2(grid_col, max_scroll_grid) * w_grid_size
+	scroll_container.custom_minimum_size = grid_size
+
+
+## 重写父类的 _add_item_at 方法
+## 这个方法将处理单格物品的特殊放置和缩放
+func _add_item_at(cell_pos: Vector2, item: WItem) -> bool:
+	var is_placed: bool = check_cell(cell_pos)
+	## 格子为未被占用时
+	if !is_placed:
+		item.head_position = cell_pos
+		# 重置物品的旋转为默认竖直方向
+		item.orientation = WItem.ORI.VER
+		# 把物品添加到items字典
+		items.set(cell_pos, item)
+		# 设置格子映射表的数据
+		set_grid_map_item(cell_pos, item)
+		# 将物品节点添加至多格子容器(显示层)
+		_append_item_in_cell_matrix(item)
+		# 将显示层的对应物品位置进行调整，根据传入的格子坐标
+		_set_item_comput_position(cell_pos, item)
+		# 调整物品纹理以适配单格大小，注意一定要在添加到渲染树之后调用这个方法
+		item.fit_to_container(w_grid_size)
+		# 测试
+		#print("放下物品------------->")
+		#_look_grip_map()
+		return true
+
+	return false
+
+
 ## 检查一个物品是否可以放置在指定位置
-## 重写父类的 can_place_item 方法，单格容器只用判定当前坐标即可
-func can_place_item(_item: Dictionary, first_cell_pos: Vector2) -> bool:
+## 重写父类的 _can_place_item 方法，单格容器只用判定当前坐标即可
+func _can_place_item(_item: Dictionary, first_cell_pos: Vector2) -> bool:
 	# 检查字典中是否已存在该位置的映射数据
 	var item_data: WItemData = grid_map.get(first_cell_pos)
 	# 如果该位置的is_placed为true，则表示格子被占用，不能放置

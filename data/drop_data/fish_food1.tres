@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="FoodData" load_steps=3 format=3 uid="uid://ddnvvf82kbmca"]
+
+[ext_resource type="Script" uid="uid://cv102g7jtrdtl" path="res://resource/data/food_data.gd" id="1_eb2su"]
+[ext_resource type="Texture2D" uid="uid://drv7fa8n4dnys" path="res://assets/textures/foods.png" id="2_gn4n2"]
+
+[resource]
+script = ExtResource("1_eb2su")
+food_type = 0
+hunger_restore_amount = 100.0
+growth_points = 50.0
+kind = 0
+lifetime = -1.0
+id = &"3002"
+item_type = 2
+item_level = 0
+nickname = "鱼饲料2"
+descrip = "很容易获得的鱼饲料，能提供少量成长度。"
+initial_growth = 0.0
+texture = ExtResource("2_gn4n2")
+hframes = 4
+vframes = 2
+frame = 1
+width = 1
+height = 1
+orientation = 0
+stackable = true
+max_stack_size = 99
+metadata/_custom_type_script = "uid://cv102g7jtrdtl"

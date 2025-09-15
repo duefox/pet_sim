@@ -14,9 +14,9 @@ enum ORI { VER, HOR }  # 代表竖直方向  # 代表横向方向
 ## 物品级别背景色
 const LEVEL_BG_COLOR: Dictionary = {
 	0: Color("ffffff80"),  # 普通
-	1: Color("ffff0080"),  # 稀有
-	2: Color("0000ff80"),  # 罕见
-	3: Color("ff00ff80"),  # 传说
+	1: Color("F0C05080"),  # 稀有  #FFFF00
+	2: Color("00BFFF80"),  # 罕见
+	3: Color("A335EE80"),  # 传说
 }
 
 ## 默认的选中颜色
@@ -28,6 +28,7 @@ var head_position: Vector2
 var id: String  # 唯一标识符
 var item_name: String  # 物品名称
 var item_type: int  # 物品类型
+var item_level: int = 0  # 物品级别
 var descrip: String  # 物品描述
 var width: int  # 物品的宽度
 var height: int  # 物品的高度
@@ -35,12 +36,13 @@ var orientation: int = ORI.VER  # 初始方向为竖着
 var stackable: bool  # 物品是否可堆叠
 var num: int = 1:  # 物品数量
 	set = _setter_num
-var max_stack_size: int = 9  # 物品最大堆叠数量
+var max_stack_size: int = 1  # 物品最大堆叠数量
 var more_data: ItemBaseData  #更多详细数据
 #endregion
 
 ## 默认背景颜色
 var _def_bg_color: Color = LEVEL_BG_COLOR[0]
+var _texture_data: Variant = null
 
 
 func _ready() -> void:
@@ -49,12 +51,14 @@ func _ready() -> void:
 
 ## 初始化设置
 func setup() -> void:
-	set_container_size()
-	set_texture()
-	set_label_data()
 	# 设置物品稀有度色值，级别颜色值
 	if more_data:
 		_def_bg_color = LEVEL_BG_COLOR[more_data.item_level]
+	# 初始化设置
+	set_container_size()
+	set_texture()
+	set_label_data()
+	show_bg_color()
 
 
 ## 设置全部标签的数据
@@ -115,13 +119,17 @@ func get_item_size() -> Vector2:
 
 
 ## 设置纹理
-func set_texture(_id: String = "0") -> void:
+func set_texture(item_id: String = "0") -> void:
 	var this_id: String
-	if _id != "0":
-		this_id = _id
+	if item_id != "0":
+		this_id = item_id
 	else:
 		this_id = id
-	var texture_data: Variant = GlobalData.get_texture_resources(this_id)
+	var texture_data: Variant
+	if _texture_data:
+		texture_data = _texture_data
+	else:
+		texture_data = GlobalData.get_texture_resources(this_id)
 
 	if texture_data:
 		item_texture.set_texture(texture_data)
@@ -130,9 +138,56 @@ func set_texture(_id: String = "0") -> void:
 
 
 ## 设置基本数据
-func set_data(data: Dictionary) -> void:
+## @param data: 基本数据
+## @param extra_args: 额外数据，当额外数据不为空时候需要覆盖基础数据
+func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
+	# 设置基本数据
 	for key in data:
 		self[key] = data[key]
+
+	# 当额外数据不为空时候需要覆盖基础数据
+	if not extra_args.is_empty():
+		#print("extra_args:", extra_args)
+		# 稀有度级别覆盖重置
+		if extra_args.has("item_level"):
+			more_data.item_level = extra_args["item_level"]
+			item_level = extra_args["item_level"]
+			_def_bg_color = LEVEL_BG_COLOR[item_level]
+
+		# TO DO 其他属性覆盖
+
+		# 是动物并且有成长值，需要重置占用宽和高和纹理贴图
+		if extra_args.has("initial_growth") and more_data.item_type == ItemBaseData.ItemType.ANIMAL:
+			var initial_growth: float = extra_args["initial_growth"]
+			var adult_threshold: float = more_data.adult_growth_threshold
+			var space_width: int = more_data.width
+			var space_height: int = more_data.height
+			var texture_data: Variant = GlobalData.get_texture_resources(id)
+			# 默认贴图
+			texture_data.set("texture", more_data.texture)
+			if not texture_data:
+				push_error("not found this id's texture.")
+				return
+			# 成年了
+			if initial_growth == adult_threshold:
+				texture_data.set("texture", more_data.adult_texture)
+			# 有的宠物有第二阶段，比如蝴蝶的虫蛹状态，这种动物的成年阈值为200
+			elif initial_growth >= 100 and initial_growth < adult_threshold:
+				texture_data.set("texture", more_data.pupa_texture)
+				## 重置占用空间大小
+				space_width = Utils.get_juvenile_space(more_data.width)
+				space_height = Utils.get_juvenile_space(more_data.height)
+			# 幼年
+			else:
+				## 重置占用空间大小
+				space_width = Utils.get_juvenile_space(more_data.width)
+				space_height = Utils.get_juvenile_space(more_data.height)
+			# 更新物品的占用空间大小,纹理
+			width = space_width
+			height = space_height
+			texture_data.set("width", space_width)
+			texture_data.set("height", space_height)
+			_texture_data = texture_data
 
 
 ## 获取基本数据

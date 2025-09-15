@@ -17,3 +17,22 @@ func throttle(key: String, delay: float, cbk: Callable, args: Array = []) -> voi
 	cbk.callv(args)
 	# 重置计时器
 	_throttle_timers[key] = Time.get_ticks_msec() + delay * 1000
+
+
+## 计算占用空间大小,JUVENILE
+## 规则是用成年的大小除以2向上取整
+## @param space: 占用空间的大小
+## @param max_space: 最大占用空间的大小
+func get_juvenile_space(space: int = 1, max_space: int = 4) -> int:
+	space = ceili(space / 2.0)
+	return clamp(space, 1, max_space)
+
+
+## 读取文件夹
+## [param:path] 文件夹路径
+## [return] 所有文件的数组
+func get_files(path: String) -> PackedStringArray:
+	var dir = DirAccess.open(path)
+	if dir:
+		return dir.get_files()
+	return []

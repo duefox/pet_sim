@@ -35,6 +35,7 @@ var items: Dictionary[Vector2,WItem] = {}
 var grid_map: Dictionary[Vector2, WItemData] = {}
 
 
+#region 内部方法
 func _ready() -> void:
 	# 清空grid container
 	_clear_grid_container()
@@ -45,9 +46,9 @@ func _ready() -> void:
 	var w_grid: WGrid = grid_container.get_child(0)
 	w_grid_size = w_grid.get_grid_size()
 	##  设置滚动区域
-	set_scroll_container()
+	_set_scroll_container()
 	##  放置区的底色
-	placement_overlay.color = get_type_color()
+	placement_overlay.color = _get_type_color()
 
 
 ## 鼠标离开
@@ -62,38 +63,81 @@ func _input(event: InputEvent) -> void:
 		off_placement_overlay()
 
 
-## 获取背景颜色
-func get_type_color(type: int = 0) -> Color:
-	var color_arr: Array[Color] = [Color(&"00be0b62"), Color(&"ff000063"), Color(&"989f9a62")]
-	if type < 0 || type >= color_arr.size():
-		return color_arr[MultiGridContainer.TYPE_COLOR.DEF]
-	return color_arr[type]
+#endregion
+
+#region 对外公开的方法
 
 
-## 设置放置提示框数据
-func set_placement_overlay(type: int, item: WItem, cell_pos: Vector2) -> void:
-	var placement_size: Vector2 = item.get_item_size()
-	placement_size -= Vector2(item.width, item.height)
-	placement_overlay.color = get_type_color(type)
-	placement_overlay.size = placement_size
-	placement_overlay.position = get_comput_position(cell_pos)
+## 根据id新建物品并放置到指定坐标的多格子容器中
+## @param cell_pos: 物品的网格位置
+## @param item_id: 物品的id
+## @param extra_args: 物品的额外属性
+func add_new_item_at(cell_pos: Vector2, item_id: String, extra_args: Dictionary = {}) -> bool:
+	var item: WItem = _create_item()
+	_set_item_data_at_id(item, item_id, extra_args)
+	return _add_item_at(cell_pos, item)
 
 
-## 启用放置提示框
-func startup_placement_overlay() -> void:
-	placement_overlay.visible = true
+## 新增一个物品，并自动查找最近的可用位置。
+## 新增的个数固定为1个，一般用于不可堆叠物品，可堆叠物品请用add_item_with_merge
+## @param item_id: 物品的唯一id
+## @param extra_args: 物品的额外属性
+func add_item(item_id: String, extra_args: Dictionary = {}) -> bool:
+	var item_data: Variant = GlobalData.find_item_data(item_id)
+
+	if not item_data:
+		push_error("Item data not found for ID: " + item_id)
+		return false
+	# 新增的个数固定为1
+	item_data.num = 1
+
+	# 模拟创建一个临时的 WItem 实例以获取其尺寸，之后不会添加到场景中
+	var temp_item: WItem = item_scene.instantiate()
+	temp_item.set_data(item_data, extra_args)
+
+	for y in range(grid_row):
+		for x in range(grid_col):
+			var first_cell_pos: Vector2 = Vector2(x, y)
+
+			# 使用新函数检查该位置是否可以放置
+			if _can_place_item(item_data, first_cell_pos):
+				# 找到合适位置后，调用现有函数放置物品并返回
+				add_new_item_in_data(first_cell_pos, item_data, extra_args)
+				temp_item.queue_free()
+				return true
+
+	temp_item.queue_free()
+	# 如果没有找到任何可用位置，发出信号
+	EventManager.emit_event(UIEvent.INVENTORY_FULL, self)
+	return false
 
 
-## 关闭放置提示框
-func off_placement_overlay() -> void:
-	placement_overlay.visible = false
-
-
-##  设置滚动区域
-func set_scroll_container() -> void:
-	grid_size = Vector2(grid_col, max_scroll_grid) * w_grid_size
-	# 有滚动条，则需要给滚动条留空间
-	scroll_container.custom_minimum_size = grid_size + Vector2(0.5, 0.5) * w_grid_size
+## 新增物品，如果可合并则堆叠，不需要指定位置
+## @param item_id: 物品的唯一id
+## @param num: 物品的数量
+## @param extra_args: 物品的额外属性
+func add_item_with_merge(item_id: String, num: int = 1, extra_args: Dictionary = {}) -> bool:
+	var remaining_items: int = num
+	# 步骤1: 遍历所有格子，尝试合并到现有物品堆叠中
+	for item_data: WItemData in grid_map.values():
+		# 如果有物品则堆叠
+		if item_data and item_data.link_item:
+			var item: WItem = item_data.link_item
+			# 检查是否为同种物品、同级别
+			if item.id == item_id and item.stackable:
+				remaining_items = item.add_num(remaining_items)
+				if remaining_items == 0:
+					return true  # 全部合并成功
+		# 如果没该物品则新建1个物品再把剩余的数量去堆叠
+		else:
+			# 新建一个待叠加的物品
+			add_item(item_id, extra_args)
+			remaining_items -= 1
+			if remaining_items > 0:
+				add_item_with_merge(item_id, remaining_items, extra_args)
+			return true
+	# 步骤2: 如果还有剩余物品，则寻找空位并添加新物品
+	return _add_remaining_item(item_id, remaining_items, extra_args)
 
 
 ## 命令行添加物品
@@ -101,7 +145,21 @@ func set_scroll_container() -> void:
 ## @param item_num: 物品数量
 ## @param extra_args: 物品额外参数
 func cmd_add_item(item_id: String, item_num: int, extra_args: Dictionary = {}) -> void:
-	add_item_with_merge(item_id, item_num, extra_args)
+	add_item_with_extra(item_id, item_num, extra_args)
+
+
+## 添加带有额外参数的物品
+## @param item_id: 物品id
+## @param item_num: 物品数量
+## @param extra_args: 物品额外参数
+func add_item_with_extra(item_id: String, item_num: int, extra_args: Dictionary = {}) -> void:
+	var res_data: Dictionary = GlobalData.find_item_data(item_id)
+	if res_data.stackable:
+		# 自动堆叠添加
+		add_item_with_merge(item_id, item_num, extra_args)
+	else:
+		# 自动添加（不可堆叠物品）
+		add_item(item_id, extra_args)
 
 
 ## 自动合并所有可堆叠的物品并重新排列
@@ -123,105 +181,17 @@ func auto_stack_existing_items() -> void:
 
 	# 2. 清空当前容器的所有物品和映射表
 	_clear_all_items()
-
 	# 3. 按照合并后的数据重新创建并放置物品
-	var sorted_stackable_items: Array[Dictionary] = merged_stackable_items.values()
+	var sorted_items: Array[Dictionary] = merged_stackable_items.values()
+	sorted_items.append_array(non_stackable_items)
 	# 4. 按id排序
-	sorted_stackable_items.sort_custom(func(a, b): return a.id < b.id)
-	#print("sorted_stackable_items:", sorted_stackable_items)
-	#print("non_stackable_items:", non_stackable_items)
-	# 5. 调用add_item_with_merge添加到容器中
-	# 5.1 处理可堆叠物品
-	for stack_item: Dictionary in sorted_stackable_items:
-		add_item_with_merge(stack_item.id, stack_item.num)
-	# 5.2 处理不可堆叠物品
-	for no_stack_item: Dictionary in non_stackable_items:
-		add_item_with_merge(no_stack_item.id, no_stack_item.num)
-
-
-## 新增物品，如果可合并则堆叠，不需要指定位置
-## @param item_id: 物品的唯一id
-## @param num: 物品的数量
-func add_item_with_merge(item_id: String, num: int = 1, extra_args: Dictionary = {}) -> bool:
-	var remaining_items: int = num
-
-	# 步骤1: 遍历所有格子，尝试合并到现有物品堆叠中
-	for item_data in grid_map.values():
-		if item_data and item_data.link_item:
-			var item: WItem = item_data.link_item
-			# 检查是否为同种物品且可堆叠
-			if item.id == item_id and item.stackable:
-				remaining_items = item.add_num(remaining_items)
-				if remaining_items == 0:
-					return true  # 全部合并成功
-
-	# 步骤2: 如果还有剩余物品，则寻找空位并添加新物品
-	while remaining_items > 0:
-		var new_item_data: Variant = GlobalData.find_item_data(item_id)
-		if not new_item_data:
-			push_error("Item data not found for id: ", item_id)
-			return false
-		var empty_pos: Vector2 = get_next_available_position(new_item_data)
-		if empty_pos == -Vector2.ONE:
-			# 如果没有找到任何可用位置，发出信号
-			EventManager.emit_event(UIEvent.INVENTORY_FULL, self)
-			return false  # 没有空位了
-		var num_to_add: int = min(remaining_items, WItem.new().max_stack_size)
-		new_item_data.num = num_to_add
-
-		# 放置新物品
-		var success: bool = add_new_item_in_data(empty_pos, new_item_data)
-		if not success:
-			print("放置失败，中断->empty_pos:", empty_pos)
-			return false  # 放置失败，中断
-
-		remaining_items -= num_to_add
-
-	return true
-
-
-## 查找下一个可用的空位
-func get_next_available_position(item_data: Dictionary) -> Vector2:
-	# 遍历所有格子，寻找第一个is_placed为false的空位
-	for y in range(grid_row):
-		for x in range(grid_col):
-			var cell_pos: Vector2 = Vector2(x, y)
-			if can_place_item(item_data, cell_pos):
-				return cell_pos
-	return -Vector2.ONE  # 没有找到可用的位置
-
-
-## 新增一个物品，并自动查找最近的可用位置。
-## 新增的个数固定为1个，一般用于不可堆叠物品，可堆叠物品请用add_item_with_merge
-## @param item_id: 物品的唯一id
-func add_item(item_id: String) -> bool:
-	var item_data: Variant = GlobalData.find_item_data(item_id)
-
-	if not item_data:
-		push_error("Item data not found for ID: " + item_id)
-		return false
-	# 新增的个数固定为1
-	item_data.num = 1
-
-	# 模拟创建一个临时的 WItem 实例以获取其尺寸，之后不会添加到场景中
-	var temp_item: WItem = item_scene.instantiate()
-	temp_item.set_data(item_data)
-
-	for y in range(grid_row):
-		for x in range(grid_col):
-			var first_cell_pos: Vector2 = Vector2(x, y)
-
-			# 使用新函数检查该位置是否可以放置
-			if can_place_item(item_data, first_cell_pos):
-				# 找到合适位置后，调用现有函数放置物品并返回
-				add_new_item_in_data(first_cell_pos, item_data)
-				temp_item.queue_free()
-				return true
-
-	temp_item.queue_free()
-	# 如果没有找到任何可用位置，发出信号
-	EventManager.emit_event(UIEvent.INVENTORY_FULL, self)
-	return false
+	sorted_items.sort_custom(func(a, b): return int(a.id) < int(b.id))
+	# 5. 处理物品重新添加
+	for sorted_item: Dictionary in sorted_items:
+		if sorted_item.stackable:
+			add_item_with_merge(sorted_item.id, sorted_item.num)
+		else:
+			add_item(sorted_item.id)
 
 
 ## 扣除指定id的物品数量
@@ -261,6 +231,25 @@ func sub_item_at(cell_pos: Vector2, num: int = 1) -> void:
 		else:
 			# 否则，更新物品标签显示
 			item.set_label_data()
+
+
+## 设置放置提示框数据
+func set_placement_overlay(type: int, item: WItem, cell_pos: Vector2) -> void:
+	var placement_size: Vector2 = item.get_item_size()
+	placement_size -= Vector2(item.width, item.height)
+	placement_overlay.color = _get_type_color(type)
+	placement_overlay.size = placement_size
+	placement_overlay.position = _get_comput_position(cell_pos)
+
+
+## 启用放置提示框
+func startup_placement_overlay() -> void:
+	placement_overlay.visible = true
+
+
+## 关闭放置提示框
+func off_placement_overlay() -> void:
+	placement_overlay.visible = false
 
 
 ## 检查格子是否已被占用
@@ -323,37 +312,8 @@ func get_item_at(cell_pos: Vector2) -> WItem:
 	return null
 
 
-## 根据坐标放置物品到多格子容器中
-func add_item_at(cell_pos: Vector2, item: WItem) -> bool:
-	var is_placed: bool = check_cell(cell_pos)
-	if !is_placed:
-		## 格子为空时
-		if scan_grid_map_area(cell_pos, item):
-			# 矩形区域扫描通过时
-			item.head_position = cell_pos
-			# 把物品添加到items字典
-			items.set(cell_pos, item)
-			# 设置格子映射表的数据
-			set_grid_map_item(cell_pos, item)
-			# 将物品节点添加至多格子容器(显示层)
-			append_item_in_cell_matrix(item)
-			# 将显示层的对应物品位置进行调整，根据传入的格子坐标
-			set_item_comput_position(cell_pos, item)
-			return true
-	return false
-
-
-## 根据id新建物品并放置到多格子容器中
-## @param cell_pos: 物品的网格位置
-## @param item_id: 物品的id
-func add_new_item_at(cell_pos: Vector2, item_id: String) -> bool:
-	var item: WItem = _create_item()
-	set_item_data_at_id(item, item_id)
-	return add_item_at(cell_pos, item)
-
-
 ## 根据data新建一个物品并放置到多格子容器中
-func add_new_item_in_data(cell_pos: Vector2, data: Dictionary) -> bool:
+func add_new_item_in_data(cell_pos: Vector2, data: Dictionary, extra_args: Dictionary = {}) -> bool:
 	# 检查格子是否已被占用
 	var item_data: WItemData = grid_map.get(cell_pos)
 	if item_data and item_data.is_placed:
@@ -362,33 +322,8 @@ func add_new_item_in_data(cell_pos: Vector2, data: Dictionary) -> bool:
 	if !check_grid_map_item(cell_pos):
 		return false
 	var item: WItem = _create_item()
-	item.set_data(data)
-	return add_item_at(cell_pos, item)
-
-
-## 根据id给WItem设置基础数据
-func set_item_data_at_id(item: WItem, item_id: String) -> void:
-	var data: Variant = GlobalData.find_item_data(item_id)
-	if data:
-		item.set_data(data)
-	else:
-		print(&"set_item_data_at_id 设置数据失败！")
-
-
-## 将物品节点添加至多格子容器(显示层)
-func append_item_in_cell_matrix(item: WItem) -> void:
-	item_container.add_child(item)
-
-
-## 将显示层的对应物品位置进行调整，根据传入的格子坐标
-func set_item_comput_position(cell_pos: Vector2, item: WItem) -> void:
-	item.position = get_comput_position(cell_pos)
-
-
-## 获取对应格子坐标在显示层中的实际坐标
-func get_comput_position(cell_pos: Vector2) -> Vector2:
-	var base: Vector2 = cell_pos * w_grid_size
-	return Vector2(base.x - cell_pos.x, base.y - cell_pos.y)
+	item.set_data(data, extra_args)
+	return _add_item_at(cell_pos, item)
 
 
 ## 计算首部坐标的偏移
@@ -430,8 +365,108 @@ func set_item_placed(item: WItem, value: bool) -> void:
 			grid_map.get(Vector2(col + head.x, row + head.y)).is_placed = value
 
 
+#endregion
+
+
+## 获取背景颜色
+func _get_type_color(type: int = 0) -> Color:
+	var color_arr: Array[Color] = [Color(&"00be0b62"), Color(&"ff000063"), Color(&"989f9a62")]
+	if type < 0 || type >= color_arr.size():
+		return color_arr[MultiGridContainer.TYPE_COLOR.DEF]
+	return color_arr[type]
+
+
+##  设置滚动区域
+func _set_scroll_container() -> void:
+	grid_size = Vector2(grid_col, max_scroll_grid) * w_grid_size
+	# 有滚动条，则需要给滚动条留空间
+	scroll_container.custom_minimum_size = grid_size + Vector2(0.5, 0.5) * w_grid_size
+
+
+## 查找下一个可用的空位
+func _get_next_available_position(item_data: Dictionary) -> Vector2:
+	# 遍历所有格子，寻找第一个is_placed为false的空位
+	for y in range(grid_row):
+		for x in range(grid_col):
+			var cell_pos: Vector2 = Vector2(x, y)
+			if _can_place_item(item_data, cell_pos):
+				return cell_pos
+	return -Vector2.ONE  # 没有找到可用的位置
+
+
+## 如果还有剩余物品，则寻找空位并添加新物品
+func _add_remaining_item(item_id: String, remaining_items: int, extra_args: Dictionary = {}) -> bool:
+	while remaining_items > 0:
+		var new_item_data: Variant = GlobalData.find_item_data(item_id)
+		if not new_item_data:
+			push_error("Item data not found for id: ", item_id)
+			return false
+		var empty_pos: Vector2 = _get_next_available_position(new_item_data)
+		if empty_pos == -Vector2.ONE:
+			# 如果没有找到任何可用位置，发出信号
+			EventManager.emit_event(UIEvent.INVENTORY_FULL, self)
+			return false  # 没有空位了
+		var num_to_add: int = min(remaining_items, WItem.new().max_stack_size)
+		new_item_data.num = num_to_add
+
+		# 放置新物品
+		var success: bool = add_new_item_in_data(empty_pos, new_item_data, extra_args)
+		if not success:
+			print("放置失败，中断->empty_pos:", empty_pos)
+			return false  # 放置失败，中断
+
+		remaining_items -= num_to_add
+
+	return true
+
+
+## 根据坐标放置物品到多格子容器中
+func _add_item_at(cell_pos: Vector2, item: WItem) -> bool:
+	var is_placed: bool = check_cell(cell_pos)
+	if !is_placed:
+		## 格子为空时
+		if scan_grid_map_area(cell_pos, item):
+			# 矩形区域扫描通过时
+			item.head_position = cell_pos
+			# 把物品添加到items字典
+			items.set(cell_pos, item)
+			# 设置格子映射表的数据
+			set_grid_map_item(cell_pos, item)
+			# 将物品节点添加至多格子容器(显示层)
+			_append_item_in_cell_matrix(item)
+			# 将显示层的对应物品位置进行调整，根据传入的格子坐标
+			_set_item_comput_position(cell_pos, item)
+			return true
+	return false
+
+
+## 根据id给WItem设置基础数据
+func _set_item_data_at_id(item: WItem, item_id: String, extra_args: Dictionary = {}) -> void:
+	var data: Variant = GlobalData.find_item_data(item_id)
+	if data:
+		item.set_data(data, extra_args)
+	else:
+		print("set item data at id 设置数据失败！")
+
+
+## 将物品节点添加至多格子容器(显示层)
+func _append_item_in_cell_matrix(item: WItem) -> void:
+	item_container.add_child(item)
+
+
+## 将显示层的对应物品位置进行调整，根据传入的格子坐标
+func _set_item_comput_position(cell_pos: Vector2, item: WItem) -> void:
+	item.position = _get_comput_position(cell_pos)
+
+
+## 获取对应格子坐标在显示层中的实际坐标
+func _get_comput_position(cell_pos: Vector2) -> Vector2:
+	var base: Vector2 = cell_pos * w_grid_size
+	return Vector2(base.x - cell_pos.x, base.y - cell_pos.y)
+
+
 ## 检查一个物品是否可以放置在指定位置
-func can_place_item(item: Dictionary, first_cell_pos: Vector2) -> bool:
+func _can_place_item(item: Dictionary, first_cell_pos: Vector2) -> bool:
 	# 检查所有被物品占用的格子
 	for y in range(int(item.height)):
 		for x in range(int(item.width)):
@@ -503,7 +538,7 @@ func _look_grip_map() -> void:
 		print("is_placed:", item_data.is_placed, ",item:", item_data.link_item)
 
 
-## 清除所有物品节点和数据
+## 清除所有物品节点和映射数据
 func _clear_all_items() -> void:
 	for item in items.values():
 		if is_instance_valid(item):

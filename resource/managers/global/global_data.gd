@@ -1,6 +1,16 @@
 ## 全局资源和变量管理类
 extends Node
 
+#region 预加载资源相关变量
+## @param StringName 物品的唯一id
+## @param String 物品的资源路径
+var pet_res: Dictionary[StringName,String] = {}
+## 食物，便便，蛋之类的掉落物资源
+var drop_res: Dictionary[StringName,String] = {}
+#endregion
+
+#region 背包容器相关变量
+
 ## 全局多格容器的格子大小
 var cell_size: int = 48
 ## 游戏中菜单UI节点的引用
@@ -19,6 +29,7 @@ var cur_selected_item: WItem
 var textures: Dictionary[String,Dictionary]
 ## 基础的物品数据，格式如下
 var data: Dictionary[String,Dictionary]
+#endregion
 
 
 ## 创建纹理表的内容单元（这些数据用于背包显示）
@@ -48,7 +59,7 @@ func create_textures_item(res_data: Resource = null) -> void:
 			# 重置占用空间大小
 			space_width = _get_juvenile_space(res_data.width)
 			space_height = _get_juvenile_space(res_data.height)
-		# 默认贴图
+		# 幼年默认贴图
 		else:
 			texture_data.set("texture", res_data.texture)
 			# 重置占用空间大小
@@ -65,6 +76,7 @@ func create_textures_item(res_data: Resource = null) -> void:
 		"id": res_data.id,  # id
 		"item_name": res_data.nickname,  # 昵称
 		"item_type": res_data.item_type,  # 类型
+		"item_level": res_data.item_level,  # 级别
 		"descrip": res_data.descrip,  # 描述
 		"width": space_width,  # 占用宽度
 		"height": space_height,  # 占用高度
@@ -95,5 +107,4 @@ func find_item_data(id: String) -> Variant:
 ## 计算占用空间大小,JUVENILE
 ## 规则是用成年的大小除以2向上取整
 func _get_juvenile_space(space: int = 1) -> int:
-	space = ceili(space / 2.0)
-	return clamp(space, 1, 4)
+	return Utils.get_juvenile_space(space)

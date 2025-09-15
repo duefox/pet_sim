@@ -29,7 +29,10 @@ func _process(_delta: float) -> void:
 
 ## 预加载资源文件
 func preload_res() -> void:
-	var res_normal: Array = [ResPaths.PET_RES, ResPaths.DROP_RES, ResPaths.SCENE_RES]
+	GlobalData.pet_res = _get_res_to_dic("res://data/pet_data/")
+	GlobalData.drop_res = _get_res_to_dic("res://data/drop_data/")
+	
+	var res_normal: Array = [GlobalData.pet_res, GlobalData.drop_res, ResPaths.SCENE_RES]
 	# 处理加载资源文件
 	var res: Array = []
 	for res_dic: Dictionary in res_normal:
@@ -42,10 +45,22 @@ func preload_res() -> void:
 		ResManager.load_resource(j)
 
 
+## 获得目录资源并整理成符合要求的字典数据
+func _get_res_to_dic(path_folder: String) -> Dictionary[StringName,String]:
+	var tmp_dic: Dictionary[StringName,String] = {}
+	var files: PackedStringArray = Utils.get_files(path_folder)
+	if files.is_empty():
+		return {}
+	for file: String in files:
+		var file_name: String = file.split(".")[0]
+		tmp_dic.set(file_name, path_folder + file)
+	return tmp_dic
+
+
 ## 资源加载完成
 func _on_resource_loaded(_path: String, _resource: Resource) -> void:
 	_complete_count += 1
-	if _complete_count >= _count - 1:
+	if _complete_count >= _count:
 		_complete_count = 0
 		# 预设纹理资源
 		_preset_all_textures()
@@ -70,7 +85,7 @@ func _init_game_ui() -> void:
 ## 预加载资源文件中所有的纹理文件（在item_base_data定义了对应的变量）
 func _preset_all_textures() -> void:
 	# 宠物，掉落物，建筑，造景等资源归一化纹理数据
-	var res_normal: Array = [ResPaths.PET_RES, ResPaths.DROP_RES]
+	var res_normal: Array = [GlobalData.pet_res, GlobalData.drop_res]
 	for res_dic: Dictionary in res_normal:
 		for i: String in res_dic:
 			var res_path: String = res_dic[i]
@@ -81,7 +96,7 @@ func _preset_all_textures() -> void:
 func initialize_fish_population():
 	#print(ResManager.get_cached_resource(ResPaths.SCENE_RES.food))
 	# 把所有宠物资源都取出来
-	for path in ResPaths.PET_RES.values():
+	for path in GlobalData.pet_res.values():
 		var res: Resource = ResManager.get_cached_resource(path)
 		var dic: Dictionary = {"path": path, "res": res}
 		all_fish_data.append(dic)

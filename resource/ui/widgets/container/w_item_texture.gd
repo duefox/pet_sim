@@ -5,6 +5,7 @@ class_name ItemTexture extends Control
 
 
 func set_texture(texture_data: Variant) -> void:
+	#print(texture_data)
 	if texture_data is Dictionary:
 		# 图集
 		var atlas_texture: AtlasTexture = AtlasTexture.new()

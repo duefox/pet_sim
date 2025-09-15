@@ -32,18 +32,19 @@ func _ready() -> void:
 	quick_tools = grid_box_bar.get_quick_tools()
 	# 初始化抓取物品
 	_init_held_item()
-	# 仓库
+	## 仓库
 	inventory.add_new_item_at(Vector2(2, 0), "1001")
 	inventory.add_item("1001")
-	#inventory.add_item("2002")
-	# 快捷栏
+	inventory.add_item("2002")
+	## 快捷栏
 	quick_tools.add_new_item_at(Vector2(0, 0), "1002")
-	quick_tools.add_item("1001")
 	quick_tools.add_item("2001")
-	# 背包
+	quick_tools.add_item("2001")
+	quick_tools.add_item_with_merge("3001", 2)
+	## 背包
 	backpack.add_item("1002")
 	backpack.add_item("2001")
-	backpack.add_item_with_merge("1001", 11)
+	backpack.add_item_with_merge("3001", 2)
 
 	for i in range(2):
 		inventory.add_item("1001")
@@ -51,7 +52,7 @@ func _ready() -> void:
 		inventory.add_item("2002")
 		inventory.add_item("1002")
 		backpack.add_item("2002")
-		quick_tools.add_item_with_merge("1001", 6)
+		quick_tools.add_item_with_merge("3001", 4)
 
 	## 设置背包模式
 	#grid_box_bar.grid_mode = GridBoxBar.GridDisplayMode.BACKPACK
