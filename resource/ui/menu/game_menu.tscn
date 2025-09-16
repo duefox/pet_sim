@@ -46,10 +46,6 @@ layout_mode = 1
 unique_name_in_owner = true
 layout_mode = 0
 
-[node name="GridBoxBar" parent="." instance=ExtResource("6_jgqhp")]
-unique_name_in_owner = true
-layout_mode = 1
-
 [node name="ProfileBar" parent="." instance=ExtResource("7_jgqhp")]
 visible = false
 layout_mode = 1
@@ -68,5 +64,9 @@ script = ExtResource("11_ieplm")
 visible = false
 layout_mode = 1
 script = ExtResource("13_nl43a")
+
+[node name="GridBoxBar" parent="." instance=ExtResource("6_jgqhp")]
+unique_name_in_owner = true
+layout_mode = 1
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

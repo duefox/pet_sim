@@ -31,7 +31,7 @@ func _process(_delta: float) -> void:
 func preload_res() -> void:
 	GlobalData.pet_res = _get_res_to_dic("res://data/pet_data/")
 	GlobalData.drop_res = _get_res_to_dic("res://data/drop_data/")
-	
+
 	var res_normal: Array = [GlobalData.pet_res, GlobalData.drop_res, ResPaths.SCENE_RES]
 	# 处理加载资源文件
 	var res: Array = []
@@ -78,8 +78,13 @@ func _on_resource_loaded(_path: String, _resource: Resource) -> void:
 func _init_game_ui() -> void:
 	print("_init_game_ui")
 	var ui_scene: PackedScene = ResManager.get_cached_resource(ResPaths.SCENE_RES.main_ui)
-	var game_ui = ui_scene.instantiate()
+	var game_ui: UIStateMachine = ui_scene.instantiate()
 	ui.add_child(game_ui)
+	GlobalData.menu = game_ui
+	
+	# 默认切换到首页菜单
+	GlobalData.menu.change_state(UIStateMachine.State.MAIN_MENU)
+	#GlobalData.menu.change_state(UIStateMachine.State.SAVE_LOAD_MENU)
 
 
 ## 预加载资源文件中所有的纹理文件（在item_base_data定义了对应的变量）

@@ -2,12 +2,20 @@
 extends Control
 class_name GridBoxBar
 
-@onready var w_inventory: WInventory = %WInventory
-@onready var w_backpack: WBackpack = %WBackpack
-@onready var w_quick_tools: WQuickTools = %WQuickTools
+const W_INVEN_SCENE: PackedScene = preload("res://resource/ui/widgets/w_inventory.tscn")
+const W_BACKPACK_SCENE: PackedScene = preload("res://resource/ui/widgets/w_backpack.tscn")
+const W_QT_SCENE: PackedScene = preload("res://resource/ui/widgets/w_quick_tools.tscn")
+
+@onready var inventory_margin: MarginContainer = $InventoryMargin
+@onready var backpack_margin: MarginContainer = $BackpackMargin
+@onready var quick_tool_margin: MarginContainer = $QuickToolMargin
 
 ## 网格容器的节点显示模式：DEFAULT-只显示快捷栏，INVENTORY-显示仓库和背包，BACKPACK-显示背包和快捷栏
 enum GridDisplayMode { DEFAULT, INVENTORY, BACKPACK }
+
+var w_inventory: WInventory
+var w_backpack: WBackpack
+var w_quick_tools: WQuickTools
 
 ## 仓库容器
 var _inventory: MultiGridContainer
@@ -31,24 +39,34 @@ var _item_grow: float = 100.0
 #endregion
 
 ## 设置网格容器的显示模式
-var grid_mode: GridDisplayMode = GridDisplayMode.DEFAULT:
-	set = set_grid_mode
+var grid_mode: GridDisplayMode:
+	set = _setter_grid_mode
 
 
 func _ready() -> void:
-	#grid_mode = GridDisplayMode.DEFAULT
-	grid_mode = GridDisplayMode.BACKPACK
-	_inventory = get_inventory()
-	_backpack = get_backpack()
-	_quick_tools = get_quick_tools()
-	# 命令行设置快捷栏为当前背包
-	_cur_bag = _backpack
+	# 初始化3个背包
+	w_inventory = W_INVEN_SCENE.instantiate()
+	inventory_margin.add_child(w_inventory)
+	w_backpack = W_BACKPACK_SCENE.instantiate()
+	backpack_margin.add_child(w_backpack)
+	w_quick_tools = W_QT_SCENE.instantiate()
+	quick_tool_margin.add_child(w_quick_tools)
+	initialize()
 	# 订阅事件
 	EventManager.subscribe(UIEvent.SUB_ITEM, _on_sub_item)
 
 
 func _exit_tree() -> void:
 	EventManager.unsubscribe(UIEvent.SUB_ITEM, _on_sub_item)
+
+
+func initialize() -> void:
+	grid_mode = GridDisplayMode.DEFAULT
+	_inventory = get_inventory()
+	_backpack = get_backpack()
+	_quick_tools = get_quick_tools()
+	# 命令行设置快捷栏为当前背包
+	_cur_bag = _backpack
 
 
 ## 获得仓库容器
@@ -67,7 +85,7 @@ func get_quick_tools() -> MultiGridContainer:
 
 
 ## 设置网格容器的显示模式
-func set_grid_mode(value: GridDisplayMode) -> void:
+func _setter_grid_mode(value: GridDisplayMode) -> void:
 	grid_mode = value
 	if grid_mode == GridDisplayMode.DEFAULT:
 		w_inventory.visible = false

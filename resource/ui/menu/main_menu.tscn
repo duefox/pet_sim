@@ -1,58 +1,38 @@
-[gd_scene load_steps=25 format=3 uid="uid://d00tx33i8g0xy"]
+[gd_scene load_steps=28 format=3 uid="uid://d00tx33i8g0xy"]
 
 [ext_resource type="Script" uid="uid://dt4r7lu3kf0fg" path="res://resource/ui/menu/main_menu.gd" id="1_7suek"]
 [ext_resource type="Texture2D" uid="uid://8obnq3j46gym" path="res://themes/wood/graphics/middleBtnDisabled.png" id="1_x2yvf"]
 [ext_resource type="Texture2D" uid="uid://b0bp2mykkojx3" path="res://themes/wood/graphics/middleBtnOver.png" id="2_uhagc"]
 [ext_resource type="Texture2D" uid="uid://45y01nouliix" path="res://themes/wood/graphics/middleBtnPressed.png" id="3_btxxm"]
 [ext_resource type="Texture2D" uid="uid://c2rls50un2mhl" path="res://themes/wood/graphics/middleBtnNormal.png" id="4_wb0q5"]
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="5_7nxb2"]
 [ext_resource type="Script" uid="uid://drmhc3abbe7ht" path="res://resource/components/ui/buttons/button_middle.gd" id="5_q85j6"]
-[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="6_8g5eo"]
-[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="7_7suek"]
-[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="8_otr3d"]
-[ext_resource type="Texture2D" uid="uid://mavihdf8alpw" path="res://themes/wood/graphics/smallBtnNormalDouble.png" id="9_8ekit"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="10_n4uci"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7suek"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("5_7nxb2")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
-texture = ExtResource("6_8g5eo")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g42rj"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
-texture = ExtResource("7_7suek")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ybt0"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
-texture = ExtResource("8_otr3d")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_brky7"]
-texture = ExtResource("9_8ekit")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_otr3d"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_js667"]
-texture = ExtResource("1_x2yvf")
-texture_margin_left = 30.0
-texture_margin_top = 30.0
-texture_margin_right = 30.0
-texture_margin_bottom = 30.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qm01m"]
-texture = ExtResource("2_uhagc")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0inov"]
+texture = ExtResource("4_wb0q5")
 texture_margin_left = 30.0
 texture_margin_top = 30.0
 texture_margin_right = 30.0
@@ -65,18 +45,59 @@ texture_margin_top = 30.0
 texture_margin_right = 30.0
 texture_margin_bottom = 30.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0inov"]
-texture = ExtResource("4_wb0q5")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qm01m"]
+texture = ExtResource("2_uhagc")
 texture_margin_left = 30.0
 texture_margin_top = 30.0
 texture_margin_right = 30.0
 texture_margin_bottom = 30.0
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8ekit"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_js667"]
+texture = ExtResource("1_x2yvf")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n4uci"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uoirr"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_877pj"]
+[sub_resource type="InputEventKey" id="InputEventKey_6ybt0"]
+device = -1
+keycode = 78
+unicode = 110
+
+[sub_resource type="Shortcut" id="Shortcut_uoirr"]
+events = [SubResource("InputEventKey_6ybt0")]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rrer2"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_uoirr"]
+device = -1
+keycode = 76
+unicode = 108
+
+[sub_resource type="Shortcut" id="Shortcut_rrer2"]
+events = [SubResource("InputEventKey_uoirr")]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7nxb2"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_7nxb2"]
+device = -1
+keycode = 83
+unicode = 115
+
+[sub_resource type="Shortcut" id="Shortcut_rcp0d"]
+events = [SubResource("InputEventKey_7nxb2")]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rcp0d"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_3yvx7"]
+device = -1
+keycode = 81
+unicode = 113
+
+[sub_resource type="Shortcut" id="Shortcut_j1l5l"]
+events = [SubResource("InputEventKey_3yvx7")]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -126,11 +147,11 @@ alignment = 2
 [node name="BtnInfo" type="Button" parent="MarginContainer/RightControl/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_7suek")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
-theme_override_styles/normal = SubResource("StyleBoxTexture_brky7")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g42rj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g42rj")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_g42rj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6ybt0")
 text = "D"
 script = ExtResource("10_n4uci")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
@@ -158,11 +179,12 @@ layout_mode = 2
 [node name="BtnNew" type="Button" parent="MarginContainer/CenterControl/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 96)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_otr3d")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
 theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_uoirr")
+shortcut = SubResource("Shortcut_uoirr")
 text = "新建"
 script = ExtResource("5_q85j6")
 metadata/_custom_type_script = "uid://drmhc3abbe7ht"
@@ -170,11 +192,12 @@ metadata/_custom_type_script = "uid://drmhc3abbe7ht"
 [node name="BtnLoad" type="Button" parent="MarginContainer/CenterControl/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 96)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8ekit")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
 theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rrer2")
+shortcut = SubResource("Shortcut_rrer2")
 text = "加载"
 script = ExtResource("5_q85j6")
 metadata/_custom_type_script = "uid://drmhc3abbe7ht"
@@ -182,11 +205,12 @@ metadata/_custom_type_script = "uid://drmhc3abbe7ht"
 [node name="BtnSetting" type="Button" parent="MarginContainer/CenterControl/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 96)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_n4uci")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
 theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7nxb2")
+shortcut = SubResource("Shortcut_rcp0d")
 text = "设置"
 script = ExtResource("5_q85j6")
 metadata/_custom_type_script = "uid://drmhc3abbe7ht"
@@ -194,11 +218,12 @@ metadata/_custom_type_script = "uid://drmhc3abbe7ht"
 [node name="BtnExit" type="Button" parent="MarginContainer/CenterControl/MarginContainer/HBoxContainer"]
 custom_minimum_size = Vector2(200, 96)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_877pj")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
 theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rcp0d")
+shortcut = SubResource("Shortcut_j1l5l")
 text = "退出"
 script = ExtResource("5_q85j6")
 metadata/_custom_type_script = "uid://drmhc3abbe7ht"

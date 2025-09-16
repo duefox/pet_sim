@@ -1,0 +1,78 @@
+[gd_scene load_steps=9 format=3 uid="uid://c0qxr2bvud8hg"]
+
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="1_ihe4s"]
+[ext_resource type="Script" uid="uid://cy1cejsmwdwu3" path="res://resource/ui/widgets/w_btn_skip.gd" id="2_y8x6a"]
+[ext_resource type="Texture2D" uid="uid://1d7nbvpvj37m" path="res://assets/ui/svg/lineFoucsHor.svg" id="4_pyuxr"]
+[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="5_5i44a"]
+[ext_resource type="Texture2D" uid="uid://dscptmtjnjrxt" path="res://assets/ui/svg/lineCheckHor.svg" id="5_krdww"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("1_ihe4s")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g42rj"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y8x6a"]
+
+[node name="WBtnSkip" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 68.0
+offset_bottom = 45.0
+tooltip_text = "长按跳过动画"
+script = ExtResource("2_y8x6a")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="BtnSkip" type="Button" parent="."]
+layout_mode = 1
+offset_right = 68.0
+offset_bottom = 45.0
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_g42rj")
+theme_override_styles/hover = SubResource("StyleBoxFlat_g42rj")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_g42rj")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_y8x6a")
+text = "Skip"
+script = ExtResource("5_5i44a")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[node name="MarginContainer" type="MarginContainer" parent="BtnSkip"]
+layout_mode = 0
+offset_top = 43.0
+offset_right = 68.0
+offset_bottom = 45.0
+size_flags_vertical = 8
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = -4
+
+[node name="SkipProgress" type="TextureProgressBar" parent="BtnSkip/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+value = 50.0
+nine_patch_stretch = true
+stretch_margin_left = 1
+stretch_margin_top = 1
+stretch_margin_right = 1
+stretch_margin_bottom = 1
+texture_under = ExtResource("4_pyuxr")
+texture_progress = ExtResource("5_krdww")
+
+[connection signal="button_down" from="BtnSkip" to="." method="_on_btn_skip_button_down"]
+[connection signal="button_up" from="BtnSkip" to="." method="_on_btn_skip_button_up"]

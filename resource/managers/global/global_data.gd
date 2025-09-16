@@ -1,6 +1,16 @@
 ## 全局资源和变量管理类
 extends Node
 
+## 游戏中菜单UI状态机节点的引用
+var menu: UIStateMachine
+
+## 游戏存档
+var save: SaveSystem = SaveSystem
+## 当前使用的存档名称
+var save_name: String
+## 当前使用存档的元数据
+var save_metadata: Dictionary
+
 #region 预加载资源相关变量
 ## @param StringName 物品的唯一id
 ## @param String 物品的资源路径
@@ -13,7 +23,7 @@ var drop_res: Dictionary[StringName,String] = {}
 
 ## 全局多格容器的格子大小
 var cell_size: int = 48
-## 游戏中菜单UI节点的引用
+## 游戏主场景中菜单UI节点的引用
 var ui: GameMenu
 ## 上一次操作的物品节点(引用)
 var previous_item: WItem
@@ -65,9 +75,3 @@ func find_item_data(id: String) -> Variant:
 	if data.has(id):
 		return data[id]
 	return false
-
-
-## 计算占用空间大小,JUVENILE
-## 规则是用成年的大小除以2向上取整
-func _get_juvenile_space(space: int = 1) -> int:
-	return Utils.get_juvenile_space(space)

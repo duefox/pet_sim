@@ -1,44 +1,50 @@
-[gd_scene load_steps=14 format=3 uid="uid://jqirj776gcme"]
+[gd_scene load_steps=16 format=3 uid="uid://jqirj776gcme"]
 
 [ext_resource type="Script" uid="uid://b03barg524hyx" path="res://resource/ui/menu/save_load_menu.gd" id="1_pajdi"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="2_hw6v8"]
-[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="3_bqx5o"]
-[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="4_vey4w"]
-[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="5_ykepm"]
-[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="6_pajdi"]
-[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="7_pxrlo"]
+[ext_resource type="PackedScene" uid="uid://d08dl5730uq5o" path="res://resource/ui/widgets/container/w_save_slots.tscn" id="3_vbwg1"]
+[ext_resource type="Texture2D" uid="uid://c2rls50un2mhl" path="res://themes/wood/graphics/middleBtnNormal.png" id="8_n7wug"]
+[ext_resource type="Texture2D" uid="uid://45y01nouliix" path="res://themes/wood/graphics/middleBtnPressed.png" id="9_jdq1c"]
+[ext_resource type="Texture2D" uid="uid://b0bp2mykkojx3" path="res://themes/wood/graphics/middleBtnOver.png" id="10_154oc"]
+[ext_resource type="Texture2D" uid="uid://8obnq3j46gym" path="res://themes/wood/graphics/middleBtnDisabled.png" id="11_745lb"]
+[ext_resource type="Script" uid="uid://drmhc3abbe7ht" path="res://resource/components/ui/buttons/button_middle.gd" id="12_7f2r4"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hw6v8"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0inov"]
+texture = ExtResource("8_n7wug")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
-texture = ExtResource("3_bqx5o")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i18ci"]
+texture = ExtResource("9_jdq1c")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
-texture = ExtResource("4_vey4w")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qm01m"]
+texture = ExtResource("10_154oc")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
-texture = ExtResource("5_ykepm")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_js667"]
+texture = ExtResource("11_745lb")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
-texture = ExtResource("6_pajdi")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vbwg1"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bqx5o"]
+[sub_resource type="InputEventKey" id="InputEventKey_n7wug"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_jdq1c"]
+events = [SubResource("InputEventKey_n7wug")]
 
 [node name="SaveLoadMenu" type="Control"]
 layout_mode = 3
@@ -47,6 +53,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 4
 script = ExtResource("1_pajdi")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -66,14 +73,14 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -250.0
-offset_top = -350.0
+offset_top = -45.0
 offset_right = 250.0
-offset_bottom = 350.0
+offset_bottom = 45.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
-custom_minimum_size = Vector2(500, 700)
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 texture = ExtResource("2_hw6v8")
 region_rect = Rect2(9, 301, 481, 157)
@@ -95,36 +102,56 @@ horizontal_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 24
+theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 64
-theme_override_constants/margin_right = 24
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 28
 
-[node name="GameSavedBox" type="VBoxContainer" parent="MarginContainer/MarginContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 500)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_right = 8
+
+[node name="SaveList" type="VBoxContainer" parent="MarginContainer/MarginContainer/ScrollContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="ButtonSmall" type="Button" parent="MarginContainer/MarginContainer/GameSavedBox"]
-custom_minimum_size = Vector2(0, 64)
+[node name="WSaveSlots" parent="MarginContainer/MarginContainer/ScrollContainer/MarginContainer/SaveList" instance=ExtResource("3_vbwg1")]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_hw6v8")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
-theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-text = "自动存档"
-alignment = 0
-script = ExtResource("7_pxrlo")
-metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
-[node name="ButtonSmall2" type="Button" parent="MarginContainer/MarginContainer/GameSavedBox"]
-custom_minimum_size = Vector2(0, 64)
+[node name="BottomMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -76.0
+offset_top = -125.0
+offset_right = 76.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 20
+
+[node name="BtnBack" type="Button" parent="BottomMargin"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bqx5o")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
-theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-text = "自动存档"
-alignment = 0
-script = ExtResource("7_pxrlo")
-metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vbwg1")
+shortcut = SubResource("Shortcut_jdq1c")
+text = "返  回"
+script = ExtResource("12_7f2r4")
+metadata/_custom_type_script = "uid://drmhc3abbe7ht"
+
+[connection signal="pressed" from="BottomMargin/BtnBack" to="." method="_on_btn_back_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bye7ywm4i53dk"]
+[gd_scene load_steps=22 format=3 uid="uid://bye7ywm4i53dk"]
 
 [ext_resource type="Script" uid="uid://cpd8quwynt5xe" path="res://resource/ui/menu/settings_memu.gd" id="1_a37kn"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="2_bfd6o"]
@@ -27,17 +27,8 @@ region = Rect2(401, 19, 30, 25)
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_muem4"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a37kn"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_js667"]
-texture = ExtResource("4_r0yd5")
-texture_margin_left = 30.0
-texture_margin_top = 30.0
-texture_margin_right = 30.0
-texture_margin_bottom = 30.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qm01m"]
-texture = ExtResource("5_h1ry0")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0inov"]
+texture = ExtResource("7_8mrdw")
 texture_margin_left = 30.0
 texture_margin_top = 30.0
 texture_margin_right = 30.0
@@ -50,12 +41,28 @@ texture_margin_top = 30.0
 texture_margin_right = 30.0
 texture_margin_bottom = 30.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_0inov"]
-texture = ExtResource("7_8mrdw")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qm01m"]
+texture = ExtResource("5_h1ry0")
 texture_margin_left = 30.0
 texture_margin_top = 30.0
 texture_margin_right = 30.0
 texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_js667"]
+texture = ExtResource("4_r0yd5")
+texture_margin_left = 30.0
+texture_margin_top = 30.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a37kn"]
+
+[sub_resource type="InputEventKey" id="InputEventKey_a37kn"]
+device = -1
+keycode = 4194305
+
+[sub_resource type="Shortcut" id="Shortcut_bfd6o"]
+events = [SubResource("InputEventKey_a37kn")]
 
 [node name="SettingsMemu" type="Control"]
 layout_mode = 3
@@ -360,11 +367,14 @@ theme_override_constants/margin_bottom = 20
 
 [node name="BtnBack" type="Button" parent="BottomMargin"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_a37kn")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
 theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_a37kn")
+shortcut = SubResource("Shortcut_bfd6o")
 text = "返  回"
 script = ExtResource("8_fglrq")
 metadata/_custom_type_script = "uid://drmhc3abbe7ht"
+
+[connection signal="pressed" from="BottomMargin/BtnBack" to="." method="_on_btn_back_pressed"]

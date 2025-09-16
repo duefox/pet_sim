@@ -1,10 +1,7 @@
-[gd_scene load_steps=30 format=3 uid="uid://dxacgbdobqbph"]
+[gd_scene load_steps=27 format=3 uid="uid://dxacgbdobqbph"]
 
 [ext_resource type="Script" uid="uid://d075t7ogwalmn" path="res://resource/ui/menu/game/grid_box_bar.gd" id="1_084rm"]
-[ext_resource type="PackedScene" uid="uid://d0rx71av14m2k" path="res://resource/ui/widgets/w_Inventory.tscn" id="1_tkl6e"]
 [ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="2_406wf"]
-[ext_resource type="PackedScene" uid="uid://c07s5fxqsda0i" path="res://resource/ui/widgets/w_backpack.tscn" id="2_l87dt"]
-[ext_resource type="PackedScene" uid="uid://cvoygtt76yv4j" path="res://resource/ui/widgets/w_quick_tools.tscn" id="3_1nciw"]
 [ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="6_ppo52"]
 [ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="7_1q7as"]
 [ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="8_2r06w"]
@@ -47,17 +44,8 @@ unicode = 99
 [sub_resource type="Shortcut" id="Shortcut_otn31"]
 events = [SubResource("InputEventKey_nijvm")]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pt6yy"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
-texture = ExtResource("6_ppo52")
-texture_margin_left = 10.0
-texture_margin_top = 10.0
-texture_margin_right = 10.0
-texture_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
-texture = ExtResource("7_1q7as")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("9_nskuy")
 texture_margin_left = 10.0
 texture_margin_top = 10.0
 texture_margin_right = 10.0
@@ -70,12 +58,21 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
-texture = ExtResource("9_nskuy")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
+texture = ExtResource("7_1q7as")
 texture_margin_left = 10.0
 texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
+texture = ExtResource("6_ppo52")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pt6yy"]
 
 [node name="GridBoxBar" type="Control"]
 layout_mode = 3
@@ -92,22 +89,22 @@ layout_mode = 1
 
 [node name="BtnBag" type="Button" parent="EmptyBtnsToShortcut"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_ppo52")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_1q7as")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ppo52")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_1q7as")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_2r06w")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_nskuy")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_5mela")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_nskuy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5mela")
 shortcut = SubResource("Shortcut_1q7as")
 script = ExtResource("2_406wf")
 metadata/_custom_type_script = "uid://hmattcwq4j3c"
 
 [node name="BtnInventory" type="Button" parent="EmptyBtnsToShortcut"]
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_tvj87")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_sbkum")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tvj87")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_sbkum")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_otn31")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_mh84u")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_130et")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_mh84u")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_130et")
 shortcut = SubResource("Shortcut_otn31")
 script = ExtResource("2_406wf")
 metadata/_custom_type_script = "uid://hmattcwq4j3c"
@@ -122,11 +119,6 @@ offset_right = 20.0
 offset_bottom = 40.0
 grow_horizontal = 2
 mouse_filter = 2
-
-[node name="WInventory" parent="InventoryMargin" instance=ExtResource("1_tkl6e")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
 
 [node name="BackpackMargin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -146,11 +138,6 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 36
 theme_override_constants/margin_bottom = 20
 
-[node name="WBackpack" parent="BackpackMargin" instance=ExtResource("2_l87dt")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-
 [node name="QuickToolMargin" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 7
@@ -165,10 +152,6 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 theme_override_constants/margin_right = 128
-
-[node name="WQuickTools" parent="QuickToolMargin" instance=ExtResource("3_1nciw")]
-unique_name_in_owner = true
-layout_mode = 2
 
 [node name="CMDMargin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -259,11 +242,11 @@ layout_mode = 2
 [node name="BtnAdd" type="Button" parent="CMDMargin/HBoxContainer/BtnMargin"]
 custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
-theme_override_styles/focus = SubResource("StyleBoxEmpty_pt6yy")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_pt6yy")
 text = "添加"
 script = ExtResource("10_5mela")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"

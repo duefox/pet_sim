@@ -21,32 +21,39 @@ var held_item: WItem
 
 
 func _ready() -> void:
-	await get_tree().process_frame
 	GlobalData.ui = self
+	initialize()
 	# 订阅事件
 	EventManager.subscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
 
-	# 获得仓库的容器
+
+## 退出处理订阅事件
+func _exit_tree() -> void:
+	EventManager.unsubscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
+
+
+func initialize() -> void:
+	## 获得仓库的容器
 	inventory = grid_box_bar.get_inventory()
 	backpack = grid_box_bar.get_backpack()
 	quick_tools = grid_box_bar.get_quick_tools()
-	# 初始化抓取物品
+	## 初始化抓取物品
 	_init_held_item()
 	#return
-	## 仓库
+	### 仓库
 	inventory.add_new_item_at(Vector2(2, 0), "1001")
 	inventory.add_item("1001")
 	inventory.add_item("2002")
-	## 快捷栏
+	### 快捷栏
 	quick_tools.add_new_item_at(Vector2(0, 0), "1002")
 	quick_tools.add_item("2001")
 	quick_tools.add_item("2001")
 	quick_tools.add_item_with_merge("3001", 2)
-	## 背包
+	### 背包
 	backpack.add_item("1002")
 	backpack.add_item("2001")
 	backpack.add_item_with_merge("3001", 2)
-
+#
 	for i in range(2):
 		inventory.add_item("1001")
 		inventory.add_item("2001")
@@ -56,7 +63,7 @@ func _ready() -> void:
 		quick_tools.add_item_with_merge("3001", 4)
 
 	## 设置背包模式
-	#grid_box_bar.grid_mode = GridBoxBar.GridDisplayMode.BACKPACK
+	grid_box_bar.grid_mode = GridBoxBar.GridDisplayMode.BACKPACK
 	#grid_box_bar.grid_mode = GridBoxBar.GridDisplayMode.INVENTORY
 
 	await get_tree().create_timer(8.0).timeout
@@ -64,11 +71,6 @@ func _ready() -> void:
 	#quick_tools.sub_item_at(Vector2(0, 0))
 	#quick_tools.sub_item("1001")
 	#quick_tools.sub_item("2003")
-
-
-## 退出处理订阅事件
-func _exit_tree() -> void:
-	EventManager.unsubscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
 
 
 ## 设置抓取物品的坐标(中心点模式)
