@@ -1,5 +1,5 @@
 ## 所有网格容器的父节点
-extends Control
+extends GameBar
 class_name GridBoxBar
 
 const W_INVEN_SCENE: PackedScene = preload("res://resource/ui/widgets/w_inventory.tscn")
@@ -44,6 +44,7 @@ var grid_mode: GridDisplayMode:
 
 
 func _ready() -> void:
+	super()
 	# 初始化3个背包
 	w_inventory = W_INVEN_SCENE.instantiate()
 	inventory_margin.add_child(w_inventory)
@@ -99,6 +100,8 @@ func _setter_grid_mode(value: GridDisplayMode) -> void:
 		w_inventory.visible = false
 		w_backpack.visible = true
 		w_quick_tools.visible = true
+	# 发送信号
+	#state_switch.emit(self, grid_mode)
 
 
 ## 分割物品
@@ -144,11 +147,11 @@ func _on_sub_item() -> void:
 				print("add_item_with_merge failed")
 
 
-#region 网格容器事件
+#region 网格容器操作方法
 
 
-## 打开背包（隐藏的按钮，方便绑定快捷键）
-func _on_btn_bag_pressed() -> void:
+## 打开背包
+func open_backpack() -> void:
 	#print("_on_btn_bag_pressed")
 	if grid_mode == GridDisplayMode.BACKPACK:
 		grid_mode = GridDisplayMode.DEFAULT
@@ -156,8 +159,8 @@ func _on_btn_bag_pressed() -> void:
 		grid_mode = GridDisplayMode.BACKPACK
 
 
-## 打开仓库（隐藏的按钮，方便绑定快捷键）
-func _on_btn_inventory_pressed() -> void:
+## 打开仓库
+func open_inventory() -> void:
 	#print("_on_btn_inventory_pressed")
 	if grid_mode == GridDisplayMode.INVENTORY:
 		grid_mode = GridDisplayMode.DEFAULT

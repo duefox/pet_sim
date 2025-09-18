@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://ca4yfgr8p3gi"]
+[gd_scene load_steps=30 format=3 uid="uid://ca4yfgr8p3gi"]
 
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_wsgeo"]
 [ext_resource type="Script" uid="uid://c32yvmbjsyuec" path="res://resource/ui/menu/game/navigation_bar.gd" id="1_xq0vp"]
@@ -18,13 +18,6 @@ region = Rect2(753, 234, 225, 64)
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s2dyo"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kr4y5"]
-
-[sub_resource type="InputEventKey" id="InputEventKey_xq0vp"]
-device = -1
-keycode = 4194306
-
-[sub_resource type="Shortcut" id="Shortcut_qf67f"]
-events = [SubResource("InputEventKey_xq0vp")]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ju00n"]
 atlas = ExtResource("2_xq0vp")
@@ -75,8 +68,6 @@ region = Rect2(320, 0, 64, 64)
 [node name="NavigationBar" type="Control"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
 script = ExtResource("1_xq0vp")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -108,15 +99,14 @@ theme_override_constants/margin_bottom = 10
 custom_minimum_size = Vector2(104, 72)
 layout_mode = 2
 tooltip_text = "查看用户信息
-快捷键 [b][color=white]TAB[/color][/b] "
+快捷键 [b][color=white]J[/color][/b] "
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 22
-theme_override_styles/focus = SubResource("StyleBoxEmpty_xq0vp")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_qf67f")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xq0vp")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_qf67f")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_n5nyd")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_s2dyo")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_kr4y5")
-shortcut = SubResource("Shortcut_qf67f")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_s2dyo")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kr4y5")
 text = "Profile"
 icon = SubResource("AtlasTexture_ju00n")
 icon_alignment = 1
@@ -137,11 +127,11 @@ tooltip_text = "打开探索地图
 快捷键 [b][color=white]M[/color][/b] "
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 22
-theme_override_styles/focus = SubResource("StyleBoxEmpty_77by8")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_lpbpn")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_77by8")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_lpbpn")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_yltgt")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_eue6h")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_h2pqm")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_eue6h")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_h2pqm")
 text = "Map"
 icon = SubResource("AtlasTexture_cprv1")
 icon_alignment = 1
@@ -159,14 +149,14 @@ theme_override_constants/margin_bottom = 10
 custom_minimum_size = Vector2(104, 72)
 layout_mode = 2
 tooltip_text = "查看当前任务
-快捷键 [b][color=white]T[/color][/b] "
+快捷键 [b][color=white]T[/color][/b]ask"
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 22
-theme_override_styles/focus = SubResource("StyleBoxEmpty_jgbs2")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_2ye31")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jgbs2")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_2ye31")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_fkqjn")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_xd726")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_mmqwy")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_xd726")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_mmqwy")
 text = "Task"
 icon = SubResource("AtlasTexture_i8p7q")
 icon_alignment = 1
@@ -187,11 +177,11 @@ tooltip_text = "查看来访者
 快捷键 [b][color=white]V[/color][/b] "
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 22
-theme_override_styles/focus = SubResource("StyleBoxEmpty_1b1eg")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_q00r5")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_1b1eg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_q00r5")
 theme_override_styles/hover = SubResource("StyleBoxEmpty_6qwrv")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_qmtau")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_uiu16")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_qmtau")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_uiu16")
 text = "Visitor"
 icon = SubResource("AtlasTexture_id4uk")
 icon_alignment = 1

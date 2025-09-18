@@ -1,11 +1,8 @@
-[gd_scene load_steps=18 format=3 uid="uid://bisaxuna7ri5q"]
+[gd_scene load_steps=11 format=3 uid="uid://bisaxuna7ri5q"]
 
 [ext_resource type="Script" uid="uid://csvdtml6ljy8n" path="res://resource/ui/menu/game/info_bar.gd" id="1_ejcqy"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_m0td1"]
 [ext_resource type="Texture2D" uid="uid://di4o8cnge1hlb" path="res://assets/ui/icons/icon3.png" id="2_m0td1"]
-[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="3_inaf2"]
-[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="4_sukrl"]
-[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="5_cito5"]
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="6_nj8fx"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="7_0tp78"]
 
@@ -17,52 +14,33 @@ region = Rect2(8, 599, 111, 113)
 atlas = ExtResource("2_m0td1")
 region = Rect2(64, 32, 32, 32)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mjnsh"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
-texture = ExtResource("3_inaf2")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
-texture = ExtResource("4_sukrl")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
-texture = ExtResource("5_cito5")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
 texture = ExtResource("6_nj8fx")
-texture_margin_left = 20.0
-texture_margin_top = 20.0
-texture_margin_right = 20.0
-texture_margin_bottom = 20.0
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
 
-[sub_resource type="InputEventKey" id="InputEventKey_ejcqy"]
-device = -1
-keycode = 78
-unicode = 110
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ybt0"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
 
-[sub_resource type="Shortcut" id="Shortcut_nohy1"]
-events = [SubResource("InputEventKey_ejcqy")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bfw33"]
 
 [node name="InfoBar" type="Control"]
 layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 40.0
 grow_horizontal = 2
 script = ExtResource("1_ejcqy")
 
@@ -92,7 +70,8 @@ size_flags_vertical = 4
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer"]
+[node name="DayLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "28日"
@@ -122,7 +101,8 @@ theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 
-[node name="Label" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2/CenterContainer/VBoxContainer/MarginContainer"]
+[node name="SeasonLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2/CenterContainer/VBoxContainer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Spring"
 horizontal_alignment = 1
@@ -139,7 +119,8 @@ layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/CenterContainer/VBoxContainer/MarginContainer2/CenterContainer"]
+[node name="WeatherTexture" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer2/CenterContainer/VBoxContainer/MarginContainer2/CenterContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 texture = SubResource("AtlasTexture_m0td1")
 
@@ -154,12 +135,11 @@ theme_override_constants/margin_right = 8
 layout_mode = 2
 tooltip_text = "即刻切换到下一天
 快捷键 [b][color=white]N[/color][/b]"
-theme_override_styles/focus = SubResource("StyleBoxEmpty_mjnsh")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-shortcut = SubResource("Shortcut_nohy1")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6ybt0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6ybt0")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_6ybt0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bfw33")
 text = "下一天"
 script = ExtResource("7_0tp78")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"

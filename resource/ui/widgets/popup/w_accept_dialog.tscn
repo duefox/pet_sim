@@ -1,0 +1,152 @@
+[gd_scene load_steps=10 format=3 uid="uid://b16yj66g6siwo"]
+
+[ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_sv8x6"]
+[ext_resource type="Script" uid="uid://bb7v3b6b5jb7o" path="res://resource/ui/widgets/popup/w_accept_dialog.gd" id="1_tt6hq"]
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="2_sm77v"]
+[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="3_tt6hq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qijlf"]
+atlas = ExtResource("1_sv8x6")
+region = Rect2(753, 175, 230, 43)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("2_sm77v")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ybt0"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7x0q3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sm77v"]
+
+[node name="WAcceptDialog" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tt6hq")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.7058824)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/MarginContainer"]
+custom_minimum_size = Vector2(320, 120)
+layout_mode = 2
+texture = SubResource("AtlasTexture_qijlf")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="TipsLabel" type="Label" parent="MarginContainer/VBoxContainer/MarginContainer/MarginContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(320, 0)
+layout_mode = 2
+theme_override_constants/line_spacing = 10
+theme_override_font_sizes/font_size = 28
+text = "确认操作的提示信息确认操作的提示信息确认"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="BtnOK" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "快捷键 [b][color=white]ENTER[/color][/b] "
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6ybt0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6ybt0")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_6ybt0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7x0q3")
+text = "确认"
+script = ExtResource("3_tt6hq")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="BtnCancel" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+tooltip_text = "快捷键 [b][color=white]ESC[/color][/b] "
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6ybt0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6ybt0")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_6ybt0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_sm77v")
+text = "取消"
+script = ExtResource("3_tt6hq")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer/BtnOK" to="." method="_on_btn_ok_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer/MarginContainer2/BtnCancel" to="." method="_on_btn_cancel_pressed"]

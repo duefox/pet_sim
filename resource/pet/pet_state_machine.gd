@@ -134,7 +134,7 @@ func _state_idle(delta: float):
 
 
 ## 漫游状态
-func _state_wandering(delta: float):
+func _state_wandering(_delta: float):
 	# 当运动目标为空时，每隔一段时间重新寻找目标
 	if _parent_pet.movement_comp.is_target_invalid():
 		_parent_pet.movement_comp.set_target(_parent_pet.create_position())
@@ -160,7 +160,7 @@ func _state_wandering(delta: float):
 
 
 ## 觅食状态
-func _state_eating(delta: float):
+func _state_eating(_delta: float):
 	if _parent_pet.target and is_instance_valid(_parent_pet.target):
 		_parent_pet.movement_comp.set_target(_parent_pet.target.position)
 		# 检查是否到达食物位置
@@ -253,10 +253,10 @@ func _stop_and_animate(pet: Pet):
 
 
 ## 游玩状态
-func _state_playing(delta: float):
+func _state_playing(_delta: float):
 	pass
 
 
 ## 睡觉状态
-func _state_sleeping(delta: float):
+func _state_sleeping(_delta: float):
 	pass

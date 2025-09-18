@@ -21,7 +21,7 @@ func initialize(pet_node: Pet):
 	_last_mating_timestamp = -_mating_cooldown
 
 
-func update_mating(delta: float):
+func update_mating(_delta: float):
 	pass  # 该组件主要由状态机调用，无需每帧更新
 
 

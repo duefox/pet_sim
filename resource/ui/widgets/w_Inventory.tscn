@@ -1,59 +1,33 @@
-[gd_scene load_steps=27 format=3 uid="uid://d0rx71av14m2k"]
+[gd_scene load_steps=20 format=3 uid="uid://d0rx71av14m2k"]
 
 [ext_resource type="Script" uid="uid://besw2npnjcopg" path="res://resource/ui/widgets/w_inventory.gd" id="1_5lsvp"]
 [ext_resource type="PackedScene" uid="uid://cs2wpwfuk23x3" path="res://resource/ui/widgets/multi_grid_container.tscn" id="1_j0ego"]
 [ext_resource type="Texture2D" uid="uid://bsask3iusjohx" path="res://themes/wood/graphics/expandBtnDisabled.png" id="2_hlw07"]
-[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="3_baqoa"]
 [ext_resource type="Texture2D" uid="uid://d05g6gyhk8t6j" path="res://themes/wood/graphics/expandBtnOver.png" id="3_thbo5"]
 [ext_resource type="Texture2D" uid="uid://chq8lw3dm6ppa" path="res://themes/wood/graphics/expandBtnPressed.png" id="4_05d2a"]
-[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="4_8y67h"]
-[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="5_8pwcu"]
 [ext_resource type="Texture2D" uid="uid://dc2dhq7qhfvec" path="res://themes/wood/graphics/expandBtnNormal.png" id="5_422mk"]
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="6_83ei1"]
 [ext_resource type="Script" uid="uid://g0cotbm5t03y" path="res://resource/components/ui/buttons/button_expand.gd" id="6_uvtc5"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="7_dgnhu"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="8_thbo5"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_thbo5"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
-texture = ExtResource("2_hlw07")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uf7ap"]
-texture = ExtResource("3_thbo5")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxv3c"]
+texture = ExtResource("5_422mk")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ihut6"]
 texture = ExtResource("4_05d2a")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxv3c"]
-texture = ExtResource("5_422mk")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uf7ap"]
+texture = ExtResource("3_thbo5")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
+texture = ExtResource("2_hlw07")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dnrxy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_05d2a"]
 atlas = ExtResource("8_thbo5")
 region = Rect2(76, 726, 58, 58)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_05d2a"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
-texture = ExtResource("3_baqoa")
-texture_margin_left = 10.0
-texture_margin_top = 10.0
-texture_margin_right = 10.0
-texture_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
-texture = ExtResource("4_8y67h")
-texture_margin_left = 10.0
-texture_margin_top = 10.0
-texture_margin_right = 10.0
-texture_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
-texture = ExtResource("5_8pwcu")
-texture_margin_left = 10.0
-texture_margin_top = 10.0
-texture_margin_right = 10.0
-texture_margin_bottom = 10.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
 texture = ExtResource("6_83ei1")
@@ -62,14 +36,20 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="InputEventKey" id="InputEventKey_hlw07"]
-device = -1
-shift_pressed = true
-keycode = 82
-unicode = 82
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_08evb"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
 
-[sub_resource type="Shortcut" id="Shortcut_thbo5"]
-events = [SubResource("InputEventKey_hlw07")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o714e"]
 
 [node name="WInventory" type="Control"]
 layout_mode = 3
@@ -113,11 +93,11 @@ layout_mode = 2
 tooltip_text = "仓库
 快捷键 [b][color=white]C[/color][/b] "
 theme_override_font_sizes/font_size = 18
-theme_override_styles/focus = SubResource("StyleBoxEmpty_thbo5")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
-theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
 theme_override_styles/normal = SubResource("StyleBoxTexture_hxv3c")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dnrxy")
 text = "仓
 库"
 icon_alignment = 1
@@ -279,12 +259,11 @@ layout_mode = 2
 tooltip_text = "快速整理堆叠
 快捷键 [b][color=white]SHIFT + R[/color][/b] 
 多次点击按物品ID和价格切换排序"
-theme_override_styles/focus = SubResource("StyleBoxEmpty_05d2a")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-shortcut = SubResource("Shortcut_thbo5")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_08evb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_08evb")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_08evb")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_o714e")
 text = "整理"
 script = ExtResource("7_dgnhu")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://edyetri7sblk"]
+[gd_scene load_steps=13 format=3 uid="uid://edyetri7sblk"]
 
 [ext_resource type="PackedScene" uid="uid://ixsr2gblswwt" path="res://resource/ui/menu/game/gold_bar.tscn" id="1_atan1"]
 [ext_resource type="Script" uid="uid://xamfug8ggsyt" path="res://resource/ui/menu/game_menu.gd" id="1_hlcy5"]
@@ -10,9 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://bui8y2omn1qrf" path="res://resource/ui/menu/game/map_bar.tscn" id="8_cprv1"]
 [ext_resource type="Script" uid="uid://bxtpnkxphti86" path="res://resource/ui/menu/game/map_bar.gd" id="9_i8p7q"]
 [ext_resource type="PackedScene" uid="uid://jlne7yb34k24" path="res://resource/ui/menu/game/task_bar.tscn" id="10_id4uk"]
-[ext_resource type="Script" uid="uid://dy4dnbfxhmd23" path="res://resource/ui/menu/game/task_bar.gd" id="11_ieplm"]
 [ext_resource type="PackedScene" uid="uid://b8enko0du1yd1" path="res://resource/ui/menu/game/layout_bar.tscn" id="12_fk3y4"]
-[ext_resource type="Script" uid="uid://kmbaqio8d8b6" path="res://resource/ui/menu/game/layout_bar.gd" id="13_nl43a"]
+[ext_resource type="Script" uid="uid://b156p07ev4jcs" path="res://resource/ui/menu/bar_state_machine.gd" id="14_rtjjr"]
 
 [node name="GameMenu" type="Control"]
 layout_mode = 3
@@ -23,16 +22,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hlcy5")
 held_scene = ExtResource("2_hlcy5")
-
-[node name="BGColor" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.501961)
-metadata/_edit_lock_ = true
 
 [node name="GoldBar" parent="." instance=ExtResource("1_atan1")]
 unique_name_in_owner = true
@@ -46,27 +35,43 @@ layout_mode = 1
 unique_name_in_owner = true
 layout_mode = 0
 
+[node name="GridBoxBar" parent="." instance=ExtResource("6_jgqhp")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="LayoutBar" parent="." instance=ExtResource("12_fk3y4")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="BGColor" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.705882)
+
 [node name="ProfileBar" parent="." instance=ExtResource("7_jgqhp")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
 
 [node name="MapBar" parent="." instance=ExtResource("8_cprv1")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
 script = ExtResource("9_i8p7q")
 
 [node name="TaskBar" parent="." instance=ExtResource("10_id4uk")]
-visible = false
-layout_mode = 1
-script = ExtResource("11_ieplm")
-
-[node name="LayoutBar" parent="." instance=ExtResource("12_fk3y4")]
-visible = false
-layout_mode = 1
-script = ExtResource("13_nl43a")
-
-[node name="GridBoxBar" parent="." instance=ExtResource("6_jgqhp")]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
+
+[node name="BarStateMachine" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("14_rtjjr")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]

@@ -1,2 +1,2 @@
-extends Control
+extends GameBar
 class_name MapBar

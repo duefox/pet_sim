@@ -1,48 +1,8 @@
-[gd_scene load_steps=27 format=3 uid="uid://dxacgbdobqbph"]
+[gd_scene load_steps=7 format=3 uid="uid://dxacgbdobqbph"]
 
 [ext_resource type="Script" uid="uid://d075t7ogwalmn" path="res://resource/ui/menu/game/grid_box_bar.gd" id="1_084rm"]
-[ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="2_406wf"]
-[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="6_ppo52"]
-[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="7_1q7as"]
-[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="8_2r06w"]
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="9_nskuy"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="10_5mela"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ppo52"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1q7as"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2r06w"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nskuy"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5mela"]
-
-[sub_resource type="InputEventKey" id="InputEventKey_ycsxv"]
-device = -1
-keycode = 66
-unicode = 98
-
-[sub_resource type="Shortcut" id="Shortcut_1q7as"]
-events = [SubResource("InputEventKey_ycsxv")]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tvj87"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sbkum"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_otn31"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mh84u"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_130et"]
-
-[sub_resource type="InputEventKey" id="InputEventKey_nijvm"]
-device = -1
-keycode = 67
-unicode = 99
-
-[sub_resource type="Shortcut" id="Shortcut_otn31"]
-events = [SubResource("InputEventKey_nijvm")]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
 texture = ExtResource("9_nskuy")
@@ -51,28 +11,20 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
-texture = ExtResource("8_2r06w")
-texture_margin_left = 10.0
-texture_margin_top = 10.0
-texture_margin_right = 10.0
-texture_margin_bottom = 10.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6ybt0"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
-texture = ExtResource("7_1q7as")
-texture_margin_left = 10.0
-texture_margin_top = 10.0
-texture_margin_right = 10.0
-texture_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
-texture = ExtResource("6_ppo52")
-texture_margin_left = 10.0
-texture_margin_top = 10.0
-texture_margin_right = 10.0
-texture_margin_bottom = 10.0
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pt6yy"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i1r8m"]
 
 [node name="GridBoxBar" type="Control"]
 layout_mode = 3
@@ -83,31 +35,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_084rm")
-
-[node name="EmptyBtnsToShortcut" type="MarginContainer" parent="."]
-layout_mode = 1
-
-[node name="BtnBag" type="Button" parent="EmptyBtnsToShortcut"]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_ppo52")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_1q7as")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_2r06w")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_nskuy")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_5mela")
-shortcut = SubResource("Shortcut_1q7as")
-script = ExtResource("2_406wf")
-metadata/_custom_type_script = "uid://hmattcwq4j3c"
-
-[node name="BtnInventory" type="Button" parent="EmptyBtnsToShortcut"]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_tvj87")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_sbkum")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_otn31")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_mh84u")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_130et")
-shortcut = SubResource("Shortcut_otn31")
-script = ExtResource("2_406wf")
-metadata/_custom_type_script = "uid://hmattcwq4j3c"
 
 [node name="InventoryMargin" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -243,16 +170,14 @@ layout_mode = 2
 custom_minimum_size = Vector2(72, 0)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_pt6yy")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6ybt0")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6ybt0")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_6ybt0")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i1r8m")
 text = "添加"
 script = ExtResource("10_5mela")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
-[connection signal="pressed" from="EmptyBtnsToShortcut/BtnBag" to="." method="_on_btn_bag_pressed"]
-[connection signal="pressed" from="EmptyBtnsToShortcut/BtnInventory" to="." method="_on_btn_inventory_pressed"]
 [connection signal="item_selected" from="CMDMargin/HBoxContainer/BagMargin/BagOption" to="." method="_on_bag_option_item_selected"]
 [connection signal="item_selected" from="CMDMargin/HBoxContainer/LevelMargin/LevelOption" to="." method="_on_level_option_item_selected"]
 [connection signal="text_changed" from="CMDMargin/HBoxContainer/IDMargin/IDEdit" to="." method="_on_id_edit_text_changed"]

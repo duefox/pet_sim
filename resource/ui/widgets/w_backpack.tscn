@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://c07s5fxqsda0i"]
+[gd_scene load_steps=19 format=3 uid="uid://c07s5fxqsda0i"]
 
 [ext_resource type="Script" uid="uid://cjx1t15khjhdn" path="res://resource/ui/widgets/w_backpack.gd" id="1_1fi2c"]
 [ext_resource type="Texture2D" uid="uid://bsask3iusjohx" path="res://themes/wood/graphics/expandBtnDisabled.png" id="1_ld7vg"]
@@ -8,49 +8,22 @@
 [ext_resource type="Script" uid="uid://g0cotbm5t03y" path="res://resource/components/ui/buttons/button_expand.gd" id="5_l5v4x"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="6_i78eo"]
 [ext_resource type="PackedScene" uid="uid://cs2wpwfuk23x3" path="res://resource/ui/widgets/multi_grid_container.tscn" id="7_pytgu"]
-[ext_resource type="Texture2D" uid="uid://dnfl1av0fggos" path="res://themes/wood/graphics/smallBtnDisabled.png" id="9_pytgu"]
-[ext_resource type="Texture2D" uid="uid://com41on25wlbj" path="res://themes/wood/graphics/smallBtnOver.png" id="10_km6t3"]
-[ext_resource type="Texture2D" uid="uid://c75h8ksgey31m" path="res://themes/wood/graphics/smallBtnPressed.png" id="11_128hq"]
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="12_n80vg"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="13_4sgyt"]
-[ext_resource type="Shortcut" uid="uid://qnvn1ktro8o" path="res://data/input/r_sort.tres" id="13_km6t3"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_km6t3"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
-texture = ExtResource("1_ld7vg")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uf7ap"]
-texture = ExtResource("2_1fi2c")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ihut6"]
-texture = ExtResource("3_vrtja")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxv3c"]
 texture = ExtResource("4_8uq2e")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_128hq"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ihut6"]
+texture = ExtResource("3_vrtja")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6vxr"]
-texture = ExtResource("9_pytgu")
-texture_margin_left = 10.0
-texture_margin_top = 10.0
-texture_margin_right = 10.0
-texture_margin_bottom = 10.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uf7ap"]
+texture = ExtResource("2_1fi2c")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qx886"]
-texture = ExtResource("10_km6t3")
-texture_margin_left = 10.0
-texture_margin_top = 10.0
-texture_margin_right = 10.0
-texture_margin_bottom = 10.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
+texture = ExtResource("1_ld7vg")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u0chl"]
-texture = ExtResource("11_128hq")
-texture_margin_left = 10.0
-texture_margin_top = 10.0
-texture_margin_right = 10.0
-texture_margin_bottom = 10.0
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8uq2e"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
 texture = ExtResource("12_n80vg")
@@ -58,6 +31,21 @@ texture_margin_left = 10.0
 texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_08evb"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5v4x"]
 
 [node name="WBackpack" type="Control"]
 layout_mode = 3
@@ -104,11 +92,11 @@ tooltip_text = "背包
 快捷键 [b][color=white]B[/color][/b]
 左键拿取，右键分割"
 theme_override_font_sizes/font_size = 18
-theme_override_styles/focus = SubResource("StyleBoxEmpty_km6t3")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
-theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
 theme_override_styles/normal = SubResource("StyleBoxTexture_hxv3c")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8uq2e")
 text = "背
 包"
 icon_alignment = 1
@@ -158,12 +146,11 @@ layout_mode = 2
 tooltip_text = "快速整理堆叠
 快捷键 [b][color=white]R[/color][/b] 
 多次点击按物品ID和价格切换排序"
-theme_override_styles/focus = SubResource("StyleBoxEmpty_128hq")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_f6vxr")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qx886")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_u0chl")
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-shortcut = ExtResource("13_km6t3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_08evb")
+theme_override_styles/hover = SubResource("StyleBoxFlat_08evb")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_08evb")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_l5v4x")
 text = "整理"
 script = ExtResource("13_4sgyt")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"

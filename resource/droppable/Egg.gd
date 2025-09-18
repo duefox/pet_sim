@@ -20,7 +20,7 @@ func _ready():
 
 
 # 每帧更新孵化度
-func _process(delta: float):
+func _process(_delta: float):
 	pass
 
 

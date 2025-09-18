@@ -1,25 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://8vdsusgtgrvs"]
+[gd_scene load_steps=3 format=3 uid="uid://8vdsusgtgrvs"]
 
 [ext_resource type="Script" uid="uid://dsvoxi0jnt22r" path="res://resource/ui/menu/new_game_menu.gd" id="1_82aom"]
 [ext_resource type="PackedScene" uid="uid://c0qxr2bvud8hg" path="res://resource/ui/widgets/w_btn_skip.tscn" id="2_7eygs"]
-[ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="3_7eygs"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k3ojv"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_omvl3"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_82aom"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qb8d4"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uw7f6"]
-
-[sub_resource type="InputEventKey" id="InputEventKey_7eygs"]
-device = -1
-keycode = 4194305
-
-[sub_resource type="Shortcut" id="Shortcut_k3ojv"]
-events = [SubResource("InputEventKey_7eygs")]
 
 [node name="NewGameMenu" type="Control"]
 layout_mode = 3
@@ -61,19 +43,3 @@ theme_override_constants/margin_bottom = 8
 
 [node name="status_label" type="Label" parent="StatusMargin"]
 layout_mode = 2
-
-[node name="EmptyMargin" type="MarginContainer" parent="."]
-layout_mode = 1
-
-[node name="BtnBack" type="Button" parent="EmptyMargin"]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxEmpty_k3ojv")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_omvl3")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_82aom")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_qb8d4")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_uw7f6")
-shortcut = SubResource("Shortcut_k3ojv")
-script = ExtResource("3_7eygs")
-metadata/_custom_type_script = "uid://hmattcwq4j3c"
-
-[connection signal="pressed" from="EmptyMargin/BtnBack" to="." method="_on_btn_back_pressed"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://jqirj776gcme"]
+[gd_scene load_steps=15 format=3 uid="uid://jqirj776gcme"]
 
 [ext_resource type="Script" uid="uid://b03barg524hyx" path="res://resource/ui/menu/save_load_menu.gd" id="1_pajdi"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="2_hw6v8"]
@@ -39,12 +39,7 @@ texture_margin_bottom = 30.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vbwg1"]
 
-[sub_resource type="InputEventKey" id="InputEventKey_n7wug"]
-device = -1
-keycode = 4194305
-
-[sub_resource type="Shortcut" id="Shortcut_jdq1c"]
-events = [SubResource("InputEventKey_n7wug")]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n82jd"]
 
 [node name="SaveLoadMenu" type="Control"]
 layout_mode = 3
@@ -127,14 +122,11 @@ layout_mode = 2
 
 [node name="BottomMargin" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
+anchors_preset = 12
 anchor_top = 1.0
-anchor_right = 0.5
+anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -76.0
 offset_top = -125.0
-offset_right = 76.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/margin_left = 10
@@ -142,16 +134,49 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 20
 
-[node name="BtnBack" type="Button" parent="BottomMargin"]
+[node name="HBoxContainer" type="HBoxContainer" parent="BottomMargin"]
 layout_mode = 2
+size_flags_vertical = 8
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="BottomMargin/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="BtnBack" type="Button" parent="BottomMargin/HBoxContainer/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "快捷键 [b][color=white]ESC[/color][/b] "
 theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
 theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_vbwg1")
-shortcut = SubResource("Shortcut_jdq1c")
 text = "返  回"
 script = ExtResource("12_7f2r4")
 metadata/_custom_type_script = "uid://drmhc3abbe7ht"
 
-[connection signal="pressed" from="BottomMargin/BtnBack" to="." method="_on_btn_back_pressed"]
+[node name="MarginContainer2" type="MarginContainer" parent="BottomMargin/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="BtnHome" type="Button" parent="BottomMargin/HBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+tooltip_text = "快捷键 [b][color=white]Q[/color][/b] "
+theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_n82jd")
+text = "主菜单"
+script = ExtResource("12_7f2r4")
+metadata/_custom_type_script = "uid://drmhc3abbe7ht"
+
+[connection signal="pressed" from="BottomMargin/HBoxContainer/MarginContainer/BtnBack" to="." method="_on_btn_back_pressed"]
+[connection signal="pressed" from="BottomMargin/HBoxContainer/MarginContainer2/BtnHome" to="." method="_on_btn_home_pressed"]

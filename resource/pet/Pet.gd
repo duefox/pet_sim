@@ -65,7 +65,7 @@ var growth_points: float = 0.0
 
 #region 私有变量区块
 # 上次成长的真实世界时间戳
-var _last_growth_timestamp: float = 0.0
+#var _last_growth_timestamp: float = 0.0
 var _container_id: String
 #endregion
 
@@ -198,8 +198,8 @@ func grow_up() -> void:
 
 
 ## 是否显示交配动画
-func show_mate_animate(show: bool = false) -> void:
-	mating.visible = show
+func show_mate_animate(is_show: bool = false) -> void:
+	mating.visible = is_show
 
 
 ## 生成宠物坐标位置

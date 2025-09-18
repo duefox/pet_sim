@@ -18,8 +18,8 @@ func _ready() -> void:
 
 
 ## 设置按下状态贴图
-func set_button_state(is_pressed: bool) -> void:
-	if is_pressed:
+func set_button_state(pressed_state: bool) -> void:
+	if pressed_state:
 		add_theme_stylebox_override("normal", pressed_style)
 	else:
 		set_row(0)

@@ -1,6 +1,9 @@
 ## 全局资源和变量管理类
 extends Node
 
+## 默认数据（方便调试）
+const DEFAULT_RES: Resource = preload("res://data/default.tres")
+
 ## 游戏中菜单UI状态机节点的引用
 var menu: UIStateMachine
 
@@ -10,6 +13,9 @@ var save: SaveSystem = SaveSystem
 var save_name: String
 ## 当前使用存档的元数据
 var save_metadata: Dictionary
+
+## 是否已弹窗
+var is_popup: bool = false
 
 #region 预加载资源相关变量
 ## @param StringName 物品的唯一id
@@ -38,6 +44,14 @@ var cur_selected_item: WItem
 ## 基础的物品数据，格式如下
 var data: Dictionary[String,Dictionary]
 #endregion
+
+## 弹窗场景
+var _confirm: WConfirm
+
+
+func _ready() -> void:
+	# 加载一个id为999的默认数据(方便F6调试）
+	create_textures_item(DEFAULT_RES)
 
 
 ## 创建纹理表的内容单元（这些数据用于背包显示）
@@ -71,7 +85,34 @@ func create_textures_item(res_data: Resource = null) -> void:
 
 
 ## 根据物品id找对应的物品data
-func find_item_data(id: String) -> Variant:
+func find_item_data(id: String) -> Dictionary:
 	if data.has(id):
 		return data[id]
-	return false
+	return {}
+
+
+## 全局弹窗
+func prompt(text: String = "") -> bool:
+	is_popup = true
+	#二次弹窗确认
+	_confirm = WConfirm.new()
+	add_child(_confirm)
+	var success: bool = await _confirm.prompt(text)
+	is_popup = false
+	return success
+
+
+## 关闭弹窗
+func close_prompt() -> void:
+	if is_popup:
+		is_popup = false
+		if is_instance_valid(_confirm):
+			_confirm.queue_free()
+
+
+## 获取窗口的大小
+func get_win_size() -> Vector2:
+	var viewport_width: int = ProjectSettings.get_setting("display/window/size/viewport_width", 1152)
+	var viewport_height: int = ProjectSettings.get_setting("display/window/size/viewport_height", 648)
+	var viewport_scale: float = ProjectSettings.get_setting("display/window/stretch/scale", 1.0)
+	return Vector2(viewport_width, viewport_height) / viewport_scale

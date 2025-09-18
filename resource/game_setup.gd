@@ -78,13 +78,10 @@ func _on_resource_loaded(_path: String, _resource: Resource) -> void:
 func _init_game_ui() -> void:
 	print("_init_game_ui")
 	var ui_scene: PackedScene = ResManager.get_cached_resource(ResPaths.SCENE_RES.main_ui)
-	var game_ui: UIStateMachine = ui_scene.instantiate()
-	ui.add_child(game_ui)
-	GlobalData.menu = game_ui
-	
+	var ui_state_machine: UIStateMachine = ui_scene.instantiate()
+	ui.add_child(ui_state_machine)
 	# 默认切换到首页菜单
-	GlobalData.menu.change_state(UIStateMachine.State.MAIN_MENU)
-	#GlobalData.menu.change_state(UIStateMachine.State.SAVE_LOAD_MENU)
+	ui_state_machine.change_state(ui_state_machine.State.MAIN_MENU)
 
 
 ## 预加载资源文件中所有的纹理文件（在item_base_data定义了对应的变量）

@@ -1,11 +1,10 @@
 ## 游戏主场景菜单，管理游戏内主场景内所有菜单栏，快捷栏，背包栏，仓库栏等等
-extends Control
+extends BaseMenu
 class_name GameMenu
 
-@onready var gold_bar: Control = %GoldBar
-@onready var info_bar: Control = %InfoBar
-@onready var navigation_bar: Control = %NavigationBar
 @onready var grid_box_bar: GridBoxBar = %GridBoxBar
+## 游戏主场景的二级状态机
+@onready var bar_state_machine: BarStateMachine = %BarStateMachine
 
 ## held item场景
 @export var held_scene: PackedScene
@@ -21,8 +20,10 @@ var held_item: WItem
 
 
 func _ready() -> void:
+	super()
 	GlobalData.ui = self
-	initialize()
+	## 初始化抓取物品
+	_init_held_item()
 	# 订阅事件
 	EventManager.subscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
 
@@ -32,45 +33,22 @@ func _exit_tree() -> void:
 	EventManager.unsubscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
 
 
-func initialize() -> void:
+func initialize(my_state_machine: UIStateMachine) -> void:
+	super(my_state_machine)
+	## 二级状态机初始化
+	bar_state_machine.initialize(state_machine)
+	## 订阅多格容器的整理事件
+	bar_state_machine.sort_backpack.connect(_on_sort_backpack)
+	bar_state_machine.sort_inventory.connect(_on_sort_inventory)
 	## 获得仓库的容器
 	inventory = grid_box_bar.get_inventory()
 	backpack = grid_box_bar.get_backpack()
 	quick_tools = grid_box_bar.get_quick_tools()
-	## 初始化抓取物品
-	_init_held_item()
-	#return
-	### 仓库
-	inventory.add_new_item_at(Vector2(2, 0), "1001")
-	inventory.add_item("1001")
-	inventory.add_item("2002")
-	### 快捷栏
-	quick_tools.add_new_item_at(Vector2(0, 0), "1002")
-	quick_tools.add_item("2001")
-	quick_tools.add_item("2001")
-	quick_tools.add_item_with_merge("3001", 2)
+
 	### 背包
-	backpack.add_item("1002")
-	backpack.add_item("2001")
-	backpack.add_item_with_merge("3001", 2)
-#
-	for i in range(2):
-		inventory.add_item("1001")
-		inventory.add_item("2001")
-		inventory.add_item("2002")
-		inventory.add_item("1002")
-		backpack.add_item("2002")
-		quick_tools.add_item_with_merge("3001", 4)
-
-	## 设置背包模式
-	grid_box_bar.grid_mode = GridBoxBar.GridDisplayMode.BACKPACK
-	#grid_box_bar.grid_mode = GridBoxBar.GridDisplayMode.INVENTORY
-
-	await get_tree().create_timer(8.0).timeout
-
-	#quick_tools.sub_item_at(Vector2(0, 0))
-	#quick_tools.sub_item("1001")
-	#quick_tools.sub_item("2003")
+	#backpack.add_item("1002")
+	#backpack.add_item("2001")
+	#backpack.add_item_with_merge("3001", 2)
 
 
 ## 设置抓取物品的坐标(中心点模式)
@@ -271,8 +249,20 @@ func _init_held_item() -> void:
 	held_item = held_scene.instantiate()
 	add_child(held_item)
 	hide_held_item()
-	held_item.set_data(GlobalData.find_item_data("1001"))
+	# 设置一个默认值
+	var tmp_data: Dictionary = GlobalData.find_item_data("999")
+	held_item.set_data(tmp_data)
 	held_item.setup()
+
+
+## 背包整理
+func _on_sort_backpack() -> void:
+	backpack.auto_stack_existing_items()
+
+
+## 仓库整理
+func _on_sort_inventory() -> void:
+	inventory.auto_stack_existing_items()
 
 
 ## 物品栏满了或者自动摆放不下了

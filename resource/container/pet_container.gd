@@ -39,9 +39,9 @@ func remove_pet(pet_instance: Pet):
 
 
 ## 在容器内生成掉落物（如食物排泄物）
-## [position] 掉落物的位置
+## [coords] 掉落物的位置
 ## [data] 掉落物的资源属性，食物和排泄物都是DroppableData类型，蛋是PetData类型
-func spawn_droppable_object(position: Vector2, data: DroppableData, pet_data: PetData = null):
+func spawn_droppable_object(coords: Vector2, data: DroppableData, pet_data: PetData = null):
 	if not drop_scene:
 		push_error("Food scene not set in PetContainer.")
 		return null
@@ -72,7 +72,7 @@ func spawn_droppable_object(position: Vector2, data: DroppableData, pet_data: Pe
 	droppable_instance.add_to_group(group_name)
 	# 掉落位置和信息
 	droppable_instance.data = data
-	droppable_instance.global_position = position
+	droppable_instance.global_position = coords
 	contents_node.add_child(droppable_instance)
 
 	return droppable_instance

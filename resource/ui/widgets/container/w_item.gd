@@ -139,6 +139,8 @@ func set_texture() -> void:
 ## @param data: 基本数据
 ## @param extra_args: 额外数据，当额外数据不为空时候需要覆盖基础数据
 func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
+	if data.is_empty():
+		return
 	# 拷贝一份数据
 	data = data.duplicate()
 	# 详细信息数据字典
@@ -270,26 +272,26 @@ func _get_texture_by_growth(data_info: Dictionary, pet_growth: float) -> Diction
 	var space_width: int = data_info.width
 	var space_height: int = data_info.height
 	# 默认贴图
-	var item_texture: CompressedTexture2D = data_info.texture
+	var default_texture: CompressedTexture2D = data_info.texture
 	# 成年了
 	if pet_growth == adult_threshold:
-		item_texture = data_info.adult_texture
+		default_texture = data_info.adult_texture
 	# 有的宠物有第二阶段，比如蝴蝶的虫蛹状态，这种动物的成年阈值为200
 	elif pet_growth >= 100 and pet_growth < adult_threshold:
-		item_texture = data_info.pupa_texture
+		default_texture = data_info.pupa_texture
 		## 重置占用空间大小
 		space_width = Utils.get_juvenile_space(data_info.width)
 		space_height = Utils.get_juvenile_space(data_info.height)
 	# 幼年
 	else:
-		item_texture = data_info.texture
+		default_texture = data_info.texture
 		## 重置占用空间大小
 		space_width = Utils.get_juvenile_space(data_info.width)
 		space_height = Utils.get_juvenile_space(data_info.height)
 
 	result_dic.set("width", space_width)
 	result_dic.set("height", space_height)
-	result_dic.set("texture", item_texture)
+	result_dic.set("texture", default_texture)
 
 	return result_dic
 

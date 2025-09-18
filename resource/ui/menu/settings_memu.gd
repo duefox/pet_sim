@@ -1,5 +1,5 @@
 # 音效、语言、画面
-extends Control
+extends BaseMenu
 class_name SettingsMemu
 
 @onready var resolution_opt_btn: OptionButton = %ResolutionOptBtn
@@ -11,16 +11,10 @@ class_name SettingsMemu
 @onready var language_opt_btn: OptionButton = %LanguageOptBtn
 
 
-
 func _ready() -> void:
-	#print("SoundSlider:",find_child("SoundSlider"))
-	pass
-
-func initialize() -> void:
-	#print("initialize")
-	pass
+	super()
 
 
 func _on_btn_back_pressed() -> void:
 	# 恢复之前的状态
-	GlobalData.menu.recover_state()
+	state_machine.recover_state()
