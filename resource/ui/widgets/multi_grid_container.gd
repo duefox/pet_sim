@@ -30,8 +30,9 @@ enum MODE_PLACEMENT_OVERTLAY {
 var cell_size: int = 48  #  容器的格子尺寸
 var grid_size: Vector2  #  多格子容器的大小
 var w_grid_size: Vector2  # 格子的大小
-var items: Dictionary[Vector2,WItem] = {}
-##  格子映射表, key为格子坐标，value为WItemData
+## 在容器中的物品
+var items: Array = []
+## 格子映射表, key为格子坐标，value为WItemData
 var grid_map: Dictionary[Vector2, WItemData] = {}
 
 ## 整理的排序方法
@@ -155,6 +156,9 @@ func cmd_add_item(item_id: String, item_num: int, extra_args: Dictionary = {}) -
 ## @param extra_args: 物品额外参数
 func add_item_with_extra(item_id: String, item_num: int, extra_args: Dictionary = {}) -> void:
 	var res_data: Dictionary = GlobalData.find_item_data(item_id)
+	if res_data.is_empty():
+		print("数据不能为空！")
+		return
 	if res_data.stackable:
 		# 自动堆叠添加
 		add_item_with_merge(item_id, item_num, extra_args)
@@ -170,12 +174,11 @@ func auto_stack_existing_items() -> void:
 	var non_stackable_items: Array[Dictionary] = []
 
 	var items_cnt: int = item_container.get_child_count()
-	if not items_cnt == items.values().size():
-		print("before--->整理->items_cnt:", items_cnt, ",字典大小：", items.values().size())
+	if not items_cnt == items.size():
+		print("before--->整理->items_cnt:", items_cnt, ",字典大小：", items.size())
 		push_error("before物品数据和物品数量不正确！")
 
-	for item_coords in items:
-		var item: WItem = items[item_coords]
+	for item: WItem in items:
 		var item_data: Dictionary = item.get_data().duplicate(true)
 		if item.stackable:
 			# 构造唯一的复合键 (ID + 等级)
@@ -188,7 +191,7 @@ func auto_stack_existing_items() -> void:
 			non_stackable_items.append(item_data)
 
 	# 2. 清空当前容器的所有物品和映射表
-	_clear_all_items()
+	clear_all_items()
 	# 3. 按照合并后的数据重新创建并放置物品
 	var sorted_items: Array[Dictionary] = merged_stackable_items.values()
 	sorted_items.append_array(non_stackable_items)
@@ -209,19 +212,13 @@ func auto_stack_existing_items() -> void:
 		else:
 			add_item(sorted_item.id, extra_args)
 
-	# 6. 检测数据是否正确
-	await get_tree().create_timer(0.1).timeout
-	var items_cnt2: int = item_container.get_child_count()
-	if not items_cnt2 == items.values().size():
-		push_error("物品数据和物品数量不正确！")
-
 
 ## 扣除指定id的物品数量
 ## @param item_id: 物品的id
 ## @param num: 扣除的数量，默认为1
 func sub_item(item_id: String, num: int = 1) -> bool:
 	# 遍历所有已放置的物品
-	for item in items.values():
+	for item in items:
 		# 检查物品ID是否匹配
 		if item.id == item_id:
 			item.num -= num
@@ -327,13 +324,6 @@ func set_grid_map_item(cell_pos: Vector2, item: WItem) -> void:
 			link_grid.update_tooltip(bbcode_text)
 
 
-## 获取坐标空间的物品
-func get_item_at(cell_pos: Vector2) -> WItem:
-	if items.has(cell_pos):
-		return items[cell_pos]
-	return null
-
-
 ## 根据data新建一个物品并放置到多格子容器中
 func add_new_item_in_data(cell_pos: Vector2, data: Dictionary, extra_args: Dictionary = {}) -> bool:
 	# 检查格子是否已被占用
@@ -359,6 +349,8 @@ func get_first_cell_pos_offset(item: WItem, cell_pos: Vector2) -> Vector2:
 func remove_item(cur_item: WItem) -> void:
 	if not is_instance_valid(cur_item):
 		return
+	#移除背包物品记录
+	items.erase(cur_item)
 	## 移除映射表的对应数据
 	for y in range(int(cur_item.height)):
 		for x in range(int(cur_item.width)):
@@ -369,8 +361,6 @@ func remove_item(cur_item: WItem) -> void:
 				item_data.link_item = null
 				item_data.is_placed = false
 				item_data.link_grid.update_tooltip()
-	## 移除背包物品记录
-	items.erase(cur_item.head_position)
 	## 释放该物品的实例化对象
 	cur_item.queue_free()
 	cur_item = null
@@ -385,6 +375,23 @@ func set_item_placed(item: WItem, value: bool) -> void:
 	for row in range(height):
 		for col in range(width):
 			grid_map.get(Vector2(col + head.x, row + head.y)).is_placed = value
+
+
+## 清除所有物品节点和映射数据
+func clear_all_items() -> void:
+	for item: WItem in items:
+		if is_instance_valid(item):
+			item.queue_free()
+	# 清空数组
+	items.clear()
+
+	# 移除映射表的对应数据
+	for item_data in grid_map.values():
+		if item_data:
+			item_data.is_placed = false
+			item_data.link_item = null
+			if is_instance_valid(item_data.link_grid):
+				item_data.link_grid.update_tooltip("")
 
 
 #endregion
@@ -454,8 +461,8 @@ func _add_item_at(cell_pos: Vector2, item: WItem) -> bool:
 		if scan_grid_map_area(cell_pos, item):
 			# 矩形区域扫描通过时
 			item.head_position = cell_pos
-			# 把物品添加到items字典
-			items.set(cell_pos, item)
+			# 把物品添加到items数组
+			items.append(item)
 			# 设置格子映射表的数据
 			set_grid_map_item(cell_pos, item)
 			# 将物品节点添加至多格子容器(显示层)
@@ -562,23 +569,6 @@ func _look_grip_map() -> void:
 		var item_data: WItemData = grid_map.get(coords)
 		print("coords:", coords, ",cell_pos:", item_data.cell_pos)
 		print("is_placed:", item_data.is_placed, ",item:", item_data.link_item)
-
-
-## 清除所有物品节点和映射数据
-func _clear_all_items() -> void:
-	for item in items.values():
-		if is_instance_valid(item):
-			item.queue_free()
-
-	items.clear()
-
-	# 移除映射表的对应数据
-	for item_data in grid_map.values():
-		if item_data:
-			item_data.is_placed = false
-			item_data.link_item = null
-			if is_instance_valid(item_data.link_grid):
-				item_data.link_grid.update_tooltip("")
 
 
 ## 按id升序排序

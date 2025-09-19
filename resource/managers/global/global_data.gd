@@ -4,8 +4,8 @@ extends Node
 ## 默认数据（方便调试）
 const DEFAULT_RES: Resource = preload("res://data/default.tres")
 
-## 游戏中菜单UI状态机节点的引用
-var menu: UIStateMachine
+## 游戏玩家
+var player
 
 ## 游戏存档
 var save: SaveSystem = SaveSystem

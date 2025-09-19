@@ -1,5 +1,5 @@
 ## 背包物品关联类
-extends Node
+extends RefCounted
 class_name WItemData
 
 var cell_pos: Vector2

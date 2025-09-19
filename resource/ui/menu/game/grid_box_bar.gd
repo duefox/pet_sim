@@ -55,12 +55,14 @@ func _ready() -> void:
 	initialize()
 	# 订阅事件
 	EventManager.subscribe(UIEvent.SUB_ITEM, _on_sub_item)
+	EventManager.subscribe(UIEvent.BACKPACK_CHANGED, _on_backpack_changed)
 	# 测试
 	grid_mode = GridDisplayMode.BACKPACK
 
 
 func _exit_tree() -> void:
 	EventManager.unsubscribe(UIEvent.SUB_ITEM, _on_sub_item)
+	EventManager.unsubscribe(UIEvent.BACKPACK_CHANGED, _on_backpack_changed)
 
 
 func initialize() -> void:
@@ -106,8 +108,16 @@ func _setter_grid_mode(value: GridDisplayMode) -> void:
 	#state_switch.emit(self, grid_mode)
 
 
+## 背包物品更新
+func _on_backpack_changed(items_data: Array) -> void:
+	pass
+
+
 ## 分割物品
 func _on_sub_item() -> void:
+	if GlobalData.previous_cell_matrix is TrashGridContainer:
+		print("TrashGridContainer can't sub.")
+		return
 	# 默认快捷工具栏不能分割物品
 	if grid_mode == GridDisplayMode.DEFAULT:
 		return
@@ -214,9 +224,9 @@ func submit_command() -> void:
 
 ## 提交命令行代码
 func _on_btn_add_pressed() -> void:
-	# 1001
 	if not _item_id.length() == 4:
-		push_warning("代码错误，请输入4位数字代码！")
+		print("无效代码，正在打印孤儿节点->")
+		#get_tree().root.print_orphan_nodes()
 		return
 	_cmd_add_item(_item_id, _item_num, _item_level, _item_grow)
 

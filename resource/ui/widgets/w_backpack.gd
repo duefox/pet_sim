@@ -4,6 +4,7 @@ class_name WBackpack
 
 @onready var packback_bg: NinePatchRect = %PackbackBG
 @onready var packback: MultiGridContainer = %Packback
+@onready var trash: TrashGridContainer = %Trash
 
 
 func _ready() -> void:
@@ -22,6 +23,11 @@ func get_item() -> void:
 	pass
 
 
+## 整理物品
 func _on_btn_sort_pressed() -> void:
-	#print("_on_btn_sort_pressed")
 	packback.auto_stack_existing_items()
+
+
+## 清空垃圾箱
+func _on_btn_clear_pressed() -> void:
+	trash.clear_all_items()

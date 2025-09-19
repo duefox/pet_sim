@@ -1,12 +1,24 @@
-[gd_scene load_steps=3 format=3 uid="uid://3ia6qn373kw0"]
+[gd_scene load_steps=6 format=3 uid="uid://3ia6qn373kw0"]
 
 [ext_resource type="Script" uid="uid://oswiqnmdn3ch" path="res://resource/game_setup.gd" id="1_7fe2v"]
+[ext_resource type="Script" uid="uid://c8hix6kt5hshy" path="res://resource/components/player/backpack_comp.gd" id="2_h21b3"]
+[ext_resource type="Script" uid="uid://b1cylyf853djb" path="res://resource/player/player.gd" id="2_lvf1d"]
 [ext_resource type="PackedScene" uid="uid://btkafvb6kvaga" path="res://resource/container/pet_container.tscn" id="2_xpw5q"]
+[ext_resource type="Script" uid="uid://dfhx2qmrxax8u" path="res://resource/components/player/inventory_comp.gd" id="4_vyehy"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_7fe2v")
 
-[node name="GameEnvironment" type="Node" parent="."]
+[node name="Player" type="Node2D" parent="."]
+script = ExtResource("2_lvf1d")
+
+[node name="Components" type="Node" parent="Player"]
+
+[node name="BackpackComponent" type="Node" parent="Player/Components"]
+script = ExtResource("2_h21b3")
+
+[node name="InventoryComponent" type="Node" parent="Player/Components"]
+script = ExtResource("4_vyehy")
 
 [node name="FishTank" parent="." instance=ExtResource("2_xpw5q")]
 visible = false

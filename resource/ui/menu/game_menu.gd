@@ -54,9 +54,9 @@ func initialize(my_state_machine: UIStateMachine) -> void:
 	quick_tools = grid_box_bar.get_quick_tools()
 
 	### 背包
-	#backpack.add_item("1002")
-	#backpack.add_item("2001")
-	#backpack.add_item_with_merge("3001", 2)
+	backpack.add_item("1002")
+	backpack.add_item("2001")
+	backpack.add_item_with_merge("3001", 2)
 
 
 ## 设置抓取物品的坐标(中心点模式)
@@ -172,38 +172,6 @@ func _on_gui_input(event: InputEvent) -> void:
 					placement_overlay_process()
 
 
-## 处理其他输入事件
-func _input2(event: InputEvent) -> void:
-	# 处理键盘按键输入
-	if event is InputEventKey and MouseEvent.is_mouse_drag():
-		# 正在抓取物品时，按下键盘R键，进行旋转物品的操作
-		#if event.pressed and event.keycode == 82:
-		if event.is_action_pressed("keyboard_r"):
-			held_item.rotation_item()
-			set_held_item_position(MouseEvent.mouse_position)
-			# 按下R键后更新放置提示框
-			placement_overlay_process()
-	# 当鼠标左键松开时，取消抓取状态，放下抓取物品
-	#elif event is InputEventMouseButton and !event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
-	elif Input.is_action_just_released("mouse_left"):
-		# 重置鼠标按下状态
-		MouseEvent.is_mouse_down = false
-		# 关闭放置提示框
-		MouseEvent.mouse_cell_matrix.off_placement_overlay()
-		# 鼠标松开时，若状态为"默认"则直接返回，不执行后续操作
-		if !MouseEvent.is_mouse_drag():
-			hide_held_item()
-			return
-		MouseEvent.mouse_state = MouseEvent.CONTROLS_TYPE.DEF
-		# 处理放置物品
-		_handle_drop_item()
-	# 当鼠标右键键松开时，重置右键状态值
-	elif Input.is_action_just_released("mouse_right"):
-		MouseEvent.is_mouse_right_down = false
-		# 关闭放置提示框
-		MouseEvent.mouse_cell_matrix.off_placement_overlay()
-
-
 ## 放置物品到多格容器
 func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 	# 获取上一次操作的物品节点
@@ -214,6 +182,7 @@ func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 	var mouse_cell_matrix: MultiGridContainer = MouseEvent.mouse_cell_matrix
 	# 获取鼠标所在的格子容器内的单个格子映射表数据
 	var mouse_item_data: WItemData = mouse_cell_matrix.get_grid_map_item(mouse_cell_pos)
+
 	# 物品堆叠判定
 	if cur_item != null and mouse_item_data.link_item is WItem:
 		var item: WItem = mouse_item_data.link_item
@@ -254,11 +223,6 @@ func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 		_handle_selected_item(item_data.link_item)
 		# 放置成功后,移除原节点
 		GlobalData.previous_cell_matrix.remove_item(cur_item)
-		#print("pre_item:",cur_item)
-		#print("当前被放置的对象:",GlobalData.previous_cell_matrix.get_item_at(first_cell_pos))
-		## 测试映射表
-		#print("重置映射表后------>first_cell_pos：",first_cell_pos,",mouse_cell_pos:",mouse_cell_pos)
-		#GlobalData.previous_cell_matrix._look_grip_map()
 	else:
 		#放置失败时，将原物品可见设为真，且将其在映射表中的所在区域设置回"已占用"
 		_item_put_back(cur_item)

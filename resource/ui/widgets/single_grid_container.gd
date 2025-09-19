@@ -62,7 +62,7 @@ func remove_item(cur_item: WItem) -> void:
 		item_data.is_placed = false
 		item_data.link_grid.update_tooltip()
 	# 移除背包物品记录
-	items.erase(cur_item.head_position)
+	items.erase(cur_item)
 	# 释放该物品的实例化对象
 	cur_item.queue_free()
 	cur_item = null
@@ -84,8 +84,8 @@ func _add_item_at(cell_pos: Vector2, item: WItem) -> bool:
 		item.head_position = cell_pos
 		# 重置物品的旋转为默认竖直方向
 		item.orientation = WItem.ORI.VER
-		# 把物品添加到items字典
-		items.set(cell_pos, item)
+		# 把物品添加到items
+		items.append(item)
 		# 设置格子映射表的数据
 		set_grid_map_item(cell_pos, item)
 		# 将物品节点添加至多格子容器(显示层)
