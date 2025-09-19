@@ -25,7 +25,7 @@ signal map_pressed
 signal task_pressed
 ## V 查看来访者信号
 signal visitor_pressed
-## I 查看仓库信号
+## C 查看仓库信号
 signal inventory_pressed
 ## B 查看背包信号
 signal backpack_pressed
@@ -33,6 +33,16 @@ signal backpack_pressed
 signal sort_pressed
 ## SHIFT+R 仓库背包整理信号
 signal sort_inven_pressed
+## 鼠标按下左键
+signal mouse_left_pressed
+## 鼠标按下右键
+signal mouse_right_pressed
+## 鼠标松开左键
+signal mouse_left_released
+## 鼠标松开右键
+signal mouse_right_released
+## 旋转物品，鼠标按下未释放前按住R键
+signal rotation_item_pressed
 
 
 ## _input函数是Godot内置的，用于接收所有输入事件
@@ -70,17 +80,31 @@ func _input(_event: InputEvent):
 	# 如果是V键，发出访客信号
 	elif Input.is_action_just_pressed("keyboard_v"):
 		visitor_pressed.emit()
-	# 如果是I键，发出仓库信号
-	elif Input.is_action_just_pressed("keyboard_i"):
+	# 如果是C键，发出仓库信号
+	elif Input.is_action_just_pressed("keyboard_c"):
 		inventory_pressed.emit()
 	# 如果是B键，发出背包信号
 	elif Input.is_action_just_pressed("keyboard_b"):
 		backpack_pressed.emit()
 	# 如果是R键，发出整理信号
 	elif Input.is_action_just_pressed("keyboard_r"):
-		# 检查是否同时按下了 SHIFT 键
+		# 检查是否同时按下了其他键
 		# `Input.is_action_pressed()` 在按键被按住时持续返回`true`
 		if Input.is_action_pressed("keyboard_shift"):
 			sort_inven_pressed.emit()
+		elif Input.is_action_pressed("mouse_left"):
+			rotation_item_pressed.emit()
 		else:
 			sort_pressed.emit()
+	# 如果是鼠标左键按下，发出信号
+	elif Input.is_action_just_pressed("mouse_left"):
+		mouse_left_pressed.emit()
+	# 如果是鼠标右键按下，发出信号
+	elif Input.is_action_just_pressed("mouse_right"):
+		mouse_right_pressed.emit()
+	# 如果是鼠标左键松开，发出信号
+	elif Input.is_action_just_released("mouse_left"):
+		mouse_left_released.emit()
+	# 如果是鼠标右键松开，发出信号
+	elif Input.is_action_just_released("mouse_right"):
+		mouse_right_released.emit()

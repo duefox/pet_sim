@@ -9,19 +9,19 @@
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="7_2is3u"]
 [ext_resource type="PackedScene" uid="uid://b1ihuvsoodjhc" path="res://resource/ui/widgets/single_grid_container.tscn" id="8_mkisp"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kth44"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
-texture = ExtResource("2_ycsxv")
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uf7ap"]
-texture = ExtResource("3_nijvm")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxv3c"]
+texture = ExtResource("5_rb4uc")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ihut6"]
 texture = ExtResource("4_2g7nd")
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxv3c"]
-texture = ExtResource("5_rb4uc")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_uf7ap"]
+texture = ExtResource("3_nijvm")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
+texture = ExtResource("2_ycsxv")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kth44"]
 
 [node name="WQuickTools" type="Control"]
 layout_mode = 3
@@ -67,13 +67,14 @@ theme_override_constants/margin_right = -16
 [node name="IconDescrip" type="Button" parent="MarginContainer/HBoxContainer/IconContainer"]
 custom_minimum_size = Vector2(72, 72)
 layout_mode = 2
-tooltip_text = "快捷工具栏"
+tooltip_text = "快捷工具栏
+[b][color=white]B[/color][/b] 打开背包"
 theme_override_font_sizes/font_size = 18
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kth44")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
-theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
 theme_override_styles/normal = SubResource("StyleBoxTexture_hxv3c")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
+theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_kth44")
 text = "快
 捷"
 icon_alignment = 1

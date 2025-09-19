@@ -26,7 +26,32 @@ theme_override_constants/margin_bottom = 2
 unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
-color = Color(1, 1, 1, 0.501961)
+color = Color(1, 1, 1, 0.8)
+
+[node name="MarginContainer" type="MarginContainer" parent="ItemContainer/BGColor"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="LevelColor" type="ColorRect" parent="ItemContainer/BGColor/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+mouse_filter = 2
+color = Color(0.96862745, 0.8901961, 0.7607843, 1)
+
+[node name="LevelPanel" type="Panel" parent="ItemContainer/BGColor/MarginContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+mouse_filter = 2
 
 [node name="TextureContainer" type="PanelContainer" parent="ItemContainer/BGColor"]
 unique_name_in_owner = true
@@ -50,8 +75,8 @@ theme_override_constants/margin_bottom = -1
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/margin_left = 1
-theme_override_constants/margin_top = 1
-theme_override_constants/margin_right = 1
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 1
 
 [node name="ItemNumLabel" type="Label" parent="ItemContainer/MarginContainer/NumMargin"]

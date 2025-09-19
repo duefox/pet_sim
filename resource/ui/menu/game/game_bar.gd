@@ -45,3 +45,5 @@ func _ready() -> void:
 
 	if not InputManager.sort_inven_pressed.is_connected(state_machine.on_sort_inven_pressed):
 		InputManager.sort_inven_pressed.connect(state_machine.on_sort_inven_pressed)
+		
+	# 处理配合鼠标的信号，不在基类连接请在具体的子类中连接

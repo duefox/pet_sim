@@ -212,7 +212,7 @@ func on_map_pressed() -> void:
 	if not _is_in_game_state():
 		return
 	# 按俩次或esc都可以返回
-	if current_state == State.PROFILE:
+	if current_state == State.MAP:
 		change_state(State.DEFAULT)
 	else:
 		change_state(State.MAP)
@@ -296,6 +296,7 @@ func on_sort_inven_pressed() -> void:
 func on_enter_pressed() -> void:
 	if not _is_in_game_state():
 		return
+	grid_box_bar.submit_command()
 
 
 ## 判断是否在游戏场景中的状态

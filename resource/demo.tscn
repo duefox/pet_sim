@@ -1,6 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://0xwv2nq5oyx8"]
+[gd_scene load_steps=4 format=3 uid="uid://0xwv2nq5oyx8"]
 
 [ext_resource type="Script" uid="uid://1ddeko8q5psv" path="res://resource/demo.gd" id="1_gat5w"]
+[ext_resource type="Texture2D" uid="uid://vxjinqdvpff7" path="res://icon.svg" id="2_e2yaf"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_e2yaf"]
+viewport_path = NodePath("SubViewportContainer/SubViewport")
 
 [node name="Demo" type="Node2D"]
 script = ExtResource("1_gat5w")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color(0.710132, 0.46417522, 0.36019522, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 946.0
+offset_top = 184.0
+offset_right = 1458.0
+offset_bottom = 696.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("ViewportTexture_e2yaf")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 992.0
+offset_bottom = 782.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport"]
+position = Vector2(84, 77)
+texture = ExtResource("2_e2yaf")

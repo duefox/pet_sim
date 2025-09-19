@@ -125,26 +125,18 @@ func add_item_with_merge(item_id: String, num: int = 1, extra_args: Dictionary =
 	var new_item_level: int = 0
 	if not extra_args.is_empty() and extra_args.has("item_level"):
 		new_item_level = extra_args["item_level"]
+
 	# 步骤1: 遍历所有格子，尝试合并到现有物品堆叠中
 	for item_data: WItemData in grid_map.values():
 		# 如果有物品则堆叠
 		if item_data and item_data.link_item:
 			var item: WItem = item_data.link_item
-			# 检查是否为同种物品、同级别
-			#if item.id == item_id and item.stackable:
 			# 检查是否为同种物品、可堆叠且物品级别相同
 			if item.id == item_id and item.stackable and item.item_level == new_item_level:
 				remaining_items = item.add_num(remaining_items)
 				if remaining_items == 0:
 					return true  # 全部合并成功
-		# 如果没该物品则新建1个物品再把剩余的数量去堆叠
-		else:
-			# 新建一个待叠加的物品
-			add_item(item_id, extra_args)
-			remaining_items -= 1
-			if remaining_items > 0:
-				add_item_with_merge(item_id, remaining_items, extra_args)
-			return true
+
 	# 步骤2: 如果还有剩余物品，则寻找空位并添加新物品
 	return _add_remaining_item(item_id, remaining_items, extra_args)
 
@@ -176,6 +168,11 @@ func auto_stack_existing_items() -> void:
 	# 1. 临时存储合并后的物品数据，分别用两个变量存储
 	var merged_stackable_items: Dictionary[String, Dictionary] = {}
 	var non_stackable_items: Array[Dictionary] = []
+
+	var items_cnt: int = item_container.get_child_count()
+	if not items_cnt == items.values().size():
+		print("before--->整理->items_cnt:", items_cnt, ",字典大小：", items.values().size())
+		push_error("before物品数据和物品数量不正确！")
 
 	for item_coords in items:
 		var item: WItem = items[item_coords]
@@ -211,6 +208,12 @@ func auto_stack_existing_items() -> void:
 			add_item_with_merge(sorted_item.id, sorted_item.num, extra_args)
 		else:
 			add_item(sorted_item.id, extra_args)
+
+	# 6. 检测数据是否正确
+	await get_tree().create_timer(0.1).timeout
+	var items_cnt2: int = item_container.get_child_count()
+	if not items_cnt2 == items.values().size():
+		push_error("物品数据和物品数量不正确！")
 
 
 ## 扣除指定id的物品数量
@@ -415,7 +418,8 @@ func _get_next_available_position(item_data: Dictionary) -> Vector2:
 
 ## 如果还有剩余物品，则寻找空位并添加新物品
 func _add_remaining_item(item_id: String, remaining_items: int, extra_args: Dictionary = {}) -> bool:
-	while remaining_items > 0:
+	# 添加一个物品，其他的递归添加
+	if remaining_items > 0:
 		var new_item_data: Variant = GlobalData.find_item_data(item_id)
 		if not new_item_data:
 			push_error("Item data not found for id: ", item_id)
@@ -425,8 +429,7 @@ func _add_remaining_item(item_id: String, remaining_items: int, extra_args: Dict
 			# 如果没有找到任何可用位置，发出信号
 			EventManager.emit_event(UIEvent.INVENTORY_FULL, self)
 			return false  # 没有空位了
-		var num_to_add: int = min(remaining_items, WItem.new().max_stack_size)
-		new_item_data.num = num_to_add
+		new_item_data.num = 1
 
 		# 放置新物品
 		var success: bool = add_new_item_in_data(empty_pos, new_item_data, extra_args)
@@ -434,7 +437,11 @@ func _add_remaining_item(item_id: String, remaining_items: int, extra_args: Dict
 			print("放置失败，中断->empty_pos:", empty_pos)
 			return false  # 放置失败，中断
 
-		remaining_items -= num_to_add
+		remaining_items -= 1
+
+		# 步骤3：递归调用add_item_with_merge，直到剩余为0
+		if remaining_items > 0:
+			add_item_with_merge(item_id, remaining_items, extra_args)
 
 	return true
 

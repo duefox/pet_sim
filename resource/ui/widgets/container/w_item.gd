@@ -3,6 +3,8 @@ class_name WItem
 
 @onready var item_container: MarginContainer = %ItemContainer
 @onready var bg_color: ColorRect = %BGColor
+@onready var level_color: ColorRect = %LevelColor
+@onready var level_panel: Panel = %LevelPanel
 @onready var texture_container: PanelContainer = %TextureContainer
 @onready var item_texture: ItemTexture = %ItemTexture
 @onready var item_num_label: Label = %ItemNumLabel
@@ -13,10 +15,10 @@ enum ORI { VER, HOR }  # 代表竖直方向  # 代表横向方向
 
 ## 物品级别背景色
 const LEVEL_BG_COLOR: Dictionary = {
-	0: Color("ffffff80"),  # 普通
-	1: Color("F0C05080"),  # 稀有  #FFFF00
-	2: Color("00BFFF80"),  # 罕见
-	3: Color("A335EE80"),  # 传说
+	0: Color("ffffff"),  # 普通
+	1: Color("F0C050"),  # 稀有  #FFFF00
+	2: Color("00BFFF"),  # 罕见
+	3: Color("A335EE"),  # 传说
 }
 
 ## 默认的选中颜色
@@ -244,16 +246,21 @@ func add_num(n: int) -> int:
 ## 隐藏背景颜色
 func hide_bg_color() -> void:
 	bg_color.color = _def_bg_color
+	level_color.color = _def_bg_color
+	level_panel.modulate=_def_bg_color
 
 
 ## 显示背景颜色
 func show_bg_color() -> void:
 	bg_color.color = _def_bg_color
+	level_color.color = _def_bg_color
+	level_panel.modulate=_def_bg_color
 
 
 ## 设置选中颜色
 func set_selected_bg_color() -> void:
 	bg_color.color = WItem.SELECTED_BG_COLOR
+	level_color.color = _def_bg_color
 
 
 ## 适配容器大小，并缩放纹理

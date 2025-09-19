@@ -55,6 +55,8 @@ func _ready() -> void:
 	initialize()
 	# 订阅事件
 	EventManager.subscribe(UIEvent.SUB_ITEM, _on_sub_item)
+	# 测试
+	grid_mode = GridDisplayMode.BACKPACK
 
 
 func _exit_tree() -> void:
@@ -113,38 +115,42 @@ func _on_sub_item() -> void:
 	var item_data: WItemData = GlobalData.previous_cell_matrix.get_grid_map_item(cell_pos)
 	var item: WItem = item_data.link_item
 	var succ: bool = false
+	var extra_args: Dictionary = {
+		"item_level": item.item_level,
+		"growth": item.growth,
+	}
 	# 背包和工具的物品之间进行分割
 	if grid_mode == GridDisplayMode.BACKPACK:
 		if GlobalData.previous_cell_matrix.name == "QuickTools":
 			# 快捷栏物品分隔到背包
-			succ = _backpack.add_item_with_merge(item.id)
+			succ = _backpack.add_item_with_merge(item.id, 1, extra_args)
 			if succ:
 				_quick_tools.sub_item_at(cell_pos)
 			else:
-				print("add_item_with_merge failed")
+				push_warning("add_item_with_merge failed")
 		else:
 			# 背包物品分割到快捷栏
-			succ = _quick_tools.add_item_with_merge(item.id)
+			succ = _quick_tools.add_item_with_merge(item.id, 1, extra_args)
 			if succ:
 				_backpack.sub_item_at(cell_pos)
 			else:
-				print("add_item_with_merge failed")
+				push_warning("add_item_with_merge failed")
 	# 背包和仓库的物品之间进行分割
 	elif grid_mode == GridDisplayMode.INVENTORY:
 		if GlobalData.previous_cell_matrix.name == "Packback":
 			# 背包物品分割到仓库
-			succ = _inventory.add_item_with_merge(item.id)
+			succ = _inventory.add_item_with_merge(item.id, 1, extra_args)
 			if succ:
 				_backpack.sub_item_at(cell_pos)
 			else:
-				print("add_item_with_merge failed")
+				push_warning("add_item_with_merge failed")
 		else:
 			# 仓库物品分割到背包
-			succ = _backpack.add_item_with_merge(item.id)
+			succ = _backpack.add_item_with_merge(item.id, 1, extra_args)
 			if succ:
 				_inventory.sub_item_at(cell_pos)
 			else:
-				print("add_item_with_merge failed")
+				push_warning("add_item_with_merge failed")
 
 
 #region 网格容器操作方法
@@ -199,6 +205,11 @@ func _on_grow_option_item_selected(index: int) -> void:
 		_item_grow = 100.0
 	else:
 		_item_grow = 0.0
+
+
+## enter提交命令
+func submit_command() -> void:
+	_on_btn_add_pressed()
 
 
 ## 提交命令行代码

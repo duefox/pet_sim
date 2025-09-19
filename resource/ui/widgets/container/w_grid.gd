@@ -6,7 +6,7 @@ var cell_pos: Vector2
 ## 格子所属的MultiGridContainer(引用)
 var parent_cell_matrix: MultiGridContainer
 ## 每隔多久扣除一个
-var _sub_interval: float = 0.2 
+var _sub_interval: float = 0.2
 
 
 func _ready() -> void:

@@ -53,8 +53,6 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_08evb"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u4twp"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3oksy"]
@@ -70,6 +68,8 @@ corner_detail = 1
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0clue"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qqo7q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3nbbr"]
 
 [node name="TaskBar" type="Control"]
 custom_minimum_size = Vector2(282, 415)
@@ -197,7 +197,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_08evb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_08evb")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_u4twp")
 text = "任务1"
 alignment = 0
 script = ExtResource("6_08evb")
@@ -210,7 +210,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_08evb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_u4twp")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3oksy")
 text = "任务1"
 alignment = 0
 script = ExtResource("6_08evb")
@@ -223,7 +223,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_08evb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_3oksy")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4o3q1")
 text = "任务1"
 alignment = 0
 script = ExtResource("6_08evb")
@@ -236,7 +236,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_08evb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_4o3q1")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4cxdb")
 text = "任务1"
 alignment = 0
 script = ExtResource("6_08evb")
@@ -249,7 +249,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_08evb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_4cxdb")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_xd0gr")
 text = "任务1"
 alignment = 0
 script = ExtResource("6_08evb")
@@ -262,7 +262,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_08evb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_xd0gr")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_6ykf3")
 text = "任务1"
 alignment = 0
 script = ExtResource("6_08evb")
@@ -275,7 +275,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_08evb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_6ykf3")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0clue")
 text = "任务1"
 alignment = 0
 script = ExtResource("6_08evb")
@@ -288,7 +288,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_08evb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_0clue")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qqo7q")
 text = "任务1"
 alignment = 0
 script = ExtResource("6_08evb")
@@ -301,7 +301,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/hover = SubResource("StyleBoxFlat_08evb")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_08evb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_qqo7q")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3nbbr")
 text = "任务1"
 alignment = 0
 script = ExtResource("6_08evb")

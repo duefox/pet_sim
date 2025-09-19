@@ -26,6 +26,14 @@ func _ready() -> void:
 	_init_held_item()
 	# 订阅事件
 	EventManager.subscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
+	## 连接鼠标操作相关的信号
+	if not InputManager.mouse_left_released.is_connected(on_mouse_left_released):
+		InputManager.mouse_left_released.connect(on_mouse_left_released)
+	if not InputManager.mouse_right_released.is_connected(on_mouse_right_released):
+		InputManager.mouse_right_released.connect(on_mouse_right_released)
+	# 旋转物品
+	if not InputManager.rotation_item_pressed.is_connected(on_rotation_item_pressed):
+		InputManager.rotation_item_pressed.connect(on_rotation_item_pressed)
 
 
 ## 退出处理订阅事件
@@ -37,7 +45,7 @@ func initialize(my_state_machine: UIStateMachine) -> void:
 	super(my_state_machine)
 	## 二级状态机初始化
 	bar_state_machine.initialize(state_machine)
-	## 订阅多格容器的整理事件
+	## 订阅多格容器的整理信号
 	bar_state_machine.sort_backpack.connect(_on_sort_backpack)
 	bar_state_machine.sort_inventory.connect(_on_sort_inventory)
 	## 获得仓库的容器
@@ -93,8 +101,8 @@ func placement_overlay_process() -> void:
 			var item: WItem = item_data.link_item
 			#先判断是不是可堆叠的物品
 			var temp_bool: bool = item.stackable and held_item.stackable == item.stackable
-			#抓取物品和目标物品id一致且都可堆叠并且没有达到最大堆叠数量，将放置提示设置为绿色
-			if item.id == held_item.id and temp_bool and item.num < item.max_stack_size:
+			#抓取物品和目标物品id一致且都可堆叠,没有达到最大堆叠数量并且物品的级别一致，将放置提示设置为绿色
+			if item.id == held_item.id and temp_bool and item.num < item.max_stack_size and item.item_level == held_item.item_level:
 				color_type = MultiGridContainer.TYPE_COLOR.SUCCESS
 		else:
 			#如果格子是空的，则对 映射表 按照 首部坐标 和 物品的宽高 所形成的矩形进行范围内扫描
@@ -108,8 +116,39 @@ func placement_overlay_process() -> void:
 	#获取UI节点下的第一层子节点，遍历它们
 	for child in get_children():
 		#将与目标不一致的inventory节点的放置提示框设置为不可见
-		if child != MouseEvent.mouse_cell_matrix && child is MultiGridContainer:
+		if child != MouseEvent.mouse_cell_matrix and child is MultiGridContainer:
 			child.off_placement_overlay()
+
+
+## 旋转物品
+func on_rotation_item_pressed() -> void:
+	# 正在抓取物品时，按下键盘R键，进行旋转物品的操作
+	held_item.rotation_item()
+	set_held_item_position(MouseEvent.mouse_position)
+	# 按下R键后更新放置提示框
+	placement_overlay_process()
+
+
+## 释放鼠标左键
+func on_mouse_left_released() -> void:
+	# 重置鼠标按下状态
+	MouseEvent.is_mouse_down = false
+	# 关闭放置提示框
+	MouseEvent.mouse_cell_matrix.off_placement_overlay()
+	# 鼠标松开时，若状态为"默认"则直接返回，不执行后续操作
+	if !MouseEvent.is_mouse_drag():
+		hide_held_item()
+		return
+	MouseEvent.mouse_state = MouseEvent.CONTROLS_TYPE.DEF
+	# 处理放置物品
+	_handle_drop_item()
+
+
+## 释放鼠标右键
+func on_mouse_right_released() -> void:
+	MouseEvent.is_mouse_right_down = false
+	# 关闭放置提示框
+	MouseEvent.mouse_cell_matrix.off_placement_overlay()
 
 
 ## 鼠标移动事件
@@ -120,7 +159,6 @@ func _on_gui_input(event: InputEvent) -> void:
 		if MouseEvent.is_mouse_down and MouseEvent.is_mouse_drag():
 			#将抓取物品的中心点与鼠标进行跟随(显示层)
 			set_held_item_position(event.position)
-			#set_held_item_position(event.global_position)
 			#当鼠标所点击的地方是不是无物品的时候执行
 			if MouseEvent.mouse_is_effective:
 				#设置抓取物品的可视为真
@@ -135,18 +173,18 @@ func _on_gui_input(event: InputEvent) -> void:
 
 
 ## 处理其他输入事件
-func _input(event: InputEvent) -> void:
+func _input2(event: InputEvent) -> void:
 	# 处理键盘按键输入
-	if event is InputEventKey && MouseEvent.is_mouse_drag():
+	if event is InputEventKey and MouseEvent.is_mouse_drag():
 		# 正在抓取物品时，按下键盘R键，进行旋转物品的操作
-		#if event.pressed && event.keycode == 82:
+		#if event.pressed and event.keycode == 82:
 		if event.is_action_pressed("keyboard_r"):
 			held_item.rotation_item()
 			set_held_item_position(MouseEvent.mouse_position)
 			# 按下R键后更新放置提示框
 			placement_overlay_process()
 	# 当鼠标左键松开时，取消抓取状态，放下抓取物品
-	#elif event is InputEventMouseButton && !event.is_pressed() && event.button_index == MOUSE_BUTTON_LEFT:
+	#elif event is InputEventMouseButton and !event.is_pressed() and event.button_index == MOUSE_BUTTON_LEFT:
 	elif Input.is_action_just_released("mouse_left"):
 		# 重置鼠标按下状态
 		MouseEvent.is_mouse_down = false
@@ -177,13 +215,13 @@ func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 	# 获取鼠标所在的格子容器内的单个格子映射表数据
 	var mouse_item_data: WItemData = mouse_cell_matrix.get_grid_map_item(mouse_cell_pos)
 	# 物品堆叠判定
-	if cur_item != null && mouse_item_data.link_item is WItem:
+	if cur_item != null and mouse_item_data.link_item is WItem:
 		var item: WItem = mouse_item_data.link_item
 		# 上一个物品不能等于鼠标当前进入格子内的物品
 		if !cur_item == item:
-			var bool_value: bool = item.stackable && cur_item.stackable == item.stackable
+			var bool_value: bool = item.stackable and cur_item.stackable == item.stackable
 			# 物品堆叠处理
-			if cur_item.id == item.id && bool_value:
+			if cur_item.id == item.id and bool_value and cur_item.item_level == item.item_level:
 				# 调用 add_num 函数并获取剩余物品数量
 				var remaining_items: int = item.add_num(cur_item.num)
 				if remaining_items == 0:
@@ -202,8 +240,13 @@ func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 	# 计算放置时的首部坐标偏移，得到置入坐标
 	var first_cell_pos: Vector2 = mouse_cell_matrix.get_first_cell_pos_offset(held_item, mouse_cell_pos)
 
+	# 假如有附加额外属性
+	var extra_args: Dictionary = {}
+	if not (held_item.item_level == 0 or held_item.growth == 0.0):
+		extra_args.set("item_level", held_item.item_level)
+		extra_args.set("growth", held_item.growth)
 	# 鼠标松开时，尝试放置物品
-	if mouse_cell_matrix.add_new_item_in_data(first_cell_pos, held_item.get_data()):
+	if mouse_cell_matrix.add_new_item_in_data(first_cell_pos, held_item.get_data(), extra_args):
 		var item_data: WItemData = mouse_cell_matrix.get_grid_map_item(first_cell_pos)
 		# 放下后矫正该物品的纹理位置和旋转
 		item_data.link_item.set_texture_container_offset_and_rotation()
@@ -227,6 +270,7 @@ func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 
 ## 物品摆放回原位
 func _item_put_back(cur_item: WItem) -> void:
+	print("_item_put_back")
 	#放置失败时，将原物品可见设为真，且将其在映射表中的所在区域设置回"已占用"
 	if cur_item != null:
 		cur_item.visible = true
