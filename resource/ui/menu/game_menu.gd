@@ -53,11 +53,6 @@ func initialize(my_state_machine: UIStateMachine) -> void:
 	backpack = grid_box_bar.get_backpack()
 	quick_tools = grid_box_bar.get_quick_tools()
 
-	### 背包
-	backpack.add_item("1002")
-	backpack.add_item("2001")
-	backpack.add_item_with_merge("3001", 2)
-
 
 ## 设置抓取物品的坐标(中心点模式)
 func set_held_item_position(p: Vector2) -> void:
@@ -142,6 +137,11 @@ func on_mouse_left_released() -> void:
 	MouseEvent.mouse_state = MouseEvent.CONTROLS_TYPE.DEF
 	# 处理放置物品
 	_handle_drop_item()
+	# 发送仓库容器物品变化的信号
+	EventManager.emit_event(UIEvent.ITEMS_CHANGED, {"container": GlobalData.previous_cell_matrix})
+	if not GlobalData.previous_cell_matrix == MouseEvent.mouse_cell_matrix:
+		EventManager.emit_event(UIEvent.ITEMS_CHANGED, {"container": MouseEvent.mouse_cell_matrix})
+	print("_handle_drop_item->form:", GlobalData.previous_cell_matrix, ",to:", MouseEvent.mouse_cell_matrix)
 
 
 ## 释放鼠标右键
@@ -234,7 +234,6 @@ func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 
 ## 物品摆放回原位
 func _item_put_back(cur_item: WItem) -> void:
-	print("_item_put_back")
 	#放置失败时，将原物品可见设为真，且将其在映射表中的所在区域设置回"已占用"
 	if cur_item != null:
 		cur_item.visible = true

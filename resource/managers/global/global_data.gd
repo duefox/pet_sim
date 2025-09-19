@@ -5,7 +5,7 @@ extends Node
 const DEFAULT_RES: Resource = preload("res://data/default.tres")
 
 ## 游戏玩家
-var player
+var player: Player
 
 ## 游戏存档
 var save: SaveSystem = SaveSystem

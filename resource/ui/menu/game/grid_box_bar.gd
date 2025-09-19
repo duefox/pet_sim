@@ -56,6 +56,8 @@ func _ready() -> void:
 	# 订阅事件
 	EventManager.subscribe(UIEvent.SUB_ITEM, _on_sub_item)
 	EventManager.subscribe(UIEvent.BACKPACK_CHANGED, _on_backpack_changed)
+	EventManager.subscribe(UIEvent.INVENTORY_CHANGED, _on_inventory_changed)
+	EventManager.subscribe(UIEvent.QUICK_TOOLS_CHANGED, _on_quick_tools_changed)
 	# 测试
 	grid_mode = GridDisplayMode.BACKPACK
 
@@ -63,6 +65,8 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	EventManager.unsubscribe(UIEvent.SUB_ITEM, _on_sub_item)
 	EventManager.unsubscribe(UIEvent.BACKPACK_CHANGED, _on_backpack_changed)
+	EventManager.unsubscribe(UIEvent.INVENTORY_CHANGED, _on_inventory_changed)
+	EventManager.unsubscribe(UIEvent.QUICK_TOOLS_CHANGED, _on_quick_tools_changed)
 
 
 func initialize() -> void:
@@ -109,8 +113,24 @@ func _setter_grid_mode(value: GridDisplayMode) -> void:
 
 
 ## 背包物品更新
-func _on_backpack_changed(items_data: Array) -> void:
-	pass
+func _on_backpack_changed(data: Dictionary) -> void:
+	# 当收到背包数据变化的事件时，调用UI的更新方法
+	if _backpack:
+		_backpack.update_view(data.get("items_data", []))
+
+
+## 仓库物品更新
+func _on_inventory_changed(data: Dictionary) -> void:
+	# 当收到背包数据变化的事件时，调用UI的更新方法
+	if _inventory:
+		_inventory.update_view(data.get("items_data", []))
+
+
+## 快捷栏物品更新
+func _on_quick_tools_changed(data: Dictionary) -> void:
+	# 当收到背包数据变化的事件时，调用UI的更新方法
+	if _quick_tools:
+		_quick_tools.update_view(data.get("items_data", []))
 
 
 ## 分割物品
@@ -138,6 +158,7 @@ func _on_sub_item() -> void:
 				_quick_tools.sub_item_at(cell_pos)
 			else:
 				push_warning("add_item_with_merge failed")
+			emit_changed_event(_quick_tools, _backpack)
 		else:
 			# 背包物品分割到快捷栏
 			succ = _quick_tools.add_item_with_merge(item.id, 1, extra_args)
@@ -145,6 +166,7 @@ func _on_sub_item() -> void:
 				_backpack.sub_item_at(cell_pos)
 			else:
 				push_warning("add_item_with_merge failed")
+			emit_changed_event(_backpack, _quick_tools)
 	# 背包和仓库的物品之间进行分割
 	elif grid_mode == GridDisplayMode.INVENTORY:
 		if GlobalData.previous_cell_matrix.name == "Packback":
@@ -154,6 +176,7 @@ func _on_sub_item() -> void:
 				_backpack.sub_item_at(cell_pos)
 			else:
 				push_warning("add_item_with_merge failed")
+			emit_changed_event(_backpack, _inventory)
 		else:
 			# 仓库物品分割到背包
 			succ = _backpack.add_item_with_merge(item.id, 1, extra_args)
@@ -161,6 +184,14 @@ func _on_sub_item() -> void:
 				_inventory.sub_item_at(cell_pos)
 			else:
 				push_warning("add_item_with_merge failed")
+			emit_changed_event(_inventory, _backpack)
+
+
+## 发送物品更新信息信号
+func emit_changed_event(from: MultiGridContainer, to: MultiGridContainer) -> void:
+	print("sub_item->form:", from, ",to:", to)
+	EventManager.emit_event(UIEvent.ITEMS_CHANGED, {"container": from})
+	EventManager.emit_event(UIEvent.ITEMS_CHANGED, {"container": to})
 
 
 #region 网格容器操作方法
@@ -226,7 +257,7 @@ func submit_command() -> void:
 func _on_btn_add_pressed() -> void:
 	if not _item_id.length() == 4:
 		print("无效代码，正在打印孤儿节点->")
-		#get_tree().root.print_orphan_nodes()
+		Window.print_orphan_nodes()
 		return
 	_cmd_add_item(_item_id, _item_num, _item_level, _item_grow)
 
@@ -241,4 +272,12 @@ func _cmd_add_item(item_id: String, item_num: int, item_level: int, item_grow: f
 		"item_level": item_level,
 		"growth": item_grow,
 	}
-	_cur_bag.cmd_add_item(item_id, item_num, extra_args)
+	#_cur_bag.cmd_add_item(item_id, item_num, extra_args)
+	if not GlobalData.player:
+		return
+	if _cur_bag == _backpack:
+		GlobalData.player.backpack_comp.add_item(item_id, item_num, extra_args)
+	elif _cur_bag == _inventory:
+		GlobalData.player.inventory_comp.add_item(item_id, item_num, extra_args)
+	elif _cur_bag == _quick_tools:
+		GlobalData.player.quick_tools_comp.add_item(item_id, item_num, extra_args)

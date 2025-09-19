@@ -31,7 +31,7 @@ var cell_size: int = 48  #  容器的格子尺寸
 var grid_size: Vector2  #  多格子容器的大小
 var w_grid_size: Vector2  # 格子的大小
 ## 在容器中的物品
-var items: Array = []
+var items: Array[WItem] = []
 ## 格子映射表, key为格子坐标，value为WItemData
 var grid_map: Dictionary[Vector2, WItemData] = {}
 
@@ -79,13 +79,38 @@ func _input(event: InputEvent) -> void:
 #region 对外公开的方法
 
 
+## 从数据组件接收数据并更新UI
+## @param new_items_data: 最新的物品数据数组
+func update_view(items_data: Array[Dictionary]) -> void:
+	if items_data.is_empty():
+		return
+	# 先清除当前显示的所有物品节点
+	clear_all_items()
+	# 根据新的数据数组，重新创建并渲染所有物品节点
+	for dict: Dictionary in items_data:
+		var head_position: Vector2 = dict.get("head_position", -Vector2.ONE)
+		var item_id: String = dict.get("id", "0")
+		var item_num: int = dict.get("num", 1)
+		var extra_args: Dictionary = dict.get("extra_args", {})
+		if head_position == -Vector2.ONE:
+			# 自动寻找位置添加
+			add_item_with_extra(item_id, item_num, extra_args)
+		else:
+			# 指定位置添加
+			add_new_item_at(head_position, item_id, item_num, extra_args)
+
+	# 数据设置成功后发信号通知数据层
+	print("update_view->in:", self)
+
+
 ## 根据id新建物品并放置到指定坐标的多格子容器中
 ## @param cell_pos: 物品的网格位置
 ## @param item_id: 物品的id
+## @param item_num: 物品的数量
 ## @param extra_args: 物品的额外属性
-func add_new_item_at(cell_pos: Vector2, item_id: String, extra_args: Dictionary = {}) -> bool:
+func add_new_item_at(cell_pos: Vector2, item_id: String, item_num: int = 1, extra_args: Dictionary = {}) -> bool:
 	var item: WItem = _create_item()
-	_set_item_data_at_id(item, item_id, extra_args)
+	_set_item_data_at_id(item, item_id, item_num, extra_args)
 	return _add_item_at(cell_pos, item)
 
 
@@ -122,6 +147,7 @@ func add_item(item_id: String, extra_args: Dictionary = {}) -> bool:
 ## @param extra_args: 物品的额外属性
 func add_item_with_merge(item_id: String, num: int = 1, extra_args: Dictionary = {}) -> bool:
 	var remaining_items: int = num
+	var success: bool = false
 	# 默认是0级别普通物品
 	var new_item_level: int = 0
 	if not extra_args.is_empty() and extra_args.has("item_level"):
@@ -136,10 +162,11 @@ func add_item_with_merge(item_id: String, num: int = 1, extra_args: Dictionary =
 			if item.id == item_id and item.stackable and item.item_level == new_item_level:
 				remaining_items = item.add_num(remaining_items)
 				if remaining_items == 0:
-					return true  # 全部合并成功
+					success = true
 
 	# 步骤2: 如果还有剩余物品，则寻找空位并添加新物品
-	return _add_remaining_item(item_id, remaining_items, extra_args)
+	success = _add_remaining_item(item_id, remaining_items, extra_args)
+	return success
 
 
 ## 命令行添加物品
@@ -211,6 +238,10 @@ func auto_stack_existing_items() -> void:
 			add_item_with_merge(sorted_item.id, sorted_item.num, extra_args)
 		else:
 			add_item(sorted_item.id, extra_args)
+
+	# 6. 数据整理成功后发信号通知数据层
+	print("auto_stack_existing_items->in:", self)
+	EventManager.emit_event(UIEvent.ITEMS_CHANGED, {"container": self})
 
 
 ## 扣除指定id的物品数量
@@ -474,8 +505,10 @@ func _add_item_at(cell_pos: Vector2, item: WItem) -> bool:
 
 
 ## 根据id给WItem设置基础数据
-func _set_item_data_at_id(item: WItem, item_id: String, extra_args: Dictionary = {}) -> void:
-	var data: Variant = GlobalData.find_item_data(item_id)
+func _set_item_data_at_id(item: WItem, item_id: String, item_num: int = 1, extra_args: Dictionary = {}) -> void:
+	var data: Dictionary = GlobalData.find_item_data(item_id)
+	# 更新设置数量
+	data.set("num", item_num)
 	if data:
 		item.set_data(data, extra_args)
 	else:

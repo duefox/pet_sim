@@ -1,6 +1,6 @@
-[gd_resource type="Resource" load_steps=2 format=3]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bcmyoagj5mt83"]
 
-[ext_resource type="Script" path="res://addons/save_system/game_state_data.gd" id="1_hjhdh"]
+[ext_resource type="Script" uid="uid://yyx0jgvjf1tp" path="res://addons/save_system/game_state_data.gd" id="1_hjhdh"]
 
 [resource]
 script = ExtResource("1_hjhdh")

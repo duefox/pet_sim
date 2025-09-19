@@ -1,0 +1,40 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://addons/save_system/game_state_data.gd" id="1_xgiqw"]
+
+[resource]
+script = ExtResource("1_xgiqw")
+metadata = {
+"game_version": "",
+"id": &"1758037083",
+"playtime": 0.0,
+"save_date": "2025-09-20T00:28:10",
+"save_name": &"auto_save_1758037083",
+"timestamp": 1758299290
+}
+nodes_state = Array[Dictionary]([{
+"items": Array[Dictionary]([{
+"extra_args": {
+"growth": 100.0,
+"item_level": 3
+},
+"head_position": Vector2(0, 0),
+"id": "1001",
+"num": 1
+}, {
+"extra_args": {
+"growth": 100.0,
+"item_level": 0
+},
+"head_position": Vector2(2, 0),
+"id": "1001",
+"num": 1
+}]),
+"node_path": NodePath("/root/Main/Player/Components/BackpackComponent")
+}, {
+"items": Array[Dictionary]([]),
+"node_path": NodePath("/root/Main/Player/Components/InventoryComponent")
+}, {
+"items": Array[Dictionary]([]),
+"node_path": NodePath("/root/Main/Player/Components/QuickToolsComponent")
+}])

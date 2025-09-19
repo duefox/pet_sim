@@ -25,7 +25,7 @@ texture = ExtResource("2_1fi2c")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
 texture = ExtResource("1_ld7vg")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8uq2e"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i78eo"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
 texture = ExtResource("12_n80vg")
@@ -34,7 +34,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1r8m"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pytgu"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -47,9 +47,9 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l5v4x"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_km6t3"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i78eo"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_128hq"]
 
 [node name="WBackpack" type="Control"]
 layout_mode = 3
@@ -100,7 +100,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_hxv3c")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
 theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8uq2e")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_i78eo")
 text = "背
 包"
 icon_alignment = 1
@@ -154,10 +154,10 @@ tooltip_text = "快速整理堆叠
 快捷键 [b][color=white]R[/color][/b] 
 多次点击按物品ID和单价切换排序"
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/hover = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_l5v4x")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pytgu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pytgu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_pytgu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_km6t3")
 text = "整理"
 script = ExtResource("13_4sgyt")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
@@ -222,10 +222,10 @@ layout_mode = 2
 tooltip_text = "清空垃圾箱
 快捷键 [b][color=white]SHIFT + C[/color][/b] "
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/hover = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_i78eo")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pytgu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pytgu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_pytgu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_128hq")
 text = "清空"
 script = ExtResource("13_4sgyt")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
