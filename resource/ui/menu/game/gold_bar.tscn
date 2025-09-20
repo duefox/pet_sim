@@ -1,8 +1,38 @@
-[gd_scene load_steps=6 format=3 uid="uid://ixsr2gblswwt"]
+[gd_scene load_steps=20 format=3 uid="uid://ixsr2gblswwt"]
 
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_c25m6"]
 [ext_resource type="Script" uid="uid://id3ob5gqg872" path="res://resource/ui/menu/game/gold_bar.gd" id="1_xvxg5"]
 [ext_resource type="Texture2D" uid="uid://d2smuitrlu4qr" path="res://assets/ui/icons/icon1.png" id="2_xvxg5"]
+[ext_resource type="Texture2D" uid="uid://vssvaih5jx2n" path="res://assets/ui/icons/icon3_32x32.png" id="3_gsgvk"]
+[ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="4_ne74b"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ewn37"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o111v"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2b5eb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bn0vi"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yfhyq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uyxkf"]
+atlas = ExtResource("3_gsgvk")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xptyc"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h3vi6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_00atj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w6fsa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j5d24"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_llwph"]
+atlas = ExtResource("3_gsgvk")
+region = Rect2(64, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7so0y"]
 atlas = ExtResource("1_c25m6")
@@ -35,30 +65,87 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer2/MarginContainer4"]
+layout_mode = 2
+
+[node name="BtnScale" type="Button" parent="MarginContainer/HBoxContainer2/MarginContainer4/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "恢复缩放度"
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ewn37")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_o111v")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_2b5eb")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_bn0vi")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yfhyq")
+icon = SubResource("AtlasTexture_uyxkf")
+icon_alignment = 1
+script = ExtResource("4_ne74b")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
+
+[node name="ScaleLabel" type="Label" parent="MarginContainer/HBoxContainer2/MarginContainer4/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 20
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 16
+
+[node name="BtnCoords" type="Button" parent="MarginContainer/HBoxContainer2/MarginContainer3"]
+layout_mode = 2
+tooltip_text = "恢复居中对齐"
+theme_override_styles/normal = SubResource("StyleBoxEmpty_xptyc")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_h3vi6")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_00atj")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_w6fsa")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_j5d24")
+icon = SubResource("AtlasTexture_llwph")
+icon_alignment = 1
+script = ExtResource("4_ne74b")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/HBoxContainer2/MarginContainer"]
 custom_minimum_size = Vector2(200, 55)
 layout_mode = 2
 texture = SubResource("AtlasTexture_7so0y")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer2/MarginContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer2/MarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer2/MarginContainer/HBoxContainer/MarginContainer"]
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 2
 texture = SubResource("AtlasTexture_waeny")
 stretch_mode = 3
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer2/MarginContainer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 theme_override_constants/margin_right = 16
 
-[node name="GoldLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2"]
+[node name="GoldLabel" type="Label" parent="MarginContainer/HBoxContainer2/MarginContainer/HBoxContainer/MarginContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(120, 40)
 layout_mode = 2
@@ -73,3 +160,6 @@ theme_override_constants/shadow_outline_size = 5
 theme_override_font_sizes/font_size = 34
 text = "123456789"
 horizontal_alignment = 1
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer2/MarginContainer4/HBoxContainer/BtnScale" to="." method="_on_btn_scale_pressed"]
+[connection signal="pressed" from="MarginContainer/HBoxContainer2/MarginContainer3/BtnCoords" to="." method="_on_btn_coords_pressed"]

@@ -46,10 +46,18 @@ func add_item(item_id: String, item_num: int, extra_args: Dictionary = {}) -> bo
 		added_successfully = true
 
 	# 当数据发生变化时，通过事件总线通知所有订阅者
-	emit_event(items_data)
+	emit_changed_event(items_data)
 
 	# 如果所有物品都成功添加或堆叠，则返回true
 	return added_successfully or item_num == 0
+
+
+## 清空组件数据
+func clear_all_data() -> void:
+	print("clear_all_data")
+	items_data.clear()
+	# 数据清空完毕后，也需要发出事件，让UI更新
+	emit_changed_event(items_data)
 
 
 ## 用于存档的序列化方法
@@ -65,7 +73,7 @@ func load_data(data: Dictionary) -> void:
 	#print("已加载存档...")
 	items_data = data.get("items", [])
 	# 数据加载完毕后，也需要发出事件，让UI更新
-	emit_event(items_data)
+	emit_changed_event(items_data)
 
 
 ## 更新数据
@@ -81,7 +89,7 @@ func update_items_data(items: Array[WItem]) -> void:
 
 ## 当数据发生变化时，通过事件总线通知所有订阅者
 ## 虚函数，具体实现见子类
-func emit_event(_data: Array[Dictionary]) -> void:
+func emit_changed_event(_data: Array[Dictionary]) -> void:
 	pass
 
 

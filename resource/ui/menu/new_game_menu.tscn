@@ -43,3 +43,5 @@ theme_override_constants/margin_bottom = 8
 
 [node name="status_label" type="Label" parent="StatusMargin"]
 layout_mode = 2
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]

@@ -7,6 +7,8 @@ class_name WButtonSkip
 
 signal long_press_over
 
+# 过滤器值，组件只有在激活时才会处理输入
+var _is_active: bool = false
 var _show_progress: bool = false
 var _skip_pressed_time: float = 1.0
 
@@ -17,7 +19,19 @@ func _ready() -> void:
 	timer.timeout.connect(_on_timer_timeout)
 
 
+# 切换激活状态的公共方法
+func set_active(value: bool) -> void:
+	_is_active = value
+	# 如果不激活，则停止计时器并隐藏进度条
+	if not _is_active:
+		_on_btn_skip_button_up()
+
+
 func _process(_delta: float) -> void:
+	# 首先检查过滤器值，如果不激活则直接返回
+	if not _is_active:
+		return
+
 	if _show_progress:
 		var left_time: float = timer.time_left
 		skip_progress.value = (_skip_pressed_time - left_time) / _skip_pressed_time * 100
@@ -40,21 +54,17 @@ func _process(_delta: float) -> void:
 
 func _on_timer_timeout() -> void:
 	_on_btn_skip_button_up()
-	timer.timeout.disconnect(_on_timer_timeout)
-	#print("长按已触发！")
+	print("长按信号已触发")
 	long_press_over.emit()
 
 
 func _on_btn_skip_button_down() -> void:
-	#print("_on_btn_skip_button_down")
-	timer.start()
-	skip_progress.value = 0.0
 	_show_progress = true
-	skip_progress.visible = true
+	skip_progress.visible = _show_progress
+	timer.start()
 
 
 func _on_btn_skip_button_up() -> void:
-	timer.stop()
-	skip_progress.value = 100.0
 	_show_progress = false
 	skip_progress.visible = _show_progress
+	timer.stop()

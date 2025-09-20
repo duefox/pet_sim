@@ -3,6 +3,9 @@ extends BaseMenu
 class_name GameMenu
 
 @onready var grid_box_bar: GridBoxBar = %GridBoxBar
+@onready var gold_bar: GoldBar = %GoldBar
+@onready var game_world: GameWorld = %GameWorld
+
 ## 游戏主场景的二级状态机
 @onready var bar_state_machine: BarStateMachine = %BarStateMachine
 
@@ -34,6 +37,10 @@ func _ready() -> void:
 	# 旋转物品
 	if not InputManager.rotation_item_pressed.is_connected(on_rotation_item_pressed):
 		InputManager.rotation_item_pressed.connect(on_rotation_item_pressed)
+
+	# 二级菜单信号事件
+	gold_bar.reset_world_scale.connect(_on_reset_world_scale)
+	gold_bar.reset_world_coords.connect(_on_reset_world_coords)
 
 
 ## 退出处理订阅事件
@@ -275,4 +282,13 @@ func _on_sort_inventory() -> void:
 ## 物品栏满了或者自动摆放不下了
 func _on_inventory_full(container: MultiGridContainer) -> void:
 	print(container, " is full")
-	pass
+
+
+## 重置世界缩放
+func _on_reset_world_scale() -> void:
+	game_world.reset_scale()
+
+
+## 重置世界坐标
+func _on_reset_world_coords() -> void:
+	game_world.reset_coords()

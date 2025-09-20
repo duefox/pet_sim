@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://edyetri7sblk"]
+[gd_scene load_steps=14 format=3 uid="uid://edyetri7sblk"]
 
 [ext_resource type="PackedScene" uid="uid://ixsr2gblswwt" path="res://resource/ui/menu/game/gold_bar.tscn" id="1_atan1"]
 [ext_resource type="Script" uid="uid://xamfug8ggsyt" path="res://resource/ui/menu/game_menu.gd" id="1_hlcy5"]
 [ext_resource type="PackedScene" uid="uid://dd0inoc7map8p" path="res://resource/ui/widgets/container/w_item.tscn" id="2_hlcy5"]
+[ext_resource type="PackedScene" uid="uid://cs0mvhvoy7vje" path="res://resource/ui/menu/game/game_world.tscn" id="3_nl43a"]
 [ext_resource type="PackedScene" uid="uid://bisaxuna7ri5q" path="res://resource/ui/menu/game/info_bar.tscn" id="3_wuobc"]
 [ext_resource type="PackedScene" uid="uid://ca4yfgr8p3gi" path="res://resource/ui/menu/game/navigation_bar.tscn" id="6_hlcy5"]
 [ext_resource type="PackedScene" uid="uid://dxacgbdobqbph" path="res://resource/ui/menu/game/grid_box_bar.tscn" id="6_jgqhp"]
@@ -22,6 +23,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hlcy5")
 held_scene = ExtResource("2_hlcy5")
+
+[node name="GameWorld" parent="." instance=ExtResource("3_nl43a")]
+unique_name_in_owner = true
+layout_mode = 1
 
 [node name="GoldBar" parent="." instance=ExtResource("1_atan1")]
 unique_name_in_owner = true

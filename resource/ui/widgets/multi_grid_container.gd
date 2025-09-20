@@ -83,6 +83,7 @@ func _input(event: InputEvent) -> void:
 ## @param new_items_data: 最新的物品数据数组
 func update_view(items_data: Array[Dictionary]) -> void:
 	#print(self, ",items_data:", items_data)
+	#print("--------------------------------------")
 	# 先清除当前显示的所有物品节点
 	clear_all_items()
 	# 数据为空不继续处理数据

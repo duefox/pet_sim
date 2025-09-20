@@ -1,19 +1,35 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ctr3bfyn8kbwj"]
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://d35t23anhjn4s"]
 
-[ext_resource type="Script" uid="uid://yyx0jgvjf1tp" path="res://addons/save_system/game_state_data.gd" id="1_83fsq"]
+[ext_resource type="Script" uid="uid://yyx0jgvjf1tp" path="res://addons/save_system/game_state_data.gd" id="1_o6msh"]
 
 [resource]
-script = ExtResource("1_83fsq")
+script = ExtResource("1_o6msh")
 metadata = {
 "game_version": "",
-"id": &"1758037083",
+"id": &"1758358877",
 "playtime": 0.0,
-"save_date": "2025-09-20T11:56:52",
-"save_name": &"save_1758037060",
-"timestamp": 1758340612
+"save_date": "2025-09-20T17:01:17",
+"save_name": &"save_1758358877",
+"timestamp": 1758358877
 }
 nodes_state = Array[Dictionary]([{
 "items": Array[Dictionary]([{
+"extra_args": {
+"growth": 100.0,
+"item_level": 3
+},
+"head_position": Vector2(0, 0),
+"id": "1002",
+"num": 1
+}, {
+"extra_args": {
+"growth": 100.0,
+"item_level": 3
+},
+"head_position": Vector2(2, 0),
+"id": "1001",
+"num": 1
+}, {
 "extra_args": {
 "growth": 100.0,
 "item_level": 2
@@ -23,26 +39,10 @@ nodes_state = Array[Dictionary]([{
 "num": 1
 }, {
 "extra_args": {
-"growth": 100.0,
-"item_level": 3
-},
-"head_position": Vector2(6, 0),
-"id": "1001",
-"num": 1
-}, {
-"extra_args": {
-"growth": 100.0,
-"item_level": 3
-},
-"head_position": Vector2(8, 0),
-"id": "1002",
-"num": 1
-}, {
-"extra_args": {
 "growth": 0.0,
 "item_level": 3
 },
-"head_position": Vector2(10, 0),
+"head_position": Vector2(6, 0),
 "id": "3001",
 "num": 9
 }, {
@@ -50,7 +50,7 @@ nodes_state = Array[Dictionary]([{
 "growth": 0.0,
 "item_level": 1
 },
-"head_position": Vector2(11, 0),
+"head_position": Vector2(7, 0),
 "id": "3001",
 "num": 6
 }, {
@@ -58,7 +58,7 @@ nodes_state = Array[Dictionary]([{
 "growth": 0.0,
 "item_level": 0
 },
-"head_position": Vector2(8, 1),
+"head_position": Vector2(8, 0),
 "id": "3001",
 "num": 3
 }]),

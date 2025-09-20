@@ -39,11 +39,11 @@ texture_margin_bottom = 30.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vbwg1"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_apu4e"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n82jd"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nml8l"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_apu4e"]
 
 [node name="SaveLoadMenu" type="Control"]
 layout_mode = 3
@@ -162,41 +162,6 @@ text = "返  回"
 script = ExtResource("12_7f2r4")
 metadata/_custom_type_script = "uid://drmhc3abbe7ht"
 
-[node name="LoadMargin" type="MarginContainer" parent="BottomMargin/HBoxContainer"]
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_right = 20
-
-[node name="BtnLoad" type="Button" parent="BottomMargin/HBoxContainer/LoadMargin"]
-custom_minimum_size = Vector2(132, 0)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_n82jd")
-text = "加载"
-script = ExtResource("12_7f2r4")
-metadata/_custom_type_script = "uid://drmhc3abbe7ht"
-
-[node name="SaveMargin" type="MarginContainer" parent="BottomMargin/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_right = 20
-
-[node name="BtnSave" type="Button" parent="BottomMargin/HBoxContainer/SaveMargin"]
-custom_minimum_size = Vector2(132, 0)
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
-theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
-theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_nml8l")
-text = "保存"
-script = ExtResource("12_7f2r4")
-metadata/_custom_type_script = "uid://drmhc3abbe7ht"
-
 [node name="HomeMargin" type="MarginContainer" parent="BottomMargin/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
@@ -217,7 +182,44 @@ text = "主菜单"
 script = ExtResource("12_7f2r4")
 metadata/_custom_type_script = "uid://drmhc3abbe7ht"
 
+[node name="LoadMargin" type="MarginContainer" parent="BottomMargin/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="BtnLoad" type="Button" parent="BottomMargin/HBoxContainer/LoadMargin"]
+custom_minimum_size = Vector2(132, 0)
+layout_mode = 2
+tooltip_text = "快捷键 [b][color=white]L[/color][/b] "
+theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_n82jd")
+text = "加载"
+script = ExtResource("12_7f2r4")
+metadata/_custom_type_script = "uid://drmhc3abbe7ht"
+
+[node name="SaveMargin" type="MarginContainer" parent="BottomMargin/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_right = 20
+
+[node name="BtnSave" type="Button" parent="BottomMargin/HBoxContainer/SaveMargin"]
+custom_minimum_size = Vector2(132, 0)
+layout_mode = 2
+tooltip_text = "快捷键 [b][color=white]S[/color][/b] "
+theme_override_styles/normal = SubResource("StyleBoxTexture_0inov")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_i18ci")
+theme_override_styles/hover = SubResource("StyleBoxTexture_qm01m")
+theme_override_styles/disabled = SubResource("StyleBoxTexture_js667")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nml8l")
+text = "保存"
+script = ExtResource("12_7f2r4")
+metadata/_custom_type_script = "uid://drmhc3abbe7ht"
+
 [connection signal="pressed" from="BottomMargin/HBoxContainer/BackMargin/BtnBack" to="." method="_on_btn_back_pressed"]
+[connection signal="pressed" from="BottomMargin/HBoxContainer/HomeMargin/BtnHome" to="." method="_on_btn_home_pressed"]
 [connection signal="pressed" from="BottomMargin/HBoxContainer/LoadMargin/BtnLoad" to="." method="_on_btn_load_pressed"]
 [connection signal="pressed" from="BottomMargin/HBoxContainer/SaveMargin/BtnSave" to="." method="_on_btn_save_pressed"]
-[connection signal="pressed" from="BottomMargin/HBoxContainer/HomeMargin/BtnHome" to="." method="_on_btn_home_pressed"]

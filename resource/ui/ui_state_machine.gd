@@ -167,15 +167,27 @@ func on_new_pressed() -> void:
 
 ## 加载存档信号
 func on_load_pressed() -> void:
+	# 注意这里一定要等1帧，先让子状态机处理完成后才处理父状态机的状态
+	await get_tree().process_frame
 	# 处于游戏菜单状态时，将ESC事件处理权交给子状态机
 	if current_state == State.GAME_MENU:
 		return
-	change_state(State.SAVE_LOAD_MENU)
+	# 加载菜单下继续按下L键则加载默认的存档
+	if current_state == State.SAVE_LOAD_MENU:
+		save_load_menu.load_pressed()
+	else:
+		change_state(State.SAVE_LOAD_MENU)
 
 
 ## 设置信号
 func on_setting_pressed() -> void:
-	change_state(State.SETTINGS)
+	# 注意这里一定要等1帧，先让子状态机处理完成后才处理父状态机的状态
+	await get_tree().process_frame
+	# 加载菜单下继续按下S键则保存选定的存档
+	if current_state == State.SAVE_LOAD_MENU:
+		save_load_menu.save_pressed()
+	else:
+		change_state(State.SETTINGS)
 
 
 ## 确认信号
@@ -186,4 +198,7 @@ func on_enter_pressed() -> void:
 
 ## 退回到主菜单
 func on_quit_pressed() -> void:
+	# 清空数据
+	GlobalData.player.clear_all()
+	# 切换状态
 	change_state(State.MAIN_MENU)

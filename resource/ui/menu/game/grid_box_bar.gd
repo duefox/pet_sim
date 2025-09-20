@@ -59,7 +59,7 @@ func _ready() -> void:
 	EventManager.subscribe(UIEvent.INVENTORY_CHANGED, _on_inventory_changed)
 	EventManager.subscribe(UIEvent.QUICK_TOOLS_CHANGED, _on_quick_tools_changed)
 	# 测试
-	grid_mode = GridDisplayMode.BACKPACK
+	#grid_mode = GridDisplayMode.BACKPACK
 
 
 func _exit_tree() -> void:

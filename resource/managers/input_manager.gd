@@ -43,10 +43,28 @@ signal mouse_left_released
 signal mouse_right_released
 ## 旋转物品，鼠标按下未释放前按住R键
 signal rotation_item_pressed
+## 鼠标滚轮向上，放大
+signal zoom_in_pressed
+## 鼠标滚轮向下，缩小
+signal zoom_out_pressed
+## 拖动信号，传递鼠标相对移动量
+signal pan_dragged(relative_motion: Vector2)
 
 
 ## _input函数是Godot内置的，用于接收所有输入事件
-func _input(_event: InputEvent):
+func _input(event: InputEvent):
+	# 如果是鼠标滚轮向上
+	if event.is_action_pressed("mouse_wheel_up"):
+		zoom_in_pressed.emit()
+	# 如果是鼠标滚轮向下
+	elif event.is_action_pressed("mouse_wheel_down"):
+		zoom_out_pressed.emit()
+	# 如果是鼠标中键按下
+	elif event is InputEventMouseMotion:
+		if Input.is_action_pressed("mouse_middle"):
+			# 发出拖动信号，并传递鼠标的相对移动量
+			pan_dragged.emit(event.relative)
+
 	# 如果是Esc键，发出返回信号
 	if Input.is_action_just_pressed("keyboard_esc"):
 		escape_pressed.emit()

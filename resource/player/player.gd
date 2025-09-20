@@ -26,6 +26,13 @@ func _exit_tree() -> void:
 	EventManager.unsubscribe(UIEvent.ITEMS_CHANGED, _on_items_changed)
 
 
+## 清空所有序列化的数据
+func clear_all() -> void:
+	backpack_comp.clear_all_data()
+	inventory_comp.clear_all_data()
+	quick_tools_comp.clear_all_data()
+
+
 ## 物品容器发生变化
 func _on_items_changed(msg: Dictionary) -> void:
 	if msg.is_empty():

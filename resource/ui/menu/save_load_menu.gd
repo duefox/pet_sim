@@ -19,7 +19,7 @@ func _ready() -> void:
 	SaveSystem.save_loaded.connect(_on_save_loaded)
 	SaveSystem.save_deleted.connect(_on_save_deleted)
 	#  更新存档列表
-	_update_save_list()
+	#_update_save_list()
 
 
 ## 更新存档界面显示
@@ -30,6 +30,19 @@ func update_display() -> void:
 	else:
 		save_margin.visible = false
 		home_margin.visible = false
+
+	#  更新存档列表
+	_update_save_list()
+
+
+## 加载存档
+func load_pressed() -> void:
+	_on_btn_load_pressed()
+
+
+## 保存存档
+func save_pressed() -> void:
+	_on_btn_save_pressed()
 
 
 ## 存档加载回调
@@ -103,7 +116,7 @@ func _on_btn_back_pressed() -> void:
 
 ## 返回主菜单
 func _on_btn_home_pressed() -> void:
-	state_machine.change_state(state_machine.State.MAIN_MENU)
+	state_machine.on_quit_pressed()
 
 
 ## 加载存档

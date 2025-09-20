@@ -4,6 +4,8 @@ class_name BarStateMachine
 @onready var bg_color: ColorRect = %BGColor
 ## 金币栏
 @onready var gold_bar: Control = %GoldBar
+## 游戏的房间世界格子地图
+@onready var game_world: GameWorld = %GameWorld
 ## 使用@onready获取所有二级菜单节点的引用
 #region 所有二级菜单节点的引用
 ## 当天信息栏
@@ -29,12 +31,6 @@ enum State {
 	PROFILE,  # 默认布局+半透明背景之上显示用户资料栏
 	MAP,  # 仅显示当天信息栏，金币栏，户外探索地图
 }
-
-#TASK,  # 默认布局+侧边显示任务栏
-#BACKPACK,  # 显示导航栏，当天信息栏，金币栏，容器栏的背包界面栏
-#INVENTORY,  # 显示导航栏，当天信息栏，金币栏，容器栏的仓库界面栏
-#VISITOR,  # 默认布局+视觉相机移动到大厅的前台
-#LAYOUT,  #默认布局+建造布局栏
 
 #region 信号
 ## 整理背包
@@ -132,6 +128,7 @@ func hide_all() -> void:
 func _state_default() -> void:
 	bg_color.visible = false
 	gold_bar.visible = true
+	game_world.visible = true
 	info_bar.visible = true
 	navigation_bar.visible = true
 	profile_bar.visible = false
@@ -180,7 +177,7 @@ func _handle_layout() -> void:
 
 
 #region 状态处理
-## 默认是返回上一状态
+## 默认是返回上一状态 ESC
 func on_escape_pressed() -> void:
 	# 检查是否处于父状态机的游戏菜单状态
 	if not _is_in_game_state():
@@ -188,6 +185,16 @@ func on_escape_pressed() -> void:
 	print("子状态机 on_escape_pressed->current_state:", current_state, ",previous_state:", previous_state)
 	# 如果子状态机处于默认状态，说明已经没有二级菜单打开
 	if current_state == State.DEFAULT:
+		# 退出背包，仓库，任务栏，布局栏
+		if not grid_box_bar.grid_mode == GridBoxBar.GridDisplayMode.DEFAULT:
+			grid_box_bar.grid_mode = GridBoxBar.GridDisplayMode.DEFAULT
+			return
+		if task_bar.is_expand:
+			task_bar.is_expand = false
+			return
+		if layout_bar.builds_visible:
+			layout_bar.builds_visible = false
+			return
 		# 通知父状态机切换到加载存档菜单
 		parent_state_machine.change_state(parent_state_machine.State.SAVE_LOAD_MENU)
 		return
@@ -196,7 +203,7 @@ func on_escape_pressed() -> void:
 	recover_state()
 
 
-## 查看日志信号
+## 查看日志信号 J
 func on_journal_pressed() -> void:
 	if not _is_in_game_state():
 		return
@@ -207,7 +214,7 @@ func on_journal_pressed() -> void:
 		change_state(State.PROFILE)
 
 
-## 户外探索地图信号
+## 户外探索地图信号 M
 func on_map_pressed() -> void:
 	if not _is_in_game_state():
 		return
@@ -221,27 +228,27 @@ func on_map_pressed() -> void:
 #endregion
 
 
-## 查看任务信号
+## 查看任务信号 T
 func on_task_pressed() -> void:
 	if not _is_in_default_state():
 		return
 	task_bar.open_task()
 
 
-## 下一天信号
+## 下一天信号 N
 func on_new_pressed() -> void:
 	if not _is_in_default_state():
 		return
 	print("game,on_new_pressed")
 
 
-## 查看来访者信号
+## 查看来访者信号 V
 func on_visitor_pressed() -> void:
 	if not _is_in_default_state():
 		return
 
 
-## 布局建筑、设备和造景
+## 布局建筑、设备和造景 L
 func on_layout_pressed() -> void:
 	if not _is_in_default_state():
 		return
@@ -249,7 +256,7 @@ func on_layout_pressed() -> void:
 	grid_box_bar.grid_mode = GridBoxBar.GridDisplayMode.DEFAULT
 
 
-## 查看仓库信号
+## 查看仓库信号 C
 func on_inventory_pressed() -> void:
 	if not _is_in_default_state():
 		return
@@ -262,7 +269,7 @@ func on_inventory_pressed() -> void:
 		info_bar.visible = false
 
 
-## 查看背包信号
+## 查看背包信号 B
 func on_backpack_pressed() -> void:
 	if not _is_in_default_state():
 		return
@@ -270,7 +277,7 @@ func on_backpack_pressed() -> void:
 	layout_bar.builds_visible = false
 
 
-## 背包整理信号
+## 背包整理信号 R
 func on_sort_pressed() -> void:
 	if not _is_in_default_state():
 		return
@@ -281,7 +288,7 @@ func on_sort_pressed() -> void:
 	sort_backpack.emit()
 
 
-## 仓库背包整理信号
+## 仓库背包整理信号 SHIFT+R
 func on_sort_inven_pressed() -> void:
 	if not _is_in_default_state():
 		return
@@ -292,7 +299,7 @@ func on_sort_inven_pressed() -> void:
 	sort_inventory.emit()
 
 
-## 确认信号
+## 确认信号 ENTER
 func on_enter_pressed() -> void:
 	if not _is_in_game_state():
 		return
