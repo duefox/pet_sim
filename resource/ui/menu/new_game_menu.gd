@@ -8,12 +8,12 @@ class_name NewGameMenu
 func _ready() -> void:
 	super()
 	w_btn_skip.long_press_over.connect(_on_long_press_over)
-	GlobalData.save.save_created.connect(_on_save_created)
+	SaveSystem.save_created.connect(_on_save_created)
 
 
 func _exit_tree() -> void:
 	w_btn_skip.long_press_over.disconnect(_on_long_press_over)
-	GlobalData.save.save_created.disconnect(_on_save_created)
+	SaveSystem.save_created.disconnect(_on_save_created)
 
 
 func _on_long_press_over() -> void:
@@ -38,5 +38,5 @@ func _create_game() -> void:
 
 
 func _save_game(save_name: String) -> void:
-	var success = await GlobalData.save.create_save(save_name)
+	var success = await SaveSystem.create_save(save_name)
 	status_label.text = "存档创建" + ("成功" if success else "失败")

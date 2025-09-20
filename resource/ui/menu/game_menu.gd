@@ -141,7 +141,7 @@ func on_mouse_left_released() -> void:
 	EventManager.emit_event(UIEvent.ITEMS_CHANGED, {"container": GlobalData.previous_cell_matrix})
 	if not GlobalData.previous_cell_matrix == MouseEvent.mouse_cell_matrix:
 		EventManager.emit_event(UIEvent.ITEMS_CHANGED, {"container": MouseEvent.mouse_cell_matrix})
-	print("_handle_drop_item->form:", GlobalData.previous_cell_matrix, ",to:", MouseEvent.mouse_cell_matrix)
+	#print("_handle_drop_item->form:", GlobalData.previous_cell_matrix, ",to:", MouseEvent.mouse_cell_matrix)
 
 
 ## 释放鼠标右键

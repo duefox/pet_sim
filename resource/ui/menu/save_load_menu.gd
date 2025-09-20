@@ -5,28 +5,36 @@ const SAVE_SLOTS_SCENE: PackedScene = preload("res://resource/ui/widgets/contain
 
 @onready var save_list: VBoxContainer = %SaveList
 @onready var tips_label: Label = $MarginContainer/LabelMargin/TipsLabel
-@onready var btn_home: ButtonMiddle = %BtnHome
+@onready var save_margin: MarginContainer = %SaveMargin
+@onready var home_margin: MarginContainer = %HomeMargin
+
+## 当前的存档名称
+var _save_name: String = ""
+## 当前选中的存档插槽
+var _cur_save_slots: WSaveSlots
 
 
 func _ready() -> void:
 	super()
-	GlobalData.save.save_loaded.connect(_on_save_loaded)
-	GlobalData.save.save_deleted.connect(_on_save_deleted)
+	SaveSystem.save_loaded.connect(_on_save_loaded)
+	SaveSystem.save_deleted.connect(_on_save_deleted)
 	#  更新存档列表
 	_update_save_list()
 
 
 ## 更新存档界面显示
 func update_display() -> void:
-	#print(state_machine.previous_state,",update_display:", state_machine.previous_state == state_machine.State.GAME_MENU)
 	if state_machine.previous_state == state_machine.State.GAME_MENU:
-		btn_home.visible = true
+		save_margin.visible = true
+		home_margin.visible = true
 	else:
-		btn_home.visible = false
+		save_margin.visible = false
+		home_margin.visible = false
 
 
 ## 存档加载回调
 func _on_save_loaded(save_name: String, metadata: Dictionary):
+	print("_on_save_loaded->save_name:", save_name)
 	GlobalData.save_name = save_name
 	GlobalData.save_metadata = metadata
 	state_machine.change_state(state_machine.State.GAME_MENU)
@@ -41,26 +49,35 @@ func _on_save_deleted(save_name: String):
 func _update_save_list():
 	# 清空save_list
 	_clear_save_list()
-	var saves: Array[Dictionary] = await GlobalData.save.get_save_list()
+	var saves: Array[Dictionary] = await SaveSystem.get_save_list()
+	var index: int = 0
 	for save in saves:
 		var save_slots: WSaveSlots = SAVE_SLOTS_SCENE.instantiate()
 		save_list.add_child(save_slots)
-		save_slots.update_info(save.save_name, save.metadata)
+		save_slots.update_info(save.save_name, save.metadata, index)
+		if index == 0:
+			_cur_save_slots = save_slots
+			_cur_save_slots.is_button_pressed = true
+			_save_name = save.save_name
+		index += 1
 		# 监听信号
-		save_slots.load_save.connect(_on_load_save)
+		save_slots.checked_save.connect(_on_checked_save)
 		save_slots.delete_save.connect(_on_delete_save)
 
 
 ## 加载存档
-func _on_load_save(save_name: String) -> void:
-	var success = await GlobalData.save.load_save(save_name)
-	tips_label.text = "存档加载" + ("成功" if success else "失败")
+func _on_checked_save(node: WSaveSlots, save_name: String) -> void:
+	_save_name = save_name
+	if is_instance_valid(_cur_save_slots):
+		_cur_save_slots.is_button_pressed = false
+	_cur_save_slots = node
+	_cur_save_slots.is_button_pressed = true
 
 
 ## 删除存档
 func _on_delete_save(save_name: String) -> void:
 	tips_label.text = "正在删除存档..."
-	var success = GlobalData.save.delete_save(save_name)
+	var success = SaveSystem.delete_save(save_name)
 	tips_label.text = "存档删除" + ("成功" if success else "失败")
 	if success:
 		_update_save_list()
@@ -86,5 +103,25 @@ func _on_btn_back_pressed() -> void:
 
 ## 返回主菜单
 func _on_btn_home_pressed() -> void:
-	print("_on_btn_home_pressed")
 	state_machine.change_state(state_machine.State.MAIN_MENU)
+
+
+## 加载存档
+func _on_btn_load_pressed() -> void:
+	var success = await SaveSystem.load_save(_save_name)
+	tips_label.text = "存档加载" + ("成功" if success else "失败")
+
+
+## 存储存档
+func _on_btn_save_pressed() -> void:
+	# 覆盖存档需要二次确认
+	if GlobalData.is_popup:
+		# 关闭提示
+		GlobalData.close_prompt()
+		return
+	# 弹出提示
+	var success: bool = await GlobalData.prompt("确认覆盖当前游戏吗？")
+	if success:
+		SaveSystem.overwrite_save(_save_name)
+	else:
+		GlobalData.close_prompt()

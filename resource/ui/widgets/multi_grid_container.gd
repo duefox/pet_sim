@@ -82,10 +82,12 @@ func _input(event: InputEvent) -> void:
 ## 从数据组件接收数据并更新UI
 ## @param new_items_data: 最新的物品数据数组
 func update_view(items_data: Array[Dictionary]) -> void:
-	if items_data.is_empty():
-		return
+	#print(self, ",items_data:", items_data)
 	# 先清除当前显示的所有物品节点
 	clear_all_items()
+	# 数据为空不继续处理数据
+	if items_data.is_empty():
+		return
 	# 根据新的数据数组，重新创建并渲染所有物品节点
 	for dict: Dictionary in items_data:
 		var head_position: Vector2 = dict.get("head_position", -Vector2.ONE)
@@ -100,7 +102,8 @@ func update_view(items_data: Array[Dictionary]) -> void:
 			add_new_item_at(head_position, item_id, item_num, extra_args)
 
 	# 数据设置成功后发信号通知数据层
-	print("update_view->in:", self)
+	#print("update_view->in:", self)
+	EventManager.emit_event(UIEvent.ITEMS_CHANGED, {"container": self})
 
 
 ## 根据id新建物品并放置到指定坐标的多格子容器中

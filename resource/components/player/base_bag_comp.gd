@@ -54,9 +54,18 @@ func add_item(item_id: String, item_num: int, extra_args: Dictionary = {}) -> bo
 
 ## 用于存档的序列化方法
 func save() -> Dictionary:
+	#print("正在存档中...")
 	var save_data: Dictionary = {}
 	save_data["items"] = items_data
 	return save_data
+
+
+## 用于读档的反序列化方法
+func load_data(data: Dictionary) -> void:
+	#print("已加载存档...")
+	items_data = data.get("items", [])
+	# 数据加载完毕后，也需要发出事件，让UI更新
+	emit_event(items_data)
 
 
 ## 更新数据
@@ -68,18 +77,6 @@ func update_items_data(items: Array[WItem]) -> void:
 		# 数据字典
 		var item_data_dict = {"id": item.id, "num": item.num, "extra_args": {"item_level": item.item_level, "growth": item.growth}, "head_position": item.head_position}
 		items_data.append(item_data_dict)
-
-	#测试保存
-	# 手动保存即是覆盖自动保存的存档
-	SaveSystem.create_auto_save()
-	# 可增加选择覆盖任意存档，调用overwrite_save
-
-
-## 用于读档的反序列化方法
-func load_save_data(data: Dictionary) -> void:
-	items_data = data.get("items", [])
-	# 数据加载完毕后，也需要发出事件，让UI更新
-	emit_event(items_data)
 
 
 ## 当数据发生变化时，通过事件总线通知所有订阅者

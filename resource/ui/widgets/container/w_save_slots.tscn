@@ -1,9 +1,33 @@
-[gd_scene load_steps=9 format=3 uid="uid://d08dl5730uq5o"]
+[gd_scene load_steps=18 format=3 uid="uid://d08dl5730uq5o"]
 
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="1_21l7p"]
 [ext_resource type="Script" uid="uid://dtuiw7bg3exiq" path="res://resource/ui/widgets/container/w_save_slots.gd" id="1_o2k3p"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="2_o2k3p"]
+[ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="2_wbxf5"]
+[ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="3_n648k"]
 [ext_resource type="Texture2D" uid="uid://tshu5tfikj0l" path="res://assets/ui/svg/close.svg" id="3_wbxf5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wbxf5"]
+atlas = ExtResource("3_n648k")
+region = Rect2(6, 726, 58, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n648k"]
+atlas = ExtResource("3_n648k")
+region = Rect2(76, 726, 58, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eqry8"]
+atlas = ExtResource("3_n648k")
+region = Rect2(76, 726, 58, 58)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n648k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eqry8"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o4q5i"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bbmh2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r2txe"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
 texture = ExtResource("1_21l7p")
@@ -12,7 +36,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g42rj"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pytgu"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -25,28 +49,60 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_21l7p"]
-
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o2k3p"]
 
 [node name="WSaveSlots" type="MarginContainer"]
 custom_minimum_size = Vector2(320, 64)
 script = ExtResource("1_o2k3p")
 
-[node name="BtnLoad" type="Button" parent="."]
+[node name="BGMargin" type="MarginContainer" parent="."]
+layout_mode = 2
+
+[node name="OddBG" type="NinePatchRect" parent="BGMargin"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_wbxf5")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="EvenBG" type="NinePatchRect" parent="BGMargin"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_n648k")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="PressedBG" type="NinePatchRect" parent="BGMargin"]
+visible = false
+modulate = Color(0.5686275, 0.8352941, 0.3254902, 1)
+layout_mode = 2
+texture = SubResource("AtlasTexture_eqry8")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="BtnLoad" type="Button" parent="MarginContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_g42rj")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g42rj")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_g42rj")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_21l7p")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_n648k")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_eqry8")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_o4q5i")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_bbmh2")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_r2txe")
 text = "存档1"
 alignment = 0
-script = ExtResource("2_o2k3p")
-metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+script = ExtResource("2_wbxf5")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
 
-[node name="MarginContainer" type="MarginContainer" parent="BtnLoad"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/BtnLoad"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -59,17 +115,17 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="BtnDelete" type="Button" parent="BtnLoad/MarginContainer"]
+[node name="BtnDelete" type="Button" parent="MarginContainer/BtnLoad/MarginContainer"]
 layout_mode = 2
 tooltip_text = "删除存档"
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_g42rj")
-theme_override_styles/hover = SubResource("StyleBoxFlat_g42rj")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_g42rj")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pytgu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pytgu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_pytgu")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_o2k3p")
 icon = ExtResource("3_wbxf5")
 script = ExtResource("2_o2k3p")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
-[connection signal="pressed" from="BtnLoad" to="." method="_on_btn_load_pressed"]
-[connection signal="pressed" from="BtnLoad/MarginContainer/BtnDelete" to="." method="_on_btn_delete_pressed"]
+[connection signal="pressed" from="MarginContainer/BtnLoad" to="." method="_on_btn_load_pressed"]
+[connection signal="pressed" from="MarginContainer/BtnLoad/MarginContainer/BtnDelete" to="." method="_on_btn_delete_pressed"]

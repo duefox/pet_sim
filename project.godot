@@ -162,4 +162,5 @@ textures/canvas_textures/default_texture_filter=0
 
 defaults/save_directory="res://saves"
 defaults/serialization_format="resource"
-auto_save/enabled=false
+auto_save/interval_seconds=3000.0
+auto_save/max_saves=10

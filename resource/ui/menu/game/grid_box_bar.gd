@@ -189,7 +189,7 @@ func _on_sub_item() -> void:
 
 ## 发送物品更新信息信号
 func emit_changed_event(from: MultiGridContainer, to: MultiGridContainer) -> void:
-	print("sub_item->form:", from, ",to:", to)
+	#print("sub_item->form:", from, ",to:", to)
 	EventManager.emit_event(UIEvent.ITEMS_CHANGED, {"container": from})
 	EventManager.emit_event(UIEvent.ITEMS_CHANGED, {"container": to})
 

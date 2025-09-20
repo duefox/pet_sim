@@ -1,6 +1,6 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://bcmyoagj5mt83"]
+[gd_resource type="Resource" load_steps=2 format=3]
 
-[ext_resource type="Script" uid="uid://yyx0jgvjf1tp" path="res://addons/save_system/game_state_data.gd" id="1_hjhdh"]
+[ext_resource type="Script" path="res://addons/save_system/game_state_data.gd" id="1_hjhdh"]
 
 [resource]
 script = ExtResource("1_hjhdh")
@@ -8,7 +8,81 @@ metadata = {
 "game_version": "",
 "id": &"1758037083",
 "playtime": 0.0,
-"save_date": "2025-09-16T23:38:04",
+"save_date": "2025-09-20T11:36:21",
 "save_name": &"save_1758037083",
-"timestamp": 1758037084
+"timestamp": 1758339381
 }
+nodes_state = Array[Dictionary]([{
+"items": Array[Dictionary]([{
+"extra_args": {
+"growth": 100.0,
+"item_level": 2
+},
+"head_position": Vector2(4, 0),
+"id": "1001",
+"num": 1
+}, {
+"extra_args": {
+"growth": 100.0,
+"item_level": 3
+},
+"head_position": Vector2(6, 0),
+"id": "1001",
+"num": 1
+}, {
+"extra_args": {
+"growth": 100.0,
+"item_level": 3
+},
+"head_position": Vector2(8, 0),
+"id": "1002",
+"num": 1
+}, {
+"extra_args": {
+"growth": 0.0,
+"item_level": 3
+},
+"head_position": Vector2(10, 0),
+"id": "3001",
+"num": 9
+}, {
+"extra_args": {
+"growth": 0.0,
+"item_level": 1
+},
+"head_position": Vector2(11, 0),
+"id": "3001",
+"num": 6
+}, {
+"extra_args": {
+"growth": 0.0,
+"item_level": 0
+},
+"head_position": Vector2(8, 1),
+"id": "3001",
+"num": 3
+}]),
+"node_path": NodePath("/root/Main/Player/Components/BackpackComponent")
+}, {
+"items": Array[Dictionary]([{
+"extra_args": {
+"growth": 100.0,
+"item_level": 1
+},
+"head_position": Vector2(0, 0),
+"id": "1001",
+"num": 1
+}]),
+"node_path": NodePath("/root/Main/Player/Components/InventoryComponent")
+}, {
+"items": Array[Dictionary]([{
+"extra_args": {
+"growth": 100.0,
+"item_level": 0
+},
+"head_position": Vector2(0, 0),
+"id": "1001",
+"num": 1
+}]),
+"node_path": NodePath("/root/Main/Player/Components/QuickToolsComponent")
+}])

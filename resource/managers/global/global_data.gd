@@ -6,9 +6,6 @@ const DEFAULT_RES: Resource = preload("res://data/default.tres")
 
 ## 游戏玩家
 var player: Player
-
-## 游戏存档
-var save: SaveSystem = SaveSystem
 ## 当前使用的存档名称
 var save_name: String
 ## 当前使用存档的元数据
