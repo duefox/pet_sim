@@ -54,6 +54,8 @@ var sale_price: int = 1:
 
 ## 默认背景颜色
 var _def_bg_color: Color = LEVEL_BG_COLOR[0]
+## 透明底色
+var _alpha_bg_color: Color = Color("ffffff00")
 
 
 func _ready() -> void:
@@ -175,7 +177,7 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 	}
 
 	# 动物类型需要根据成长值显示不同的贴图
-	if item_info.item_type == ItemBaseData.ItemType.ANIMAL:
+	if item_info.item_type == BaseItemData.ItemType.ANIMAL:
 		var pet_growth: float = growth
 		if not extra_args.is_empty() and extra_args.has("growth"):
 			pet_growth = extra_args["growth"]
@@ -245,16 +247,25 @@ func add_num(n: int) -> int:
 
 ## 隐藏背景颜色
 func hide_bg_color() -> void:
+	if item_type == BaseItemData.ItemType.TERRIAIN:
+		_def_bg_color = _alpha_bg_color
+	else:
+		_def_bg_color = LEVEL_BG_COLOR[0]
+	#
 	bg_color.color = _def_bg_color
 	level_color.color = _def_bg_color
-	level_panel.modulate=_def_bg_color
+	level_panel.modulate = _def_bg_color
 
 
 ## 显示背景颜色
 func show_bg_color() -> void:
+	if item_type == BaseItemData.ItemType.TERRIAIN:
+		_def_bg_color = _alpha_bg_color
+	else:
+		_def_bg_color = LEVEL_BG_COLOR[0]
 	bg_color.color = _def_bg_color
 	level_color.color = _def_bg_color
-	level_panel.modulate=_def_bg_color
+	level_panel.modulate = _def_bg_color
 
 
 ## 设置选中颜色

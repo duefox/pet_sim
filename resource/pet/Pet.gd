@@ -4,7 +4,6 @@ class_name Pet
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var mating: Node2D = $Mating
 
-
 ##描边着色器效果
 const OUTLINE_SHDER = preload("res://shaders/outer_line.gdshader")
 
@@ -192,9 +191,9 @@ func initialize_pet(assigned_id: int, data: Dictionary, assigned_gender: PetData
 ## 宠物成长动画,切换贴图
 func grow_up() -> void:
 	if life_stage == PetData.LifeStage.JUVENILE:
-		pet_sprite.texture=pet_data.texture
+		pet_sprite.texture = pet_data.texture
 	else:
-		pet_sprite.texture=pet_data.adult_texture
+		pet_sprite.texture = pet_data.adult_texture
 
 
 ## 是否显示交配动画
@@ -350,7 +349,8 @@ func _create_aquatic_coords() -> Vector2:
 	var height = bounds.size.y
 	var start_y = bounds.position.y
 	# 从 PetData 中获取 live_layer
-	var wander_layer: int = (pet_data as FishData).live_layer
+	#print(Utils.get_properties_from_res(pet_data))
+	var wander_layer: int = pet_data.live_layer
 	match wander_layer:
 		FishData.WanderLayer.TOP:
 			y_min = start_y

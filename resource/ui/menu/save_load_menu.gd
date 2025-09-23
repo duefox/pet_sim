@@ -135,6 +135,12 @@ func _on_btn_save_pressed() -> void:
 	# 弹出提示
 	var success: bool = await GlobalData.prompt("确认覆盖当前游戏吗？")
 	if success:
-		SaveSystem.overwrite_save(_save_name)
+		var save_name: String = await SaveSystem.overwrite_save(_save_name)
+		if not save_name.is_empty():
+			tips_label.text = "存档覆盖" + ("成功" if success else "失败")
+			GlobalData.save_name = save_name
+			await get_tree().create_timer(0.1).timeout
+			state_machine.recover_state()
+			tips_label.text = "请选择存档"
 	else:
 		GlobalData.close_prompt()

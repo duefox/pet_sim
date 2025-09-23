@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="TerrainsData" load_steps=3 format=3 uid="uid://cpgj5lorli8ya"]
+
+[ext_resource type="Script" uid="uid://c1dps65gg8ad0" path="res://resource/data/terrains_data.gd" id="1_1k4ci"]
+[ext_resource type="Texture2D" uid="uid://d2e1pegqmd7gs" path="res://assets/textures/builds/bd8.png" id="2_1k4ci"]
+
+[resource]
+script = ExtResource("1_1k4ci")
+generate_weight = 10
+terrain_type = 8
+body_size = 2
+output_desc = "产出碎雷晶、雷晶石等，随等级提升产出更具能量的晶石。"
+id = &"9008"
+item_type = 8
+nickname = "雷鸣峰"
+descrip = "一座位于高空、常年被风暴和雷电笼罩的山峰。"
+texture = ExtResource("2_1k4ci")
+hframes = 1
+width = 5
+height = 5
+can_drag = false
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

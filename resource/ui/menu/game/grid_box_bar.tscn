@@ -24,7 +24,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i1r8m"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_084rm"]
 
 [node name="GridBoxBar" type="Control"]
 layout_mode = 3
@@ -173,7 +173,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_i1r8m")
 theme_override_styles/hover = SubResource("StyleBoxFlat_i1r8m")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_i1r8m")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_084rm")
 text = "添加"
 script = ExtResource("10_5mela")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"

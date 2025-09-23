@@ -1,194 +1,168 @@
-[gd_scene load_steps=30 format=3 uid="uid://ca4yfgr8p3gi"]
+[gd_scene load_steps=15 format=3 uid="uid://ca4yfgr8p3gi"]
 
-[ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_wsgeo"]
 [ext_resource type="Script" uid="uid://c32yvmbjsyuec" path="res://resource/ui/menu/game/navigation_bar.gd" id="1_xq0vp"]
-[ext_resource type="Texture2D" uid="uid://d2smuitrlu4qr" path="res://assets/ui/icons/icon1.png" id="2_xq0vp"]
-[ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="3_qf67f"]
+[ext_resource type="Texture2D" uid="uid://b8qewc5715p8w" path="res://assets/ui/icons/icon_32.png" id="3_kr4y5"]
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="3_s2dyo"]
+[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="5_kr4y5"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jgqhp"]
-atlas = ExtResource("1_wsgeo")
-region = Rect2(753, 234, 225, 64)
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("3_s2dyo")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xq0vp"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qf67f"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n5nyd"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_s2dyo"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kr4y5"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ju00n"]
-atlas = ExtResource("2_xq0vp")
-region = Rect2(256, 0, 64, 64)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4mrxu"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_77by8"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2pqm"]
+atlas = ExtResource("3_kr4y5")
+region = Rect2(128, 64, 32, 32)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lpbpn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n5nyd"]
+atlas = ExtResource("3_kr4y5")
+region = Rect2(224, 32, 32, 32)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_yltgt"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_kr4y5"]
+atlas = ExtResource("3_kr4y5")
+region = Rect2(192, 32, 32, 32)
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eue6h"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h2pqm"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cprv1"]
-atlas = ExtResource("2_xq0vp")
-region = Rect2(192, 0, 64, 64)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jgbs2"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ye31"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fkqjn"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xd726"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mmqwy"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_i8p7q"]
-atlas = ExtResource("2_xq0vp")
-region = Rect2(192, 64, 64, 64)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1b1eg"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q00r5"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6qwrv"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qmtau"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_uiu16"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_id4uk"]
-atlas = ExtResource("2_xq0vp")
-region = Rect2(320, 0, 64, 64)
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2dyo"]
+atlas = ExtResource("3_kr4y5")
+region = Rect2(128, 32, 32, 32)
 
 [node name="NavigationBar" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 0
 script = ExtResource("1_xq0vp")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
-layout_mode = 2
-texture = SubResource("AtlasTexture_jgqhp")
-patch_margin_left = 10
-patch_margin_top = 10
-patch_margin_right = 10
-patch_margin_bottom = 10
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -284.0
+offset_top = -80.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+alignment = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_bottom = 10
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="BtnProfile" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer"]
-custom_minimum_size = Vector2(104, 72)
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 tooltip_text = "查看用户信息
 快捷键 [b][color=white]J[/color][/b] "
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxEmpty_xq0vp")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_qf67f")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_n5nyd")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_s2dyo")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kr4y5")
-text = "Profile"
-icon = SubResource("AtlasTexture_ju00n")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_77by8")
+icon = SubResource("AtlasTexture_h2pqm")
 icon_alignment = 1
-vertical_icon_alignment = 0
 expand_icon = true
-script = ExtResource("3_qf67f")
-metadata/_custom_type_script = "uid://hmattcwq4j3c"
+script = ExtResource("5_kr4y5")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_bottom = 10
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="BtnMap" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer2"]
-custom_minimum_size = Vector2(104, 72)
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 tooltip_text = "打开探索地图
 快捷键 [b][color=white]M[/color][/b] "
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxEmpty_77by8")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_lpbpn")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_yltgt")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_eue6h")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_h2pqm")
-text = "Map"
-icon = SubResource("AtlasTexture_cprv1")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lpbpn")
+icon = SubResource("AtlasTexture_n5nyd")
 icon_alignment = 1
-vertical_icon_alignment = 0
 expand_icon = true
-script = ExtResource("3_qf67f")
-metadata/_custom_type_script = "uid://hmattcwq4j3c"
+script = ExtResource("5_kr4y5")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
 [node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_bottom = 10
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="BtnTask" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer3"]
-custom_minimum_size = Vector2(104, 72)
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 tooltip_text = "查看当前任务
 快捷键 [b][color=white]T[/color][/b]ask"
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxEmpty_jgbs2")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_2ye31")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_fkqjn")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_xd726")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_mmqwy")
-text = "Task"
-icon = SubResource("AtlasTexture_i8p7q")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_yltgt")
+icon = SubResource("AtlasTexture_kr4y5")
 icon_alignment = 1
-vertical_icon_alignment = 0
 expand_icon = true
-script = ExtResource("3_qf67f")
-metadata/_custom_type_script = "uid://hmattcwq4j3c"
+script = ExtResource("5_kr4y5")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
 [node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
 layout_mode = 2
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_bottom = 10
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="BtnVisitor" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer4"]
-custom_minimum_size = Vector2(104, 72)
+custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 tooltip_text = "查看来访者
 快捷键 [b][color=white]V[/color][/b] "
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 22
-theme_override_styles/normal = SubResource("StyleBoxEmpty_1b1eg")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_q00r5")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_6qwrv")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_qmtau")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_uiu16")
-text = "Visitor"
-icon = SubResource("AtlasTexture_id4uk")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_eue6h")
+icon = SubResource("AtlasTexture_s2dyo")
 icon_alignment = 1
-vertical_icon_alignment = 0
 expand_icon = true
-script = ExtResource("3_qf67f")
-metadata/_custom_type_script = "uid://hmattcwq4j3c"
+script = ExtResource("5_kr4y5")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/BtnProfile" to="." method="_on_btn_profile_pressed"]
 [connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer2/BtnMap" to="." method="_on_btn_map_pressed"]

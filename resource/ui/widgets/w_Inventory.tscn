@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d0rx71av14m2k"]
+[gd_scene load_steps=22 format=3 uid="uid://d0rx71av14m2k"]
 
 [ext_resource type="Script" uid="uid://besw2npnjcopg" path="res://resource/ui/widgets/w_inventory.gd" id="1_5lsvp"]
 [ext_resource type="PackedScene" uid="uid://cs2wpwfuk23x3" path="res://resource/ui/widgets/multi_grid_container.tscn" id="1_j0ego"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://chq8lw3dm6ppa" path="res://themes/wood/graphics/expandBtnPressed.png" id="4_05d2a"]
 [ext_resource type="Texture2D" uid="uid://dc2dhq7qhfvec" path="res://themes/wood/graphics/expandBtnNormal.png" id="5_422mk"]
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="6_83ei1"]
+[ext_resource type="Texture2D" uid="uid://b8qewc5715p8w" path="res://assets/ui/icons/icon_32.png" id="6_o714e"]
 [ext_resource type="Script" uid="uid://g0cotbm5t03y" path="res://resource/components/ui/buttons/button_expand.gd" id="6_uvtc5"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="7_dgnhu"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="8_thbo5"]
@@ -23,7 +24,11 @@ texture = ExtResource("3_thbo5")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
 texture = ExtResource("2_hlw07")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dnrxy"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_piks7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_41jff"]
+atlas = ExtResource("6_o714e")
+region = Rect2(64, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_05d2a"]
 atlas = ExtResource("8_thbo5")
@@ -36,7 +41,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1r8m"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4mrxu"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -49,7 +54,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_o714e"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ikxyj"]
 
 [node name="WInventory" type="Control"]
 layout_mode = 3
@@ -97,9 +102,8 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_hxv3c")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
 theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_dnrxy")
-text = "仓
-库"
+theme_override_styles/focus = SubResource("StyleBoxEmpty_piks7")
+icon = SubResource("AtlasTexture_41jff")
 icon_alignment = 1
 script = ExtResource("6_uvtc5")
 metadata/_custom_type_script = "uid://g0cotbm5t03y"
@@ -260,10 +264,10 @@ tooltip_text = "快速整理堆叠
 快捷键 [b][color=white]SHIFT + R[/color][/b] 
 多次点击按物品ID和单价切换排序"
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/hover = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_o714e")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ikxyj")
 text = "整理"
 script = ExtResource("7_dgnhu")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"

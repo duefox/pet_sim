@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="TerrainsData" load_steps=3 format=3 uid="uid://c885y70rkasng"]
+
+[ext_resource type="Script" uid="uid://c1dps65gg8ad0" path="res://resource/data/terrains_data.gd" id="1_1yfws"]
+[ext_resource type="Texture2D" uid="uid://1d5op60h1wgm" path="res://assets/textures/materials.png" id="2_qfabk"]
+
+[resource]
+script = ExtResource("1_1yfws")
+generate_weight = 10
+terrain_type = 10
+id = &"9010"
+item_type = 8
+nickname = "腐质泥土"
+descrip = "腐质泥土"
+texture = ExtResource("2_qfabk")
+hframes = 6
+vframes = 8
+frame = 41
+can_drag = false
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

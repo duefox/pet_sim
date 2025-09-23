@@ -8,7 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://chq8lw3dm6ppa" path="res://themes/wood/graphics/expandBtnPressed.png" id="6_u4twp"]
 [ext_resource type="Texture2D" uid="uid://d05g6gyhk8t6j" path="res://themes/wood/graphics/expandBtnOver.png" id="7_3oksy"]
 [ext_resource type="Texture2D" uid="uid://bsask3iusjohx" path="res://themes/wood/graphics/expandBtnDisabled.png" id="8_4o3q1"]
-[ext_resource type="Texture2D" uid="uid://syyp8krxy8jp" path="res://assets/ui/icons/icon2.png" id="9_4cxdb"]
+[ext_resource type="Texture2D" uid="uid://syyp8krxy8jp" path="res://assets/ui/icons/icon_dir.png" id="9_4cxdb"]
 [ext_resource type="Script" uid="uid://g0cotbm5t03y" path="res://resource/components/ui/buttons/button_expand.gd" id="10_xd0gr"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxv3c"]

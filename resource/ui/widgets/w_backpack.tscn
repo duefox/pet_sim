@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://c07s5fxqsda0i"]
+[gd_scene load_steps=24 format=3 uid="uid://c07s5fxqsda0i"]
 
 [ext_resource type="Script" uid="uid://cjx1t15khjhdn" path="res://resource/ui/widgets/w_backpack.gd" id="1_1fi2c"]
 [ext_resource type="Texture2D" uid="uid://bsask3iusjohx" path="res://themes/wood/graphics/expandBtnDisabled.png" id="1_ld7vg"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dc2dhq7qhfvec" path="res://themes/wood/graphics/expandBtnNormal.png" id="4_8uq2e"]
 [ext_resource type="Script" uid="uid://g0cotbm5t03y" path="res://resource/components/ui/buttons/button_expand.gd" id="5_l5v4x"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="6_i78eo"]
+[ext_resource type="Texture2D" uid="uid://b8qewc5715p8w" path="res://assets/ui/icons/icon_32.png" id="6_pytgu"]
 [ext_resource type="PackedScene" uid="uid://cs2wpwfuk23x3" path="res://resource/ui/widgets/multi_grid_container.tscn" id="7_pytgu"]
 [ext_resource type="Texture2D" uid="uid://bdrvcstpy4jve" path="res://assets/ui/ui_common.png" id="11_l5v4x"]
 [ext_resource type="PackedScene" uid="uid://bxfnhkuptiyi8" path="res://resource/ui/widgets/trash_grid_container.tscn" id="12_i78eo"]
@@ -25,7 +26,11 @@ texture = ExtResource("2_1fi2c")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
 texture = ExtResource("1_ld7vg")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i78eo"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_km6t3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_128hq"]
+atlas = ExtResource("6_pytgu")
+region = Rect2(96, 32, 32, 32)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
 texture = ExtResource("12_n80vg")
@@ -34,7 +39,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pytgu"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4mrxu"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -47,9 +52,9 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_km6t3"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_n80vg"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_128hq"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4sgyt"]
 
 [node name="WBackpack" type="Control"]
 layout_mode = 3
@@ -100,9 +105,8 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_hxv3c")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
 theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_i78eo")
-text = "背
-包"
+theme_override_styles/focus = SubResource("StyleBoxEmpty_km6t3")
+icon = SubResource("AtlasTexture_128hq")
 icon_alignment = 1
 script = ExtResource("5_l5v4x")
 metadata/_custom_type_script = "uid://g0cotbm5t03y"
@@ -154,10 +158,10 @@ tooltip_text = "快速整理堆叠
 快捷键 [b][color=white]R[/color][/b] 
 多次点击按物品ID和单价切换排序"
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pytgu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pytgu")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_pytgu")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_km6t3")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_n80vg")
 text = "整理"
 script = ExtResource("13_4sgyt")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
@@ -222,10 +226,10 @@ layout_mode = 2
 tooltip_text = "清空垃圾箱
 快捷键 [b][color=white]SHIFT + C[/color][/b] "
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_pytgu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_pytgu")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_pytgu")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_128hq")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4sgyt")
 text = "清空"
 script = ExtResource("13_4sgyt")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"

@@ -61,19 +61,34 @@ func _handle_mouse_left() -> void:
 	## 鼠标在物品节点范围内，按下左键，则更改鼠标的状态为抓取物品
 	GlobalData.previous_cell_matrix = parent_cell_matrix
 	var cur_item_data: WItemData = parent_cell_matrix.get_grid_map_item(cell_pos)
+	var cur_item: WItem = cur_item_data.link_item
+	## 判定物品是否可以拖拽
+	if is_instance_valid(cur_item):
+		## 地形物品点击，大型显示详细信息，小型直接拾取
+		if cur_item.item_type == BaseItemData.ItemType.TERRIAIN:
+			if cur_item.item_info.get("body_size", 0) == BaseItemData.BodySize.BIG:
+				print("显示详细信息")
+				pass
+			else:
+				print("直接拾取")
+				pass
+
+		var can_drag: bool = cur_item.get_data().get("item_info").get("can_drag", true)
+		if not can_drag:
+			return
+
 	MouseEvent.is_mouse_down = true
 	MouseEvent.mouse_is_effective = cur_item_data.is_placed
 
 	## 鼠标点击的格子内，如果是"已占用"，才执行下面代码
 	if cur_item_data.is_placed:
 		MouseEvent.mouse_state = MouseEvent.CONTROLS_TYPE.DRAG
-		var cur_item: WItem = cur_item_data.link_item
 		## 将自身的引用传递到上一次点击的物品属性中
 		GlobalData.previous_item = cur_item
 		## 同步抓取物品的旋转状态
 		GlobalData.ui.sync_held_item_rotation(cur_item)
-		## 同步抓取物品的数据
-		GlobalData.ui.set_held_item_data(cur_item.get_data())
+		## 同步抓取物品的数据和来源
+		GlobalData.ui.set_held_item_data(cur_item.get_data(), parent_cell_matrix)
 		## 将抓取物品中心移至鼠标坐标点
 		GlobalData.ui.set_held_item_position(MouseEvent.mouse_position)
 		## 隐藏抓取物品的背景颜色
@@ -93,9 +108,15 @@ func _handle_mouse_right() -> void:
 	# 鼠标在物品节点范围内，按下右键，则开始减少物品数量
 	GlobalData.previous_cell_matrix = parent_cell_matrix
 	var cur_item_data: WItemData = parent_cell_matrix.get_grid_map_item(cell_pos)
+	var cur_item: WItem = cur_item_data.link_item
+	## 判定物品是否可以拖拽，不可拖拽的物品也不能分割
+	if is_instance_valid(cur_item):
+		var can_drag: bool = cur_item.get_data().get("item_info").get("can_drag", true)
+		if not can_drag:
+			return
+
 	# 鼠标点击的格子内，如果是"已占用"，才执行下面代码
 	if cur_item_data.is_placed:
-		var cur_item: WItem = cur_item_data.link_item
 		# 将自身的引用传递到上一次点击的物品属性中
 		GlobalData.previous_item = cur_item
 		MouseEvent.is_mouse_right_down = true

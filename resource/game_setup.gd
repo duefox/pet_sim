@@ -4,7 +4,7 @@ extends Node2D
 @onready var fish_tank: PetContainer = $FishTank
 @onready var ui: CanvasLayer = $UI
 
-@export var init_fish_cout: int = 13
+@export var init_fish_cout: int = 11
 # 存放所有鱼类数据资源的数组
 var all_fish_data: Array
 
@@ -29,10 +29,9 @@ func _process(_delta: float) -> void:
 
 ## 预加载资源文件
 func preload_res() -> void:
-	GlobalData.pet_res = _get_res_to_dic("res://data/pet_data/")
-	GlobalData.drop_res = _get_res_to_dic("res://data/drop_data/")
+	GlobalData.all_res = Utils.get_res_to_dic("res://data/")
 
-	var res_normal: Array = [GlobalData.pet_res, GlobalData.drop_res, ResPaths.SCENE_RES]
+	var res_normal: Array = [GlobalData.all_res, ResPaths.SCENE_RES]
 	# 处理加载资源文件
 	var res: Array = []
 	for res_dic: Dictionary in res_normal:
@@ -43,18 +42,6 @@ func preload_res() -> void:
 	# 加载资源文件
 	for j in res:
 		ResManager.load_resource(j)
-
-
-## 获得目录资源并整理成符合要求的字典数据
-func _get_res_to_dic(path_folder: String) -> Dictionary[StringName,String]:
-	var tmp_dic: Dictionary[StringName,String] = {}
-	var files: PackedStringArray = Utils.get_files(path_folder)
-	if files.is_empty():
-		return {}
-	for file: String in files:
-		var file_name: String = file.split(".")[0]
-		tmp_dic.set(file_name, path_folder + file)
-	return tmp_dic
 
 
 ## 资源加载完成
@@ -76,7 +63,10 @@ func _on_resource_loaded(_path: String, _resource: Resource) -> void:
 
 ## 设置挂载游戏界面到UI节点
 func _init_game_ui() -> void:
+	# 初始化玩家
+	_init_player()
 	print("_init_game_ui")
+	# 初始化UI状态机
 	var ui_scene: PackedScene = ResManager.get_cached_resource(ResPaths.SCENE_RES.main_ui)
 	var ui_state_machine: UIStateMachine = ui_scene.instantiate()
 	ui.add_child(ui_state_machine)
@@ -84,10 +74,17 @@ func _init_game_ui() -> void:
 	ui_state_machine.change_state(ui_state_machine.State.MAIN_MENU)
 
 
+## 初始化玩家
+func _init_player() -> void:
+	var player_scene: PackedScene = ResManager.get_cached_resource(ResPaths.SCENE_RES.player)
+	var player:Player=player_scene.instantiate()
+	add_child(player)
+
+
 ## 预加载资源文件中所有的纹理文件（在item_base_data定义了对应的变量）
 func _preset_all_textures() -> void:
 	# 宠物，掉落物，建筑，造景等资源归一化纹理数据
-	var res_normal: Array = [GlobalData.pet_res, GlobalData.drop_res]
+	var res_normal: Array = [GlobalData.all_res]
 	for res_dic: Dictionary in res_normal:
 		for i: String in res_dic:
 			var res_path: String = res_dic[i]

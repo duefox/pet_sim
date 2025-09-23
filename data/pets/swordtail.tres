@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=5 format=3 uid="uid://qfcdqheia6ta"]
+
+[ext_resource type="Texture2D" uid="uid://dq510ulpbmfks" path="res://assets/textures/aquatic/water/swordtail_adult_96x48.png" id="1_wvslc"]
+[ext_resource type="Resource" uid="uid://c8ulubdxek2xv" path="res://data/drops/fish_egg1.tres" id="2_rdljr"]
+[ext_resource type="Script" uid="uid://c1cfnn80q7lso" path="res://resource/data/fish_data.gd" id="3_tqmcc"]
+[ext_resource type="Texture2D" uid="uid://bby2s6mjdo5it" path="res://assets/textures/aquatic/water/swordtail_48x48.png" id="4_e8ova"]
+
+[resource]
+script = ExtResource("3_tqmcc")
+speed = 50.0
+initial_angle = null
+hunger_decrease_rate = 0.5
+hunger_restore_amount = 20.0
+excretion_interval = 60.0
+mating_timer = 5
+descendant_res = ExtResource("2_rdljr")
+id = &"1002"
+nickname = "西瓜剑尾"
+descrip = "身体翠绿，尾部有红色剑状。"
+base_price = 10.0
+texture = ExtResource("4_e8ova")
+adult_texture = ExtResource("1_wvslc")
+width = 2
+metadata/_custom_type_script = "uid://c1cfnn80q7lso"

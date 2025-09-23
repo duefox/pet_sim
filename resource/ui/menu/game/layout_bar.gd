@@ -10,7 +10,6 @@ var builds_visible: bool = false:
 
 func _ready() -> void:
 	super()
-	btn_layout.set_pressed_no_signal(true)
 
 
 ## 打开布局栏
@@ -22,9 +21,8 @@ func open_layout() -> void:
 func _setter_builds_visible(value: bool) -> void:
 	builds_visible = value
 	builds_margin.visible = builds_visible
-	btn_layout.button_pressed = builds_visible
 
 
 ## 按钮事件
-func _on_btn_layout_toggled(toggled_on: bool) -> void:
-	builds_visible = toggled_on
+func _on_btn_layout_pressed() -> void:
+	state_machine.on_layout_pressed()

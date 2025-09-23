@@ -93,6 +93,12 @@ func emit_changed_event(_data: Array[Dictionary]) -> void:
 	pass
 
 
+## 第一次创建存档的时候默认创建数据
+## 虚函数，具体实现见子类
+func init_data() -> void:
+	pass
+
+
 ## 查找可堆叠的数据
 ## @param item_id: 物品id
 ## @param num_to_add: 物品数量

@@ -1,10 +1,12 @@
 extends RefCounted
 class_name ResPaths
 
-## 场景资源
+## 通用场景资源
 const SCENE_RES: Dictionary[StringName,String] = {
-	#主UI界面
+	# 主UI界面
 	"main_ui": "res://resource/ui/ui_state_machine.tscn",
+	# 玩家场景
+	"player": "res://resource/player/player.tscn",
 	# 食物场景
 	"food": "res://resource/droppable/food.tscn",
 	# 便便场景

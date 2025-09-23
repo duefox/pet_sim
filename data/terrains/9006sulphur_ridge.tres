@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="TerrainsData" load_steps=3 format=3 uid="uid://db68eqemxr1d6"]
+
+[ext_resource type="Script" uid="uid://c1dps65gg8ad0" path="res://resource/data/terrains_data.gd" id="1_13fck"]
+[ext_resource type="Texture2D" uid="uid://rv11acpf8jkt" path="res://assets/textures/builds/bd6.png" id="2_13fck"]
+
+[resource]
+script = ExtResource("1_13fck")
+generate_weight = 10
+terrain_type = 6
+body_size = 2
+output_desc = "产出硫磺、黑曜石等，随等级提升产出更稀有和危险的矿物。"
+id = &"9006"
+item_type = 8
+nickname = "硫磺山脊"
+descrip = "一座休眠的火山，山顶不时冒出浓烟，周围是炽热的熔岩流。"
+texture = ExtResource("2_13fck")
+hframes = 1
+width = 7
+height = 7
+can_drag = false
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

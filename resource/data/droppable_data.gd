@@ -1,4 +1,4 @@
-extends ItemBaseData
+extends BaseItemData
 class_name DroppableData
 
 ## 类型

@@ -11,21 +11,30 @@ class_name MultiGridContainer
 @onready var item_container: Control = %ItemContainer
 
 ## 类型颜色枚举
-enum TYPE_COLOR { SUCCESS, ERROR, DEF }  ## 绿色，代表允许放置  ## 红色，代表不允许放置  ## 默认颜色
+enum TYPE_COLOR { SUCCESS, ERROR, DEF }  # 绿色，代表允许放置  # 红色，代表不允许放置  # 默认颜色
+
+## 定义容器类型，用于验证
+enum CONTAINER_TYPE { BACKPACK_INVENTORY_QT, WORLD_LAYOUT }  # 背包、仓库和快捷工具栏  # 世界布局
 
 ## 放置提示框显示模式枚举
 enum MODE_PLACEMENT_OVERTLAY {
 	DEF,  ## 默认模式(鼠标移出容器范围就消失)
 	STAY,  ## 停留模式(鼠标移出容器范围后且未进入其他容器，在原容器内仍然保留显示)
 }
-
-@export var grid_row: int = 5  ##  容器的格子行数
-@export var grid_col: int = 6  ##  容器的格子列数
-
-@export var max_scroll_grid: int = 4  ##  最多显示多少格
-@export var placement_overlay_mode: MODE_PLACEMENT_OVERTLAY = MODE_PLACEMENT_OVERTLAY.DEF  ## 放置提示框显示模式
+##  容器的格子行数
+@export var grid_row: int = 5
+##  容器的格子列数
+@export var grid_col: int = 6
+##  最多显示多少格
+@export var max_scroll_grid: int = 4
+## 放置提示框显示模式
+@export var placement_overlay_mode: MODE_PLACEMENT_OVERTLAY = MODE_PLACEMENT_OVERTLAY.DEF
+## 格子场景
 @export var grid_scene: PackedScene
+## 物品场景
 @export var item_scene: PackedScene
+## 容器类型
+@export var container_type: CONTAINER_TYPE = CONTAINER_TYPE.BACKPACK_INVENTORY_QT
 
 var cell_size: int = 48  #  容器的格子尺寸
 var grid_size: Vector2  #  多格子容器的大小
@@ -43,6 +52,7 @@ var _sort_timers: int = 0
 
 #region 内部方法
 func _ready() -> void:
+	#await get_tree().process_frame
 	# 清空grid container
 	_clear_grid_container()
 	cell_size = GlobalData.cell_size
@@ -293,7 +303,8 @@ func set_placement_overlay(type: int, item: WItem, cell_pos: Vector2) -> void:
 	placement_size -= Vector2(item.width, item.height)
 	placement_overlay.color = _get_type_color(type)
 	placement_overlay.size = placement_size
-	placement_overlay.position = _get_comput_position(cell_pos)
+	var offset: Vector2 = _get_scroll_offset()
+	placement_overlay.position = _get_comput_position(cell_pos) - offset
 
 
 ## 启用放置提示框
@@ -599,6 +610,10 @@ func _clear_grid_container() -> void:
 	for child in grid_container.get_children():
 		child.queue_free()
 
+
+## 滚动条的偏移量
+func _get_scroll_offset() -> Vector2:
+	return Vector2(scroll_container.scroll_horizontal, scroll_container.scroll_vertical)
 
 ## 查看映射表
 func _look_grip_map() -> void:

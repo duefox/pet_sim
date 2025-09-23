@@ -1,28 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://3ia6qn373kw0"]
+[gd_scene load_steps=3 format=3 uid="uid://3ia6qn373kw0"]
 
 [ext_resource type="Script" uid="uid://oswiqnmdn3ch" path="res://resource/game_setup.gd" id="1_7fe2v"]
-[ext_resource type="Script" uid="uid://bxkjp1budxtg4" path="res://resource/components/player/backpack_comp.gd" id="2_h21b3"]
-[ext_resource type="Script" uid="uid://b1cylyf853djb" path="res://resource/player/player.gd" id="2_lvf1d"]
 [ext_resource type="PackedScene" uid="uid://btkafvb6kvaga" path="res://resource/container/pet_container.tscn" id="2_xpw5q"]
-[ext_resource type="Script" uid="uid://dfhx2qmrxax8u" path="res://resource/components/player/inventory_comp.gd" id="4_vyehy"]
-[ext_resource type="Script" uid="uid://clqw3gj12kr56" path="res://resource/components/player/quick_tools_comp.gd" id="5_f34hv"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_7fe2v")
-
-[node name="Player" type="Node2D" parent="."]
-script = ExtResource("2_lvf1d")
-
-[node name="Components" type="Node" parent="Player"]
-
-[node name="BackpackComponent" type="Node" parent="Player/Components"]
-script = ExtResource("2_h21b3")
-
-[node name="InventoryComponent" type="Node" parent="Player/Components"]
-script = ExtResource("4_vyehy")
-
-[node name="QuickToolsComponent" type="Node" parent="Player/Components"]
-script = ExtResource("5_f34hv")
 
 [node name="FishTank" parent="." instance=ExtResource("2_xpw5q")]
 visible = false
@@ -44,9 +26,14 @@ metadata/_edit_lock_ = true
 
 [node name="FPSContainer" type="MarginContainer" parent="UI/Control"]
 layout_mode = 1
-offset_right = 40.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -37.0
+offset_right = 37.0
 offset_bottom = 40.0
-theme_override_constants/margin_left = 72
+grow_horizontal = 2
+theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
@@ -58,3 +45,4 @@ theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 18
 text = "FPS:60"
+horizontal_alignment = 1

@@ -54,3 +54,49 @@ func get_properties_from_res(resource: Resource) -> Dictionary:
 			var key_value = resource.get(key_name)
 			dic.set(key_name, key_value)
 	return dic
+
+
+## 递归获取指定目录下所有文件的路径
+## @param path: 要扫描的目录路径
+## @return: 包含所有文件路径的PackedStringArray
+func get_all_files(path: String) -> PackedStringArray:
+	var files: PackedStringArray = []
+	var dir: DirAccess = DirAccess.open(path)
+
+	if dir:
+		dir.list_dir_begin()
+		var file_name: String = dir.get_next()
+
+		while file_name != "":
+			if dir.current_is_dir():
+				# 这是一个子目录，递归调用自身
+				files.append_array(get_all_files(path.path_join(file_name)))
+			else:
+				# 这是一个文件，添加到列表中
+				files.append(path.path_join(file_name))
+
+			file_name = dir.get_next()
+	else:
+		push_warning("An error occurred when trying to access the path: ", path)
+
+	return files
+
+
+## 获得目录资源并整理成符合要求的字典数据
+## @param path_folder: 目录路径
+## @return: 文件名-文件路径 字典
+func get_res_to_dic(path_folder: String) -> Dictionary[StringName,String]:
+	var tmp_dic: Dictionary[StringName,String] = {}
+	# 调用 get_all_files 函数，它会递归地获取所有文件
+	var files: PackedStringArray = get_all_files(path_folder)
+
+	if files.is_empty():
+		return {}
+
+	for file: String in files:
+		# 获取不带扩展名的文件名
+		var file_name: String = file.get_file().get_basename()
+		# 将文件名作为键，完整路径作为值
+		tmp_dic.set(file_name, file)
+
+	return tmp_dic

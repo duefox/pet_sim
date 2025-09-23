@@ -17,9 +17,7 @@ var is_popup: bool = false
 #region 预加载资源相关变量
 ## @param StringName 物品的唯一id
 ## @param String 物品的资源路径
-var pet_res: Dictionary[StringName,String] = {}
-## 食物，便便，蛋之类的掉落物资源
-var drop_res: Dictionary[StringName,String] = {}
+var all_res: Dictionary[StringName,String] = {}
 #endregion
 
 #region 背包容器相关变量
@@ -45,19 +43,13 @@ var data: Dictionary[String,Dictionary]
 ## 弹窗场景
 var _confirm: WConfirm
 
-
-func _ready() -> void:
-	# 加载一个id为999的默认数据(方便F6调试）
-	create_textures_item(DEFAULT_RES)
-
-
 ## 创建纹理表的内容单元（这些数据用于背包显示）
 func create_textures_item(res_data: Resource = null) -> void:
-	# 只处理ItemBaseData类型的资源
-	if not res_data or not (res_data is ItemBaseData):
+	# 只处理BaseItemData类型的资源
+	if not res_data or not (res_data is BaseItemData):
 		return
 	# 资源数据
-	res_data = res_data as ItemBaseData
+	res_data = res_data as BaseItemData
 	var space_width: int = res_data.width
 	var space_height: int = res_data.height
 	# 属性数据

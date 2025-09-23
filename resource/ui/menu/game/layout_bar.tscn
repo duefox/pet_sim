@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://kmbaqio8d8b6" path="res://resource/ui/menu/game/layout_bar.gd" id="1_hkbts"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_jckig"]
+[ext_resource type="Texture2D" uid="uid://b8qewc5715p8w" path="res://assets/ui/icons/icon_32.png" id="4_hkbts"]
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="5_3auqv"]
-[ext_resource type="Texture2D" uid="uid://di4o8cnge1hlb" path="res://assets/ui/icons/icon3.png" id="6_lxnp4"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="7_g5rs6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c0qi4"]
@@ -17,7 +17,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hkbts"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4mrxu"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -30,11 +30,11 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4mrxu"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jckig"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8vwas"]
-atlas = ExtResource("6_lxnp4")
-region = Rect2(64, 0, 32, 32)
+atlas = ExtResource("4_hkbts")
+region = Rect2(160, 64, 32, 32)
 
 [node name="LayoutBar" type="Control"]
 layout_mode = 3
@@ -42,6 +42,7 @@ anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 grow_vertical = 0
+size_flags_vertical = 8
 script = ExtResource("1_hkbts")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -49,9 +50,8 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -40.0
-offset_right = 36.0
-offset_bottom = -4.0
+offset_top = -80.0
+offset_right = 80.0
 grow_vertical = 0
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
@@ -120,6 +120,7 @@ patch_margin_bottom = 10
 [node name="BtnMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
+size_flags_vertical = 8
 
 [node name="BtnLayout" type="Button" parent="MarginContainer/VBoxContainer/BtnMargin"]
 unique_name_in_owner = true
@@ -129,14 +130,14 @@ tooltip_text = "布局建筑、设备和造景
 快捷键 [b][color=white]L[/color][/b]ayout
 "
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_hkbts")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hkbts")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_hkbts")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_4mrxu")
-toggle_mode = true
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4mrxu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jckig")
 icon = SubResource("AtlasTexture_8vwas")
 icon_alignment = 1
+expand_icon = true
 script = ExtResource("7_g5rs6")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
-[connection signal="toggled" from="MarginContainer/VBoxContainer/BtnMargin/BtnLayout" to="." method="_on_btn_layout_toggled"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BtnMargin/BtnLayout" to="." method="_on_btn_layout_pressed"]

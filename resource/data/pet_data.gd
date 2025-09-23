@@ -1,4 +1,4 @@
-extends ItemBaseData
+extends BaseItemData
 class_name PetData
 
 ## region 枚举类型
@@ -23,9 +23,6 @@ enum LifeStage { JUVENILE, ADULT, DEAD }
 ##  物种级别
 enum Level { ENTRY, MIDDLE, ADVANCED, TOP }
 
-##  体型大小
-enum BodySize { SMALL, MIDDLE, BIG }
-
 ##  灯光类型
 enum LightCategory {
 	ALL,  ## 所有
@@ -48,6 +45,9 @@ enum Gender {
 	MALE,  ## 雄性
 	FEMALE,  ## 雌性
 }
+
+enum WanderLayer { TOP, MIDDLE, BOTTOM, ALL }
+
 ## endregion
 
 ## 基本信息
@@ -63,7 +63,7 @@ enum Gender {
 ## 速度
 @export var speed: float = 100.0
 ## 体型大小
-@export var max_size: BodySize = BodySize.SMALL
+@export var body_size: BodySize = BodySize.SMALL
 ## 性别
 @export var gender: Gender
 ## 角度
@@ -124,3 +124,8 @@ enum Gender {
 @export var hatch_rate: float = 1.0
 ## 蛋当前的孵化值
 var hatch_level: float = 0.0
+
+##特有的属性
+@export_group("Special attribute")
+#生活的域层级
+@export var live_layer: WanderLayer = WanderLayer.ALL

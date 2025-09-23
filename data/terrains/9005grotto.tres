@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="TerrainsData" load_steps=3 format=3 uid="uid://cs6o3voj42yfs"]
+
+[ext_resource type="Script" uid="uid://c1dps65gg8ad0" path="res://resource/data/terrains_data.gd" id="1_4ec16"]
+[ext_resource type="Texture2D" uid="uid://m5bctwit4ns5" path="res://assets/textures/builds/bd5.png" id="2_4ec16"]
+
+[resource]
+script = ExtResource("1_4ec16")
+generate_weight = 10
+terrain_type = 5
+body_size = 2
+output_desc = "产出石块、砂岩等，随等级提升产出更坚硬的石材。"
+id = &"9005"
+item_type = 8
+nickname = "地底溶洞"
+descrip = " 一个已经被废弃多年的古老矿洞，内部黑暗潮湿，充满了蜿蜒的隧道。。"
+texture = ExtResource("2_4ec16")
+hframes = 1
+width = 6
+height = 6
+can_drag = false
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

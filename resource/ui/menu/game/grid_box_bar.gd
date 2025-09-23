@@ -53,13 +53,13 @@ func _ready() -> void:
 	w_quick_tools = W_QT_SCENE.instantiate()
 	quick_tool_margin.add_child(w_quick_tools)
 	initialize()
-	# 订阅事件
+	# 订阅总线事件
 	EventManager.subscribe(UIEvent.SUB_ITEM, _on_sub_item)
 	EventManager.subscribe(UIEvent.BACKPACK_CHANGED, _on_backpack_changed)
 	EventManager.subscribe(UIEvent.INVENTORY_CHANGED, _on_inventory_changed)
 	EventManager.subscribe(UIEvent.QUICK_TOOLS_CHANGED, _on_quick_tools_changed)
-	# 测试
-	#grid_mode = GridDisplayMode.BACKPACK
+	# 内部信号事件
+	w_quick_tools.next_day_pressed.connect(_on_next_day_pressed)
 
 
 func _exit_tree() -> void:
@@ -110,6 +110,11 @@ func _setter_grid_mode(value: GridDisplayMode) -> void:
 		w_quick_tools.visible = true
 	# 发送信号
 	#state_switch.emit(self, grid_mode)
+
+
+## 下一天
+func _on_next_day_pressed() -> void:
+	state_machine.on_new_pressed()
 
 
 ## 背包物品更新
@@ -275,6 +280,7 @@ func _cmd_add_item(item_id: String, item_num: int, item_level: int, item_grow: f
 	#_cur_bag.cmd_add_item(item_id, item_num, extra_args)
 	if not GlobalData.player:
 		return
+		
 	if _cur_bag == _backpack:
 		GlobalData.player.backpack_comp.add_item(item_id, item_num, extra_args)
 	elif _cur_bag == _inventory:

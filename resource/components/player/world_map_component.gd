@@ -1,0 +1,179 @@
+## 世界地图数据
+extends BaseBagComponent
+class_name WorldMapComponent
+
+## 8种大型地形，key为ID，value为占用尺寸
+const LARGE_TERRAINS: Dictionary = {
+	"9001": {"range": Vector2(-1.0, -0.75), "size": Vector2(6, 4)},
+	"9002": {"range": Vector2(-0.75, -0.5), "size": Vector2(5, 7)},
+	"9003": {"range": Vector2(-0.5, -0.25), "size": Vector2(5, 5)},
+	"9004": {"range": Vector2(-0.25, 0.0), "size": Vector2(8, 4)},
+	"9005": {"range": Vector2(0.0, 0.25), "size": Vector2(6, 6)},
+	"9006": {"range": Vector2(0.25, 0.5), "size": Vector2(7, 7)},
+	"9007": {"range": Vector2(0.5, 0.75), "size": Vector2(6, 6)},
+	"9008": {"range": Vector2(0.75, 1.0), "size": Vector2(5, 5)}
+}
+
+## 8种小型地形的ID列表
+const SMALL_TERRAINS: Array = ["9009", "9010", "9011", "9012", "9013", "9014", "9015", "9015"]
+
+## 世界的大小 ###这里有bug
+@export var world_size: Vector2i = Vector2i(38, 38)
+## 小地形物品生成概率
+@export var create_rate: float = 0.15
+
+## 噪声生成器
+var noise = FastNoiseLite.new()
+## 地形物品数据
+var item_db: Dictionary[String,Dictionary] = {}
+## 每种物品的最大生成数量限制
+## 每种物品的最大生成数量限制
+var item_max_counts: Dictionary = {
+	"9001": 1,
+	"9002": 1,
+	"9003": 1,
+	"9004": 1,
+	"9005": 1,
+	"9006": 1,
+	"9007": 1,
+	"9008": 1,
+	"9009": 40,
+	"9010": 40,
+	"9011": 40,
+	"9012": 40,
+	"9013": 40,
+	"9014": 40,
+	"9015": 40,
+	"9016": 40,
+}
+## 实时追踪每种物品的已生成数量
+var item_current_counts: Dictionary = {}
+## 世界数据映射表，存储已放置物品
+var world_map: Dictionary = {}
+
+
+## 当数据发生变化时，通过事件总线通知所有订阅者
+func emit_changed_event(_data: Array[Dictionary]) -> void:
+	EventManager.emit_event(UIEvent.WORLD_MAP_CHANGED, {"items_data": _data})
+
+
+## 第一次创建存档的时候默认创建数据
+func init_data() -> void:
+	# 获取创建文档时候的种子
+	var map_seed: int = randi()
+	# 初始化世界地图地形
+	initialize(map_seed)
+
+
+func initialize(map_seed: int) -> void:
+	noise.seed = map_seed
+	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
+	noise.frequency = 0.05
+	# 构建基础配置数据
+	_generate_item_data()
+	# 构建世界数据
+	_generate_world()
+	#print("World generation complete. Total items: ", items_data.size())
+	# 通知地块更新数据
+	emit_changed_event(items_data)
+
+
+## 构建数据
+func _generate_item_data() -> void:
+	for item_id: String in item_max_counts:
+		var dict: Dictionary = GlobalData.find_item_data(item_id)
+		if not dict.is_empty():
+			item_db.set(item_id, dict)
+
+
+## 生成世界
+func _generate_world() -> void:
+	# 第一步：放置大型地形
+	for item_id: String in LARGE_TERRAINS:
+		var rank = LARGE_TERRAINS[item_id].range
+		var item_data = item_db[item_id]
+		_place_large_terrain(item_data, rank)
+
+	# 第二步：用小型地形填充剩余的空位
+	_place_small_terrains()
+
+
+## 尝试在特定噪声值范围内放置一个大型地形
+func _place_large_terrain(item_data: Dictionary, noise_range: Vector2) -> void:
+	var candidates: Array = []
+	# 遍历所有格子，找到符合噪声值范围的放置点
+	for y in range(world_size.y):
+		for x in range(world_size.x):
+			var noise_val = noise.get_noise_2d(x, y)
+			if noise_val >= noise_range.x and noise_val < noise_range.y:
+				candidates.append(Vector2(x, y))
+
+	if candidates.is_empty():
+		return
+
+	# 从候选项中随机选择一个位置
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	var head_pos = candidates[rng.randi_range(0, candidates.size() - 1)]
+	# 尝试放置大型地形
+	var success: bool = _try_place_item(item_data, head_pos)
+	if success:
+		_add_new_item_data(item_data, head_pos)
+
+
+## 添加数据
+func _add_new_item_data(item_data: Dictionary, head_pos: Vector2) -> void:
+	# 创建新物品数据字典
+	var item_data_dict = {"id": item_data.id, "num": 1, "head_position": head_pos}
+	# 放入待更新数组
+	items_data.append(item_data_dict)
+
+
+## 在剩余的空位上随机放置小型地形
+func _place_small_terrains() -> void:
+	var empty_cells: Array = []
+	# 1. 找到所有空闲格子
+	for y in range(int(world_size.y)):
+		for x in range(int(world_size.x)):
+			var current_pos = Vector2(x, y)
+			if not world_map.has(current_pos):
+				empty_cells.append(current_pos)
+
+	# 2. 随机打乱空闲格子列表
+	var rng = RandomNumberGenerator.new()
+	rng.randomize()
+	empty_cells.shuffle()
+
+	# 3. 遍历打乱后的列表，并尝试放置物品
+	for current_pos in empty_cells:
+		# 以一定概率生成小型物品
+		if rng.randf() < create_rate:
+			var small_item_id = SMALL_TERRAINS[rng.randi_range(0, SMALL_TERRAINS.size() - 1)]
+			var item_data = item_db[small_item_id]
+
+			if item_current_counts.get(small_item_id, 0) < item_max_counts.get(small_item_id, 9999):
+				var success: bool = _try_place_item(item_data, current_pos)
+				if success:
+					_add_new_item_data(item_data, current_pos)
+
+
+## 尝试在指定位置放置物品（大型和小型通用）
+func _try_place_item(item_data: Dictionary, head_pos: Vector2) -> bool:
+	var item_width: int = item_data.get("width", 1)
+	var item_height: int = item_data.get("height", 1)
+
+	# 检查物品占用区域是否都空闲
+	for x in range(item_width):
+		for y in range(item_height):
+			var check_pos = head_pos + Vector2(x, y)
+			if check_pos.x >= world_size.x or check_pos.y >= world_size.y or world_map.has(check_pos):
+				return false
+
+	# 标记所有被占用的格子
+	for x in range(item_width):
+		for y in range(item_height):
+			var occupied_pos = head_pos + Vector2(x, y)
+			world_map[occupied_pos] = item_data.id
+			item_current_counts[item_data.id] = item_current_counts.get(item_data.id, 0) + 1
+
+	return true

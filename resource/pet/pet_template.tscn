@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bhnyru0q25l3n" path="res://resource/pet/Pet.gd" id="1_bpwwj"]
 [ext_resource type="Script" uid="uid://dqbx4m2xcx2bt" path="res://resource/pet/pet_state_machine.gd" id="1_fm2pq"]
 [ext_resource type="PackedScene" uid="uid://dfkq8j2ktl5js" path="res://resource/droppable/excrement.tscn" id="2_bte7q"]
-[ext_resource type="Resource" uid="uid://dp85ytsnwka4m" path="res://data/drop_data/fish_excrement00.tres" id="2_nfquc"]
+[ext_resource type="Resource" uid="uid://dp85ytsnwka4m" path="res://data/drops/fish_excrement00.tres" id="2_nfquc"]
 [ext_resource type="Script" uid="uid://dkuu5mtkv38wx" path="res://resource/components/behavior/movement_component.gd" id="2_wcy08"]
 [ext_resource type="Script" uid="uid://cev476a751rcw" path="res://resource/components/behavior/hunger_component.gd" id="4_2kcnw"]
 [ext_resource type="Texture2D" uid="uid://cewk86mrkx1pw" path="res://assets/textures/aquatic/water/bubblefish_48x48.png" id="4_nu6g7"]

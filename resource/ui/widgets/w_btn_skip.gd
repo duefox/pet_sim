@@ -8,7 +8,8 @@ class_name WButtonSkip
 signal long_press_over
 
 # 过滤器值，组件只有在激活时才会处理输入
-var _is_active: bool = false
+var is_active: bool = false
+##
 var _show_progress: bool = false
 var _skip_pressed_time: float = 1.0
 
@@ -21,15 +22,15 @@ func _ready() -> void:
 
 # 切换激活状态的公共方法
 func set_active(value: bool) -> void:
-	_is_active = value
+	is_active = value
 	# 如果不激活，则停止计时器并隐藏进度条
-	if not _is_active:
+	if not is_active:
 		_on_btn_skip_button_up()
 
 
 func _process(_delta: float) -> void:
 	# 首先检查过滤器值，如果不激活则直接返回
-	if not _is_active:
+	if not is_active:
 		return
 
 	if _show_progress:

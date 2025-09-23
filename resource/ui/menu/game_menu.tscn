@@ -38,7 +38,7 @@ layout_mode = 1
 
 [node name="NavigationBar" parent="." instance=ExtResource("6_hlcy5")]
 unique_name_in_owner = true
-layout_mode = 0
+layout_mode = 1
 
 [node name="GridBoxBar" parent="." instance=ExtResource("6_jgqhp")]
 unique_name_in_owner = true

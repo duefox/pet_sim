@@ -20,6 +20,10 @@ var backpack: MultiGridContainer
 var quick_tools: MultiGridContainer
 ## 抓取的物品
 var held_item: WItem
+## 抓取的物品的来源容器，可以是背包、仓库或世界建造菜单
+var held_item_from: MultiGridContainer
+## 滚动条的偏移量
+var sroll_offset: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
@@ -72,12 +76,16 @@ func hide_held_item() -> void:
 	held_item.position = Vector2(-900, -900)
 
 
-## 设置抓取的物品节点数据
-func set_held_item_data(data: Dictionary) -> void:
+## 设置抓取的物品节点数据以及来源
+## @param data：物品数据
+## @param item_from：物品来源
+func set_held_item_data(data: Dictionary, item_from: MultiGridContainer = null) -> void:
 	held_item.set_data(data)
 	held_item.setup()
 	held_item.set_texture_container_offset_and_rotation()
 	held_item.show_item_num()
+	# 设置来源
+	held_item_from = item_from
 
 
 ## 将抓取的物品进行旋转同步(显示层)
@@ -89,29 +97,33 @@ func sync_held_item_rotation(org_item: WItem) -> void:
 
 ## 放置提示框的处理逻辑(显示层)
 func placement_overlay_process() -> void:
-	#计算首部坐标偏移
+	# 计算首部坐标偏移
 	var hand_pos: Vector2 = MouseEvent.mouse_cell_matrix.get_first_cell_pos_offset(held_item, MouseEvent.mouse_cell_pos)
-	#创建默认的放置提示颜色为红色
+	# 创建默认的放置提示颜色为红色
 	var color_type: int = MultiGridContainer.TYPE_COLOR.ERROR
 
-	#检查坐标是不是合法的，即不超出边界
+	# 检查坐标是不是合法的，即不超出边界
 	if MouseEvent.mouse_cell_matrix.check_grid_map_item(hand_pos):
-		#检查坐标内的格子是不是空的
+		# 检查坐标内的格子是不是空的
 		if MouseEvent.mouse_cell_matrix.check_cell(hand_pos):
-			#获取映射表中对应的单个格子数据
+			# 获取映射表中对应的单个格子数据
 			var item_data: WItemData = MouseEvent.mouse_cell_matrix.get_grid_map_item(hand_pos)
 			var item: WItem = item_data.link_item
-			#先判断是不是可堆叠的物品
+			# 先判断是不是可堆叠的物品
 			var temp_bool: bool = item.stackable and held_item.stackable == item.stackable
-			#抓取物品和目标物品id一致且都可堆叠,没有达到最大堆叠数量并且物品的级别一致，将放置提示设置为绿色
+			# 判断是否同一种容器类型
+			if not held_item_from.container_type == MouseEvent.mouse_cell_matrix.container_type:
+				temp_bool = false
+			# 抓取物品和目标物品id一致且都可堆叠,没有达到最大堆叠数量并且物品的级别一致，将放置提示设置为绿色
 			if item.id == held_item.id and temp_bool and item.num < item.max_stack_size and item.item_level == held_item.item_level:
 				color_type = MultiGridContainer.TYPE_COLOR.SUCCESS
 		else:
-			#如果格子是空的，则对 映射表 按照 首部坐标 和 物品的宽高 所形成的矩形进行范围内扫描
-			if MouseEvent.mouse_cell_matrix.scan_grid_map_area(hand_pos, held_item):
-				#扫描范围内的格子都为空，即代表允许放置物品，设提示为绿色
+			# 判断是否同一种容器类型
+			# 如果格子是空的，则对 映射表 按照 首部坐标 和 物品的宽高 所形成的矩形进行范围内扫描
+			if MouseEvent.mouse_cell_matrix.scan_grid_map_area(hand_pos, held_item) and held_item_from.container_type == MouseEvent.mouse_cell_matrix.container_type:
+				# 扫描范围内的格子都为空，即代表允许放置物品，设提示为绿色
 				color_type = MultiGridContainer.TYPE_COLOR.SUCCESS
-	#设置对应inventory内的放置提示框
+	# 设置对应inventory内的放置提示框
 	MouseEvent.mouse_cell_matrix.set_placement_overlay(color_type, held_item, hand_pos)
 	#显示该放置提示框
 	MouseEvent.mouse_cell_matrix.startup_placement_overlay()
@@ -189,7 +201,15 @@ func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 	var mouse_cell_matrix: MultiGridContainer = MouseEvent.mouse_cell_matrix
 	# 获取鼠标所在的格子容器内的单个格子映射表数据
 	var mouse_item_data: WItemData = mouse_cell_matrix.get_grid_map_item(mouse_cell_pos)
-
+	# 判定是否是否相同容器的来源
+	if not held_item_from.container_type == mouse_cell_matrix.container_type:
+		# 不同容器类型则放回原位
+		_item_put_back(cur_item)
+		# 这行代码其实可以不要的，并不影响什么
+		held_item.show_bg_color()
+		# 隐藏抓取物品节点(显示层)
+		hide_held_item()
+		return
 	# 物品堆叠判定
 	if cur_item != null and mouse_item_data.link_item is WItem:
 		var item: WItem = mouse_item_data.link_item

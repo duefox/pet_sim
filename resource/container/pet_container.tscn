@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=3 uid="uid://btkafvb6kvaga"]
 
 [ext_resource type="Script" uid="uid://b1q1oyetm8dd8" path="res://resource/container/pet_container.gd" id="1_k2uak"]
-[ext_resource type="Resource" uid="uid://nc4ypekgcowp" path="res://data/drop_data/fish_food0.tres" id="2_jyjxn"]
+[ext_resource type="Resource" uid="uid://nc4ypekgcowp" path="res://data/drops/fish_food0.tres" id="2_jyjxn"]
 [ext_resource type="PackedScene" uid="uid://ytui6fhuudad" path="res://resource/droppable/food.tscn" id="3_013c3"]
 [ext_resource type="Texture2D" uid="uid://4qsn7ar88663" path="res://assets/images/wall/Wall_01.png" id="4_4o1vb"]
 [ext_resource type="Shader" uid="uid://c25wsf7t3on1f" path="res://shaders/water_wave.gdshader" id="5_ueymg"]

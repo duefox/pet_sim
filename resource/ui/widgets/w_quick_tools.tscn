@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cvoygtt76yv4j"]
+[gd_scene load_steps=19 format=3 uid="uid://cvoygtt76yv4j"]
 
 [ext_resource type="Script" uid="uid://ds2hvp1yfju06" path="res://resource/ui/widgets/w_quick_tools.gd" id="1_kth44"]
 [ext_resource type="Texture2D" uid="uid://bsask3iusjohx" path="res://themes/wood/graphics/expandBtnDisabled.png" id="2_ycsxv"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" uid="uid://g0cotbm5t03y" path="res://resource/components/ui/buttons/button_expand.gd" id="6_j1uao"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="7_2is3u"]
 [ext_resource type="PackedScene" uid="uid://b1ihuvsoodjhc" path="res://resource/ui/widgets/single_grid_container.tscn" id="8_mkisp"]
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="9_nijvm"]
+[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="10_2g7nd"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hxv3c"]
 texture = ExtResource("5_rb4uc")
@@ -22,6 +24,28 @@ texture = ExtResource("3_nijvm")
 texture = ExtResource("2_ycsxv")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kth44"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("9_nijvm")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n5nyd"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rb4uc"]
 
 [node name="WQuickTools" type="Control"]
 layout_mode = 3
@@ -43,9 +67,9 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -288.0
+offset_left = -336.0
 offset_top = -88.0
-offset_right = 288.0
+offset_right = 336.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
@@ -109,3 +133,22 @@ layout_mode = 2
 grid_row = 1
 grid_col = 10
 max_scroll_grid = 1
+
+[node name="BtnMargin" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="BtnNextDay" type="Button" parent="MarginContainer/HBoxContainer/BtnMargin"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_n5nyd")
+theme_override_styles/hover = SubResource("StyleBoxFlat_n5nyd")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_n5nyd")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_rb4uc")
+text = "下一天"
+script = ExtResource("10_2g7nd")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/BtnMargin/BtnNextDay" to="." method="_on_btn_next_day_pressed"]

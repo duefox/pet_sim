@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="TerrainsData" load_steps=3 format=3 uid="uid://ojo3ohd2n4k8"]
+
+[ext_resource type="Script" uid="uid://c1dps65gg8ad0" path="res://resource/data/terrains_data.gd" id="1_gvfno"]
+[ext_resource type="Texture2D" uid="uid://bxcp0u3b4vkxc" path="res://assets/textures/builds/bd7.png" id="2_p4xre"]
+
+[resource]
+script = ExtResource("1_gvfno")
+generate_weight = 10
+terrain_type = 7
+body_size = 2
+output_desc = "产出羽毛、彩色羽毛等，随等级提升产出更具装饰性的羽毛。"
+id = &"9007"
+item_type = 8
+nickname = "高山云林"
+descrip = "一片树木高大、终年被浓雾笼罩的森林。这里的空气纯净，是鸟类和昆虫的天堂。"
+texture = ExtResource("2_p4xre")
+hframes = 1
+width = 6
+height = 6
+can_drag = false
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"
