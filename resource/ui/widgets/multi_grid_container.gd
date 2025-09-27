@@ -317,13 +317,16 @@ func sub_item_at(cell_pos: Vector2, num: int = 1) -> void:
 
 
 ## 设置放置提示框数据
-func set_placement_overlay(type: int, item: WItem, cell_pos: Vector2) -> void:
+func set_placement_overlay(type: int, item: WItem, cell_pos: Vector2) -> Vector2:
 	var placement_size: Vector2 = item.get_item_size()
 	placement_size -= Vector2(item.width, item.height)
 	placement_overlay.color = _get_type_color(type)
 	placement_overlay.size = placement_size
 	var offset: Vector2 = _get_scroll_offset()
 	placement_overlay.position = _get_comput_position(cell_pos) - offset
+	return placement_overlay.position
+	#var global_transform: Transform2D = get_global_transform()
+	#return global_transform * placement_overlay.position
 
 
 ## 启用放置提示框
@@ -401,6 +404,7 @@ func add_new_item_in_data(cell_pos: Vector2, data: Dictionary, extra_args: Dicti
 		return false
 	var item: WItem = _create_item()
 	item.set_data(data, extra_args)
+
 	return _add_item_at(cell_pos, item)
 
 

@@ -10,7 +10,7 @@ class_name WItem
 @onready var item_name_label: Label = %ItemNameLabel
 
 ## 旋转方向
-enum ORI { VER, HOR }  # 代表竖直方向  # 代表横向方向
+enum ORI { NONE, VER, HOR }  # 代表竖直方向  # 代表横向方向
 
 ## 默认的选中颜色
 const SELECTED_BG_COLOR: Color = Color(&"91d553")
@@ -85,11 +85,16 @@ func show_item_num() -> void:
 
 
 ## 旋转物品
-func rotation_item() -> void:
-	if orientation == WItem.ORI.HOR:
-		orientation = WItem.ORI.VER
+func rotation_item(ori: int = ORI.NONE) -> void:
+	if not is_instance_valid(texture_container):
+		return
+	if ori == ORI.NONE:
+		if orientation == WItem.ORI.HOR:
+			orientation = WItem.ORI.VER
+		else:
+			orientation = WItem.ORI.HOR
 	else:
-		orientation = WItem.ORI.HOR
+		orientation = ori
 	swap_width_and_height()
 	set_texture_container_offset_and_rotation()
 	set_container_size()
@@ -142,6 +147,11 @@ func set_texture() -> void:
 		# 大型物品稍微缩放，使得边框在格子内
 		item_offset = Vector2(12.0, 12.0)
 		item_texture.scale_texture(get_item_size() - item_offset, self)
+		# 设置背景色的着色器
+		bg_color.material.set_shader_parameter("corner_radius", 15.0)
+	else:
+		# 设置背景色的着色器
+		bg_color.material.set_shader_parameter("corner_radius", 4.0)
 
 	# 设置贴图
 	if not texture_data.is_empty():
@@ -155,7 +165,7 @@ func set_texture() -> void:
 
 ## 设置拖动缩放，使得纹理略小于绿色区域
 func drag_texture_scale() -> void:
-	item_texture.drag_texture_scale(get_item_size())
+	item_texture.drag_texture_scale(item_type, orientation)
 
 
 ## 设置基本数据
@@ -165,7 +175,7 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 	if data.is_empty():
 		return
 	# 拷贝一份数据
-	data = data.duplicate()
+	data = data.duplicate(true)
 	# 详细信息数据字典
 	var item_info_dic: Dictionary
 	if data["item_info"] is Resource:
@@ -173,7 +183,7 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 		item_info_dic = Utils.get_properties_from_res(data["item_info"]).duplicate()
 	else:
 		# 拖拽过来的物品数据
-		item_info_dic = data["item_info"].duplicate()
+		item_info_dic = data["item_info"].duplicate(true)
 
 	# 设置基本数据
 	for key: String in data:
@@ -190,8 +200,8 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 		"hframes": item_info.hframes,  # 原始数据的行
 		"vframes": item_info.vframes,  # 原始数据的列
 		"frame": item_info.frame,  # 原始数据的所在帧的序号
-		"width": width,  # 占用空间宽
-		"height": height,  # 占用空间高度
+		"width": item_info.width,  # 占用空间宽
+		"height": item_info.height,  # 占用空间高度
 		"texture": item_info.texture,  # 原始数据的纹理贴图
 	}
 
@@ -207,6 +217,10 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 		# 重置物品的宽高
 		width = texture_data["width"]
 		height = texture_data["height"]
+		# 旋转了的话需要交换宽高
+		if orientation == WItem.ORI.HOR:
+			width = texture_data["height"]
+			height = texture_data["width"]
 
 	if extra_args.is_empty():
 		return
@@ -222,7 +236,7 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 
 
 ## 获取基本数据
-func get_data() -> Dictionary:
+func get_data(show_more: bool = true) -> Dictionary:
 	var result: Dictionary = {
 		"id": id,  # 唯一标识符
 		"item_name": item_name,  # 物品名称
@@ -237,9 +251,12 @@ func get_data() -> Dictionary:
 		"stackable": stackable,  # 物品是否可堆叠
 		"num": num,  # 物品数量
 		"max_stack_size": max_stack_size,  # 物品最大堆叠数量
-		"item_info": item_info,  #更多详细的物品信息数据
 		"texture_data": texture_data,  #更多详细的物品信息数据
 	}
+	if show_more:
+		#更多详细的物品信息数据
+		result.set("item_info", item_info)
+
 	return result
 
 

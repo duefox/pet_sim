@@ -207,7 +207,6 @@ func _state_mating(delta: float):
 		_parent_pet.mate_coords = Vector2.ZERO
 		_parent_pet.show_mate_animate(false)
 		change_state(State.WANDERING)
-		print("mating_timeout_timer----------------------------")
 		return
 
 	# 当运动目标为空时，重置目标。**注意一定要这样做，宠物碰撞墙壁反弹会把目标置为空，不这样操作宠物就没目标位置就像漂浮一样

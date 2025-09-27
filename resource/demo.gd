@@ -3,7 +3,7 @@ extends Node
 
 func _ready():
 	# 预加载或加载你的自定义资源
-	var my_resource = preload("res://data/drop_data/fish_food0.tres")
+	var my_resource = preload("res://data/items/default.tres")
 	
 	# 获取资源的属性列表
 	var properties: Array = my_resource.get_property_list()
@@ -22,4 +22,3 @@ func _ready():
 			print("变量名称: ", name)
 			print("变量值: ", value)
 			print("变量类型: ", type_name)
-			print("----------------------")

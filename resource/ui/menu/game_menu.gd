@@ -108,6 +108,8 @@ func set_held_item_data(data: Dictionary, item_from: MultiGridContainer = null) 
 	held_item_from = item_from
 	# 设置拖动缩放，使得纹理略小于绿色区域
 	held_item.drag_texture_scale()
+	# 还原所有弹出层，除了布局栏
+	bar_state_machine.reset_all_popup()
 
 
 ## 将抓取的物品进行旋转同步(显示层)
@@ -121,6 +123,7 @@ func sync_held_item_rotation(org_item: WItem) -> void:
 func placement_overlay_process() -> void:
 	# 计算首部坐标偏移
 	var hand_pos: Vector2 = MouseEvent.mouse_cell_matrix.get_first_cell_pos_offset(held_item, MouseEvent.mouse_cell_pos)
+	#var hand_pos: Vector2 = MouseEvent.mouse_cell_matrix.get_first_cell_pos_offset(held_item, GlobalData.prent_cell_pos)
 	# 创建默认的放置提示颜色为红色
 	var color_type: int = MultiGridContainer.TYPE_COLOR.ERROR
 
@@ -145,9 +148,9 @@ func placement_overlay_process() -> void:
 			if MouseEvent.mouse_cell_matrix.scan_grid_map_area(hand_pos, held_item) and held_item_from.container_type == MouseEvent.mouse_cell_matrix.container_type:
 				# 扫描范围内的格子都为空，即代表允许放置物品，设提示为绿色
 				color_type = MultiGridContainer.TYPE_COLOR.SUCCESS
-	# 设置对应inventory内的放置提示框
+	# 设置对应多格容器内的放置提示框
 	MouseEvent.mouse_cell_matrix.set_placement_overlay(color_type, held_item, hand_pos)
-	#显示该放置提示框
+	# 显示该放置提示框
 	MouseEvent.mouse_cell_matrix.startup_placement_overlay()
 	#获取UI节点下的第一层子节点，遍历它们
 	for child in get_children():
@@ -188,6 +191,9 @@ func pick_up_item(data: Dictionary, cell_pos: Vector2, item_from: MultiGridConta
 
 ## 旋转物品
 func on_rotation_item_pressed() -> void:
+	## 单格容器不让旋转
+	#if MouseEvent.mouse_cell_matrix is SingleGridContainer:
+		#return
 	# 正在抓取物品时，按下键盘R键，进行旋转物品的操作
 	held_item.rotation_item()
 	set_held_item_position(MouseEvent.mouse_position)
@@ -226,21 +232,46 @@ func on_mouse_right_released() -> void:
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		MouseEvent.mouse_position = event.position
-		#当鼠标按下且鼠标状态为抓取物品时执行
+		# 当鼠标按下且鼠标状态为抓取物品时执行
 		if MouseEvent.is_mouse_down and MouseEvent.is_mouse_drag():
-			#将抓取物品的中心点与鼠标进行跟随(显示层)
+			# 将抓取物品的中心点与鼠标进行跟随(显示层)
 			set_held_item_position(event.position)
-			#当鼠标所点击的地方是不是无物品的时候执行
+			# 当鼠标所点击的地方是不是无物品的时候执行
 			if MouseEvent.mouse_is_effective:
-				#设置抓取物品的可视为真
+				# 设置抓取物品的可视为真
 				held_item.visible = true
-				#隐藏抓取物品的背景颜色
+				# 隐藏抓取物品的背景颜色
 				held_item.hide_bg_color()
-				#当进入的网格容器不一致或格子坐标和上一次不一致时，更新放置提示框(用于减少触发频率，显示层)
+				# 当进入的网格容器不一致或格子坐标和上一次不一致时，更新放置提示框(用于减少触发频率，显示层)
 				var bool_value: bool = MouseEvent.mouse_cell_matrix != GlobalData.previous_cell_matrix
+				# 获得当前鼠标所在格子的局部坐标
+				var item_data: WItemData = MouseEvent.mouse_cell_matrix.get_grid_map_item(MouseEvent.mouse_cell_pos)
+				var mouse_grid_offset: Vector2 = item_data.link_grid.get_local_mouse_position()
+				var grid_center: Vector2 = item_data.link_grid.get_grid_size() / 2.0
 				if MouseEvent.mouse_cell_pos != GlobalData.prent_cell_pos || bool_value:
-					GlobalData.prent_cell_pos = MouseEvent.mouse_cell_pos
-					placement_overlay_process()
+					# 切换提示层根据中心点偏移来计算
+					var can_switch: bool = false
+					# 左上角 (X < Center, Y < Center)
+					if mouse_grid_offset.x < grid_center.x and mouse_grid_offset.y < grid_center.y:
+						GlobalData.prent_cell_pos = MouseEvent.mouse_cell_pos
+						can_switch = true
+					# 左下角 (X < Center, Y > Center)
+					elif mouse_grid_offset.x < grid_center.x and mouse_grid_offset.y > grid_center.y:
+						GlobalData.prent_cell_pos = MouseEvent.mouse_cell_pos + Vector2(0.0, -1.0)
+						can_switch = true
+					# 右上角 (X > Center, Y < Center)
+					elif mouse_grid_offset.x > grid_center.x and mouse_grid_offset.y < grid_center.y:
+						GlobalData.prent_cell_pos = MouseEvent.mouse_cell_pos + Vector2(-1.0, 0.0)
+						can_switch = true
+					# 右下角 (X > Center, Y > Center)
+					elif mouse_grid_offset.x > grid_center.x and mouse_grid_offset.y > grid_center.y:
+						GlobalData.prent_cell_pos = MouseEvent.mouse_cell_pos - Vector2.ONE
+						can_switch = true
+					else:
+						can_switch = false
+					# 切换
+					if can_switch:
+						placement_overlay_process()
 
 
 ## 放置物品到多格容器

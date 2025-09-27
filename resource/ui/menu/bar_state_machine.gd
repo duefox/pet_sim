@@ -74,6 +74,12 @@ func initialize(state_machine: UIStateMachine):
 	change_state(State.DEFAULT)
 
 
+# 还原所有弹出层，除了布局栏
+func reset_all_popup() -> void:
+	task_bar.is_expand=false
+	
+
+
 ## 切换二级菜单状态的公共接口
 ## @param new_state: 目标状态 (使用 State 枚举)
 func change_state(new_state: int) -> void:
@@ -137,6 +143,7 @@ func _state_default() -> void:
 	layout_bar.visible = true
 	layout_bar.builds_visible = false
 	grid_box_bar.visible = true
+
 
 
 func _state_profile() -> void:

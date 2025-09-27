@@ -83,7 +83,7 @@ func _on_create_new_save() -> void:
 	# 初始化默认地图
 	if world_map_comp:
 		# 初始化地图数据
-		world_map_comp.init_data(player_info.get("map_size", Vector2i(38, 38)))
+		#world_map_comp.init_data(player_info.get("map_size", Vector2i(38, 38)))
 		pass
 
 	# 发送创建初始化地图成功信号

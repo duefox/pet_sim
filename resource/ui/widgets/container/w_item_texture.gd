@@ -112,8 +112,19 @@ func scale_texture(container_size: Vector2, item: WItem) -> void:
 
 
 ## 设置拖动缩放，使得纹理略小于绿色区域
-func drag_texture_scale(container_size: Vector2) -> void:
+func drag_texture_scale(item_type: int, orientation: int) -> void:
+	# 注意这里一定要等一帧，先让item_texture渲染完成才去计算缩放
+	await get_tree().process_frame
+	var container_size: Vector2 = item_texture.size
 	texture_margin.scale = Vector2.ONE * _drag_scale
 	var offset: Vector2 = (1.0 - _drag_scale) * container_size / 2.0
-	texture_margin.position = offset
+	if orientation == WItem.ORI.HOR:
+		texture_margin.position = offset * Vector2(1.0, -1.0)
+	else:
+		texture_margin.position = offset
 	texture_margin.size = container_size * _drag_scale
+
+	if item_type == BaseItemData.ItemType.BUILD or item_type == BaseItemData.ItemType.TERRIAIN:
+		item_border.visible = true
+	else:
+		item_border.visible = false

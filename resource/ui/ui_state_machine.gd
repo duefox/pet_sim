@@ -169,6 +169,8 @@ func on_escape_pressed() -> void:
 
 ## 新建存档信号
 func on_new_pressed() -> void:
+	if not current_state == State.MAIN_MENU:
+		return
 	# 游戏主场景菜单退出，以便之后可以任意地方创建新存档
 	game_main.exit_node()
 	# 清空数据

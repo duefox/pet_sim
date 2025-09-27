@@ -19,13 +19,6 @@ offset_right = 48.0
 offset_bottom = 48.0
 mouse_filter = 2
 
-[node name="ItemBorder" type="NinePatchRect" parent="TextureMargin"]
-unique_name_in_owner = true
-visible = false
-show_behind_parent = true
-custom_minimum_size = Vector2(64, 64)
-layout_mode = 2
-
 [node name="CenterContainer" type="CenterContainer" parent="TextureMargin"]
 layout_mode = 2
 mouse_filter = 2
@@ -35,3 +28,9 @@ unique_name_in_owner = true
 layout_mode = 2
 mouse_filter = 2
 texture = SubResource("AtlasTexture_1r2yy")
+
+[node name="ItemBorder" type="NinePatchRect" parent="TextureMargin"]
+unique_name_in_owner = true
+visible = false
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2

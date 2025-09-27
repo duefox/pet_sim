@@ -56,7 +56,7 @@ region = Rect2(32, 32, 32, 32)
 atlas = ExtResource("4_hkbts")
 region = Rect2(160, 64, 32, 32)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jckig"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lxnp4"]
 
 [node name="LayoutBar" type="Control"]
 layout_mode = 3
@@ -107,7 +107,8 @@ patch_margin_bottom = 10
 
 [node name="GridMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer/MarginContainer2"]
 layout_mode = 2
-size_flags_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -211,12 +212,13 @@ theme_override_constants/margin_left = 12
 
 [node name="BtnSort" type="Button" parent="MarginContainer/VBoxContainer/BtnMargin/HBoxContainer/MarginContainer2"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_jckig")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_lxnp4")
 text = "整理"
 script = ExtResource("7_g5rs6")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
