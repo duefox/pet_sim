@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvxwhkwhwxxc0"]
+
+[ext_resource type="PackedScene" uid="uid://dd0inoc7map8p" path="res://resource/ui/widgets/container/w_item.tscn" id="1_c3e11"]
+[ext_resource type="Texture2D" uid="uid://3ahyibf0wao7" path="res://assets/textures/builds/borders/tank10.png" id="2_vfgws"]
+
+[node name="WItem" instance=ExtResource("1_c3e11")]
+
+[node name="ItemTexture" parent="ItemContainer/BGColor/TextureContainer" index="0"]
+visible = false
+
+[node name="ItemNumLabel" parent="ItemContainer/MarginContainer/NumMargin" index="0"]
+visible = false
+
+[node name="ItemBorder" parent="ItemContainer/BorderMargin" index="0"]
+visible = true
+texture = ExtResource("2_vfgws")
+patch_margin_left = 0
+patch_margin_top = 0
+patch_margin_right = 0
+patch_margin_bottom = 0

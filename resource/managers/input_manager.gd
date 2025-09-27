@@ -65,6 +65,11 @@ func _input(event: InputEvent):
 			# 发出拖动信号，并传递鼠标的相对移动量
 			pan_dragged.emit(event.relative)
 
+		## 组合键 空格+鼠标左键
+		if Input.is_action_pressed("keyboard_space") and Input.is_action_pressed("mouse_left"):
+			# 发出拖动信号，并传递鼠标的相对移动量
+			pan_dragged.emit(event.relative)
+
 	# 如果是Esc键，发出返回信号
 	if Input.is_action_just_pressed("keyboard_esc"):
 		escape_pressed.emit()

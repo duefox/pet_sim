@@ -1,9 +1,9 @@
 [gd_scene load_steps=13 format=3 uid="uid://btkafvb6kvaga"]
 
 [ext_resource type="Script" uid="uid://b1q1oyetm8dd8" path="res://resource/container/pet_container.gd" id="1_k2uak"]
-[ext_resource type="Resource" uid="uid://nc4ypekgcowp" path="res://data/drops/fish_food0.tres" id="2_jyjxn"]
+[ext_resource type="Resource" uid="uid://nc4ypekgcowp" path="res://data/items/drops/fish_food0.tres" id="2_jyjxn"]
 [ext_resource type="PackedScene" uid="uid://ytui6fhuudad" path="res://resource/droppable/food.tscn" id="3_013c3"]
-[ext_resource type="Texture2D" uid="uid://4qsn7ar88663" path="res://assets/images/wall/Wall_01.png" id="4_4o1vb"]
+[ext_resource type="Texture2D" uid="uid://dt6dpki3lco1f" path="res://assets/images/wall/Wall_02.png" id="4_rwnhe"]
 [ext_resource type="Shader" uid="uid://c25wsf7t3on1f" path="res://shaders/water_wave.gdshader" id="5_ueymg"]
 [ext_resource type="Texture2D" uid="uid://cfac0ov46o7qx" path="res://assets/images/water/Water_63.png" id="6_fll12"]
 [ext_resource type="Texture2D" uid="uid://dsydxx25ntx36" path="res://assets/images/tank/fishTank1.png" id="7_b0sr5"]
@@ -56,10 +56,9 @@ drop_scene = ExtResource("3_013c3")
 drop_data = ExtResource("2_jyjxn")
 
 [node name="WallBG" type="Sprite2D" parent="."]
-position = Vector2(532, 301)
-scale = Vector2(0.677315, 0.677315)
-texture = ExtResource("4_4o1vb")
-metadata/_edit_lock_ = true
+position = Vector2(560, 424.00006)
+scale = Vector2(1.1658059, 1.1658059)
+texture = ExtResource("4_rwnhe")
 
 [node name="ContentsNode" type="Node2D" parent="."]
 y_sort_enabled = true

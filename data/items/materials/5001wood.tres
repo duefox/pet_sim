@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BuildData" load_steps=3 format=3 uid="uid://j0v2mdffnu3q"]
+
+[ext_resource type="Script" uid="uid://cohsvmhhen5pn" path="res://resource/data/material_data.gd" id="1_q4vos"]
+[ext_resource type="Texture2D" uid="uid://1d5op60h1wgm" path="res://assets/textures/materials.png" id="2_xny43"]
+
+[resource]
+script = ExtResource("1_q4vos")
+body_size = 0
+id = &"5001"
+item_type = 4
+nickname = "水杉木"
+descrip = "水杉木"
+texture = ExtResource("2_xny43")
+hframes = 6
+vframes = 8
+frame = 47
+stackable = true
+max_stack_size = 999
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

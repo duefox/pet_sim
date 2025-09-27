@@ -15,11 +15,11 @@ region = Rect2(9, 301, 481, 157)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ya4ey"]
 atlas = ExtResource("3_bfd6o")
-region = Rect2(160, 0, 32, 32)
+region = Rect2(192, 32, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_eb6dy"]
 atlas = ExtResource("3_bfd6o")
-region = Rect2(128, 0, 32, 32)
+region = Rect2(160, 32, 32, 32)
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_jkv2x"]
 

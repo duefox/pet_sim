@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="FishData" load_steps=5 format=3 uid="uid://b3ri0juh20ywa"]
+
+[ext_resource type="Texture2D" uid="uid://m8m8ywh10fyi" path="res://assets/textures/aquatic/water/bubblefish_adult_96x96.png" id="1_i1kh1"]
+[ext_resource type="Resource" uid="uid://txupj3tcb1r5" path="res://data/items/drops/fish_egg0.tres" id="2_et63q"]
+[ext_resource type="Script" uid="uid://c1cfnn80q7lso" path="res://resource/data/fish_data.gd" id="3_bh13m"]
+[ext_resource type="Texture2D" uid="uid://cewk86mrkx1pw" path="res://assets/textures/aquatic/water/bubblefish_48x48.png" id="4_kitgs"]
+
+[resource]
+script = ExtResource("3_bh13m")
+speed = 80.0
+initial_angle = null
+excretion_interval = 60.0
+descendant_res = ExtResource("2_et63q")
+live_layer = 0
+id = &"1001"
+nickname = "泡泡鱼"
+descrip = "外形像一串透明的蓝色气泡。"
+base_price = 5.0
+texture = ExtResource("4_kitgs")
+adult_texture = ExtResource("1_i1kh1")
+width = 2
+height = 2
+metadata/_custom_type_script = "uid://c1cfnn80q7lso"

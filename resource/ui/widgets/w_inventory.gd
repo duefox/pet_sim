@@ -9,6 +9,13 @@ class_name WInventory
 
 
 func _ready() -> void:
+	# 设置多格容器的大小
+	if GlobalData.player.player_info:
+		var box_size: Vector2i = GlobalData.player.player_info.get("inven_size", Vector2i(10, 16))
+		inventory.grid_col = box_size.x
+		inventory.grid_row = box_size.y
+	# 渲染格子
+	inventory.render_grid()
 	var grid_size: Vector2 = inventory.grid_size
 	inventory.custom_minimum_size = grid_size + Vector2(0.0, 24.0)
 	name = &"Inventory"
@@ -35,7 +42,7 @@ func _on_btn_sort_pressed() -> void:
 ## tab页切换
 func _on_inven_tab_changed(tab: int) -> void:
 	# check box 显示更新
-	
+
 	# 仓库容器中的items过滤更新
 	pass  # Replace with function body.
 

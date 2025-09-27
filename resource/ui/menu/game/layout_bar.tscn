@@ -1,9 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://b8enko0du1yd1"]
+[gd_scene load_steps=20 format=3 uid="uid://b8enko0du1yd1"]
 
 [ext_resource type="Script" uid="uid://kmbaqio8d8b6" path="res://resource/ui/menu/game/layout_bar.gd" id="1_hkbts"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_jckig"]
+[ext_resource type="PackedScene" uid="uid://b1ihuvsoodjhc" path="res://resource/ui/widgets/single_grid_container.tscn" id="3_4mrxu"]
 [ext_resource type="Texture2D" uid="uid://b8qewc5715p8w" path="res://assets/ui/icons/icon_32.png" id="4_hkbts"]
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="5_3auqv"]
+[ext_resource type="Texture2D" uid="uid://vssvaih5jx2n" path="res://assets/ui/icons/icon_small.png" id="6_jckig"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="7_g5rs6"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_c0qi4"]
@@ -17,7 +19,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4mrxu"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jckig"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -30,11 +32,31 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jckig"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gaguq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u3b0f"]
+atlas = ExtResource("4_hkbts")
+region = Rect2(160, 64, 32, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u3b0f"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jckig"]
+atlas = ExtResource("6_jckig")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_llukx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gaguq"]
+atlas = ExtResource("6_jckig")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3auqv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8vwas"]
 atlas = ExtResource("4_hkbts")
 region = Rect2(160, 64, 32, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jckig"]
 
 [node name="LayoutBar" type="Control"]
 layout_mode = 3
@@ -43,6 +65,7 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 grow_vertical = 0
 size_flags_vertical = 8
+mouse_filter = 1
 script = ExtResource("1_hkbts")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -63,22 +86,18 @@ layout_mode = 2
 
 [node name="BuildsMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/margin_bottom = 4
 
-[node name="TabContainer" type="TabContainer" parent="MarginContainer/VBoxContainer/BuildsMargin"]
-custom_minimum_size = Vector2(760, 0)
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BuildsMargin"]
 layout_mode = 2
-current_tab = 0
 
-[node name="Builds" type="MarginContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer"]
 layout_mode = 2
-metadata/_tab_index = 0
 
-[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer/Builds"]
-custom_minimum_size = Vector2(320, 100)
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer/MarginContainer2"]
+custom_minimum_size = Vector2(144, 180)
 layout_mode = 2
 texture = SubResource("AtlasTexture_c0qi4")
 patch_margin_left = 10
@@ -86,43 +105,87 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer/Builds"]
+[node name="GridMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer/MarginContainer2"]
 layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
 
-[node name="Device" type="PanelContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer"]
-visible = false
+[node name="Landscape" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer/MarginContainer2/GridMargin" instance=ExtResource("3_4mrxu")]
+unique_name_in_owner = true
 layout_mode = 2
-metadata/_tab_index = 1
+grid_row = 10
+grid_col = 2
+max_scroll_grid = 10
+container_type = 1
 
-[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer/Device"]
-custom_minimum_size = Vector2(320, 100)
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer"]
 layout_mode = 2
-texture = SubResource("AtlasTexture_c0qi4")
-patch_margin_left = 10
-patch_margin_top = 10
-patch_margin_right = 10
-patch_margin_bottom = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
 
-[node name="Lanscape" type="PanelContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer"]
-visible = false
+[node name="TabBarBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer/MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
-metadata/_tab_index = 2
+alignment = 2
 
-[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/VBoxContainer/BuildsMargin/TabContainer/Lanscape"]
-custom_minimum_size = Vector2(320, 100)
+[node name="BtnLandscape" type="Button" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer/MarginContainer/TabBarBox"]
+unique_name_in_owner = true
 layout_mode = 2
-texture = SubResource("AtlasTexture_c0qi4")
-patch_margin_left = 10
-patch_margin_top = 10
-patch_margin_right = 10
-patch_margin_bottom = 10
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gaguq")
+toggle_mode = true
+icon = SubResource("AtlasTexture_u3b0f")
+icon_alignment = 1
+script = ExtResource("7_g5rs6")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[node name="BtnDevice" type="Button" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer/MarginContainer/TabBarBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_u3b0f")
+toggle_mode = true
+icon = SubResource("AtlasTexture_jckig")
+icon_alignment = 1
+script = ExtResource("7_g5rs6")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[node name="BtnBuild" type="Button" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer/MarginContainer/TabBarBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_llukx")
+toggle_mode = true
+button_pressed = true
+icon = SubResource("AtlasTexture_gaguq")
+icon_alignment = 1
+script = ExtResource("7_g5rs6")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
 [node name="BtnMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 8
 
-[node name="BtnLayout" type="Button" parent="MarginContainer/VBoxContainer/BtnMargin"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/BtnMargin"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/BtnMargin/HBoxContainer"]
+layout_mode = 2
+
+[node name="BtnLayout" type="Button" parent="MarginContainer/VBoxContainer/BtnMargin/HBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
@@ -130,14 +193,32 @@ tooltip_text = "布局建筑、设备和造景
 快捷键 [b][color=white]L[/color][/b]ayout
 "
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_4mrxu")
-theme_override_styles/hover = SubResource("StyleBoxFlat_4mrxu")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_4mrxu")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_jckig")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3auqv")
 icon = SubResource("AtlasTexture_8vwas")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("7_g5rs6")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/BtnMargin/BtnLayout" to="." method="_on_btn_layout_pressed"]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/BtnMargin/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/margin_left = 12
+
+[node name="BtnSort" type="Button" parent="MarginContainer/VBoxContainer/BtnMargin/HBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jckig")
+text = "整理"
+script = ExtResource("7_g5rs6")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/BtnMargin/HBoxContainer/MarginContainer/BtnLayout" to="." method="_on_btn_layout_pressed"]

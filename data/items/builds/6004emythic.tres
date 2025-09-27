@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BuildData" load_steps=5 format=3 uid="uid://bj42ltwd5slgg"]
+
+[ext_resource type="Texture2D" uid="uid://bv30cet0fkste" path="res://assets/textures/builds/foregounded1.png" id="1_0yb58"]
+[ext_resource type="Texture2D" uid="uid://dc1iaf222k3qw" path="res://assets/textures/landscapes/wall_01.png" id="2_5oij8"]
+[ext_resource type="Script" uid="uid://coxquhhqar1y8" path="res://resource/data/build_data.gd" id="3_k2tu8"]
+[ext_resource type="Texture2D" uid="uid://bahcwlhfhjcc2" path="res://assets/textures/builds/6004.png" id="4_0yb58"]
+
+[resource]
+script = ExtResource("3_k2tu8")
+build_type = 1
+id = &"6004"
+item_type = 5
+item_level = 3
+nickname = "传说水族箱"
+texture = ExtResource("4_0yb58")
+pupa_texture = ExtResource("2_5oij8")
+adult_texture = ExtResource("1_0yb58")
+hframes = 1
+height = 6
+width = 10
+metadata/_custom_type_script = "uid://coxquhhqar1y8"

@@ -16,8 +16,9 @@ enum State {
 @onready var main_menu: MainMenu = $MainMenu
 @onready var save_load_menu: SaveLoadMenu = $SaveLoadMenu
 @onready var settings_memu: SettingsMemu = $SettingsMemu
-@onready var game_menu: GameMenu = $GameMenu
 @onready var new_game_menu: NewGameMenu = $NewGameMenu
+@onready var game_main: GameMain = $GameMain
+@onready var cmd_line: CMDLine = %CMDLine
 
 # 存储当前状态
 var current_state: int = State.NONE
@@ -32,10 +33,10 @@ func _ready():
 	ui_nodes[State.MAIN_MENU] = main_menu
 	ui_nodes[State.SAVE_LOAD_MENU] = save_load_menu
 	ui_nodes[State.SETTINGS] = settings_memu
-	ui_nodes[State.GAME_MENU] = game_menu
+	ui_nodes[State.GAME_MENU] = game_main
 	ui_nodes[State.NEW_GAME_MENU] = new_game_menu
 	# 初始化时隐藏所有 UI
-	for node: BaseMenu in ui_nodes.values():
+	for node: Control in ui_nodes.values():
 		# 初始自己的状态机
 		node.initialize(self)
 		# 隐藏UI
@@ -70,6 +71,12 @@ func change_state(new_state: int) -> void:
 
 	# 更新加载菜单的按钮显示
 	save_load_menu.update_display()
+	# 显示游戏场景菜单
+	if current_state == State.GAME_MENU:
+		game_main.load_game_menu()
+		cmd_line.visible = true
+	else:
+		cmd_line.visible = false
 
 
 ## 恢复之前的状态
@@ -160,8 +167,13 @@ func on_escape_pressed() -> void:
 	recover_state()
 
 
-## 新建信号
+## 新建存档信号
 func on_new_pressed() -> void:
+	# 游戏主场景菜单退出，以便之后可以任意地方创建新存档
+	game_main.exit_node()
+	# 清空数据
+	GlobalData.player.clear_all()
+	# 切换状态
 	change_state(State.NEW_GAME_MENU)
 
 
@@ -194,11 +206,18 @@ func on_setting_pressed() -> void:
 func on_enter_pressed() -> void:
 	if current_state == State.MAIN_MENU:
 		get_tree().quit()
+	elif current_state == State.GAME_MENU:
+		cmd_line.submit_command()
 
 
 ## 退回到主菜单
 func on_quit_pressed() -> void:
+	# 注意这里一定要等1帧，先让子状态机处理完成后才处理父状态机的状态
+	await get_tree().process_frame
+	if not current_state == State.SAVE_LOAD_MENU:
+		return
 	# 清空数据
 	GlobalData.player.clear_all()
+	game_main.exit_node()
 	# 切换状态
 	change_state(State.MAIN_MENU)

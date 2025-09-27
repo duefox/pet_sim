@@ -1,8 +1,13 @@
 ## 全局资源和变量管理类
 extends Node
 
-## 默认数据（方便调试）
-const DEFAULT_RES: Resource = preload("res://data/default.tres")
+## 物品级别背景色
+const LEVEL_BG_COLOR: Dictionary = {
+	0: Color("ffffff00"),  # 普通
+	1: Color("F0C050"),  # 稀有  #FFFF00
+	2: Color("00BFFF"),  # 罕见
+	3: Color("A335EE"),  # 传说
+}
 
 ## 游戏玩家
 var player: Player
@@ -17,13 +22,20 @@ var is_popup: bool = false
 #region 预加载资源相关变量
 ## @param StringName 物品的唯一id
 ## @param String 物品的资源路径
+## 除宠物之外的所有物品资源
 var all_res: Dictionary[StringName,String] = {}
+## 宠物资源
+var pet_res: Dictionary[StringName,String] = {}
+## 建筑边框
+var border_res: Dictionary[StringName,String] = {}
 #endregion
 
 #region 背包容器相关变量
 
 ## 全局多格容器的格子大小
 var cell_size: int = 48
+## 全局单格容器的格子大小
+var single_cell_size: int = 64
 ## 游戏主场景中菜单UI节点的引用
 var ui: GameMenu
 ## 上一次操作的物品节点(引用)
@@ -42,6 +54,7 @@ var data: Dictionary[String,Dictionary]
 
 ## 弹窗场景
 var _confirm: WConfirm
+
 
 ## 创建纹理表的内容单元（这些数据用于背包显示）
 func create_textures_item(res_data: Resource = null) -> void:
@@ -97,11 +110,3 @@ func close_prompt() -> void:
 		is_popup = false
 		if is_instance_valid(_confirm):
 			_confirm.queue_free()
-
-
-## 获取窗口的大小
-func get_win_size() -> Vector2:
-	var viewport_width: int = ProjectSettings.get_setting("display/window/size/viewport_width", 1152)
-	var viewport_height: int = ProjectSettings.get_setting("display/window/size/viewport_height", 648)
-	var viewport_scale: float = ProjectSettings.get_setting("display/window/stretch/scale", 1.0)
-	return Vector2(viewport_width, viewport_height) / viewport_scale

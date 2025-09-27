@@ -1,0 +1,135 @@
+[gd_scene load_steps=7 format=3 uid="uid://bytdhlubgfajx"]
+
+[ext_resource type="Script" uid="uid://dkd6tbuu67lws" path="res://resource/ui/cmd_line.gd" id="1_lj2nn"]
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="2_ywe7h"]
+[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="3_np2ca"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("2_ywe7h")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jckig"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0l0p3"]
+
+[node name="CMDLine" type="MarginContainer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -401.0
+offset_top = -165.0
+offset_right = 401.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_constants/margin_bottom = 100
+script = ExtResource("1_lj2nn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="BagMargin" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="BagOption" type="OptionButton" parent="HBoxContainer/BagMargin"]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+selected = 1
+item_count = 5
+popup/item_0/text = "快捷栏"
+popup/item_0/id = 0
+popup/item_1/text = "背包"
+popup/item_1/id = 1
+popup/item_2/text = "仓库"
+popup/item_2/id = 2
+popup/item_3/text = "地图"
+popup/item_3/id = 3
+popup/item_4/text = "布局"
+popup/item_4/id = 4
+
+[node name="LevelMargin" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="LevelOption" type="OptionButton" parent="HBoxContainer/LevelMargin"]
+custom_minimum_size = Vector2(132, 0)
+layout_mode = 2
+selected = 0
+item_count = 4
+popup/item_0/text = "普通"
+popup/item_0/id = 0
+popup/item_1/text = "稀有"
+popup/item_1/id = 1
+popup/item_2/text = "罕见"
+popup/item_2/id = 2
+popup/item_3/text = "传说"
+popup/item_3/id = 3
+
+[node name="IDMargin" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="IDEdit" type="LineEdit" parent="HBoxContainer/IDMargin"]
+custom_minimum_size = Vector2(200, 48)
+layout_mode = 2
+theme_override_colors/font_placeholder_color = Color(0.136826, 0.136826, 0.136826, 0.6)
+placeholder_text = "输入物品代码"
+alignment = 1
+
+[node name="NumSpinMargin" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="NumSpin" type="SpinBox" parent="HBoxContainer/NumSpinMargin"]
+layout_mode = 2
+min_value = 1.0
+max_value = 999.0
+value = 1.0
+alignment = 1
+
+[node name="GrowMargin" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="GrowOption" type="OptionButton" parent="HBoxContainer/GrowMargin"]
+layout_mode = 2
+selected = 0
+item_count = 2
+popup/item_0/text = "成年"
+popup/item_0/id = 0
+popup/item_1/text = "幼体"
+popup/item_1/id = 1
+
+[node name="BtnMargin" type="MarginContainer" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="BtnAdd" type="Button" parent="HBoxContainer/BtnMargin"]
+custom_minimum_size = Vector2(72, 0)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0l0p3")
+text = "添加"
+script = ExtResource("3_np2ca")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[connection signal="item_selected" from="HBoxContainer/BagMargin/BagOption" to="." method="_on_bag_option_item_selected"]
+[connection signal="item_selected" from="HBoxContainer/LevelMargin/LevelOption" to="." method="_on_level_option_item_selected"]
+[connection signal="text_changed" from="HBoxContainer/IDMargin/IDEdit" to="." method="_on_id_edit_text_changed"]
+[connection signal="value_changed" from="HBoxContainer/NumSpinMargin/NumSpin" to="." method="_on_num_spin_value_changed"]
+[connection signal="item_selected" from="HBoxContainer/GrowMargin/GrowOption" to="." method="_on_grow_option_item_selected"]
+[connection signal="pressed" from="HBoxContainer/BtnMargin/BtnAdd" to="." method="_on_btn_add_pressed"]

@@ -51,13 +51,13 @@ func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if not MouseEvent.is_mouse_drag():
 			if event.is_action_pressed("mouse_left"):
-				_handle_mouse_left()
+				_handle_mouse_left(event)
 			elif event.is_action_pressed("mouse_right"):
 				_handle_mouse_right()
 
 
 ## 处理鼠标单击事件
-func _handle_mouse_left() -> void:
+func _handle_mouse_left(event: InputEventMouseButton) -> void:
 	## 鼠标在物品节点范围内，按下左键，则更改鼠标的状态为抓取物品
 	GlobalData.previous_cell_matrix = parent_cell_matrix
 	var cur_item_data: WItemData = parent_cell_matrix.get_grid_map_item(cell_pos)
@@ -67,11 +67,11 @@ func _handle_mouse_left() -> void:
 		## 地形物品点击，大型显示详细信息，小型直接拾取
 		if cur_item.item_type == BaseItemData.ItemType.TERRIAIN:
 			if cur_item.item_info.get("body_size", 0) == BaseItemData.BodySize.BIG:
-				print("显示详细信息")
-				pass
+				#print("显示详细信息")
+				GlobalData.ui.show_terrian_attribute(cur_item.get_data(), event.global_position)
 			else:
-				print("直接拾取")
-				pass
+				#print("直接拾取")
+				GlobalData.ui.pick_up_item(cur_item.get_data(), cell_pos, parent_cell_matrix)
 
 		var can_drag: bool = cur_item.get_data().get("item_info").get("can_drag", true)
 		if not can_drag:

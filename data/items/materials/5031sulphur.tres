@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MaterialData" load_steps=3 format=3 uid="uid://cjqucau0bfxic"]
+
+[ext_resource type="Script" uid="uid://cohsvmhhen5pn" path="res://resource/data/material_data.gd" id="1_shyqi"]
+[ext_resource type="Texture2D" uid="uid://1d5op60h1wgm" path="res://assets/textures/materials.png" id="2_yowkg"]
+
+[resource]
+script = ExtResource("1_shyqi")
+id = &"5031"
+item_type = 4
+nickname = "硫磺"
+descrip = "硫磺"
+texture = ExtResource("2_yowkg")
+hframes = 6
+vframes = 8
+frame = 17
+stackable = true
+max_stack_size = 999
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

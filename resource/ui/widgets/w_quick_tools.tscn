@@ -23,7 +23,7 @@ texture = ExtResource("3_nijvm")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_m47no"]
 texture = ExtResource("2_ycsxv")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kth44"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nijvm"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
 texture = ExtResource("9_nijvm")
@@ -32,7 +32,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n5nyd"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jckig"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -45,7 +45,7 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rb4uc"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2g7nd"]
 
 [node name="WQuickTools" type="Control"]
 layout_mode = 3
@@ -98,7 +98,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_hxv3c")
 theme_override_styles/pressed = SubResource("StyleBoxTexture_ihut6")
 theme_override_styles/hover = SubResource("StyleBoxTexture_uf7ap")
 theme_override_styles/disabled = SubResource("StyleBoxTexture_m47no")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kth44")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nijvm")
 text = "快
 捷"
 icon_alignment = 1
@@ -143,10 +143,10 @@ size_flags_vertical = 4
 custom_minimum_size = Vector2(0, 56)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_n5nyd")
-theme_override_styles/hover = SubResource("StyleBoxFlat_n5nyd")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_n5nyd")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_rb4uc")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2g7nd")
 text = "下一天"
 script = ExtResource("10_2g7nd")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"

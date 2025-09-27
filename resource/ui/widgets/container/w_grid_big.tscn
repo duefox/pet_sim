@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6qr5ior72ml7"]
+
+[ext_resource type="PackedScene" uid="uid://cyns0gvci50ah" path="res://resource/ui/widgets/container/w_grid.tscn" id="1_umce2"]
+[ext_resource type="Texture2D" uid="uid://be2c5rdyhq4y" path="res://assets/ui/grid_96.png" id="2_umce2"]
+
+[node name="WGrid" instance=ExtResource("1_umce2")]
+texture = ExtResource("2_umce2")

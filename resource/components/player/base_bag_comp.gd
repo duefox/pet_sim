@@ -10,46 +10,46 @@ var items_data: Array[Dictionary] = []
 ## @param item_id: 物品id
 ## @param item_num: 物品数量
 ## @param extra_args: 物品额外参数
-func add_item(item_id: String, item_num: int, extra_args: Dictionary = {}) -> bool:
+## @param head_pos: 物品坐标
+func add_item(item_id: String, item_num: int, extra_args: Dictionary = {}, head_pos: Vector2 = -Vector2.ONE) -> bool:
 	# 仅在此处调用一次，获取物品完整数据
 	var item_dict = GlobalData.find_item_data(item_id)
 	if item_dict.is_empty():
 		return false
 
 	var remaining_num: int = item_num
-	var added_successfully: bool = false
+	var added_success: bool = false
+
+	# 确保extra_args中的item_level存在，默认item_dict的值，item_dict的值大于extra_args的键值也设置为默认
+	if extra_args.is_empty():
+		extra_args.set("item_level", item_dict.get("item_level", 0))
+		extra_args.set("growth", item_dict.get("growth", 0))
+	else:
+		if item_dict.get("item_level", 0) > extra_args.get("item_level", 0):
+			extra_args.set("item_level", item_dict.get("item_level", 0))
+		if item_dict.get("growth", 0) > extra_args.get("growth", 0):
+			extra_args.set("growth", item_dict.get("growth", 0))
 
 	# 如果是可堆叠物品，先尝试堆叠
 	if item_dict.stackable:
-		# 确保extra_args中的item_level存在，否则默认为0
-		if extra_args.is_empty() or not extra_args.has("item_level"):
-			extra_args.set("item_level", 0)
-
-		# 调用堆叠方法，并将max_stack_size作为参数传递
+		# 调用堆叠方法，并将max_stack_size作为参数传递，返回值是堆叠满后剩余的值，##注意本函数会自动操作已有的数据。##
 		remaining_num = _find_stackable_data(item_id, remaining_num, extra_args.get("item_level"), item_dict.max_stack_size)
 
 	# 如果仍有剩余数量，将剩余物品作为新物品添加到背包
 	while remaining_num > 0:
 		var new_stack_size = min(remaining_num, item_dict.max_stack_size)
 		remaining_num -= new_stack_size
-
 		# 创建新物品数据字典
-		var new_item_data_dict = {
-			"id": item_id,
-			"num": new_stack_size,
-			"extra_args": extra_args,
-			# 将head_position设置为占位符，UI层会根据此值来寻找空位
-			"head_position": Vector2(-1, -1)
-		}
-
+		var new_item_data_dict = {"id": item_id, "num": new_stack_size, "extra_args": extra_args, "head_position": Vector2(-1, -1)}
+		if not head_pos == -Vector2.ONE:
+			new_item_data_dict.set("head_position", head_pos)
 		items_data.append(new_item_data_dict)
-		added_successfully = true
+		added_success = true
 
 	# 当数据发生变化时，通过事件总线通知所有订阅者
 	emit_changed_event(items_data)
-
 	# 如果所有物品都成功添加或堆叠，则返回true
-	return added_successfully or item_num == 0
+	return added_success or remaining_num == 0
 
 
 ## 清空组件数据
@@ -57,6 +57,11 @@ func clear_all_data() -> void:
 	print("clear_all_data")
 	items_data.clear()
 	# 数据清空完毕后，也需要发出事件，让UI更新
+	emit_changed_event(items_data)
+
+
+## 手动刷新数据
+func reflush_data() -> void:
 	emit_changed_event(items_data)
 
 
@@ -95,7 +100,7 @@ func emit_changed_event(_data: Array[Dictionary]) -> void:
 
 ## 第一次创建存档的时候默认创建数据
 ## 虚函数，具体实现见子类
-func init_data() -> void:
+func init_data(_gird_size: Vector2 = Vector2.ZERO) -> void:
 	pass
 
 

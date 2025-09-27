@@ -24,19 +24,7 @@ var _backpack: MultiGridContainer
 ## 快捷栏容器
 var _quick_tools: MultiGridContainer
 
-#region 命令行相关变量
-## 当前要添加物品的背包
-var _cur_bag: MultiGridContainer
-## 物品id
-var _item_id: String = ""
-## 物品数量
-var _item_num: int = 1
-## 物品级别
-var _item_level: int = 0
-## 成长值
-var _item_grow: float = 100.0
 
-#endregion
 
 ## 设置网格容器的显示模式
 var grid_mode: GridDisplayMode:
@@ -54,6 +42,7 @@ func _ready() -> void:
 	quick_tool_margin.add_child(w_quick_tools)
 	initialize()
 	# 订阅总线事件
+	EventManager.subscribe(UIEvent.UPDATE_PLAYER_INFO, _on_update_player_info)
 	EventManager.subscribe(UIEvent.SUB_ITEM, _on_sub_item)
 	EventManager.subscribe(UIEvent.BACKPACK_CHANGED, _on_backpack_changed)
 	EventManager.subscribe(UIEvent.INVENTORY_CHANGED, _on_inventory_changed)
@@ -67,6 +56,7 @@ func _exit_tree() -> void:
 	EventManager.unsubscribe(UIEvent.BACKPACK_CHANGED, _on_backpack_changed)
 	EventManager.unsubscribe(UIEvent.INVENTORY_CHANGED, _on_inventory_changed)
 	EventManager.unsubscribe(UIEvent.QUICK_TOOLS_CHANGED, _on_quick_tools_changed)
+	EventManager.unsubscribe(UIEvent.UPDATE_PLAYER_INFO, _on_update_player_info)
 
 
 func initialize() -> void:
@@ -74,8 +64,6 @@ func initialize() -> void:
 	_inventory = get_inventory()
 	_backpack = get_backpack()
 	_quick_tools = get_quick_tools()
-	# 命令行设置快捷栏为当前背包
-	_cur_bag = _backpack
 
 
 ## 获得仓库容器
@@ -108,13 +96,19 @@ func _setter_grid_mode(value: GridDisplayMode) -> void:
 		w_inventory.visible = false
 		w_backpack.visible = true
 		w_quick_tools.visible = true
-	# 发送信号
-	#state_switch.emit(self, grid_mode)
-
+	
 
 ## 下一天
 func _on_next_day_pressed() -> void:
 	state_machine.on_new_pressed()
+
+
+## 更新玩家3个背包的数据（背包大小可以升级的）
+func _on_update_player_info() -> void:
+	var player_info: Dictionary = GlobalData.player.player_info
+	_inventory.render_grid(player_info.get("inven_size", Vector2i(_inventory.grid_row, _inventory.grid_col)))
+	_backpack.render_grid(player_info.get("bag_size", Vector2i(_backpack.grid_row, _backpack.grid_col)))
+	_quick_tools.render_grid(player_info.get("qt_size", Vector2i(_quick_tools.grid_row, _quick_tools.grid_col)))
 
 
 ## 背包物品更新
@@ -221,69 +215,3 @@ func open_inventory() -> void:
 
 
 #endregion
-
-#region 命令行事件
-
-
-func _on_bag_option_item_selected(index: int) -> void:
-	if index == 0:
-		_cur_bag = _quick_tools
-	elif index == 1:
-		_cur_bag = _backpack
-	elif index == 2:
-		_cur_bag = _inventory
-
-
-func _on_level_option_item_selected(index: int) -> void:
-	_item_level = index
-
-
-func _on_id_edit_text_changed(new_text: String) -> void:
-	_item_id = new_text
-
-
-func _on_num_spin_value_changed(value: float) -> void:
-	_item_num = int(value)
-
-
-func _on_grow_option_item_selected(index: int) -> void:
-	if index == 0:
-		_item_grow = 100.0
-	else:
-		_item_grow = 0.0
-
-
-## enter提交命令
-func submit_command() -> void:
-	_on_btn_add_pressed()
-
-
-## 提交命令行代码
-func _on_btn_add_pressed() -> void:
-	if not _item_id.length() == 4:
-		print("无效代码，正在打印孤儿节点->")
-		Window.print_orphan_nodes()
-		return
-	_cmd_add_item(_item_id, _item_num, _item_level, _item_grow)
-
-
-#endregion
-
-
-## 命令行添加物品
-func _cmd_add_item(item_id: String, item_num: int, item_level: int, item_grow: float) -> void:
-	# 附加额外属性
-	var extra_args: Dictionary = {
-		"item_level": item_level,
-		"growth": item_grow,
-	}
-	#_cur_bag.cmd_add_item(item_id, item_num, extra_args)
-	if not GlobalData.player:
-		return
-		
-	if _cur_bag == _backpack:
-		GlobalData.player.backpack_comp.add_item(item_id, item_num, extra_args)
-	elif _cur_bag == _inventory:
-		GlobalData.player.inventory_comp.add_item(item_id, item_num, extra_args)
-	elif _cur_bag == _quick_tools:
-		GlobalData.player.quick_tools_comp.add_item(item_id, item_num, extra_args)

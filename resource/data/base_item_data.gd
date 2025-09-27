@@ -45,9 +45,9 @@ enum BodySize { SMALL, MIDDLE, BIG }
 @export_group("Texture & Aimate")
 ##  基础贴图，默认
 @export var texture: Texture2D
-##  宠物虫蛹形变贴图（部分宠物有形变的中间态）
+##  宠物物品代表虫蛹形变贴图（部分宠物有形变的中间态），建筑设备等物品代表后景贴图
 @export var pupa_texture: Texture2D
-##  宠物成年后的贴图
+##  宠物物品代表成年后的贴图，建筑设备等物品代表前景贴图
 @export var adult_texture: Texture2D
 ##  动画帧设置
 @export var hframes: int = 3
@@ -55,8 +55,8 @@ enum BodySize { SMALL, MIDDLE, BIG }
 ##  当前帧序号
 @export var frame: int = 0
 ##  成年占用空间的大小，非成年用成年占用空间除以2向上取整
-@export var width: int = 1
 @export var height: int = 1
+@export var width: int = 1
 ##  方向，默认水平0
 @export var orientation: int = 0
 ##  是否可堆叠

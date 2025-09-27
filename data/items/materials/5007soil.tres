@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MaterialData" load_steps=3 format=3 uid="uid://dtrnl5t2qg8ph"]
+
+[ext_resource type="Script" uid="uid://cohsvmhhen5pn" path="res://resource/data/material_data.gd" id="1_l1c0a"]
+[ext_resource type="Texture2D" uid="uid://1d5op60h1wgm" path="res://assets/textures/materials.png" id="2_qfabk"]
+
+[resource]
+script = ExtResource("1_l1c0a")
+id = &"5007"
+item_type = 4
+nickname = "腐质泥土"
+descrip = "腐质泥土"
+texture = ExtResource("2_qfabk")
+hframes = 6
+vframes = 8
+frame = 41
+stackable = true
+max_stack_size = 999
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

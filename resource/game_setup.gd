@@ -29,9 +29,10 @@ func _process(_delta: float) -> void:
 
 ## 预加载资源文件
 func preload_res() -> void:
-	GlobalData.all_res = Utils.get_res_to_dic("res://data/")
+	GlobalData.all_res = Utils.get_res_to_dic("res://data/items/")
+	GlobalData.pet_res = Utils.get_res_to_dic("res://data/pets/")
 
-	var res_normal: Array = [GlobalData.all_res, ResPaths.SCENE_RES]
+	var res_normal: Array = [GlobalData.all_res, GlobalData.pet_res, ResPaths.SCENE_RES]
 	# 处理加载资源文件
 	var res: Array = []
 	for res_dic: Dictionary in res_normal:
@@ -77,14 +78,14 @@ func _init_game_ui() -> void:
 ## 初始化玩家
 func _init_player() -> void:
 	var player_scene: PackedScene = ResManager.get_cached_resource(ResPaths.SCENE_RES.player)
-	var player:Player=player_scene.instantiate()
+	var player: Player = player_scene.instantiate()
 	add_child(player)
 
 
 ## 预加载资源文件中所有的纹理文件（在item_base_data定义了对应的变量）
 func _preset_all_textures() -> void:
 	# 宠物，掉落物，建筑，造景等资源归一化纹理数据
-	var res_normal: Array = [GlobalData.all_res]
+	var res_normal: Array = [GlobalData.all_res, GlobalData.pet_res]
 	for res_dic: Dictionary in res_normal:
 		for i: String in res_dic:
 			var res_path: String = res_dic[i]

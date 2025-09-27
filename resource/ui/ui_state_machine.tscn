@@ -1,12 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://3ydrwtquwhps"]
+[gd_scene load_steps=9 format=3 uid="uid://3ydrwtquwhps"]
 
 [ext_resource type="Script" uid="uid://byqk5dvvbey4x" path="res://resource/ui/ui_state_machine.gd" id="1_cgcw0"]
 [ext_resource type="Texture2D" uid="uid://4qsn7ar88663" path="res://assets/images/wall/Wall_01.png" id="2_xyexs"]
 [ext_resource type="PackedScene" uid="uid://d00tx33i8g0xy" path="res://resource/ui/menu/main_menu.tscn" id="3_b16ew"]
 [ext_resource type="PackedScene" uid="uid://jqirj776gcme" path="res://resource/ui/menu/save_load_menu.tscn" id="4_ptpn0"]
 [ext_resource type="PackedScene" uid="uid://bye7ywm4i53dk" path="res://resource/ui/menu/settings_memu.tscn" id="5_6t8os"]
-[ext_resource type="PackedScene" uid="uid://edyetri7sblk" path="res://resource/ui/menu/game_menu.tscn" id="6_0tvg2"]
+[ext_resource type="Script" uid="uid://bl4khgsmt8n6" path="res://resource/ui/game_main.gd" id="7_b16ew"]
 [ext_resource type="PackedScene" uid="uid://8vdsusgtgrvs" path="res://resource/ui/menu/new_game_menu.tscn" id="7_xyexs"]
+[ext_resource type="PackedScene" uid="uid://bytdhlubgfajx" path="res://resource/ui/cmd_line.tscn" id="8_b16ew"]
 
 [node name="UIStateMachine" type="Node"]
 script = ExtResource("1_cgcw0")
@@ -56,5 +57,16 @@ visible = false
 [node name="NewGameMenu" parent="." instance=ExtResource("7_xyexs")]
 visible = false
 
-[node name="GameMenu" parent="." instance=ExtResource("6_0tvg2")]
+[node name="GameMain" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_b16ew")
+
+[node name="CMDLine" parent="." instance=ExtResource("8_b16ew")]
+unique_name_in_owner = true
 visible = false

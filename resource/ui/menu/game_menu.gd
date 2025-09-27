@@ -5,7 +5,6 @@ class_name GameMenu
 @onready var grid_box_bar: GridBoxBar = %GridBoxBar
 @onready var gold_bar: GoldBar = %GoldBar
 @onready var game_world: GameWorld = %GameWorld
-
 ## 游戏主场景的二级状态机
 @onready var bar_state_machine: BarStateMachine = %BarStateMachine
 
@@ -25,10 +24,12 @@ var held_item_from: MultiGridContainer
 ## 滚动条的偏移量
 var sroll_offset: Vector2 = Vector2.ZERO
 
+## 地形详细信息
+var _terrian_attribute: WTerrianAttribute
+
 
 func _ready() -> void:
 	super()
-	GlobalData.ui = self
 	## 初始化抓取物品
 	_init_held_item()
 	# 订阅事件
@@ -65,27 +66,48 @@ func initialize(my_state_machine: UIStateMachine) -> void:
 	quick_tools = grid_box_bar.get_quick_tools()
 
 
+## 关闭所有弹窗层
+func close_all_popup() -> void:
+	if _terrian_attribute:
+		_terrian_attribute.queue_free()
+
+
 ## 设置抓取物品的坐标(中心点模式)
 func set_held_item_position(p: Vector2) -> void:
-	held_item.position = p - held_item.get_item_size() / 2
+	if MouseEvent.mouse_cell_matrix is SingleGridContainer:
+		# 设置缩放
+		var held_size: Vector2 = held_item.get_item_size()
+		# held_item 的缩放比例
+		var scale_factor = GlobalData.single_cell_size / max(held_size.x, held_size.y)
+		# 将 held_item 缩放为一个统一的尺寸，例如最大 1.5 倍的 cell_size
+		held_item.scale = Vector2.ONE * min(scale_factor, 1.5)  # 限制最大缩放倍数
+	else:
+		held_item.scale = Vector2.ONE
+
+	# 跟随鼠标设置坐标
+	held_item.position = p - held_item.get_item_size() / 2 * held_item.scale
 
 
 ## 隐匿抓取的物品节点
 func hide_held_item() -> void:
 	held_item.visible = false
 	held_item.position = Vector2(-900, -900)
+	held_item.scale = Vector2.ONE
 
 
 ## 设置抓取的物品节点数据以及来源
 ## @param data：物品数据
 ## @param item_from：物品来源
 func set_held_item_data(data: Dictionary, item_from: MultiGridContainer = null) -> void:
+	held_item.item_offset = Vector2(0.0, 0.0)
 	held_item.set_data(data)
 	held_item.setup()
 	held_item.set_texture_container_offset_and_rotation()
 	held_item.show_item_num()
 	# 设置来源
 	held_item_from = item_from
+	# 设置拖动缩放，使得纹理略小于绿色区域
+	held_item.drag_texture_scale()
 
 
 ## 将抓取的物品进行旋转同步(显示层)
@@ -132,6 +154,36 @@ func placement_overlay_process() -> void:
 		#将与目标不一致的inventory节点的放置提示框设置为不可见
 		if child != MouseEvent.mouse_cell_matrix and child is MultiGridContainer:
 			child.off_placement_overlay()
+
+
+## 显示地形详细数据
+func show_terrian_attribute(data: Dictionary, mouse_position: Vector2) -> void:
+	if not _terrian_attribute:
+		_terrian_attribute = ResManager.get_cached_resource(ResPaths.SCENE_RES.terrian_attribute).instantiate()
+		add_child(_terrian_attribute)
+	# 获取面板的实际尺寸
+	var panel_size: Vector2 = _terrian_attribute.get_real_size()
+	var target_pos: Vector2 = Utils.get_target_coords(mouse_position, panel_size)
+	# 设置坐标
+	_terrian_attribute.global_position = target_pos
+	# 更新属性显示
+	_terrian_attribute.update_display(data)
+
+
+## 拾取物品
+func pick_up_item(data: Dictionary, cell_pos: Vector2, item_from: MultiGridContainer = null) -> void:
+	if not item_from.name == "WorldGrid" or data.is_empty():
+		return
+	var output_items: Array[String] = data["item_info"]["output_items"]
+	# 只有固定材料，要是多个材料请随机
+	var item_id: String = output_items[0]
+	# 随机获得材料的数量
+	var item_num: int = randi_range(10, 20)
+	var success: bool = GlobalData.player.backpack_comp.add_item(item_id, item_num)
+	if success:
+		# 删除地图数据
+		item_from.sub_item_at(cell_pos)
+		# TO DO 动画+num和物品飞入仓库的动画
 
 
 ## 旋转物品
@@ -184,7 +236,7 @@ func _on_gui_input(event: InputEvent) -> void:
 				held_item.visible = true
 				#隐藏抓取物品的背景颜色
 				held_item.hide_bg_color()
-				#当进入的inventory不一致或格子坐标和上一次不一致时，更新放置提示框(用于减少触发频率，显示层)
+				#当进入的网格容器不一致或格子坐标和上一次不一致时，更新放置提示框(用于减少触发频率，显示层)
 				var bool_value: bool = MouseEvent.mouse_cell_matrix != GlobalData.previous_cell_matrix
 				if MouseEvent.mouse_cell_pos != GlobalData.prent_cell_pos || bool_value:
 					GlobalData.prent_cell_pos = MouseEvent.mouse_cell_pos
@@ -279,12 +331,12 @@ func _handle_selected_item(item: WItem) -> void:
 
 
 ## 初始化被抓取的物品
-func _init_held_item() -> void:
+func _init_held_item(item_id: String = "999") -> void:
 	held_item = held_scene.instantiate()
 	add_child(held_item)
 	hide_held_item()
 	# 设置一个默认值
-	var tmp_data: Dictionary = GlobalData.find_item_data("999")
+	var tmp_data: Dictionary = GlobalData.find_item_data(item_id)
 	held_item.set_data(tmp_data)
 	held_item.setup()
 

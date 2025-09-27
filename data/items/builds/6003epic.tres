@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="BuildData" load_steps=5 format=3 uid="uid://cktjsccu764ds"]
+
+[ext_resource type="Texture2D" uid="uid://bv30cet0fkste" path="res://assets/textures/builds/foregounded1.png" id="1_80kw0"]
+[ext_resource type="Texture2D" uid="uid://dc1iaf222k3qw" path="res://assets/textures/landscapes/wall_01.png" id="2_6e8bu"]
+[ext_resource type="Script" uid="uid://coxquhhqar1y8" path="res://resource/data/build_data.gd" id="3_0ktdp"]
+[ext_resource type="Texture2D" uid="uid://bsxlun8n52w65" path="res://assets/textures/builds/6003.png" id="4_80kw0"]
+
+[resource]
+script = ExtResource("3_0ktdp")
+build_type = 1
+id = &"6003"
+item_type = 5
+item_level = 2
+nickname = "罕见水族箱"
+texture = ExtResource("4_80kw0")
+pupa_texture = ExtResource("2_6e8bu")
+adult_texture = ExtResource("1_80kw0")
+hframes = 1
+height = 5
+width = 8
+metadata/_custom_type_script = "uid://coxquhhqar1y8"

@@ -4,7 +4,6 @@ class_name WItem
 @onready var item_container: MarginContainer = %ItemContainer
 @onready var bg_color: ColorRect = %BGColor
 @onready var level_color: ColorRect = %LevelColor
-@onready var level_panel: Panel = %LevelPanel
 @onready var texture_container: PanelContainer = %TextureContainer
 @onready var item_texture: ItemTexture = %ItemTexture
 @onready var item_num_label: Label = %ItemNumLabel
@@ -13,18 +12,14 @@ class_name WItem
 ## 旋转方向
 enum ORI { VER, HOR }  # 代表竖直方向  # 代表横向方向
 
-## 物品级别背景色
-const LEVEL_BG_COLOR: Dictionary = {
-	0: Color("ffffff"),  # 普通
-	1: Color("F0C050"),  # 稀有  #FFFF00
-	2: Color("00BFFF"),  # 罕见
-	3: Color("A335EE"),  # 传说
-}
-
 ## 默认的选中颜色
 const SELECTED_BG_COLOR: Color = Color(&"91d553")
+## 父容器
+var parent_container: MultiGridContainer = null
 ## 首部坐标
 var head_position: Vector2
+## 偏移量，大型物品有边框，需要使得物品在格子内，设置一个偏移量来居中并缩放
+var item_offset: Vector2 = Vector2(0.0, 0.0)
 
 #region 要和全局加载配置的字典key值对应
 var id: String  # 唯一标识符
@@ -53,7 +48,7 @@ var sale_price: int = 1:
 	get = _getter_sale_price
 
 ## 默认背景颜色
-var _def_bg_color: Color = LEVEL_BG_COLOR[0]
+var _def_bg_color: Color = GlobalData.LEVEL_BG_COLOR[0]
 ## 透明底色
 var _alpha_bg_color: Color = Color("ffffff00")
 
@@ -66,7 +61,7 @@ func _ready() -> void:
 func setup() -> void:
 	# 设置物品稀有度色值，级别颜色值
 	if item_info:
-		_def_bg_color = LEVEL_BG_COLOR[item_info.item_level]
+		_def_bg_color = GlobalData.LEVEL_BG_COLOR[item_info.item_level]
 	# 初始化设置
 	set_container_size()
 	set_texture()
@@ -128,15 +123,39 @@ func set_container_size() -> void:
 
 ## 获取物品纹理的大小
 func get_item_size() -> Vector2:
-	return Vector2(width * GlobalData.cell_size, height * GlobalData.cell_size)
+	var real_size: Vector2 = Vector2(width * GlobalData.cell_size, height * GlobalData.cell_size)
+	return real_size
 
 
 ## 设置纹理
 func set_texture() -> void:
+	var extra_param: Dictionary = {}
+	# 显示大型物品贴图的边框
+	var body_size: int = item_info.get("body_size", BaseItemData.BodySize.SMALL)
+	if body_size == BaseItemData.BodySize.BIG:
+		extra_param.set("item_type", item_type)
+		extra_param.set("build_type", item_info.get("build_type", 1))
+		extra_param.set("item_level", item_level)
+		# 设置物品边框
+		item_texture.set_item_border(extra_param)
+		level_color.visible = false
+		# 大型物品稍微缩放，使得边框在格子内
+		item_offset = Vector2(12.0, 12.0)
+		item_texture.scale_texture(get_item_size() - item_offset, self)
+
+	# 设置贴图
 	if not texture_data.is_empty():
 		item_texture.set_texture(texture_data)
 	else:
 		print(name, &"纹理设置失败")
+
+	# 设置着色器
+	item_texture.set_material_shader(extra_param)
+
+
+## 设置拖动缩放，使得纹理略小于绿色区域
+func drag_texture_scale() -> void:
+	item_texture.drag_texture_scale(get_item_size())
 
 
 ## 设置基本数据
@@ -197,7 +216,7 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 	if extra_args.has("item_level"):
 		item_info["item_level"] = extra_args["item_level"]
 		item_level = extra_args["item_level"]
-		_def_bg_color = LEVEL_BG_COLOR[item_level]
+		_def_bg_color = GlobalData.LEVEL_BG_COLOR[item_level]
 
 	# TO DO 其他属性覆盖
 
@@ -247,30 +266,27 @@ func add_num(n: int) -> int:
 
 ## 隐藏背景颜色
 func hide_bg_color() -> void:
-	if item_type == BaseItemData.ItemType.TERRIAIN:
-		_def_bg_color = _alpha_bg_color
+	if item_type == BaseItemData.ItemType.BUILD or item_type == BaseItemData.ItemType.TERRIAIN:
+		bg_color.color = _alpha_bg_color
+		level_color.color = _alpha_bg_color
 	else:
-		_def_bg_color = LEVEL_BG_COLOR[0]
-	#
-	bg_color.color = _def_bg_color
-	level_color.color = _def_bg_color
-	level_panel.modulate = _def_bg_color
+		bg_color.color = _def_bg_color
+		level_color.color = _def_bg_color
 
 
 ## 显示背景颜色
 func show_bg_color() -> void:
-	if item_type == BaseItemData.ItemType.TERRIAIN:
-		_def_bg_color = _alpha_bg_color
+	if item_type == BaseItemData.ItemType.BUILD or item_type == BaseItemData.ItemType.TERRIAIN:
+		bg_color.color = _alpha_bg_color
+		level_color.color = _alpha_bg_color
 	else:
-		_def_bg_color = LEVEL_BG_COLOR[0]
-	bg_color.color = _def_bg_color
-	level_color.color = _def_bg_color
-	level_panel.modulate = _def_bg_color
+		bg_color.color = _def_bg_color
+		level_color.color = _def_bg_color
 
 
 ## 设置选中颜色
 func set_selected_bg_color() -> void:
-	bg_color.color = WItem.SELECTED_BG_COLOR
+	bg_color.color = SELECTED_BG_COLOR
 	level_color.color = _def_bg_color
 
 
@@ -279,7 +295,8 @@ func fit_to_container(container_size: Vector2) -> void:
 	# 物品容器大小等同于真实格子大小
 	item_container.size = container_size
 	# 缩放纹理
-	item_texture.scale_texture(container_size, self)
+	item_offset = Vector2(8.0, 8.0)
+	item_texture.scale_texture(container_size - item_offset, self)
 
 
 ## 根据成长值获取贴图

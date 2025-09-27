@@ -58,7 +58,9 @@ func emit_changed_event(_data: Array[Dictionary]) -> void:
 
 
 ## 第一次创建存档的时候默认创建数据
-func init_data() -> void:
+func init_data(gird_size: Vector2 = Vector2.ZERO) -> void:
+	if not gird_size == Vector2.ZERO:
+		world_size = gird_size
 	# 获取创建文档时候的种子
 	var map_seed: int = randi()
 	# 初始化世界地图地形

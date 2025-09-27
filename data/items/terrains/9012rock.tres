@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="TerrainData" load_steps=3 format=3 uid="uid://csdg8fevjfpit"]
+
+[ext_resource type="Script" uid="uid://c1dps65gg8ad0" path="res://resource/data/terrain_data.gd" id="1_kc8rf"]
+[ext_resource type="Texture2D" uid="uid://1d5op60h1wgm" path="res://assets/textures/materials.png" id="2_vvb7s"]
+
+[resource]
+script = ExtResource("1_kc8rf")
+generate_weight = 10
+terrain_type = 12
+output_items = Array[String](["5019"])
+id = &"9012"
+item_type = 8
+nickname = "沉积岩"
+descrip = "点击获得少量沉积岩"
+texture = ExtResource("2_vvb7s")
+hframes = 6
+vframes = 8
+frame = 29
+can_drag = false
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

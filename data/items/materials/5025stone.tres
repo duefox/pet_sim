@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MaterialData" load_steps=3 format=3 uid="uid://c8fe8frfh68on"]
+
+[ext_resource type="Script" uid="uid://cohsvmhhen5pn" path="res://resource/data/material_data.gd" id="1_hf4xm"]
+[ext_resource type="Texture2D" uid="uid://1d5op60h1wgm" path="res://assets/textures/materials.png" id="2_wfu4a"]
+
+[resource]
+script = ExtResource("1_hf4xm")
+id = &"5025"
+item_type = 4
+nickname = "石块"
+descrip = "石块"
+texture = ExtResource("2_wfu4a")
+hframes = 6
+vframes = 8
+frame = 23
+stackable = true
+max_stack_size = 999
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

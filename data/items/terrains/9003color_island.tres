@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="TerrainData" load_steps=3 format=3 uid="uid://rkme2uy6jw2l"]
+
+[ext_resource type="Script" uid="uid://c1dps65gg8ad0" path="res://resource/data/terrain_data.gd" id="1_ver45"]
+[ext_resource type="Texture2D" uid="uid://bmtyvt21urm0c" path="res://assets/textures/terrains/bd3.png" id="2_ver45"]
+
+[resource]
+script = ExtResource("1_ver45")
+generate_weight = 10
+terrain_type = 3
+body_size = 2
+radius = 6
+output_items = Array[String](["5013"])
+output_desc = "产出海藻珊瑚、白化珊瑚等，随等级提升产出更具装饰性的珊瑚。"
+id = &"9003"
+item_type = 8
+nickname = "彩贝礁"
+descrip = " 一片靠近海岸的温暖海域，拥有色彩斑斓的珊瑚群。"
+texture = ExtResource("2_ver45")
+hframes = 1
+height = 5
+width = 5
+can_drag = false
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

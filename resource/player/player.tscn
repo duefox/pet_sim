@@ -1,15 +1,19 @@
-[gd_scene load_steps=6 format=3 uid="uid://duy3nqkdpnsd3"]
+[gd_scene load_steps=7 format=3 uid="uid://duy3nqkdpnsd3"]
 
 [ext_resource type="Script" uid="uid://b1cylyf853djb" path="res://resource/player/player.gd" id="1_12tl6"]
 [ext_resource type="Script" uid="uid://bxkjp1budxtg4" path="res://resource/components/player/backpack_comp.gd" id="2_ukftp"]
 [ext_resource type="Script" uid="uid://dfhx2qmrxax8u" path="res://resource/components/player/inventory_comp.gd" id="3_wqm47"]
 [ext_resource type="Script" uid="uid://clqw3gj12kr56" path="res://resource/components/player/quick_tools_comp.gd" id="4_or00y"]
 [ext_resource type="Script" uid="uid://b34tqc2nv8dx4" path="res://resource/components/player/world_map_component.gd" id="5_ahctr"]
+[ext_resource type="Script" uid="uid://khxvq1w4mcio" path="res://resource/components/player/landscpe_component.gd" id="6_ahctr"]
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_12tl6")
 
 [node name="Components" type="Node" parent="."]
+
+[node name="QuickToolsComponent" type="Node" parent="Components"]
+script = ExtResource("4_or00y")
 
 [node name="BackpackComponent" type="Node" parent="Components"]
 script = ExtResource("2_ukftp")
@@ -17,8 +21,8 @@ script = ExtResource("2_ukftp")
 [node name="InventoryComponent" type="Node" parent="Components"]
 script = ExtResource("3_wqm47")
 
-[node name="QuickToolsComponent" type="Node" parent="Components"]
-script = ExtResource("4_or00y")
-
 [node name="WorldMapComponent" type="Node" parent="Components"]
 script = ExtResource("5_ahctr")
+
+[node name="LandscpeComponent" type="Node" parent="Components"]
+script = ExtResource("6_ahctr")

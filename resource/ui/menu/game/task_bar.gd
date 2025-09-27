@@ -22,7 +22,7 @@ func _ready() -> void:
 	# 获取任务栏的原始宽度，用于计算展开后的位置
 	_original_width = size.x
 	# 设置初始位置，使其处于收缩状态（在屏幕右侧之外）
-	position.x = GlobalData.get_win_size().x
+	position.x = Utils.get_win_size().x
 	# 默认隐藏
 	is_expand = false
 
@@ -40,7 +40,7 @@ func _setter_is_expand(value: bool) -> void:
 	is_expand = value
 	btn_expand.button_pressed = is_expand
 	# 获取视口（窗口）大小
-	var win_size: Vector2 = GlobalData.get_win_size()
+	var win_size: Vector2 = Utils.get_win_size()
 	# 创建一个 tween 动画
 	var tween: Tween = create_tween().set_ease(Tween.EASE_IN_OUT)
 	# 标记动画正在播放

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="TerrainData" load_steps=3 format=3 uid="uid://cy776vijlp2vw"]
+
+[ext_resource type="Script" uid="uid://c1dps65gg8ad0" path="res://resource/data/terrain_data.gd" id="1_kbuha"]
+[ext_resource type="Texture2D" uid="uid://ctc87gnj2jehb" path="res://assets/textures/terrains/bd2.png" id="2_84lyf"]
+
+[resource]
+script = ExtResource("1_kbuha")
+generate_weight = 10
+terrain_type = 2
+body_size = 2
+radius = 6
+output_items = Array[String](["5007"])
+output_desc = "产出腐质泥土、沼泽黑泥等，随等级提升产出更高品质的泥土。"
+id = &"9002"
+item_type = 8
+nickname = "枯木湿地"
+descrip = "一片常年被浓雾笼罩的沼泽，泥土松软。这里是苔藓和腐殖质的聚集地。"
+texture = ExtResource("2_84lyf")
+hframes = 1
+height = 5
+width = 7
+can_drag = false
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

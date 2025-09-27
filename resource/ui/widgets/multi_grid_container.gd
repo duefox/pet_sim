@@ -37,7 +37,9 @@ enum MODE_PLACEMENT_OVERTLAY {
 @export var container_type: CONTAINER_TYPE = CONTAINER_TYPE.BACKPACK_INVENTORY_QT
 
 var cell_size: int = 48  #  容器的格子尺寸
-var grid_size: Vector2  #  多格子容器的大小
+var grid_size: Vector2:  #  多格子容器的大小
+	get():
+		return Vector2(grid_col, max_scroll_grid) * w_grid_size
 var w_grid_size: Vector2  # 格子的大小
 ## 在容器中的物品
 var items: Array[WItem] = []
@@ -48,28 +50,18 @@ var grid_map: Dictionary[Vector2, WItemData] = {}
 var _sort_func: Dictionary
 ## 整理点击的次数
 var _sort_timers: int = 0
+## 缓存每次更新显示的数据，方便重新渲染格子的行列时候更新
+var _buffer_items_data: Array[Dictionary] = []
 
 
 #region 内部方法
 func _ready() -> void:
-	#await get_tree().process_frame
-	# 清空grid container
-	_clear_grid_container()
 	cell_size = GlobalData.cell_size
 	# 整理的排序方法
 	_sort_func = {
 		0: _sort_by_id,
 		1: _sort_by_price,
 	}
-	##  渲染格子
-	_init_rend()
-	# 获取格子场景的大小
-	var w_grid: WGrid = grid_container.get_child(0)
-	w_grid_size = w_grid.get_grid_size()
-	##  设置滚动区域
-	_set_scroll_container()
-	##  放置区的底色
-	placement_overlay.color = _get_type_color()
 
 
 ## 鼠标离开
@@ -89,16 +81,43 @@ func _input(event: InputEvent) -> void:
 #region 对外公开的方法
 
 
+## 渲染格子数量
+## @param bag_size:背包格子大小
+func render_grid(bag_size: Vector2i = Vector2i.ONE, max_scroll: int = 0) -> void:
+	#print(self.name, "->render_grid")
+	if not bag_size == Vector2i.ONE:
+		grid_col = bag_size.x
+		grid_row = bag_size.y
+	#
+	if not max_scroll == 0:
+		max_scroll_grid = max_scroll
+	# 清空grid container
+	_clear_grid_container()
+	##  渲染格子
+	_init_rend()
+	# 获取格子场景的大小
+	var w_grid: WGrid = grid_container.get_child(0)
+	w_grid_size = w_grid.get_grid_size()
+	##  设置滚动区域
+	set_scroll_container()
+	##  放置区的底色
+	placement_overlay.color = _get_type_color()
+	## 更新数据
+	update_view(_buffer_items_data)
+
+
 ## 从数据组件接收数据并更新UI
 ## @param new_items_data: 最新的物品数据数组
 func update_view(items_data: Array[Dictionary]) -> void:
 	#print(self, ",items_data:", items_data)
-	#print("--------------------------------------")
+	#print("------------------------")
 	# 先清除当前显示的所有物品节点
 	clear_all_items()
 	# 数据为空不继续处理数据
 	if items_data.is_empty():
 		return
+	# 缓存数据（引用）
+	_buffer_items_data = items_data
 	# 根据新的数据数组，重新创建并渲染所有物品节点
 	for dict: Dictionary in items_data:
 		var head_position: Vector2 = dict.get("head_position", -Vector2.ONE)
@@ -319,6 +338,7 @@ func off_placement_overlay() -> void:
 
 ## 检查格子是否已被占用
 func check_cell(cell_pos: Vector2) -> bool:
+	#print("grid_map:", grid_map.size())
 	var item_data: WItemData = grid_map.get(cell_pos)
 	return item_data.is_placed
 
@@ -388,7 +408,8 @@ func add_new_item_in_data(cell_pos: Vector2, data: Dictionary, extra_args: Dicti
 func get_first_cell_pos_offset(item: WItem, cell_pos: Vector2) -> Vector2:
 	var width: int = item.width
 	var height: int = item.height
-	return Vector2(cell_pos.x - floori(width / 2.0), cell_pos.y - floori(height / 2.0))
+	var offset: Vector2 = Vector2(cell_pos.x - floori(width / 2.0), cell_pos.y - floori(height / 2.0))
+	return offset
 
 
 ## 移除物品
@@ -440,6 +461,14 @@ func clear_all_items() -> void:
 				item_data.link_grid.update_tooltip("")
 
 
+##  设置滚动区域
+func set_scroll_container(container_size: Vector2 = Vector2.ONE) -> void:
+	if container_size == Vector2.ONE:
+		container_size = grid_size
+	# 有滚动条，则需要给滚动条留空间
+	scroll_container.custom_minimum_size = container_size + Vector2(0.5, 0.5) * w_grid_size
+
+
 #endregion
 
 
@@ -449,13 +478,6 @@ func _get_type_color(type: int = 0) -> Color:
 	if type < 0 || type >= color_arr.size():
 		return color_arr[MultiGridContainer.TYPE_COLOR.DEF]
 	return color_arr[type]
-
-
-##  设置滚动区域
-func _set_scroll_container() -> void:
-	grid_size = Vector2(grid_col, max_scroll_grid) * w_grid_size
-	# 有滚动条，则需要给滚动条留空间
-	scroll_container.custom_minimum_size = grid_size + Vector2(0.5, 0.5) * w_grid_size
 
 
 ## 查找下一个可用的空位
@@ -537,7 +559,7 @@ func _append_item_in_cell_matrix(item: WItem) -> void:
 
 ## 将显示层的对应物品位置进行调整，根据传入的格子坐标
 func _set_item_comput_position(cell_pos: Vector2, item: WItem) -> void:
-	item.position = _get_comput_position(cell_pos)
+	item.position = _get_comput_position(cell_pos) + item.item_offset / 6.0
 
 
 ## 获取对应格子坐标在显示层中的实际坐标
@@ -576,6 +598,7 @@ func _create_cell() -> WGrid:
 ## 创建实例化的WItem
 func _create_item() -> WItem:
 	var item: WItem = item_scene.instantiate()
+	item.parent_container = self
 	return item
 
 
@@ -614,6 +637,7 @@ func _clear_grid_container() -> void:
 ## 滚动条的偏移量
 func _get_scroll_offset() -> Vector2:
 	return Vector2(scroll_container.scroll_horizontal, scroll_container.scroll_vertical)
+
 
 ## 查看映射表
 func _look_grip_map() -> void:

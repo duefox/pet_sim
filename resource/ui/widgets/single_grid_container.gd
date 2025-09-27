@@ -68,11 +68,12 @@ func remove_item(cur_item: WItem) -> void:
 	cur_item = null
 
 
-## 重写父类的 _set_scroll_container 方法
+## 重写父类的 set_scroll_container 方法
 ## 设置滚动区域
-func _set_scroll_container() -> void:
-	grid_size = Vector2(grid_col, max_scroll_grid) * w_grid_size
-	scroll_container.custom_minimum_size = grid_size
+func set_scroll_container(container_size: Vector2 = Vector2.ONE) -> void:
+	if container_size == Vector2.ONE:
+		container_size = grid_size
+	scroll_container.custom_minimum_size = container_size
 
 
 ## 重写父类的 _add_item_at 方法

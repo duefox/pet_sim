@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="MaterialData" load_steps=3 format=3 uid="uid://c2ewnsue81y23"]
+
+[ext_resource type="Script" uid="uid://cohsvmhhen5pn" path="res://resource/data/material_data.gd" id="1_qxl4g"]
+[ext_resource type="Texture2D" uid="uid://1d5op60h1wgm" path="res://assets/textures/materials.png" id="2_sb6e0"]
+
+[resource]
+script = ExtResource("1_qxl4g")
+id = &"5037"
+item_type = 4
+nickname = "羽毛"
+descrip = "羽毛"
+texture = ExtResource("2_sb6e0")
+hframes = 6
+vframes = 8
+frame = 11
+stackable = true
+max_stack_size = 999
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

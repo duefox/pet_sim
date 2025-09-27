@@ -8,6 +8,13 @@ signal next_day_pressed
 
 
 func _ready() -> void:
+	# 设置多格容器的大小
+	if GlobalData.player.player_info:
+		var box_size: Vector2i = GlobalData.player.player_info.get("qt_size", Vector2i(1, 10))
+		quick_tools.grid_col = box_size.x
+		quick_tools.grid_row = box_size.y
+	# 渲染格子
+	quick_tools.render_grid()
 	var grid_size: Vector2 = quick_tools.grid_size
 	qtbg.custom_minimum_size = grid_size + Vector2(0.0, 10.0)
 	name = &"QuickTools"

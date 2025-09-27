@@ -1,10 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://0xwv2nq5oyx8"]
+[gd_scene load_steps=7 format=3 uid="uid://0xwv2nq5oyx8"]
 
 [ext_resource type="Script" uid="uid://1ddeko8q5psv" path="res://resource/demo.gd" id="1_gat5w"]
 [ext_resource type="Texture2D" uid="uid://vxjinqdvpff7" path="res://icon.svg" id="2_e2yaf"]
+[ext_resource type="Shader" uid="uid://b7boqp8rlslle" path="res://shaders/rounded_rect.gdshader" id="3_emgpm"]
+[ext_resource type="Texture2D" uid="uid://ctc87gnj2jehb" path="res://assets/textures/terrains/bd2.png" id="4_emgpm"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_e2yaf"]
 viewport_path = NodePath("SubViewportContainer/SubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cj8hn"]
+shader = ExtResource("3_emgpm")
+shader_parameter/corner_radius = 25.0
+shader_parameter/rect_size = Vector2(336, 414)
+shader_parameter/margin_top = 0.0
+shader_parameter/margin_bottom = 10.0
+shader_parameter/margin_left = 0.0
+shader_parameter/margin_right = 10.0
 
 [node name="Demo" type="Node2D"]
 script = ExtResource("1_gat5w")
@@ -14,10 +25,10 @@ modulate = Color(0.710132, 0.46417522, 0.36019522, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 946.0
-offset_top = 184.0
-offset_right = 1458.0
-offset_bottom = 696.0
+offset_left = 1392.0
+offset_top = 15.0
+offset_right = 1904.0
+offset_bottom = 527.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_e2yaf")
@@ -27,7 +38,17 @@ offset_right = 992.0
 offset_bottom = 782.0
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+render_target_update_mode = 4
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport"]
 position = Vector2(84, 77)
 texture = ExtResource("2_e2yaf")
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_cj8hn")
+offset_left = 554.0
+offset_top = 138.0
+offset_right = 794.0
+offset_bottom = 378.0
+texture = ExtResource("4_emgpm")
