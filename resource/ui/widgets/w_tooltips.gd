@@ -9,6 +9,5 @@ func update_display(info: Variant) -> void:
 		return
 	if info is String:
 		simple_label.text = str(info)
-		pass
 	elif info is Dictionary:
 		pass

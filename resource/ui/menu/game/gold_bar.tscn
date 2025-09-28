@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://ixsr2gblswwt"]
+[gd_scene load_steps=13 format=3 uid="uid://ixsr2gblswwt"]
 
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_c25m6"]
 [ext_resource type="Script" uid="uid://id3ob5gqg872" path="res://resource/ui/menu/game/gold_bar.gd" id="1_xvxg5"]
@@ -18,20 +18,6 @@
 [sub_resource type="AtlasTexture" id="AtlasTexture_j5d24"]
 atlas = ExtResource("2_gsgvk")
 region = Rect2(160, 0, 32, 32)
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_00atj"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w6fsa"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j5d24"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_llwph"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ewn37"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yfhyq"]
-atlas = ExtResource("2_gsgvk")
-region = Rect2(128, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7so0y"]
 atlas = ExtResource("1_c25m6")
@@ -101,25 +87,6 @@ text = "100%"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/HBoxContainer2"]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_right = 16
-
-[node name="BtnCoords" type="Button" parent="MarginContainer/HBoxContainer2/MarginContainer3"]
-layout_mode = 2
-tooltip_text = "恢复居中对齐
-快捷键 [b][color=white]Space[/color][/b] "
-theme_override_styles/normal = SubResource("StyleBoxEmpty_00atj")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_w6fsa")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_j5d24")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_llwph")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_ewn37")
-icon = SubResource("AtlasTexture_yfhyq")
-icon_alignment = 1
-script = ExtResource("4_ne74b")
-metadata/_custom_type_script = "uid://hmattcwq4j3c"
-
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer2"]
 layout_mode = 2
 
@@ -165,4 +132,3 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="MarginContainer/HBoxContainer2/MarginContainer4/HBoxContainer/BtnScale" to="." method="_on_btn_scale_pressed"]
-[connection signal="pressed" from="MarginContainer/HBoxContainer2/MarginContainer3/BtnCoords" to="." method="_on_btn_coords_pressed"]

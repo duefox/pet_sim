@@ -53,7 +53,7 @@ func _on_gui_input(event: InputEvent) -> void:
 			if event.is_action_pressed("mouse_left"):
 				_handle_mouse_left(event)
 			elif event.is_action_pressed("mouse_right"):
-				_handle_mouse_right()
+				_handle_mouse_right(event)
 
 
 ## 处理鼠标单击事件
@@ -66,12 +66,12 @@ func _handle_mouse_left(event: InputEventMouseButton) -> void:
 	if is_instance_valid(cur_item):
 		## 地形物品点击，大型显示详细信息，小型直接拾取
 		if cur_item.item_type == BaseItemData.ItemType.TERRIAIN:
-			if cur_item.item_info.get("body_size", 0) == BaseItemData.BodySize.BIG:
-				#print("显示详细信息")
-				GlobalData.ui.show_terrian_attribute(cur_item.get_data(), event.global_position)
-			else:
+			if cur_item.item_info.get("body_size", 0) == BaseItemData.BodySize.SMALL:
 				#print("直接拾取")
 				GlobalData.ui.pick_up_item(cur_item.get_data(), cell_pos, parent_cell_matrix)
+			else:
+				#print("显示详细信息")
+				GlobalData.ui.show_terrian_attribute(cur_item.get_data(), event.global_position)
 
 		var can_drag: bool = cur_item.get_data().get("item_info").get("can_drag", true)
 		if not can_drag:
@@ -104,13 +104,26 @@ func _handle_mouse_left(event: InputEventMouseButton) -> void:
 
 
 ## 处理鼠标右击事件
-func _handle_mouse_right() -> void:
+func _handle_mouse_right(event: InputEventMouseButton) -> void:
 	# 鼠标在物品节点范围内，按下右键，则开始减少物品数量
 	GlobalData.previous_cell_matrix = parent_cell_matrix
 	var cur_item_data: WItemData = parent_cell_matrix.get_grid_map_item(cell_pos)
 	var cur_item: WItem = cur_item_data.link_item
 	## 判定物品是否可以拖拽，不可拖拽的物品也不能分割
 	if is_instance_valid(cur_item):
+		## 地形物品点击，大型显示详细信息，小型直接拾取
+		if cur_item.item_type == BaseItemData.ItemType.TERRIAIN:
+			if cur_item.item_info.get("body_size", 0) == BaseItemData.BodySize.SMALL:
+				#print("直接拾取")
+				GlobalData.ui.pick_up_item(cur_item.get_data(), cell_pos, parent_cell_matrix)
+			else:
+				#print("显示详细信息")
+				GlobalData.ui.show_terrian_attribute(cur_item.get_data(), event.global_position)
+		## 建筑物品右键大窗口查看详情
+		elif cur_item.item_type == BaseItemData.ItemType.BUILD:
+			print("进入建筑内部！")
+			pass
+
 		var can_drag: bool = cur_item.get_data().get("item_info").get("can_drag", true)
 		if not can_drag:
 			return

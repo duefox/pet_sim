@@ -12,5 +12,6 @@ func init_data(_gird_size: Vector2 = Vector2.ZERO) -> void:
 	# 默认送俩种鱼饲料
 	add_item("3001", 9)
 	add_item("3002", 9)
-	# 默认送俩条鱼（1雄鱼，1雌鱼）
-	add_item("1001", 2)
+	# 默认送俩条鱼（1雄性幼鱼，1雌性幼鱼）
+	add_item("1001", 1, {"item_level": 0, "growth": 0.0, "gender": BaseItemData.Gender.MALE})
+	add_item("1001", 1, {"item_level": 0, "growth": 0.0, "gender": BaseItemData.Gender.FEMALE})

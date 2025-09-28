@@ -10,7 +10,7 @@ class_name WItem
 @onready var item_name_label: Label = %ItemNameLabel
 
 ## 旋转方向
-enum ORI { NONE, VER, HOR }  # 代表竖直方向  # 代表横向方向
+enum ORI { VER, HOR, NONE }  # 代表竖直方向  # 代表横向方向
 
 ## 默认的选中颜色
 const SELECTED_BG_COLOR: Color = Color(&"91d553")
@@ -27,6 +27,7 @@ var item_name: String  # 物品名称
 var item_type: int  # 物品类型
 var item_level: int = 0  # 物品级别
 var growth: float = 0.0  # 物品的成长值
+var gender: BaseItemData.Gender = BaseItemData.Gender.NONE  # 物品的性别（默认无）
 var base_price: float = 1.0  # 物品的基础价格
 var descrip: String  # 物品描述
 var width: int  # 物品的宽度
@@ -112,18 +113,23 @@ func set_texture_container_offset_and_rotation() -> void:
 
 ## 交换宽高
 func swap_width_and_height() -> void:
-	var temp: int = width
-	width = height
-	height = temp
+	# 从texture_data数据拿宽高
+	if orientation == WItem.ORI.VER:
+		width = texture_data.get("width", 1)
+		height = texture_data.get("height", 1)
+	elif orientation == WItem.ORI.HOR:
+		# 旋转了则交换宽高
+		width = texture_data.get("height", 1)
+		height = texture_data.get("width", 1)
 
 
 ## 设置容器的大小
 func set_container_size() -> void:
-	var _size: Vector2 = get_item_size()
-	_size.x -= width
-	_size.y -= height
-	item_container.size = _size
-	texture_container.size = _size
+	var item_size: Vector2 = get_item_size()
+	item_size.x -= width
+	item_size.y -= height
+	item_container.size = item_size
+	texture_container.size = item_size
 
 
 ## 获取物品纹理的大小
@@ -172,6 +178,7 @@ func drag_texture_scale() -> void:
 ## @param data: 基本数据
 ## @param extra_args: 额外数据，当额外数据不为空时候需要覆盖基础数据
 func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
+	#print("witem-->set data->extra_args:", extra_args)
 	if data.is_empty():
 		return
 	# 拷贝一份数据
@@ -180,10 +187,13 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 	var item_info_dic: Dictionary
 	if data["item_info"] is Resource:
 		# 第一次载入是资源的话标准化为字典
-		item_info_dic = Utils.get_properties_from_res(data["item_info"]).duplicate()
+		item_info_dic = Utils.get_properties_from_res(data["item_info"]).duplicate(true)
 	else:
 		# 拖拽过来的物品数据
 		item_info_dic = data["item_info"].duplicate(true)
+
+	# data合并extra_args参数，需要覆盖，以extra_args为主
+	data.merge(extra_args, true)
 
 	# 设置基本数据
 	for key: String in data:
@@ -193,6 +203,9 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 		else:
 			# 物品当前数据
 			self[key] = data[key]
+
+	# item_info合并extra_args参数，需要覆盖，以extra_args为主
+	item_info.merge(extra_args, true)
 
 	# 设置默认纹理数据
 	texture_data = {
@@ -210,8 +223,8 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 		var pet_growth: float = growth
 		if not extra_args.is_empty() and extra_args.has("growth"):
 			pet_growth = extra_args["growth"]
-		var pettexture_data: Dictionary = _get_texture_by_growth(item_info, pet_growth)
-		texture_data = texture_data.merged(pettexture_data, true)
+		var pet_texture_data: Dictionary = _get_texture_by_growth(item_info, pet_growth)
+		texture_data = texture_data.merged(pet_texture_data, true)
 		# 设置成长值
 		growth = pet_growth
 		# 重置物品的宽高
@@ -222,17 +235,9 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 			width = texture_data["height"]
 			height = texture_data["width"]
 
-	if extra_args.is_empty():
-		return
-	# 当额外数据不为空时候需要覆盖基础数据
-	#print("extra_args:", extra_args)
-	# 稀有度级别覆盖重置
-	if extra_args.has("item_level"):
-		item_info["item_level"] = extra_args["item_level"]
-		item_level = extra_args["item_level"]
+	# 稀有度级别覆盖重置，切换稀有度颜色
+	if not extra_args.is_empty() and extra_args.has("item_level"):
 		_def_bg_color = GlobalData.LEVEL_BG_COLOR[item_level]
-
-	# TO DO 其他属性覆盖
 
 
 ## 获取基本数据

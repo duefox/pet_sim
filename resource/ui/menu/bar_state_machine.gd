@@ -76,8 +76,7 @@ func initialize(state_machine: UIStateMachine):
 
 # 还原所有弹出层，除了布局栏
 func reset_all_popup() -> void:
-	task_bar.is_expand=false
-	
+	task_bar.is_expand = false
 
 
 ## 切换二级菜单状态的公共接口
@@ -143,7 +142,6 @@ func _state_default() -> void:
 	layout_bar.visible = true
 	layout_bar.builds_visible = false
 	grid_box_bar.visible = true
-
 
 
 func _state_profile() -> void:
@@ -253,6 +251,7 @@ func on_new_pressed() -> void:
 func on_visitor_pressed() -> void:
 	if not _is_in_default_state():
 		return
+	game_world.reset_to_visitor()
 
 
 ## 布局建筑、设备和造景 L
@@ -314,6 +313,8 @@ func on_enter_pressed() -> void:
 
 ## 判断是否在游戏场景中的状态
 func _is_in_game_state() -> bool:
+	# 关闭所有属性弹窗
+	GlobalData.ui.close_all_popup()
 	return parent_state_machine.current_state == parent_state_machine.State.GAME_MENU
 
 

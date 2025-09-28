@@ -23,6 +23,13 @@ enum ItemLevel {
 	MYTHIC,  # 传说
 }
 
+##  性别
+enum Gender {
+	NONE,  ## 无性别
+	MALE,  ## 雄性
+	FEMALE,  ## 雌性
+}
+
 ##  体型大小
 enum BodySize { SMALL, MIDDLE, BIG }
 
@@ -40,6 +47,8 @@ enum BodySize { SMALL, MIDDLE, BIG }
 @export var growth: float = 0.0
 ## 物品基础价格，实际出售价格和级别、成长度相关
 @export var base_price: float = 1.0
+## 性别 默认无性别，这个属性暴露在基类更方便，非动物直接是默认值，动物添加的时候默认雄性（请在资源上设置）
+@export var gender: Gender = Gender.NONE
 
 ##  动画贴图相关信息
 @export_group("Texture & Aimate")

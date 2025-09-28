@@ -18,6 +18,6 @@ descrip = "外形像一串透明的蓝色气泡。"
 base_price = 5.0
 texture = ExtResource("4_kitgs")
 adult_texture = ExtResource("1_i1kh1")
-width = 2
 height = 2
+width = 2
 metadata/_custom_type_script = "uid://c1cfnn80q7lso"

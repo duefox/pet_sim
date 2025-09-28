@@ -470,7 +470,10 @@ func set_scroll_container(container_size: Vector2 = Vector2.ONE) -> void:
 	if container_size == Vector2.ONE:
 		container_size = grid_size
 	# 有滚动条，则需要给滚动条留空间
-	scroll_container.custom_minimum_size = container_size + Vector2(0.5, 0.5) * w_grid_size
+	if grid_row > max_scroll_grid:
+		scroll_container.custom_minimum_size = container_size + Vector2(0.5, 0.5) * w_grid_size
+	else:
+		scroll_container.custom_minimum_size = container_size - Vector2(grid_col, 0.0)
 
 
 #endregion
@@ -559,6 +562,8 @@ func _set_item_data_at_id(item: WItem, item_id: String, item_num: int = 1, extra
 ## 将物品节点添加至多格子容器(显示层)
 func _append_item_in_cell_matrix(item: WItem) -> void:
 	item_container.add_child(item)
+	# 校正旋转
+	item.rotation_item(item.orientation)
 
 
 ## 将显示层的对应物品位置进行调整，根据传入的格子坐标

@@ -9,6 +9,7 @@ enum BuildType {
 	ECOLOGICAL,  # 生态箱
 	AVIARY,  # 鸟舍
 	GREEN_HOUSE,  # 生态温室
+	OTHERS,  # 其他类型
 }
 
 ## 建筑类型

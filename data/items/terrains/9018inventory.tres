@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="TerrainInventoryData" load_steps=3 format=3 uid="uid://dqb63eno1d7x"]
+
+[ext_resource type="Script" uid="uid://bganclcotjgki" path="res://resource/data/terrain_inventory_data.gd" id="1_5o4g8"]
+[ext_resource type="Texture2D" uid="uid://ckc6uimcrld5d" path="res://assets/textures/terrains/inventory.png" id="2_5o4g8"]
+
+[resource]
+script = ExtResource("1_5o4g8")
+generate_weight = 10
+terrain_type = 17
+body_size = 1
+can_delete = false
+output_desc = "保存物品，升级提升仓库的容量。[br]快捷键 [b][color=white]C[/color][/b] 打开仓库。"
+id = &"9018"
+item_type = 8
+nickname = "仓库"
+descrip = "存储物品的仓库。[br][color=black]不可拆除，不可移动。[/color]"
+texture = ExtResource("2_5o4g8")
+hframes = 1
+height = 2
+width = 3
+can_drag = false
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

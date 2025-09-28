@@ -2,7 +2,7 @@
 extends BaseBagComponent
 class_name WorldMapComponent
 
-## 8种大型地形，key为ID，value为占用尺寸
+## 8种大型资源点地形，key为ID，value为占用尺寸
 const LARGE_TERRAINS: Dictionary = {
 	"9001": {"range": Vector2(-1.0, -0.75), "size": Vector2(6, 4)},
 	"9002": {"range": Vector2(-0.75, -0.5), "size": Vector2(5, 7)},
@@ -16,11 +16,22 @@ const LARGE_TERRAINS: Dictionary = {
 
 ## 8种小型地形的ID列表
 const SMALL_TERRAINS: Array = ["9009", "9010", "9011", "9012", "9013", "9014", "9015", "9015"]
+## 固定的地形ID列表
+const REGULAR_TERRAINS: Array = ["9017"]
+## 固定仓库id
+const INVENTORY_ID: String = "9018"
 
-## 世界的大小 ###这里有bug
+## 默认送的建筑物品（鱼缸等等）
+@export var regular_build: Array = ["6001"]
+## 固定送的大型资源点ID,新建世界用户的选择相关
+@export var regular_terrains_id: String = "9001"
+## 世界的大小
 @export var world_size: Vector2i = Vector2i(38, 38)
 ## 小地形物品生成概率
 @export var create_rate: float = 0.15
+
+## 默认解锁区域
+var unlock_arear: Array = [Rect2i(20, 0, 20, 20)]
 
 ## 噪声生成器
 var noise = FastNoiseLite.new()
@@ -45,6 +56,8 @@ var item_max_counts: Dictionary = {
 	"9014": 40,
 	"9015": 40,
 	"9016": 40,
+	"9017": 0,  # 接待前台，固定生成
+	"9018": 0,  # 仓库，固定生成
 }
 ## 实时追踪每种物品的已生成数量
 var item_current_counts: Dictionary = {}
@@ -73,6 +86,8 @@ func initialize(map_seed: int) -> void:
 	noise.frequency = 0.05
 	# 构建基础配置数据
 	_generate_item_data()
+	# 构建固定的世界物品
+	_generate_regular_world()
 	# 构建世界数据
 	_generate_world()
 	#print("World generation complete. Total items: ", items_data.size())
@@ -86,6 +101,48 @@ func _generate_item_data() -> void:
 		var dict: Dictionary = GlobalData.find_item_data(item_id)
 		if not dict.is_empty():
 			item_db.set(item_id, dict)
+
+
+## 构建固定的世界物品
+func _generate_regular_world() -> void:
+	# 按x方向水平布局
+	# 1.布局固定地形
+	var coords_x: int = 0
+	var coords_y: int = 0
+	var world_center_top: Vector2i = Vector2i(int(world_size.x / 2.0), 0)
+	var head_pos: Vector2 = Vector2.ZERO
+	var item_data: Dictionary
+	for item_id: String in REGULAR_TERRAINS:
+		item_data = item_db[item_id]
+		# 计算初始位置
+		if head_pos == Vector2.ZERO:
+			head_pos = Vector2(world_center_top) - Vector2(int(item_data.get("width", 0) / 2.0), 0.0)
+		else:
+			head_pos += Vector2(coords_x, 0.0)
+		coords_x += item_data.get("width", 6)
+		coords_y = max(item_data.get("heigjt", 6), coords_y)
+		_try_add_new_data(item_data, head_pos)
+
+	# 2.布局固定仓库，按默认解锁区域的一个元素位置开始
+	var arear_rect: Rect2i = unlock_arear[0]
+	item_data = item_db[INVENTORY_ID]
+	_try_add_new_data(item_data, Vector2(arear_rect.position))
+
+	# 3.布局初始送的鱼缸，按竖直方向布局
+	coords_x = 0
+	for item_id: String in regular_build:
+		head_pos += Vector2(coords_x, coords_y)
+		coords_y += 6
+		# 添加建筑
+		var success: bool = _try_place_item(GlobalData.find_item_data(item_id), head_pos)
+		if success:
+			add_item(item_id, 1, {}, head_pos)
+
+	# 4.布局初始送的资源点，按竖直方向布局
+	item_data = item_db[regular_terrains_id]
+	# 随机位置
+	head_pos = Vector2(randi_range(arear_rect.position.x, arear_rect.position.x + arear_rect.size.x), coords_y)
+	_try_add_new_data(item_data, head_pos)
 
 
 ## 生成世界
@@ -121,6 +178,13 @@ func _place_large_terrain(item_data: Dictionary, noise_range: Vector2) -> void:
 	var success: bool = _try_place_item(item_data, head_pos)
 	if success:
 		_add_new_item_data(item_data, head_pos)
+
+
+## 尝试添加数据
+func _try_add_new_data(item_data: Dictionary, current_pos: Vector2) -> void:
+	var success: bool = _try_place_item(item_data, current_pos)
+	if success:
+		_add_new_item_data(item_data, current_pos)
 
 
 ## 添加数据

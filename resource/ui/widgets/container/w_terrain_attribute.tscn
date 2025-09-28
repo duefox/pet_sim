@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d20ltlex78cxv"]
+[gd_scene load_steps=21 format=3 uid="uid://d20ltlex78cxv"]
 
 [ext_resource type="Script" uid="uid://3ck1up76n83a" path="res://resource/ui/widgets/container/w_terrain_attribute.gd" id="1_3gc3m"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_4lr1s"]
@@ -32,7 +32,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbkjt"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4lr1s"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -47,6 +47,8 @@ corner_detail = 1
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4lr1s"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3gc3m"]
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_4lr1s"]
 atlas = ExtResource("4_kyeoa")
 region = Rect2(48, 336, 48, 48)
@@ -55,9 +57,9 @@ region = Rect2(48, 336, 48, 48)
 atlas = ExtResource("4_kyeoa")
 region = Rect2(0, 336, 48, 48)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3gc3m"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ctgu7"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kyeoa"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w6cg6"]
 
 [node name="WTerrianAttribute" type="Control"]
 custom_minimum_size = Vector2(480, 0)
@@ -71,7 +73,7 @@ offset_right = 480.0
 offset_bottom = 341.0
 
 [node name="NinePatchRect" type="NinePatchRect" parent="MainMargin"]
-custom_minimum_size = Vector2(480, 240)
+custom_minimum_size = Vector2(480, 180)
 layout_mode = 2
 texture = SubResource("AtlasTexture_oca67")
 patch_margin_left = 24
@@ -110,13 +112,18 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="Decrip" type="Label" parent="MainMargin/MarginContainer/VBoxContainer/MarginContainer3"]
+[node name="Decrip" type="RichTextLabel" parent="MainMargin/MarginContainer/VBoxContainer/MarginContainer3"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/bold_font_size = 22
+theme_override_font_sizes/bold_italics_font_size = 22
+theme_override_font_sizes/italics_font_size = 22
+theme_override_font_sizes/mono_font_size = 22
+bbcode_enabled = true
 text = " 一片宁静的湖泊，夜晚会散发微弱的荧光。这里是水生植物和水下木材的温床。"
-autowrap_mode = 3
+fit_content = true
 
 [node name="MarginContainer2" type="MarginContainer" parent="MainMargin/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -134,13 +141,18 @@ theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="OutputDescrip" type="Label" parent="MainMargin/MarginContainer/VBoxContainer/MarginContainer7"]
+[node name="OutputDescrip" type="RichTextLabel" parent="MainMargin/MarginContainer/VBoxContainer/MarginContainer7"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+bbcode_enabled = true
 text = "产出水杉木、湖底沉木等，随等级提升产出更高品质的木材。"
-autowrap_mode = 3
+fit_content = true
 
 [node name="MarginContainer4" type="MarginContainer" parent="MainMargin/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -175,13 +187,27 @@ texture = SubResource("AtlasTexture_jqjpb")
 layout_mode = 2
 size_flags_horizontal = 8
 
-[node name="BtnDelete" type="Button" parent="MainMargin/MarginContainer/VBoxContainer/MarginContainer4/MarginContainer2"]
+[node name="BtnOpen" type="Button" parent="MainMargin/MarginContainer/VBoxContainer/MarginContainer4/MarginContainer2"]
+unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/hover = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_qbkjt")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4lr1s")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_4lr1s")
+text = "打开"
+script = ExtResource("8_1mh3p")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[node name="BtnDelete" type="Button" parent="MainMargin/MarginContainer/VBoxContainer/MarginContainer4/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3gc3m")
 text = "拆除"
 script = ExtResource("8_1mh3p")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
@@ -241,10 +267,10 @@ size_flags_horizontal = 8
 [node name="BtnUpgrade" type="Button" parent="MainMargin/MarginContainer/VBoxContainer/MarginContainer6/MarginContainer2"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/hover = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_3gc3m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ctgu7")
 text = "升级"
 script = ExtResource("8_1mh3p")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
@@ -261,15 +287,16 @@ theme_override_constants/margin_bottom = 8
 [node name="BtnClose" type="Button" parent="MainMargin/MarginContainer2"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/hover = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kyeoa")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_w6cg6")
 icon = ExtResource("7_jqjpb")
 icon_alignment = 1
 script = ExtResource("8_1mh3p")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
+[connection signal="pressed" from="MainMargin/MarginContainer/VBoxContainer/MarginContainer4/MarginContainer2/BtnOpen" to="." method="_on_btn_open_pressed"]
 [connection signal="pressed" from="MainMargin/MarginContainer/VBoxContainer/MarginContainer4/MarginContainer2/BtnDelete" to="." method="_on_btn_delete_pressed"]
 [connection signal="pressed" from="MainMargin/MarginContainer/VBoxContainer/MarginContainer6/MarginContainer2/BtnUpgrade" to="." method="_on_btn_upgrade_pressed"]
 [connection signal="pressed" from="MainMargin/MarginContainer2/BtnClose" to="." method="_on_btn_close_pressed"]

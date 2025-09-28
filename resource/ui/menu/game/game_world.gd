@@ -13,13 +13,15 @@ class_name GameWorld
 ## 缩放率
 var _scale_rate: float = 0.05
 ## 最小缩放值
-var _min_scale: float = 0.5
+var _min_scale: float = 0.2
 ## 最大缩放值
 var _max_scale: float = 2.0
 ## 当前缩放值
 var _current_scale: float = 1.0
 ## 是否在当前世界的画布
 var _is_in_world: bool = false
+## 是否动画播放中
+var _is_tween: bool = false
 
 
 func _ready() -> void:
@@ -46,11 +48,30 @@ func _exit_tree() -> void:
 ## 重置世界缩放
 func reset_scale() -> void:
 	scale = Vector2.ONE
+	_current_scale = scale.x
 
 
-## 重置世界坐标
-func reset_coords() -> void:
-	position = Vector2.ZERO
+## 重置世界初始坐标和缩放，访客快速定位
+func reset_to_visitor(show_tween: bool = true) -> void:
+	if _is_tween:
+		return
+	var win_size: Vector2 = Utils.get_win_size()
+	var pos_x: float = (win_size.x - world_grid.grid_size.x) / 2.0
+	var pos_y: float = world_grid.w_grid_size.y * 2.0
+	if not show_tween:
+		reset_scale()
+		position = Vector2(pos_x, pos_y)
+		return
+	# tween 动画
+	_is_tween = true
+	var tween: Tween = create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_parallel(true)
+	tween.tween_property(self, "scale", Vector2.ONE, 0.8)
+	tween.tween_property(self, "position", Vector2(pos_x, pos_y), 0.8)
+	_current_scale = 1.0
+	await tween.finished
+	_is_tween = false
 
 
 ## 更新世界网格
@@ -62,8 +83,12 @@ func update_world_size() -> void:
 		world_size = box_size
 	# 渲染格子
 	world_grid.render_grid(world_size, world_size.y)
+	# 网格容器居中
+	world_grid.position = Vector2(0.0, world_grid.w_grid_size.y / 2.0)
 	# 初始化网格
 	_init_map_grid()
+	# 重置世界初始坐标和缩放，访客快速定位
+	reset_to_visitor(false)
 
 
 ## 世界地图物品更新
@@ -87,8 +112,7 @@ func _init_map_grid() -> void:
 	# 将 Control 节点的缩放中心设置为其自身大小的一半，实现居中缩放
 	pivot_offset = size / 2
 	scale = Vector2.ONE * _current_scale
-	var grid_size: Vector2 = world_grid.grid_size - Vector2(world_grid.grid_col, world_grid.grid_row)
-	bg_texture.custom_minimum_size = grid_size + Vector2(96, 96.0)
+	bg_texture.custom_minimum_size = world_grid.grid_size
 
 
 ## 向下滚动，缩小
@@ -109,11 +133,51 @@ func _on_zoom_in_pressed() -> void:
 	scale = Vector2(_current_scale, _current_scale)
 
 
-func _on_pan_dragged(relative: Vector2) -> void:
+func _on_pan_dragged2(delta: Vector2) -> void:
+	if not _is_in_world:
+		return
+
+	# 1. 应用拖拽位移
+	# GameWorld 的 position 是相对于其父节点（通常是 GameMenu/Viewport）的
+	position += delta
+
+	# 2. 获取关键尺寸
+	var screen_size: Vector2 = Utils.get_win_size()
+
+	# WorldGrid 的总大小（像素），并考虑当前的缩放比例
+	# 注意：world_grid.size 应该在你初始化时已经计算了 grid_row * cell_size
+	# multi_grid_container.gd 文件中的 size = Vector2(grid_col * GlobalData.cell_size, ...)
+	var world_size_scaled: Vector2 = world_grid.size * scale
+
+	# 3. 计算钳制边界 (1/3 屏幕大小)
+	var margin: Vector2 = screen_size / 3.0
+
+	# 4. 计算最小/最大可拖拽位置
+
+	# 【最大拖拽位置 (Min_Pos)】: 地图左上角允许向右/向下移动的最大距离。
+	# 这是地图原点（position = 0）向右下移动的最大值，即 margin。
+	# 当 position 达到 margin 时，地图的左上角刚好在屏幕的 1/3 处。
+	var max_pos: Vector2 = margin
+
+	# 【最小拖拽位置 (Max_Pos)】: 地图原点允许向左/向上移动的最大距离。
+	# 地图右下角不能超出屏幕右下 margin 处。
+	# 计算公式：-(World_Size_Scaled - Screen_Size - Margin)
+	# 简化：-(World_Size_Scaled - Screen_Size * 2/3)
+	var min_pos: Vector2 = -(world_size_scaled - screen_size + margin)
+
+	# 5. 钳制位置
+	position.x = clampf(position.x, min_pos.x, max_pos.x)
+	position.y = clampf(position.y, min_pos.y, max_pos.y)
+
+
+func _on_pan_dragged(delta: Vector2) -> void:
 	if not _is_in_world:
 		return
 	# 除以缩放值确保在不同缩放级别下拖动速度保持一致。
-	position += relative / _current_scale
+	#position += relative / _current_scale
+	position += delta
+	# 这里注意，需要钳制坐标的范围
+
 	# 关闭所有弹窗
 	GlobalData.ui.close_all_popup()
 

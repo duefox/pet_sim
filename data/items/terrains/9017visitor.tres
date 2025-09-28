@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="TerrainData" load_steps=3 format=3 uid="uid://boqwyn1gro06y"]
+
+[ext_resource type="Script" uid="uid://c1dps65gg8ad0" path="res://resource/data/terrain_data.gd" id="1_yw8m7"]
+[ext_resource type="Texture2D" uid="uid://cx5y7i3a85egw" path="res://assets/textures/terrains/visitor.png" id="2_yw8m7"]
+
+[resource]
+script = ExtResource("1_yw8m7")
+generate_weight = 10
+terrain_type = 17
+body_size = 1
+can_delete = false
+output_desc = "可以溢价出售访客需要的资源，升级后增加同时接待的人数。[br]快捷键 [b][color=white]V[/color][/b] 快速定位到接待处。"
+id = &"9017"
+item_type = 8
+nickname = "接待前台"
+descrip = "访客接待前台。[br][color=black]不可拆除，不可移动。[/color]"
+texture = ExtResource("2_yw8m7")
+hframes = 1
+height = 4
+width = 6
+can_drag = false
+metadata/_custom_type_script = "uid://c1dps65gg8ad0"

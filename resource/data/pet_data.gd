@@ -40,11 +40,6 @@ enum FoodCategory {
 	HERBIVORES,  ## 草食性
 	SCAVENGERS,  ## 腐食性
 }
-##  性别
-enum Gender {
-	MALE,  ## 雄性
-	FEMALE,  ## 雌性
-}
 
 enum WanderLayer { TOP, MIDDLE, BOTTOM, ALL }
 
@@ -64,8 +59,6 @@ enum WanderLayer { TOP, MIDDLE, BOTTOM, ALL }
 @export var speed: float = 100.0
 ## 体型大小
 @export var body_size: BodySize = BodySize.SMALL
-## 性别
-@export var gender: Gender
 ## 角度
 @export var initial_angle: float = randf() * PI * 2.0
 ## 转向率

@@ -34,6 +34,7 @@ func _ready() -> void:
 	_init_held_item()
 	# 订阅事件
 	EventManager.subscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
+	EventManager.subscribe(UIEvent.OPEN_INVENTORY, _on_open_inventory)  # 打开仓库
 	## 连接鼠标操作相关的信号
 	if not InputManager.mouse_left_released.is_connected(on_mouse_left_released):
 		InputManager.mouse_left_released.connect(on_mouse_left_released)
@@ -45,12 +46,12 @@ func _ready() -> void:
 
 	# 二级菜单信号事件
 	gold_bar.reset_world_scale.connect(_on_reset_world_scale)
-	gold_bar.reset_world_coords.connect(_on_reset_world_coords)
 
 
 ## 退出处理订阅事件
 func _exit_tree() -> void:
 	EventManager.unsubscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
+	EventManager.unsubscribe(UIEvent.OPEN_INVENTORY, _on_open_inventory)
 
 
 func initialize(my_state_machine: UIStateMachine) -> void:
@@ -66,7 +67,7 @@ func initialize(my_state_machine: UIStateMachine) -> void:
 	quick_tools = grid_box_bar.get_quick_tools()
 
 
-## 关闭所有弹窗层
+## 关闭所有属性弹窗层
 func close_all_popup() -> void:
 	if _terrian_attribute:
 		_terrian_attribute.queue_free()
@@ -181,19 +182,23 @@ func pick_up_item(data: Dictionary, cell_pos: Vector2, item_from: MultiGridConta
 	# 只有固定材料，要是多个材料请随机
 	var item_id: String = output_items[0]
 	# 随机获得材料的数量
-	var item_num: int = randi_range(10, 20)
-	var success: bool = GlobalData.player.backpack_comp.add_item(item_id, item_num)
+	var item_num: int = randi_range(GlobalData.pick_up_range.x, GlobalData.pick_up_range.y)
+	var success: bool = GlobalData.player.inventory_comp.add_item(item_id, item_num)
 	if success:
 		# 删除地图数据
 		item_from.sub_item_at(cell_pos)
 		# TO DO 动画+num和物品飞入仓库的动画
+
+		# 发送地图容器物品变化的信号（同步数据）
+		EventManager.emit_event(UIEvent.ITEMS_CHANGED, {"container": item_from})
+		
 
 
 ## 旋转物品
 func on_rotation_item_pressed() -> void:
 	## 单格容器不让旋转
 	#if MouseEvent.mouse_cell_matrix is SingleGridContainer:
-		#return
+	#return
 	# 正在抓取物品时，按下键盘R键，进行旋转物品的操作
 	held_item.rotation_item()
 	set_held_item_position(MouseEvent.mouse_position)
@@ -387,11 +392,16 @@ func _on_inventory_full(container: MultiGridContainer) -> void:
 	print(container, " is full")
 
 
+## 打开仓库
+func _on_open_inventory() -> void:
+	bar_state_machine.on_inventory_pressed()
+
+
 ## 重置世界缩放
 func _on_reset_world_scale() -> void:
 	game_world.reset_scale()
 
 
-## 重置世界坐标
-func _on_reset_world_coords() -> void:
-	game_world.reset_coords()
+## 覆盖存档
+func _on_overwrite_save() -> void:
+	EventManager.emit_event(UIEvent.OVERWRITE_SAVE)

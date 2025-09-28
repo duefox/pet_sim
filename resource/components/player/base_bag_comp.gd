@@ -16,19 +16,40 @@ func add_item(item_id: String, item_num: int, extra_args: Dictionary = {}, head_
 	var item_dict = GlobalData.find_item_data(item_id)
 	if item_dict.is_empty():
 		return false
-
+	#print("add_item:",extra_args)
 	var remaining_num: int = item_num
 	var added_success: bool = false
 
 	# 确保extra_args中的item_level存在，默认item_dict的值，item_dict的值大于extra_args的键值也设置为默认
 	if extra_args.is_empty():
+		# 默认级别
 		extra_args.set("item_level", item_dict.get("item_level", 0))
+		# 默认成长值
 		extra_args.set("growth", item_dict.get("growth", 0))
+		# 默认方向
+		extra_args.set("orientation", item_dict.get("orientation", 0))
+		# 动物则随机性别，其他则默认无性别
+		if item_dict.get("item_type", BaseItemData.ItemType.OTHERS) == BaseItemData.ItemType.ANIMAL:
+			var rng: int = randi_range(BaseItemData.Gender.MALE, BaseItemData.Gender.FEMALE)
+			extra_args.set("gender", rng)
+		else:
+			extra_args.set("gender", item_dict.get("gender", BaseItemData.Gender.NONE))
 	else:
 		if item_dict.get("item_level", 0) > extra_args.get("item_level", 0):
 			extra_args.set("item_level", item_dict.get("item_level", 0))
 		if item_dict.get("growth", 0) > extra_args.get("growth", 0):
 			extra_args.set("growth", item_dict.get("growth", 0))
+		# 方向设置
+		if not extra_args.has("orientation"):
+			extra_args.set("orientation", item_dict.get("orientation", 0))
+		# 性别设置
+		if not extra_args.has("gender"):
+			# 动物则随机性别，其他则默认无性别
+			if item_dict.get("item_type", BaseItemData.ItemType.OTHERS) == BaseItemData.ItemType.ANIMAL:
+				var rng: int = randi_range(BaseItemData.Gender.MALE, BaseItemData.Gender.FEMALE)
+				extra_args.set("gender", rng)
+			else:
+				extra_args.set("gender", item_dict.get("gender", BaseItemData.Gender.NONE))
 
 	# 如果是可堆叠物品，先尝试堆叠
 	if item_dict.stackable:
@@ -54,7 +75,6 @@ func add_item(item_id: String, item_num: int, extra_args: Dictionary = {}, head_
 
 ## 清空组件数据
 func clear_all_data() -> void:
-	print("clear_all_data")
 	items_data.clear()
 	# 数据清空完毕后，也需要发出事件，让UI更新
 	emit_changed_event(items_data)
@@ -88,7 +108,18 @@ func update_items_data(items: Array[WItem]) -> void:
 	# 从items中更新items_data
 	for item: WItem in items:
 		# 数据字典
-		var item_data_dict = {"id": item.id, "num": item.num, "extra_args": {"item_level": item.item_level, "growth": item.growth}, "head_position": item.head_position}
+		var extra_args: Dictionary = {
+			"item_level": item.item_level,
+			"growth": item.growth,
+			"gender": item.gender,
+			"orientation": item.orientation,
+		}
+		var item_data_dict = {
+			"id": item.id,
+			"num": item.num,
+			"extra_args": extra_args,
+			"head_position": item.head_position,
+		}
 		items_data.append(item_data_dict)
 
 

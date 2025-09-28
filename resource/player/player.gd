@@ -11,8 +11,8 @@ var landscape_comp: LandscpeComponent
 var player_info: Dictionary[String,Variant] = {
 	"qt_size": Vector2i(10, 1),
 	"bag_size": Vector2i(12, 6),
-	"inven_size": Vector2i(16, 10),
-	"map_size": Vector2i(38, 38),
+	"inven_size": Vector2i(16, 6),
+	"map_size": Vector2i(60, 60),
 	"landscape_size": Vector2i(2, 10),
 }
 
@@ -36,11 +36,13 @@ func _ready() -> void:
 	# 订阅事件
 	EventManager.subscribe(UIEvent.ITEMS_CHANGED, _on_items_changed)
 	EventManager.subscribe(UIEvent.CREATE_NEW_SAVE, _on_create_new_save)
+	EventManager.subscribe(UIEvent.OVERWRITE_SAVE, _on_overwrite_save)
 
 
 func _exit_tree() -> void:
 	EventManager.unsubscribe(UIEvent.ITEMS_CHANGED, _on_items_changed)
 	EventManager.unsubscribe(UIEvent.CREATE_NEW_SAVE, _on_create_new_save)
+	EventManager.unsubscribe(UIEvent.OVERWRITE_SAVE, _on_overwrite_save)
 
 
 ## 用于存档的序列化方法
@@ -83,11 +85,16 @@ func _on_create_new_save() -> void:
 	# 初始化默认地图
 	if world_map_comp:
 		# 初始化地图数据
-		#world_map_comp.init_data(player_info.get("map_size", Vector2i(38, 38)))
+		world_map_comp.init_data(player_info.get("map_size", Vector2i(38, 38)))
 		pass
 
 	# 发送创建初始化地图成功信号
 	EventManager.emit_event(UIEvent.CREATE_MAP_SUCCESS)
+
+
+## 覆盖存档
+func _on_overwrite_save() -> void:
+	SaveSystem.overwrite_save(GlobalData.save_name)
 
 
 ## 物品容器发生变化，同步数据给玩家的数据组件（保证玩家数据的一致性）
@@ -109,3 +116,8 @@ func _on_items_changed(msg: Dictionary) -> void:
 		world_map_comp.update_items_data(items)
 	elif container.name == "Landscpe":
 		world_map_comp.update_items_data(items)
+
+	# 等上一帧，并发时确保节流保存的数据是最新的
+	await get_tree().process_frame
+	# 节流发送保存存档信号
+	Utils.throttle("sub_item", 0.2, _on_overwrite_save)

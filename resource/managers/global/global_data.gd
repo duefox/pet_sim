@@ -15,9 +15,10 @@ var player: Player
 var save_name: String
 ## 当前使用存档的元数据
 var save_metadata: Dictionary
-
 ## 是否已弹窗
 var is_popup: bool = false
+## 材料拾取的范围
+var pick_up_range: Vector2i = Vector2i(6, 10)
 
 #region 预加载资源相关变量
 ## @param StringName 物品的唯一id
@@ -72,6 +73,7 @@ func create_textures_item(res_data: Resource = null) -> void:
 		"item_type": res_data.item_type,  # 类型
 		"item_level": res_data.item_level,  # 级别
 		"growth": res_data.growth,  # 成长度
+		"gender": res_data.gender,  # 性别
 		"base_price": res_data.base_price,  # 基础价格
 		"descrip": res_data.descrip,  # 描述
 		"width": space_width,  # 占用宽度

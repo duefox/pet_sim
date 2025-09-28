@@ -23,6 +23,7 @@ enum Terrains {
 	SULPHUR,  # 硫磺
 	FEATHER,  # 羽毛
 	THUNDER_CRYSTAL,  # 碎雷晶
+	OTHERS,  # 其他类型
 }
 
 ## 地形权重
@@ -31,6 +32,8 @@ enum Terrains {
 @export var terrain_type: Terrains = Terrains.NONE
 ## 体型大小
 @export var body_size: BodySize = BodySize.SMALL
+## 是否可以拆除
+@export var can_delete: bool = true
 ## buffer辐射半径
 @export var radius: int = 0
 ## 主要产出数组，值是材料的物品id

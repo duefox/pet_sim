@@ -39,7 +39,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1r8m"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4lr1s"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -129,7 +129,6 @@ patch_margin_bottom = 20
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/PackbackMargin"]
 layout_mode = 2
 mouse_filter = 2
-theme_override_constants/margin_left = 36
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_bottom = 5
 
@@ -158,9 +157,9 @@ tooltip_text = "快速整理堆叠
 快捷键 [b][color=white]R[/color][/b] 
 多次点击按物品ID和单价切换排序"
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/hover = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_i1r8m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4lr1s")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_km6t3")
 text = "整理"
 script = ExtResource("13_4sgyt")
@@ -226,9 +225,9 @@ layout_mode = 2
 tooltip_text = "清空垃圾箱
 快捷键 [b][color=white]SHIFT + C[/color][/b] "
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/hover = SubResource("StyleBoxFlat_i1r8m")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_i1r8m")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/hover = SubResource("StyleBoxFlat_4lr1s")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_4lr1s")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_128hq")
 text = "清空"
 script = ExtResource("13_4sgyt")

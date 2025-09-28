@@ -26,6 +26,7 @@ mouse_filter = 2
 [node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+horizontal_scroll_mode = 3
 
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer/ScrollContainer"]
 layout_mode = 2
