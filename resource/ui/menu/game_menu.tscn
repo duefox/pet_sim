@@ -28,24 +28,25 @@ held_scene = ExtResource("2_hlcy5")
 unique_name_in_owner = true
 layout_mode = 1
 
-[node name="GoldBar" parent="." instance=ExtResource("1_atan1")]
-unique_name_in_owner = true
-layout_mode = 1
-
 [node name="InfoBar" parent="." instance=ExtResource("3_wuobc")]
 unique_name_in_owner = true
+z_index = 1
+layout_mode = 1
+
+[node name="GoldBar" parent="." instance=ExtResource("1_atan1")]
+unique_name_in_owner = true
+z_index = 2
 layout_mode = 1
 
 [node name="NavigationBar" parent="." instance=ExtResource("6_hlcy5")]
 unique_name_in_owner = true
+z_index = 3
 layout_mode = 1
 
-[node name="GridBoxBar" parent="." instance=ExtResource("6_jgqhp")]
+[node name="TaskBar" parent="." instance=ExtResource("10_id4uk")]
 unique_name_in_owner = true
-layout_mode = 1
-
-[node name="LayoutBar" parent="." instance=ExtResource("12_fk3y4")]
-unique_name_in_owner = true
+visible = false
+z_index = 4
 layout_mode = 1
 
 [node name="BGColor" type="ColorRect" parent="."]
@@ -59,21 +60,28 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.705882)
 
+[node name="GridBoxBar" parent="." instance=ExtResource("6_jgqhp")]
+unique_name_in_owner = true
+z_index = 98
+layout_mode = 1
+
+[node name="LayoutBar" parent="." instance=ExtResource("12_fk3y4")]
+unique_name_in_owner = true
+z_index = 99
+layout_mode = 1
+
 [node name="ProfileBar" parent="." instance=ExtResource("7_jgqhp")]
 unique_name_in_owner = true
 visible = false
+z_index = 198
 layout_mode = 1
 
 [node name="MapBar" parent="." instance=ExtResource("8_cprv1")]
 unique_name_in_owner = true
 visible = false
+z_index = 199
 layout_mode = 1
 script = ExtResource("9_i8p7q")
-
-[node name="TaskBar" parent="." instance=ExtResource("10_id4uk")]
-unique_name_in_owner = true
-visible = false
-layout_mode = 1
 
 [node name="BarStateMachine" type="Node" parent="."]
 unique_name_in_owner = true

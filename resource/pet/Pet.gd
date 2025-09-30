@@ -45,21 +45,23 @@ var target_collision_distance: float = 24.0
 #方便显示信息
 var info_label: Label
 
-#region 需要存档的变量
-#宠物id
-var id: int
-#资源属性集合
-@export var pet_data: PetData
+#region 公有变量
+## 宠物容器内置计数id
+var pet_id: int
+## 资源属性集合
 @export var excrement_scene: PackedScene
 @export var excrement_data: DroppableData
-#性别
+## 性别
 @export var gender: PetData.Gender
-#数据路径
-var data_path: StringName
-#成长时期标志，juvenile, adult
+## 宠物id,唯一标识id
+var id: StringName
+var pet_data: PetData
+## 成长时期标志，juvenile, adult
 var life_stage: int = PetData.LifeStage.JUVENILE
-# 宠物当前的成长值
+## 宠物当前的成长值
 var growth_points: float = 0.0
+## 宠物的房间
+var pet_room: PetRoom
 #endregion
 
 #region 私有变量区块
@@ -147,17 +149,20 @@ func update_info() -> void:
 ## @param data:宠物数据字典，包含资源和资源的路径
 ## @param assigned_gender:宠物的性别
 ## @param wander_bounds:漫游范围
-func initialize_pet(assigned_id: int, data: Dictionary, assigned_gender: PetData.Gender, wander_bounds: Rect2):
+func initialize_pet(assigned_id: int, data: Dictionary, wander_bounds: Rect2):
 	#初始化数据
-	id = assigned_id
-	data_path = data["path"]
-	pet_data = data["res"]
-	gender = assigned_gender
+	pet_id = assigned_id
+	pet_data = GlobalData.items_res[data["id"]]
+	if not is_instance_valid(pet_data):
+		push_warning("无效的资源.")
+		return
+	id = data.get("id", "")
+	gender = data.get("gender", BaseItemData.Gender.MALE)
 	wander_rank = wander_bounds
 	#贴图和动画
-	pet_sprite.texture = pet_data.texture
+	pet_sprite.texture = data["texture_data"].get("texture", pet_data.texture)
 	# 初始化成长值
-	growth_points = pet_data.growth
+	growth_points = data.get("growth", 0.0)
 	life_stage = PetData.LifeStage.JUVENILE
 
 	#初始化运动组件
@@ -238,7 +243,7 @@ func check_for_offline_growth():
 		if life_stage == PetData.LifeStage.JUVENILE:
 			var total_growth = days_passed * pet_data.daily_growth_points
 			lifecycle_comp.add_growth_points(total_growth)
-			print("Pet %s was offline for %d game days and gained %f growth points." % [id, days_passed, total_growth])
+			print("Pet %s was offline for %d game days and gained %f growth points." % [pet_id, days_passed, total_growth])
 		# 更新元数据，记录新的时间戳，避免重复计算
 		set_meta("last_growth_timestamp", last_timestamp + days_passed * game_day_duration)
 
@@ -289,11 +294,11 @@ func on_pet_excrete():
 ## 排泄动作，由状态机调用
 func spawn_excrement():
 	# 使用容器的通用方法生成排泄物
-	var container = get_parent().get_parent()  # 获取 PetContainer 节点
-	if container is PetContainer:
-		container.spawn_droppable_object(global_position, excrement_data)
+	var container = pet_room  # 获取 PetRoom 节点
+	if container is PetRoom:
+		container.spawn_droppable_object(position, excrement_data)
 
-	print("Pet %s just pooped!" % self.id)
+	print("Pet %s just pooped!" % self.pet_id)
 
 
 ## 查找容器内合适的交配对象
@@ -318,7 +323,7 @@ func find_mate() -> Pet:
 			and pet_candidate.mating_comp.can_mate()
 			and pet_candidate.gender != self.gender
 			and pet_candidate.mate_target == null
-			and pet_candidate.data_path == data_path  #物种相同，同一个资源
+			and pet_candidate.id == id  #物种相同，同一个资源
 			and not pet_candidate.mate_lock
 		):
 			var distance = position.distance_to(pet_candidate.position)
@@ -332,11 +337,11 @@ func find_mate() -> Pet:
 ## 产蛋动作
 func spawn_egg():
 	# 使用容器的通用方法生成后代
-	var container = get_parent().get_parent()  # 获取 PetContainer 节点
-	if container is PetContainer:
-		container.spawn_droppable_object(global_position, pet_data.descendant_res, pet_data)
+	var container = pet_room  # 获取 PetRoom 节点
+	if container is PetRoom:
+		container.spawn_droppable_object(position, pet_data.descendant_res, pet_data)
 
-	print(">>>Pet %s is spawning an egg!" % self.id)
+	print(">>>Pet %s is spawning an egg!" % self.pet_id)
 
 
 ## 创建水生动物漫游位置

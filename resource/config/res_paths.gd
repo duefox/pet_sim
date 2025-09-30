@@ -9,6 +9,8 @@ const SCENE_RES: Dictionary[StringName,String] = {
 	"player": "res://resource/player/player.tscn",
 	# 地形详细信息场景
 	"terrian_attribute": "res://resource/ui/widgets/container/w_terrain_attribute.tscn",
+	# 水生动物房间场景
+	"aquatic_room": "res://resource/ui/container/aquatic_room.tscn",
 	# 食物场景
 	"food": "res://resource/droppable/food.tscn",
 	# 便便场景

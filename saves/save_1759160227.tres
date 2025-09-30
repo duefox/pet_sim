@@ -1,0 +1,3827 @@
+[gd_resource type="Resource" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://addons/save_system/game_state_data.gd" id="1_1eoql"]
+[ext_resource type="Texture2D" path="res://assets/textures/aquatic/water/bubblefish_adult_96x96.png" id="2_hfe2r"]
+[ext_resource type="Texture2D" path="res://assets/textures/aquatic/water/swordtail_adult_96x48.png" id="2_iub7g"]
+
+[resource]
+script = ExtResource("1_1eoql")
+metadata = {
+"game_version": "",
+"id": &"1759160227",
+"playtime": 0.0,
+"save_date": "2025-09-29T23:54:46",
+"save_name": &"save_1759160227",
+"timestamp": 1759161286
+}
+nodes_state = Array[Dictionary]([{
+"info": Dictionary[String, Variant]({
+"bag_size": Vector2i(12, 6),
+"inven_size": Vector2i(16, 6),
+"landscape_size": Vector2i(2, 10),
+"map_size": Vector2i(60, 60),
+"qt_size": Vector2i(10, 1)
+}),
+"node_path": NodePath("/root/Main/Player")
+}, {
+"items": Array[Dictionary]([{
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(0, 0),
+"height": 1,
+"id": "3001",
+"num": 9,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(1, 0),
+"height": 1,
+"id": "3002",
+"num": 9,
+"width": 1
+}]),
+"node_path": NodePath("/root/Main/Player/Components/QuickToolsComponent")
+}, {
+"items": Array[Dictionary]([]),
+"node_path": NodePath("/root/Main/Player/Components/BackpackComponent")
+}, {
+"items": Array[Dictionary]([]),
+"node_path": NodePath("/root/Main/Player/Components/InventoryComponent")
+}, {
+"items": Array[Dictionary]([{
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(27, 0),
+"height": 4,
+"id": "9017",
+"num": 1,
+"width": 6
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(20, 0),
+"height": 2,
+"id": "9018",
+"num": 1,
+"width": 3
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(20, 12),
+"height": 4,
+"id": "9001",
+"num": 1,
+"width": 6
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(31, 54),
+"height": 4,
+"id": "9001",
+"num": 1,
+"width": 6
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(29, 21),
+"height": 5,
+"id": "9003",
+"num": 1,
+"width": 5
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(16, 44),
+"height": 4,
+"id": "9004",
+"num": 1,
+"width": 8
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(1, 40),
+"height": 6,
+"id": "9005",
+"num": 1,
+"width": 6
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(47, 36),
+"height": 6,
+"id": "9007",
+"num": 1,
+"width": 6
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(36, 32),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(3, 28),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(48, 43),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(47, 17),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(59, 22),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(41, 46),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(7, 21),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(57, 57),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(7, 7),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(6, 24),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(25, 48),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(50, 22),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(22, 10),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(23, 30),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(58, 0),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(47, 51),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(11, 30),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(15, 43),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(44, 45),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(35, 31),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(36, 58),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(35, 14),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(58, 56),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(15, 54),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(49, 53),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(41, 35),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(15, 11),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(44, 25),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(21, 36),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(3, 39),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(16, 29),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(35, 23),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(33, 29),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(59, 28),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(32, 46),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(10, 44),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(40, 48),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(9, 41),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(25, 17),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(36, 59),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(32, 13),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(15, 44),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(30, 20),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(28, 45),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(30, 39),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(30, 4),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(20, 35),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(19, 22),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(8, 22),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(24, 8),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(19, 18),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(38, 25),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(42, 56),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(15, 4),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(1, 29),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(26, 25),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(49, 30),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(46, 17),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(32, 42),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(5, 39),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(42, 36),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(5, 21),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(13, 28),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(36, 31),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(39, 42),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(12, 48),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(1, 32),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(51, 44),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(23, 19),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(17, 38),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(52, 25),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(24, 30),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(27, 35),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(58, 49),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(26, 23),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(40, 29),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(14, 3),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(37, 34),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(43, 0),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(42, 47),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(35, 32),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(28, 16),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(57, 0),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(39, 20),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(41, 4),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(22, 8),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(44, 52),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(0, 15),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(49, 49),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(26, 3),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(14, 17),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(56, 53),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(28, 42),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(2, 8),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(10, 46),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(47, 10),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(13, 2),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(11, 54),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(8, 4),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(6, 0),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(5, 18),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(45, 49),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(49, 47),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(5, 53),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(48, 35),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(53, 3),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(12, 34),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(34, 20),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(39, 50),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(12, 36),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(26, 49),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(15, 56),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(46, 2),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(56, 2),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(28, 23),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(14, 34),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(50, 6),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(53, 37),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(45, 19),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(1, 28),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(15, 38),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(46, 49),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(9, 28),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(55, 48),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(55, 58),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(0, 6),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(13, 0),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(22, 42),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(20, 27),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(4, 30),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(31, 18),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(2, 37),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(40, 38),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(31, 14),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(18, 21),
+"height": 1,
+"id": "9015",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(21, 23),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(2, 1),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(27, 48),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(2, 49),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(8, 32),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(1, 7),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(46, 54),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(50, 13),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(6, 28),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(36, 12),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(42, 6),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(3, 2),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(54, 4),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(54, 2),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(17, 51),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(43, 7),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(17, 53),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(21, 17),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(2, 14),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(8, 20),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(58, 48),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(37, 13),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(55, 29),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(16, 52),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(42, 30),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(53, 14),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(7, 33),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(29, 54),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(0, 31),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(21, 10),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(11, 5),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(5, 11),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(13, 11),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(46, 5),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(35, 26),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(55, 47),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(3, 9),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(18, 1),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(31, 13),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(5, 52),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(41, 27),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(42, 18),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(11, 36),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(12, 49),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(40, 30),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(13, 34),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(56, 12),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(52, 58),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(28, 52),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(59, 34),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(58, 41),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(16, 57),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(40, 55),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(53, 40),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(46, 18),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(8, 23),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(14, 18),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(7, 20),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(32, 12),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(42, 11),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(30, 45),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(4, 31),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(45, 29),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(13, 5),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(51, 24),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(49, 48),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(24, 20),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(50, 20),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(54, 28),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(27, 4),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(15, 34),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(24, 26),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(10, 26),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(31, 34),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(22, 28),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(57, 26),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(44, 43),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(34, 43),
+"height": 1,
+"id": "9013",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(20, 21),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(32, 58),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(11, 42),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(27, 29),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(6, 18),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(43, 6),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(21, 30),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(48, 44),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(28, 34),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(23, 29),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(47, 50),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(29, 39),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(25, 32),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(1, 53),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(5, 32),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(44, 44),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(41, 5),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(24, 59),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(56, 18),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(57, 54),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(3, 59),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(42, 0),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(10, 37),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(45, 52),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(2, 58),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(23, 38),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(53, 12),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(37, 12),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(9, 18),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(16, 8),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(28, 32),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(53, 44),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(41, 23),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(55, 56),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(1, 25),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(46, 39),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(4, 5),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(59, 44),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(55, 53),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(50, 5),
+"height": 1,
+"id": "9009",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(48, 1),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(43, 18),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(44, 40),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(12, 25),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(54, 14),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(58, 46),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(48, 56),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(41, 42),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(3, 15),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(17, 57),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(51, 3),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(45, 31),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(57, 24),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(7, 6),
+"height": 1,
+"id": "9014",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(40, 9),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(18, 30),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(2, 9),
+"height": 1,
+"id": "9010",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(17, 17),
+"height": 1,
+"id": "9012",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(42, 16),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(45, 4),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(1, 5),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(15, 8),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(45, 48),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(59, 48),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(54, 42),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(41, 11),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(35, 35),
+"height": 1,
+"id": "9011",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"foods_data": Array[Dictionary]([]),
+"head_position": Vector2(18, 4),
+"height": 3,
+"id": "6001",
+"landscape_data": Array[Dictionary]([]),
+"num": 1,
+"pets_data": Array[Dictionary]([]),
+"wall_paper": null,
+"width": 4
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 100.0,
+"item_level": 2,
+"orientation": 0
+},
+"foods_data": Array[Dictionary]([]),
+"head_position": Vector2(26, 5),
+"height": 5,
+"id": "6003",
+"landscape_data": Array[Dictionary]([]),
+"num": 1,
+"pets_data": Array[Dictionary]([{
+"base_price": 5.0,
+"descrip": "外形像一串透明的蓝色气泡。",
+"gender": 1,
+"growth": 100.0,
+"height": 2,
+"id": "1001",
+"item_level": 0,
+"item_name": "泡泡鱼",
+"item_type": 0,
+"max_stack_size": 1,
+"num": 1,
+"orientation": 0,
+"stackable": false,
+"texture_data": {
+"frame": 0,
+"height": 2,
+"hframes": 3,
+"id": "1001",
+"texture": ExtResource("2_hfe2r"),
+"vframes": 1,
+"width": 2
+},
+"width": 2
+}, {
+"base_price": 5.0,
+"descrip": "外形像一串透明的蓝色气泡。",
+"gender": 2,
+"growth": 100.0,
+"height": 2,
+"id": "1001",
+"item_level": 0,
+"item_name": "泡泡鱼",
+"item_type": 0,
+"max_stack_size": 1,
+"num": 1,
+"orientation": 0,
+"stackable": false,
+"texture_data": {
+"frame": 0,
+"height": 2,
+"hframes": 3,
+"id": "1001",
+"texture": ExtResource("2_hfe2r"),
+"vframes": 1,
+"width": 2
+},
+"width": 2
+}, {
+"base_price": 5.0,
+"descrip": "外形像一串透明的蓝色气泡。",
+"gender": 2,
+"growth": 100.0,
+"height": 2,
+"id": "1001",
+"item_level": 0,
+"item_name": "泡泡鱼",
+"item_type": 0,
+"max_stack_size": 1,
+"num": 1,
+"orientation": 0,
+"stackable": false,
+"texture_data": {
+"frame": 0,
+"height": 2,
+"hframes": 3,
+"id": "1001",
+"texture": ExtResource("2_hfe2r"),
+"vframes": 1,
+"width": 2
+},
+"width": 2
+}, {
+"base_price": 10.0,
+"descrip": "身体翠绿，尾部有红色剑状。",
+"gender": 2,
+"growth": 100.0,
+"height": 1,
+"id": "1002",
+"item_level": 0,
+"item_name": "西瓜剑尾",
+"item_type": 0,
+"max_stack_size": 1,
+"num": 1,
+"orientation": 0,
+"stackable": false,
+"texture_data": {
+"frame": 0,
+"height": 1,
+"hframes": 3,
+"id": "1002",
+"texture": ExtResource("2_iub7g"),
+"vframes": 1,
+"width": 2
+},
+"width": 2
+}, {
+"base_price": 10.0,
+"descrip": "身体翠绿，尾部有红色剑状。",
+"gender": 1,
+"growth": 100.0,
+"height": 1,
+"id": "1002",
+"item_level": 0,
+"item_name": "西瓜剑尾",
+"item_type": 0,
+"max_stack_size": 1,
+"num": 1,
+"orientation": 0,
+"stackable": false,
+"texture_data": {
+"frame": 0,
+"height": 1,
+"hframes": 3,
+"id": "1002",
+"texture": ExtResource("2_iub7g"),
+"vframes": 1,
+"width": 2
+},
+"width": 2
+}, {
+"base_price": 5.0,
+"descrip": "外形像一串透明的蓝色气泡。",
+"gender": 1,
+"growth": 100.0,
+"height": 2,
+"id": "1001",
+"item_level": 0,
+"item_name": "泡泡鱼",
+"item_type": 0,
+"max_stack_size": 1,
+"num": 1,
+"orientation": 0,
+"stackable": false,
+"texture_data": {
+"frame": 0,
+"height": 2,
+"hframes": 3,
+"id": "1001",
+"texture": ExtResource("2_hfe2r"),
+"vframes": 1,
+"width": 2
+},
+"width": 2
+}, {
+"base_price": 5.0,
+"descrip": "外形像一串透明的蓝色气泡。",
+"gender": 1,
+"growth": 100.0,
+"height": 2,
+"id": "1001",
+"item_level": 0,
+"item_name": "泡泡鱼",
+"item_type": 0,
+"max_stack_size": 1,
+"num": 1,
+"orientation": 0,
+"stackable": false,
+"texture_data": {
+"frame": 0,
+"height": 2,
+"hframes": 3,
+"id": "1001",
+"texture": ExtResource("2_hfe2r"),
+"vframes": 1,
+"width": 2
+},
+"width": 2
+}, {
+"base_price": 5.0,
+"descrip": "外形像一串透明的蓝色气泡。",
+"gender": 1,
+"growth": 100.0,
+"height": 2,
+"id": "1001",
+"item_level": 0,
+"item_name": "泡泡鱼",
+"item_type": 0,
+"max_stack_size": 1,
+"num": 1,
+"orientation": 0,
+"stackable": false,
+"texture_data": {
+"frame": 0,
+"height": 2,
+"hframes": 3,
+"id": "1001",
+"texture": ExtResource("2_hfe2r"),
+"vframes": 1,
+"width": 2
+},
+"width": 2
+}, {
+"base_price": 5.0,
+"descrip": "外形像一串透明的蓝色气泡。",
+"gender": 1,
+"growth": 100.0,
+"height": 2,
+"id": "1001",
+"item_level": 0,
+"item_name": "泡泡鱼",
+"item_type": 0,
+"max_stack_size": 1,
+"num": 1,
+"orientation": 0,
+"stackable": false,
+"texture_data": {
+"frame": 0,
+"height": 2,
+"hframes": 3,
+"id": "1001",
+"texture": ExtResource("2_hfe2r"),
+"vframes": 1,
+"width": 2
+},
+"width": 2
+}, {
+"base_price": 10.0,
+"descrip": "身体翠绿，尾部有红色剑状。",
+"gender": 2,
+"growth": 100.0,
+"height": 1,
+"id": "1002",
+"item_level": 0,
+"item_name": "西瓜剑尾",
+"item_type": 0,
+"max_stack_size": 1,
+"num": 1,
+"orientation": 0,
+"stackable": false,
+"texture_data": {
+"frame": 0,
+"height": 1,
+"hframes": 3,
+"id": "1002",
+"texture": ExtResource("2_iub7g"),
+"vframes": 1,
+"width": 2
+},
+"width": 2
+}, {
+"base_price": 10.0,
+"descrip": "身体翠绿，尾部有红色剑状。",
+"gender": 1,
+"growth": 100.0,
+"height": 1,
+"id": "1002",
+"item_level": 0,
+"item_name": "西瓜剑尾",
+"item_type": 0,
+"max_stack_size": 1,
+"num": 1,
+"orientation": 0,
+"stackable": false,
+"texture_data": {
+"frame": 0,
+"height": 1,
+"hframes": 3,
+"id": "1002",
+"texture": ExtResource("2_iub7g"),
+"vframes": 1,
+"width": 2
+},
+"width": 2
+}]),
+"wall_paper": null,
+"width": 8
+}]),
+"node_path": NodePath("/root/Main/Player/Components/WorldMapComponent")
+}, {
+"items": Array[Dictionary]([{
+"extra_args": {
+"gender": 0,
+"growth": 100.0,
+"item_level": 2,
+"orientation": 0
+},
+"head_position": Vector2(-1, -1),
+"id": "6003",
+"num": 1
+}]),
+"node_path": NodePath("/root/Main/Player/Components/LandscpeComponent")
+}])

@@ -25,12 +25,12 @@ func check_for_life_stage_change():
 
 	if parent_pet.life_stage == PetData.LifeStage.JUVENILE and parent_pet.growth_points >= pet_data.adult_growth_threshold:
 		new_stage = PetData.LifeStage.ADULT
-		print("Pet %s has grown into an adult!" % parent_pet.id)
+		print("Pet %s has grown into an adult!" % parent_pet.pet_id)
 
 	# 如果阶段发生变化，打印信息并更新阶段
 	if new_stage != parent_pet.life_stage:
 		parent_pet.life_stage = new_stage
-		print("Pet %s has entered the %s stage." % [parent_pet.id, PetData.LifeStage.keys()[parent_pet.life_stage]])
+		print("Pet %s has entered the %s stage." % [parent_pet.pet_id, PetData.LifeStage.keys()[parent_pet.life_stage]])
 		EventManager.emit_event(GameEvent.PET_GROW_UP, parent_pet)
 
 

@@ -26,6 +26,8 @@ var sroll_offset: Vector2 = Vector2.ZERO
 
 ## 地形详细信息
 var _terrian_attribute: WTerrianAttribute
+## 建筑房间内部
+var _current_room: PetRoom
 
 
 func _ready() -> void:
@@ -160,6 +162,31 @@ func placement_overlay_process() -> void:
 			child.off_placement_overlay()
 
 
+## 进入建筑内部
+func enter_build(data: Dictionary, head_pos: Vector2) -> void:
+	if data.is_empty() or not data.has("item_info"):
+		return
+	if not _current_room:
+		# 水族箱
+		if data["item_info"].get("build_type", BuildData.BuildType.NONE) == BuildData.BuildType.AQUATIC:
+			_current_room = ResManager.get_cached_resource(ResPaths.SCENE_RES.aquatic_room).instantiate()
+			add_child(_current_room)
+			_current_room.z_index = 19
+		# 生态缸
+		elif data["item_info"].get("build_type", BuildData.BuildType.NONE) == BuildData.BuildType.ECOLOGICAL:
+			pass
+		# 鸟舍
+		elif data["item_info"].get("build_type", BuildData.BuildType.NONE) == BuildData.BuildType.AVIARY:
+			pass
+		# 生态温室
+		elif data["item_info"].get("build_type", BuildData.BuildType.NONE) == BuildData.BuildType.GREEN_HOUSE:
+			pass
+	# 等一帧再执行，确保画面相关的参数已设定完成
+	await get_tree().process_frame
+	# 设置房间内的数据
+	_current_room.update_pet_view(data, head_pos)
+
+
 ## 显示地形详细数据
 func show_terrian_attribute(data: Dictionary, mouse_position: Vector2) -> void:
 	if not _terrian_attribute:
@@ -191,7 +218,6 @@ func pick_up_item(data: Dictionary, cell_pos: Vector2, item_from: MultiGridConta
 
 		# 发送地图容器物品变化的信号（同步数据）
 		EventManager.emit_event(UIEvent.ITEMS_CHANGED, {"container": item_from})
-		
 
 
 ## 旋转物品
@@ -289,14 +315,46 @@ func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 	var mouse_cell_matrix: MultiGridContainer = MouseEvent.mouse_cell_matrix
 	# 获取鼠标所在的格子容器内的单个格子映射表数据
 	var mouse_item_data: WItemData = mouse_cell_matrix.get_grid_map_item(mouse_cell_pos)
+	# 如果是房间内部
+	if _current_room and _current_room.mouse_in_room:
+		var item_data: Dictionary = held_item.get_data(false)
+		var success: bool = false
+		var food_left: int = 0
+		# 添加食物
+		if item_data.get("item_type", BaseItemData.ItemType.OTHERS) == BaseItemData.ItemType.FOOD:
+			food_left = GlobalData.player.world_map_comp.add_food(_current_room.room_id, _current_room.head_position, item_data)
+			if food_left == item_data["num"]:
+				_item_put_back(cur_item)
+				# 提示房间满了
+			# 达到放置食物的上限后还剩余食物量
+			elif food_left > 0:
+				# 放回原出处并修改剩余数量
+				_item_put_back(cur_item)
+				cur_item.num = food_left
+			# 放置成功后,没有任何剩余则移除原节点
+			else:
+				GlobalData.previous_cell_matrix.remove_item(cur_item)
+				hide_held_item()
+
+		# 添加宠物数据
+		elif item_data.get("item_type", BaseItemData.ItemType.OTHERS) == BaseItemData.ItemType.ANIMAL:
+			success = GlobalData.player.world_map_comp.add_pet(_current_room.room_id, _current_room.head_position, item_data)
+			# 添加成功后
+			if success:
+				# 放置成功后,移除原节点
+				GlobalData.previous_cell_matrix.remove_item(cur_item)
+				hide_held_item()
+				print("宠物放置成功")
+			else:
+				_item_put_back(cur_item)
+				# 提示房间满了
+				print("宠物放置失败，房间满了")
+
+		return
 	# 判定是否是否相同容器的来源
 	if not held_item_from.container_type == mouse_cell_matrix.container_type:
 		# 不同容器类型则放回原位
 		_item_put_back(cur_item)
-		# 这行代码其实可以不要的，并不影响什么
-		held_item.show_bg_color()
-		# 隐藏抓取物品节点(显示层)
-		hide_held_item()
 		return
 	# 物品堆叠判定
 	if cur_item != null and mouse_item_data.link_item is WItem:
@@ -349,12 +407,17 @@ func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 
 ## 物品摆放回原位
 func _item_put_back(cur_item: WItem) -> void:
+	print("_item_put_back,",GlobalData.previous_cell_matrix)
 	#放置失败时，将原物品可见设为真，且将其在映射表中的所在区域设置回"已占用"
 	if cur_item != null:
 		cur_item.visible = true
 		GlobalData.previous_cell_matrix.set_item_placed(cur_item, true)
 		# 处理选中物品
 		_handle_selected_item(cur_item)
+		# 这行代码其实可以不要的，并不影响什么
+		held_item.show_bg_color()
+		# 隐藏抓取物品节点(显示层)
+		hide_held_item()
 
 
 ## 处理选中物品的标记状态
@@ -370,6 +433,7 @@ func _handle_selected_item(item: WItem) -> void:
 func _init_held_item(item_id: String = "999") -> void:
 	held_item = held_scene.instantiate()
 	add_child(held_item)
+	held_item.z_index = 999
 	hide_held_item()
 	# 设置一个默认值
 	var tmp_data: Dictionary = GlobalData.find_item_data(item_id)
@@ -400,8 +464,3 @@ func _on_open_inventory() -> void:
 ## 重置世界缩放
 func _on_reset_world_scale() -> void:
 	game_world.reset_scale()
-
-
-## 覆盖存档
-func _on_overwrite_save() -> void:
-	EventManager.emit_event(UIEvent.OVERWRITE_SAVE)

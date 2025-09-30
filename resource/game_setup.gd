@@ -1,7 +1,6 @@
 extends Node2D
 
 @onready var fps_label: Label = %FPSLabel
-@onready var fish_tank: PetContainer = $FishTank
 @onready var ui: CanvasLayer = $UI
 
 @export var init_fish_cout: int = 11
@@ -102,14 +101,14 @@ func initialize_fish_population():
 		all_fish_data.append(dic)
 
 	# 根据设置的初始数量创建鱼
-	for i in range(init_fish_cout):
-		# 随机选择一个鱼类数据
-		var random_data = all_fish_data[randi() % all_fish_data.size()]
-		# 漫游的范围
-		var bounds: Rect2 = fish_tank.wander_rank
-		# 随机生成一个位置
-		var random_pos = Vector2(randf_range(bounds.position.x, bounds.position.x + bounds.size.x), randf_range(bounds.position.y, bounds.position.y + bounds.size.y))
-		# 调用 PetManager 的方法创建宠物
-		PetManager.create_pet(fish_tank, random_data, random_pos, bounds)
+	#for i in range(init_fish_cout):
+		## 随机选择一个鱼类数据
+		#var random_data = all_fish_data[randi() % all_fish_data.size()]
+		## 漫游的范围
+		#var bounds: Rect2 = fish_tank.wander_rank
+		## 随机生成一个位置
+		#var random_pos = Vector2(randf_range(bounds.position.x, bounds.position.x + bounds.size.x), randf_range(bounds.position.y, bounds.position.y + bounds.size.y))
+		## 调用 PetManager 的方法创建宠物
+		##PetManager.create_pet(fish_tank, random_data, random_pos, bounds)
 
 	print("Initial fish population created: ", init_fish_cout)

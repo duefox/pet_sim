@@ -1,0 +1,291 @@
+[gd_scene load_steps=17 format=3 uid="uid://yk82qpfhmcau"]
+
+[ext_resource type="Script" uid="uid://b5tfkhsk05csu" path="res://resource/ui/widgets/container/w_pet_info.gd" id="1_7db1o"]
+[ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_nbiwa"]
+[ext_resource type="Shader" uid="uid://b7boqp8rlslle" path="res://shaders/rounded_rect.gdshader" id="2_7db1o"]
+[ext_resource type="Texture2D" uid="uid://m8m8ywh10fyi" path="res://assets/textures/aquatic/water/bubblefish_adult_96x96.png" id="3_sy5i1"]
+[ext_resource type="Texture2D" uid="uid://b8qewc5715p8w" path="res://assets/ui/icons/icon_32.png" id="4_p5s6t"]
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="5_qktof"]
+[ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="6_pxyv2"]
+[ext_resource type="LabelSettings" uid="uid://b3kwt3au4hh4x" path="res://assets/label_small_setting.tres" id="7_jq5c3"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lkka7"]
+atlas = ExtResource("1_nbiwa")
+region = Rect2(894, 429, 90, 91)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lkka7"]
+shader = ExtResource("2_7db1o")
+shader_parameter/corner_radius = 8.0
+shader_parameter/rect_size = Vector2(100, 100)
+shader_parameter/margin_top = 0.0
+shader_parameter/margin_bottom = 0.0
+shader_parameter/margin_left = 0.0
+shader_parameter/margin_right = 0.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtts1"]
+atlas = ExtResource("3_sy5i1")
+region = Rect2(0, 0, 96, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6mx6h"]
+atlas = ExtResource("4_p5s6t")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("5_qktof")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jckig"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7db1o"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sy5i1"]
+
+[node name="WPetInfo" type="MarginContainer"]
+custom_minimum_size = Vector2(320, 120)
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+script = ExtResource("1_7db1o")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
+custom_minimum_size = Vector2(0, 144)
+layout_mode = 2
+texture = SubResource("AtlasTexture_lkka7")
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 1
+theme_override_constants/margin_top = 1
+theme_override_constants/margin_right = 1
+theme_override_constants/margin_bottom = 1
+
+[node name="BGColorRect" type="ColorRect" parent="MarginContainer/GridContainer/MarginContainer"]
+unique_name_in_owner = true
+show_behind_parent = true
+material = SubResource("ShaderMaterial_lkka7")
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemTexture" type="TextureRect" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect/CenterContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+texture = SubResource("AtlasTexture_wtts1")
+stretch_mode = 2
+
+[node name="PriceMargin" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect"]
+layout_mode = 1
+offset_right = 60.0
+offset_bottom = 32.0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect/PriceMargin"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect/PriceMargin/HBoxContainer2"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect/PriceMargin/HBoxContainer2/MarginContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_6mx6h")
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect/PriceMargin/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="PriceLabel" type="Label" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect/PriceMargin/HBoxContainer2/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "9999"
+vertical_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+
+[node name="NicknameLabel" type="Label" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "昵称"
+label_settings = ExtResource("7_jq5c3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 12
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/GridContainer/MarginContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="BtnToBackpack" type="Button" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7db1o")
+text = "放回仓库"
+script = ExtResource("6_pxyv2")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="BtnToInventory" type="Button" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_sy5i1")
+text = "放回背包"
+script = ExtResource("6_pxyv2")
+metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+
+[node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3"]
+layout_mode = 2
+alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+
+[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2/VBoxContainer/MarginContainer4"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2/VBoxContainer/MarginContainer4/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2/VBoxContainer/MarginContainer4/HBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "G"
+label_settings = ExtResource("7_jq5c3")
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2/VBoxContainer/MarginContainer4/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+
+[node name="GrowthBar" type="ProgressBar" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2/VBoxContainer/MarginContainer4/HBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 0)
+layout_mode = 2
+tooltip_text = "成长进度"
+value = 50.0
+show_percentage = false
+
+[node name="MarginContainer5" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2/VBoxContainer/MarginContainer5"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2/VBoxContainer/MarginContainer5/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2/VBoxContainer/MarginContainer5/HBoxContainer/MarginContainer"]
+layout_mode = 2
+text = "E"
+label_settings = ExtResource("7_jq5c3")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2/VBoxContainer/MarginContainer5/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+
+[node name="MoodBar" type="ProgressBar" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3/VBoxContainer/MarginContainer2/VBoxContainer/MarginContainer5/HBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+tooltip_text = "当前的心情值"
+value = 10.0
+show_percentage = false
+
+[connection signal="pressed" from="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer/BtnToBackpack" to="." method="_on_btn_to_backpack_pressed"]
+[connection signal="pressed" from="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer2/BtnToInventory" to="." method="_on_btn_to_inventory_pressed"]

@@ -17,8 +17,10 @@ var save_name: String
 var save_metadata: Dictionary
 ## 是否已弹窗
 var is_popup: bool = false
-## 材料拾取的范围
+## 材料拾取获得值的范围
 var pick_up_range: Vector2i = Vector2i(6, 10)
+## 单格房间食物最大放置量
+var room_max_food: int = 99
 
 #region 预加载资源相关变量
 ## @param StringName 物品的唯一id
@@ -51,6 +53,9 @@ var prent_cell_pos: Vector2
 var cur_selected_item: WItem
 ## 基础的物品数据，格式如下
 var data: Dictionary[String,Dictionary]
+## 物品的资源数据
+var items_res: Dictionary[String,Resource]
+
 #endregion
 
 ## 弹窗场景
@@ -84,8 +89,9 @@ func create_textures_item(res_data: Resource = null) -> void:
 		"max_stack_size": res_data.max_stack_size,  # 最大堆叠数
 		"item_info": res_data,  # 详细数据（包含以上）
 	}
-
+	# 基础数据
 	data[res_data.id] = base_data
+	items_res[res_data.id] = res_data
 
 
 ## 根据物品id找对应的物品data

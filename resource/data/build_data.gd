@@ -16,3 +16,11 @@ enum BuildType {
 @export var build_type: BuildType = BuildType.NONE
 ## 体型大小
 @export var body_size: BodySize = BodySize.BIG
+## 墙纸
+@export var wall_paper: Texture2D
+## 造景
+@export var landscape_data: Array[Dictionary]
+## 动物
+@export var pets_data: Array[Dictionary]
+## 食物
+@export var foods_data: Array[Dictionary]

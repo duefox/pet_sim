@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://bods0nyhnshw0"]
+
+[ext_resource type="PackedScene" uid="uid://bm7nist6yg0i7" path="res://resource/ui/container/pet_room.tscn" id="1_up8a6"]
+[ext_resource type="Script" uid="uid://cv5nrw6iopvro" path="res://resource/ui/container/aquatic_room.gd" id="2_vm3a3"]
+[ext_resource type="Shader" uid="uid://c25wsf7t3on1f" path="res://shaders/water_wave.gdshader" id="3_hs7uw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_up8a6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vm3a3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hs7uw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nbqbk"]
+shader = ExtResource("3_hs7uw")
+shader_parameter/wave_color = Color(0, 0.5, 1, 1)
+shader_parameter/edge_color = Color(1, 1, 1, 1)
+shader_parameter/wave_opacity = 0.5
+shader_parameter/water_alpha = 0.6
+shader_parameter/texture_blend = 0.2
+shader_parameter/speed = 1.0
+shader_parameter/wave_frequency = 1.0
+shader_parameter/wave_offset = 0.06
+shader_parameter/peak_amplitude = 0.01
+shader_parameter/trough_amplitude = 0.01
+shader_parameter/secondary_ripple_blend = 0.1
+shader_parameter/tertiary_ripple_blend = 0.1
+shader_parameter/edge_width = 0.02
+shader_parameter/edge_pixel_size = 0.004
+shader_parameter/bubble_color = Color(1, 1, 1, 1)
+shader_parameter/bubble_count = 10
+shader_parameter/bubble_opacity = 0.5
+shader_parameter/bubble_speed_min = 1.0
+shader_parameter/bubble_speed_max = 4.0
+shader_parameter/bubble_radius_min = 0.004
+shader_parameter/bubble_radius_max = 0.01
+shader_parameter/bubble_spawn_x_min = 0.0
+shader_parameter/bubble_spawn_x_max = 1.0
+shader_parameter/bubble_spawn_y_min = 0.0
+shader_parameter/bubble_spawn_y_max = 1.0
+shader_parameter/bubble_pixel_size = 0.002
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_58x83"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x4a22"]
+
+[node name="AquaticRoom" instance=ExtResource("1_up8a6")]
+script = ExtResource("2_vm3a3")
+
+[node name="ButtonSmall" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer" index="0"]
+theme_override_styles/focus = SubResource("StyleBoxEmpty_up8a6")
+
+[node name="ButtonSmall" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer2" index="0"]
+theme_override_styles/focus = SubResource("StyleBoxEmpty_vm3a3")
+
+[node name="ButtonSmall" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer3" index="0"]
+theme_override_styles/focus = SubResource("StyleBoxEmpty_hs7uw")
+
+[node name="ContentsRank" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/ContentMargin" index="0"]
+material = SubResource("ShaderMaterial_nbqbk")
+
+[node name="BtnClean" parent="MarginContainer/VBoxContainer/StateMargin/BtnsMargin/HBoxContainer/MarginContainer2" index="0"]
+theme_override_styles/focus = SubResource("StyleBoxEmpty_58x83")
+
+[node name="BtnBack" parent="MarginContainer/VBoxContainer/StateMargin/BtnsMargin/HBoxContainer/MarginContainer" index="0"]
+theme_override_styles/focus = SubResource("StyleBoxEmpty_x4a22")

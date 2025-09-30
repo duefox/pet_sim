@@ -60,7 +60,7 @@ func start_mating(mate: Pet):
 		# 让配偶宠物的 mate_target 指向自己，形成双向锁定
 		mate.mate_target = parent_pet
 
-	print("Pet %s is starting to mate with Pet %s." % [parent_pet.id, mate.id])
+	print("Pet %s is starting to mate with Pet %s." % [parent_pet.pet_id, mate.pet_id])
 
 
 ## 完成交配
@@ -86,4 +86,4 @@ func complete_mating(mate: Pet):
 		# 隐藏交配动画
 		mate.show_mate_animate(false)
 
-	print("Pet %s has completed mating." % parent_pet.id)
+	print("Pet %s has completed mating." % parent_pet.pet_id)

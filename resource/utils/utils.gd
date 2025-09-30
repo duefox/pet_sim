@@ -140,3 +140,24 @@ func get_res_to_dic(path_folder: String) -> Dictionary[StringName,String]:
 		tmp_dic.set(file_name, file)
 
 	return tmp_dic
+
+
+## 获取两个数组的对称差集：在 A 或 B 中，但不在交集中的所有元素
+func get_array_difference(array_a: Array, array_b: Array) -> Array:
+	var diff_set: Dictionary = {}  # 用字典模拟 HashSet (O(1) 查找)
+
+	# 1. 将数组 A 的元素添加到字典中
+	for item in array_a:
+		diff_set[item] = true
+
+	# 2. 遍历数组 B，如果是交集就移除，不是交集就添加
+	for item in array_b:
+		if diff_set.has(item):
+			# 元素在 A 中也存在，说明是交集，从字典中移除
+			diff_set.erase(item)
+		else:
+			# 元素只在 B 中存在，添加到字典中
+			diff_set[item] = true
+
+	# 3. 字典中剩下的 Key 就是差异元素
+	return diff_set.keys()

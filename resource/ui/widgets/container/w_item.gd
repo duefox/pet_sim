@@ -37,7 +37,13 @@ var stackable: bool  # 物品是否可堆叠
 var num: int = 1:  # 物品数量
 	set = _setter_num
 var max_stack_size: int = 1  # 物品最大堆叠数量
-var item_info: Dictionary  #更多详细的物品原始信息数据
+var item_info: Dictionary  # 更多详细的物品原始信息数据
+## 建筑类物品特有属性
+var wall_paper: Texture2D  # 墙纸
+var landscape_data: Array = []  # 造景
+var pets_data: Array = []  # 房间内部的宠物
+var foods_data: Array = []  # 房间内的食物
+
 #endregion
 ## 物品贴图数据
 var texture_data: Dictionary = {}
@@ -200,6 +206,8 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 		if key == "item_info":
 			# 原始数据字典
 			item_info = item_info_dic
+		elif key == "extra_args":
+			continue
 		else:
 			# 物品当前数据
 			self[key] = data[key]
@@ -248,6 +256,7 @@ func get_data(show_more: bool = true) -> Dictionary:
 		"item_type": item_type,  # 物品类型
 		"item_level": item_level,  # 物品级别
 		"growth": growth,  # 物品的成长值
+		"gender": gender,  # 性别
 		"base_price": base_price,  # 物品的基础价格
 		"descrip": descrip,  # 物品描述
 		"width": width,  # 物品的宽度
@@ -261,6 +270,12 @@ func get_data(show_more: bool = true) -> Dictionary:
 	if show_more:
 		#更多详细的物品信息数据
 		result.set("item_info", item_info)
+	# 建筑类特殊属性
+	if item_type == BaseItemData.ItemType.BUILD:
+		result.set("wall_paper", wall_paper)
+		result.set("landscape_data", landscape_data)
+		result.set("pets_data", pets_data)
+		result.set("foods_data", foods_data)
 
 	return result
 
@@ -358,6 +373,8 @@ func _setter_num(value) -> void:
 	num = value
 	if not is_instance_valid(item_num_label) or num == max_stack_size:
 		return
+	# 更新数字显示
+	set_label_data()
 	# 字体动画
 	var tween: Tween = create_tween()
 	tween.tween_property(item_num_label, "theme_override_font_sizes/font_size", 22, 0.08)

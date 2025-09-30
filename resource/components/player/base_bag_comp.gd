@@ -103,8 +103,7 @@ func load_data(data: Dictionary) -> void:
 
 ## 更新数据
 func update_items_data(items: Array[WItem]) -> void:
-	# 清空数据
-	items_data.clear()
+	var tmp_data: Array[Dictionary] = []
 	# 从items中更新items_data
 	for item: WItem in items:
 		# 数据字典
@@ -117,10 +116,34 @@ func update_items_data(items: Array[WItem]) -> void:
 		var item_data_dict = {
 			"id": item.id,
 			"num": item.num,
+			"width": item.width,
+			"height": item.height,
 			"extra_args": extra_args,
 			"head_position": item.head_position,
 		}
-		items_data.append(item_data_dict)
+		# 建筑需要构建额外的数据
+		if item.item_type == BaseItemData.ItemType.BUILD:
+			item_data_dict.set("wall_paper", item.item_info.get("wall_paper", null))
+			item_data_dict.set("landscape_data", item.item_info.get("landscape_data", []))
+			item_data_dict.set("pets_data", item.item_info.get("pets_data", []))
+			item_data_dict.set("foods_data", item.item_info.get("foods_data", []))
+			# 数据优先以items_data为准，没则从item获得
+			var item_data: Dictionary = find_item_data(item.id, item.head_position)
+			item_data_dict.merge(item_data, true)
+
+		tmp_data.append(item_data_dict)
+
+	# 判定数据值是否一样
+	if tmp_data == items_data:
+		return
+	else:
+		# 清空数据
+		items_data.clear()
+		items_data = tmp_data
+		# 等上一帧，并发时确保节流保存的数据是最新的
+		await get_tree().process_frame
+		# 节流发送保存存档信号
+		Utils.throttle(UIEvent.OVERWRITE_SAVE, 0.2, _on_overwrite_save)
 
 
 ## 当数据发生变化时，通过事件总线通知所有订阅者
@@ -133,6 +156,14 @@ func emit_changed_event(_data: Array[Dictionary]) -> void:
 ## 虚函数，具体实现见子类
 func init_data(_gird_size: Vector2 = Vector2.ZERO) -> void:
 	pass
+
+
+## 根据id和head_pos查找数据
+func find_item_data(item_id: String, head_pos: Vector2) -> Dictionary:
+	for data: Dictionary in items_data:
+		if data["id"] == item_id and data["head_position"] == head_pos:
+			return data
+	return {}
 
 
 ## 查找可堆叠的数据
@@ -163,3 +194,8 @@ func _find_stackable_data(item_id: String, num_to_add: int, item_level: int, max
 
 	# 返回处理后剩余的数量
 	return remaining_num
+
+
+## 发送覆盖存档信号
+func _on_overwrite_save() -> void:
+	EventManager.emit_event(UIEvent.OVERWRITE_SAVE)

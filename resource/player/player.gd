@@ -116,8 +116,3 @@ func _on_items_changed(msg: Dictionary) -> void:
 		world_map_comp.update_items_data(items)
 	elif container.name == "Landscpe":
 		world_map_comp.update_items_data(items)
-
-	# 等上一帧，并发时确保节流保存的数据是最新的
-	await get_tree().process_frame
-	# 节流发送保存存档信号
-	Utils.throttle("sub_item", 0.2, _on_overwrite_save)

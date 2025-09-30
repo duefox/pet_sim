@@ -53,7 +53,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qbkjt"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jckig"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -66,9 +66,9 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wy6p7"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ne4f8"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8d31l"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d0ave"]
 
 [node name="WPetAttribute" type="Control"]
 custom_minimum_size = Vector2(480, 0)
@@ -260,7 +260,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 theme_override_constants/margin_left = 8
 
-[node name="ProgressBar" type="ProgressBar" parent="MarginContainer/MarginContainer/VBoxContainer/MarginContainer5/HBoxContainer/MarginContainer2"]
+[node name="MoodBar" type="ProgressBar" parent="MarginContainer/MarginContainer/VBoxContainer/MarginContainer5/HBoxContainer/MarginContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 tooltip_text = "当前的心情值"
 value = 10.0
@@ -293,10 +294,10 @@ theme_override_constants/margin_right = 24
 [node name="BtnToBackpack" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/MarginContainer6/HBoxContainer/MarginContainer"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/hover = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_wy6p7")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ne4f8")
 text = "放回背包"
 script = ExtResource("8_0uv62")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
@@ -309,10 +310,10 @@ theme_override_constants/margin_right = 24
 [node name="BtnToInventory" type="Button" parent="MarginContainer/MarginContainer/VBoxContainer/MarginContainer6/HBoxContainer/MarginContainer2"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/hover = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_qbkjt")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_8d31l")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_d0ave")
 text = "放回仓库"
 script = ExtResource("8_0uv62")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"

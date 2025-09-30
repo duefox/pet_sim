@@ -32,31 +32,31 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gaguq"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jckig"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u3b0f"]
 atlas = ExtResource("4_hkbts")
 region = Rect2(160, 64, 32, 32)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u3b0f"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gaguq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jckig"]
 atlas = ExtResource("6_jckig")
 region = Rect2(0, 32, 32, 32)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_llukx"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_u3b0f"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gaguq"]
 atlas = ExtResource("6_jckig")
 region = Rect2(32, 32, 32, 32)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3auqv"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_llukx"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8vwas"]
 atlas = ExtResource("4_hkbts")
 region = Rect2(160, 64, 32, 32)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lxnp4"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3auqv"]
 
 [node name="LayoutBar" type="Control"]
 layout_mode = 3
@@ -86,6 +86,7 @@ layout_mode = 2
 
 [node name="BuildsMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/margin_bottom = 4
@@ -139,7 +140,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_gaguq")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jckig")
 toggle_mode = true
 icon = SubResource("AtlasTexture_u3b0f")
 icon_alignment = 1
@@ -153,7 +154,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_u3b0f")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_gaguq")
 toggle_mode = true
 icon = SubResource("AtlasTexture_jckig")
 icon_alignment = 1
@@ -167,7 +168,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_llukx")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_u3b0f")
 toggle_mode = true
 button_pressed = true
 icon = SubResource("AtlasTexture_gaguq")
@@ -197,7 +198,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_3auqv")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_llukx")
 icon = SubResource("AtlasTexture_8vwas")
 icon_alignment = 1
 expand_icon = true
@@ -218,7 +219,7 @@ theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
 theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_lxnp4")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3auqv")
 text = "整理"
 script = ExtResource("7_g5rs6")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"

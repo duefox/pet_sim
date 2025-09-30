@@ -22,4 +22,4 @@ func increase_mood(amount: float):
 	mood_level += amount
 	# 将心情值限制在0到100之间，防止超出范围
 	mood_level = clamp(mood_level, 0.0, 100.0)
-	print("Pet %s's mood has increased to %s." % [parent_pet.id, mood_level])
+	print("Pet %s's mood has increased to %s." % [parent_pet.pet_id, mood_level])

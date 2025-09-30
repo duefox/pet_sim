@@ -550,13 +550,25 @@ func _add_item_at(cell_pos: Vector2, item: WItem) -> bool:
 
 ## 根据id给WItem设置基础数据
 func _set_item_data_at_id(item: WItem, item_id: String, item_num: int = 1, extra_args: Dictionary = {}) -> void:
+	# 获取基本数据，资源的原始数据，不可修改
 	var data: Dictionary = GlobalData.find_item_data(item_id)
+	# 最终数据需要从保存的数据中合并覆盖
+	var latest_data: Dictionary = _get_latest_data(item_id)
+	data.merge(latest_data, true)
 	# 更新设置数量
 	data.set("num", item_num)
 	if data:
 		item.set_data(data, extra_args)
 	else:
 		print("set item data at id 设置数据失败！")
+
+
+## 从视觉数据中拿取最新数据
+func _get_latest_data(item_id: String) -> Dictionary:
+	for dict: Dictionary in _buffer_items_data:
+		if dict["id"] == item_id:
+			return dict.duplicate(true)
+	return {}
 
 
 ## 将物品节点添加至多格子容器(显示层)

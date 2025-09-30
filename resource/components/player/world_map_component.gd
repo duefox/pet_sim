@@ -80,6 +80,35 @@ func init_data(gird_size: Vector2 = Vector2.ZERO) -> void:
 	initialize(map_seed)
 
 
+## 添加宠物（房间有大小，空间还有才能放下）
+func add_pet(room_id: String, head_pos: Vector2, data: Dictionary) -> bool:
+	var item_data: Dictionary = find_item_data(room_id, head_pos)
+	var pets_data: Array = item_data["pets_data"]
+	# 计算改房间还能放置宠物的空间大小
+	var left_space: int = _comput_left_room_space(item_data)
+	var space: int = data["width"] * data["height"]
+	print("left_space:",left_space)
+	if left_space >= space:
+		pets_data.append(data)
+		# 通知更新数据
+		emit_changed_event(items_data)
+		return true
+	return false
+
+
+## 添加食物（不能超过上限）
+func add_food(room_id: String, head_pos: Vector2, data: Dictionary) -> int:
+	var item_data: Dictionary = find_item_data(room_id, head_pos)
+	var foods_data: Array = item_data["foods_data"]
+	# 计算改房间还能放置食物的数量
+	var left_count: int = _comput_food_left_count(item_data, data)
+	data.set("num", data.get("num", 1) - left_count)
+	foods_data.append(data)
+	# 通知更新数据
+	emit_changed_event(items_data)
+	return left_count
+
+
 func initialize(map_seed: int) -> void:
 	noise.seed = map_seed
 	noise.noise_type = FastNoiseLite.TYPE_SIMPLEX
@@ -243,3 +272,32 @@ func _try_place_item(item_data: Dictionary, head_pos: Vector2) -> bool:
 			item_current_counts[item_data.id] = item_current_counts.get(item_data.id, 0) + 1
 
 	return true
+
+
+## 计算房间还可以放下宠物的空间大小
+func _comput_left_room_space(item_data: Dictionary) -> int:
+	var pets_data: Array = item_data.get("pets_data", [])
+	var room_size: int = item_data["width"] * item_data["height"]
+	print("room_size:",room_size)
+	var left_space: int = room_size
+	for data: Dictionary in pets_data:
+		var space: int = data["width"] * data["height"]
+		print("space:",space)
+		left_space -= space
+
+	return max(left_space, 0)
+
+
+## 计算房间还可以放下食物后的剩余量
+func _comput_food_left_count(item_data: Dictionary, place_data: Dictionary) -> int:
+	var foods_data: Array = item_data.get("foods_data", [])
+	var place_count: int = 0
+	for data: Dictionary in foods_data:
+		var num: int = data.get("num", 1)
+		place_count += num
+	# 还可以放置的数量
+	var left_count: int = max(GlobalData.room_max_food - place_count, 0)
+	if place_data.get("num", 1) > left_count:
+		return place_data.get("num", 1) - left_count
+	else:
+		return 0

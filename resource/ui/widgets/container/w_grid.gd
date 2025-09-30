@@ -121,8 +121,8 @@ func _handle_mouse_right(event: InputEventMouseButton) -> void:
 				GlobalData.ui.show_terrian_attribute(cur_item.get_data(), event.global_position)
 		## 建筑物品右键大窗口查看详情
 		elif cur_item.item_type == BaseItemData.ItemType.BUILD:
-			print("进入建筑内部！")
-			pass
+			#print("进入建筑内部！")
+			GlobalData.ui.enter_build(cur_item.get_data(),cur_item.head_position)
 
 		var can_drag: bool = cur_item.get_data().get("item_info").get("can_drag", true)
 		if not can_drag:
