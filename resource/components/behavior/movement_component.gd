@@ -1,13 +1,9 @@
 extends Node
 class_name MovementComponent
 
-# 移动速度
-@export var speed: float = 100.0:
-	set(value):
-		speed = value
-		#print("update speed:", speed)
-
-# 是否在到达目标后自动清除目标，交配状态下不清除
+## 移动速度
+@export var speed: float = 100.0
+## 是否在到达目标后自动清除目标，交配状态下不清除
 @export var clear_on_arrival: bool = true
 
 var parent_pet: Pet  #宠物对象
@@ -32,6 +28,9 @@ func update_movement(delta: float):
 	# 如果有目标，根据目标进行转向
 	if target_pos != Vector2.ZERO:
 		_steer_towards(delta)
+	# 如果目标为空则设置新的目标位置
+	else:
+		set_target(parent_pet.create_position())
 
 	# 如果设置了自动清除，并且已经到达目标，则清除目标
 	if clear_on_arrival and parent_pet.position.distance_to(target_pos) < parent_pet.target_collision_distance * 0.5:
@@ -41,14 +40,19 @@ func update_movement(delta: float):
 	_baisc_movement(delta)
 
 
-# 设定移动目标
-func set_target(pos: Vector2):
+# 设定移动目标位置
+func set_target(pos: Vector2) -> void:
 	#print("new positon:", pos)
 	target_pos = pos
 
 
+# 返回移动到的目标位置
+func get_target() -> Vector2:
+	return target_pos
+
+
 ## 清空移动目标
-func clear_target():
+func clear_target() -> void:
 	target_pos = Vector2.ZERO
 
 

@@ -1,23 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://ixsr2gblswwt"]
+[gd_scene load_steps=6 format=3 uid="uid://ixsr2gblswwt"]
 
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_c25m6"]
 [ext_resource type="Script" uid="uid://id3ob5gqg872" path="res://resource/ui/menu/game/gold_bar.gd" id="1_xvxg5"]
 [ext_resource type="Texture2D" uid="uid://b8qewc5715p8w" path="res://assets/ui/icons/icon_32.png" id="2_gsgvk"]
-[ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="4_ne74b"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_agvq5"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gsgvk"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ne74b"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_xptyc"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h3vi6"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j5d24"]
-atlas = ExtResource("2_gsgvk")
-region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7so0y"]
 atlas = ExtResource("1_c25m6")
@@ -52,40 +37,7 @@ theme_override_constants/margin_bottom = 10
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-
-[node name="MarginContainer4" type="MarginContainer" parent="MarginContainer/HBoxContainer2"]
-layout_mode = 2
-theme_override_constants/margin_left = 8
-theme_override_constants/margin_right = 8
-
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer2/MarginContainer4"]
-layout_mode = 2
-
-[node name="BtnScale" type="Button" parent="MarginContainer/HBoxContainer2/MarginContainer4/HBoxContainer"]
-layout_mode = 2
-tooltip_text = "恢复缩放度
-快捷键 [b][color=white]S[/color][/b] "
-theme_override_styles/normal = SubResource("StyleBoxEmpty_agvq5")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_gsgvk")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_ne74b")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_xptyc")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_h3vi6")
-icon = SubResource("AtlasTexture_j5d24")
-icon_alignment = 1
-script = ExtResource("4_ne74b")
-metadata/_custom_type_script = "uid://hmattcwq4j3c"
-
-[node name="ScaleLabel" type="Label" parent="MarginContainer/HBoxContainer2/MarginContainer4/HBoxContainer"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(40, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 20
-text = "100%"
-horizontal_alignment = 1
-vertical_alignment = 1
+alignment = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer2"]
 layout_mode = 2
@@ -130,5 +82,3 @@ theme_override_font_sizes/font_size = 28
 text = "123456789"
 horizontal_alignment = 1
 vertical_alignment = 1
-
-[connection signal="pressed" from="MarginContainer/HBoxContainer2/MarginContainer4/HBoxContainer/BtnScale" to="." method="_on_btn_scale_pressed"]

@@ -1,16 +1,55 @@
-[gd_scene load_steps=10 format=3 uid="uid://bods0nyhnshw0"]
+[gd_scene load_steps=22 format=3 uid="uid://mh84126p0k3m"]
 
 [ext_resource type="PackedScene" uid="uid://bm7nist6yg0i7" path="res://resource/ui/container/pet_room.tscn" id="1_up8a6"]
 [ext_resource type="Script" uid="uid://cv5nrw6iopvro" path="res://resource/ui/container/aquatic_room.gd" id="2_vm3a3"]
 [ext_resource type="Shader" uid="uid://c25wsf7t3on1f" path="res://shaders/water_wave.gdshader" id="3_hs7uw"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_up8a6"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vm3a3"]
+[ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="3_vm3a3"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hs7uw"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_nbqbk"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_58x83"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x4a22"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kr5c3"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nrycr"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
+texture = ExtResource("3_vm3a3")
+texture_margin_left = 10.0
+texture_margin_top = 10.0
+texture_margin_right = 10.0
+texture_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1kw4x"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(1, 0.365, 0.365, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_detail = 1
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_an3ju"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ur8yp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gpwsl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_73u5l"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_12puh"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a4xo2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_t60h2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_up8a6"]
 shader = ExtResource("3_hs7uw")
 shader_parameter/wave_color = Color(0, 0.5, 1, 1)
 shader_parameter/edge_color = Color(1, 1, 1, 1)
@@ -39,27 +78,66 @@ shader_parameter/bubble_spawn_y_min = 0.0
 shader_parameter/bubble_spawn_y_max = 1.0
 shader_parameter/bubble_pixel_size = 0.002
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_58x83"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_16bw7"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x4a22"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fqd13"]
 
-[node name="AquaticRoom" instance=ExtResource("1_up8a6")]
+[node name="PetRoom" instance=ExtResource("1_up8a6")]
 script = ExtResource("2_vm3a3")
 
-[node name="ButtonSmall" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer" index="0"]
-theme_override_styles/focus = SubResource("StyleBoxEmpty_up8a6")
+[node name="BtnDirLeft" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer/HBoxContainer" index="0"]
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hs7uw")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_58x83")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_x4a22")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_kr5c3")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_nrycr")
 
-[node name="ButtonSmall" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer2" index="0"]
-theme_override_styles/focus = SubResource("StyleBoxEmpty_vm3a3")
+[node name="BtnToBag" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer/HBoxContainer" index="1"]
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_an3ju")
 
-[node name="ButtonSmall" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer3" index="0"]
-theme_override_styles/focus = SubResource("StyleBoxEmpty_hs7uw")
+[node name="BtnDirRight" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer/HBoxContainer" index="2"]
+theme_override_styles/normal = SubResource("StyleBoxEmpty_ur8yp")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_gpwsl")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_73u5l")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_12puh")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_a4xo2")
 
-[node name="ContentsRank" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/ContentMargin" index="0"]
-material = SubResource("ShaderMaterial_nbqbk")
+[node name="BtnSell" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer3" index="0"]
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_t60h2")
+
+[node name="WaterMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin" index="2"]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 34
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 8
+
+[node name="WaterColor" type="ColorRect" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/WaterMargin" index="0"]
+unique_name_in_owner = true
+layout_mode = 2
+color = Color(0, 0.42352942, 1, 0.3764706)
+
+[node name="ContentsRank" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/ContentMargin" index="1"]
+material = SubResource("ShaderMaterial_up8a6")
 
 [node name="BtnClean" parent="MarginContainer/VBoxContainer/StateMargin/BtnsMargin/HBoxContainer/MarginContainer2" index="0"]
-theme_override_styles/focus = SubResource("StyleBoxEmpty_58x83")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_16bw7")
 
 [node name="BtnBack" parent="MarginContainer/VBoxContainer/StateMargin/BtnsMargin/HBoxContainer/MarginContainer" index="0"]
-theme_override_styles/focus = SubResource("StyleBoxEmpty_x4a22")
+theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_fqd13")

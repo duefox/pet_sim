@@ -9,7 +9,6 @@
 script = ExtResource("3_bh13m")
 speed = 80.0
 initial_angle = null
-excretion_interval = 60.0
 descendant_res = ExtResource("2_et63q")
 live_layer = 0
 id = &"1001"

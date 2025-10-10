@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bisaxuna7ri5q"]
+[gd_scene load_steps=18 format=3 uid="uid://bisaxuna7ri5q"]
 
 [ext_resource type="Script" uid="uid://csvdtml6ljy8n" path="res://resource/ui/menu/game/info_bar.gd" id="1_ejcqy"]
 [ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="2_s6r2k"]
@@ -9,6 +9,8 @@
 atlas = ExtResource("2_tyhas")
 region = Rect2(753, 234, 225, 64)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tyhas"]
+
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bfw33"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_12h2e"]
@@ -17,11 +19,23 @@ region = Rect2(753, 234, 225, 64)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ejcqy"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nohy1"]
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_lyk6u"]
 atlas = ExtResource("3_tyhas")
 region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_nohy1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_50f63"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lma7q"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2wt8m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ntged"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mrxdn"]
+atlas = ExtResource("3_tyhas")
+region = Rect2(160, 0, 32, 32)
 
 [node name="InfoBar" type="Control"]
 layout_mode = 3
@@ -37,7 +51,13 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/HBoxContainer/MarginContainer2"]
 layout_mode = 2
 texture = SubResource("AtlasTexture_bfw33")
 patch_margin_left = 10
@@ -45,49 +65,85 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer2"]
 layout_mode = 2
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
 theme_override_constants/margin_bottom = 8
 
-[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/MarginContainer/HBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_right = 8
 
-[node name="DayLabel" type="Label" parent="MarginContainer/MarginContainer/HBoxContainer/MarginContainer"]
+[node name="DayLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer2/MarginContainer/HBoxContainer/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "春 28日"
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/MarginContainer/HBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/HBoxContainer/MarginContainer2/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/margin_right = 6
 
-[node name="WeatherIcon" type="Button" parent="MarginContainer/MarginContainer/HBoxContainer/MarginContainer2"]
+[node name="WeatherIcon" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer2/MarginContainer/HBoxContainer/MarginContainer2"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 tooltip_text = "今日天气"
-theme_override_styles/normal = SubResource("StyleBoxEmpty_bfw33")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_12h2e")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_mjnsh")
-theme_override_styles/disabled = SubResource("StyleBoxEmpty_ejcqy")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_nohy1")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_tyhas")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_bfw33")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_12h2e")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_mjnsh")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ejcqy")
 icon = SubResource("AtlasTexture_lyk6u")
 icon_alignment = 1
 expand_icon = true
 script = ExtResource("2_s6r2k")
 metadata/_custom_type_script = "uid://hmattcwq4j3c"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/HBoxContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="ScaleLabel" type="Label" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 20
+text = "100%"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BtnScale" type="Button" parent="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+tooltip_text = "恢复缩放度
+快捷键 [b][color=white]S[/color][/b] "
+theme_override_styles/normal = SubResource("StyleBoxEmpty_nohy1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_50f63")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_lma7q")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_2wt8m")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ntged")
+icon = SubResource("AtlasTexture_mrxdn")
+icon_alignment = 1
+script = ExtResource("2_s6r2k")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
+
+[connection signal="pressed" from="MarginContainer/HBoxContainer/MarginContainer/HBoxContainer/BtnScale" to="." method="_on_btn_scale_pressed"]

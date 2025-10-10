@@ -1,13 +1,12 @@
 ## 价格管理器，市场波动，优惠，好感度影响价格
 extends Node
 
-## 物品级别基础售价
-## key: 物品级别, value: 基础价格
-const BASE_SALE_PRICES: Dictionary = {
-	0: 10,  # 普通
-	1: 50,  # 稀有
-	2: 200,  # 罕见
-	3: 1000,  # 传说
+## key: 物品级别, value: 基础价格的倍数
+const SALE_PRICES_MULTIPLE: Dictionary = {
+	0: 1,  # 普通
+	1: 2,  # 稀有
+	2: 3,  # 罕见
+	3: 4,  # 传说
 }
 
 ## 全局市场波动值 (例如每小时更新一次)
@@ -25,8 +24,8 @@ func _init() -> void:
 
 ## 更新市场波动
 func update_market_fluctuation() -> void:
-	# 随机生成一个 -5% 到 +5% 的波动值
-	market_fluctuation = 1.0 + randf_range(-0.05, 0.05)
+	# 随机生成一个 -20% 到 +20% 的波动值
+	market_fluctuation = 1.0 + randf_range(-0.2, 0.2)
 	print("市场波动已更新至：", market_fluctuation)
 
 
@@ -61,14 +60,17 @@ func get_sale_price(item_data: Dictionary) -> int:
 	var item_level: int = item_data.get("item_level", 0)
 	# 获取物品的成长值
 	var growth: float = item_data.get("growth", 0.0)
-
-	# 1. 根据级别获取基础出售价格
-	var base_price: int = BASE_SALE_PRICES.get(item_level, 0)
-
+	# 确保包含原始数据（item_info就是原始数据）
+	if not item_data.has("item_info"):
+		var origin_data: Dictionary = GlobalData.find_item_data(item_data["id"])
+		var item_info: Dictionary = Utils.get_properties_from_res(origin_data["item_info"]).duplicate(true)
+		item_data.set("item_info", item_info)
+	# 1. 根据级别获取基础出售价格，根据BASE_SALE_PRICES
+	var base_price: int = int(item_data["item_info"].get("base_price", 1)) * SALE_PRICES_MULTIPLE.get(item_level, 0)
 	# 2. 根据成长值增加价格（假设成长值与价格线性相关）
 	var growth_bonus: float = 0.0
 	# 如果物品有成长值属性
-	if item_data.has("item_info") and item_data["item_info"].get("item_type") == 2:  # 2 代表动物类型
+	if item_data["item_info"].get("item_type") == 2:  # 2 代表动物类型
 		var adult_threshold: float = item_data["item_info"].get("adult_growth_threshold", 100.0)
 		# 成年动物出售价格翻倍
 		if growth >= adult_threshold:
@@ -81,4 +83,4 @@ func get_sale_price(item_data: Dictionary) -> int:
 	var final_price: float = (base_price + growth_bonus) * market_fluctuation
 
 	# 确保价格不低于0，并返回整数
-	return max(0, round(final_price))
+	return max(0, floor(final_price))

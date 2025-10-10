@@ -1,0 +1,425 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://0w0me4s0krje"]
+
+[ext_resource type="Script" uid="uid://yyx0jgvjf1tp" path="res://addons/save_system/game_state_data.gd" id="1_2qkwl"]
+
+[resource]
+script = ExtResource("1_2qkwl")
+metadata = {
+"game_version": "",
+"id": &"1759932756",
+"playtime": 0.0,
+"save_date": "2025-10-10T13:01:57",
+"save_name": &"save_1759932756",
+"timestamp": 1760072517
+}
+nodes_state = Array[Dictionary]([{
+"info": Dictionary[String, Variant]({
+"bag_size": Vector2i(12, 6),
+"inven_size": Vector2i(16, 6),
+"landscape_size": Vector2i(2, 10),
+"map_size": Vector2i(60, 60),
+"qt_size": Vector2i(10, 1)
+}),
+"node_path": NodePath("/root/Main/Player")
+}, {
+"items": Array[Dictionary]([{
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(0, 0),
+"height": 1,
+"id": "3001",
+"num": 9,
+"width": 1
+}, {
+"extra_args": {
+"gender": 1,
+"growth": 100.0,
+"item_level": 3,
+"orientation": 0
+},
+"head_position": Vector2(4, 0),
+"height": 2,
+"id": "1001",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 1,
+"growth": 100.0,
+"item_level": 2,
+"orientation": 0
+},
+"head_position": Vector2(7, 0),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 1,
+"growth": 100.0,
+"item_level": 3,
+"orientation": 0
+},
+"head_position": Vector2(8, 0),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 1,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(3, 0),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 1,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(5, 0),
+"height": 1,
+"id": "1001",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 1,
+"growth": 100.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(6, 0),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}]),
+"node_path": NodePath("/root/Main/Player/Components/QuickToolsComponent")
+}, {
+"items": Array[Dictionary]([{
+"extra_args": {
+"gender": 1,
+"growth": 100.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(0, 0),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}]),
+"node_path": NodePath("/root/Main/Player/Components/BackpackComponent")
+}, {
+"items": Array[Dictionary]([{
+"extra_args": {
+"gender": 1,
+"growth": 100.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(0, 0),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(2, 0),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(4, 0),
+"height": 2,
+"id": "1001",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(6, 0),
+"height": 2,
+"id": "1001",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 1,
+"growth": 100.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(8, 0),
+"height": 2,
+"id": "1001",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(10, 0),
+"height": 2,
+"id": "1001",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(12, 0),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(14, 0),
+"height": 1,
+"id": "1001",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 1,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(0, 1),
+"height": 1,
+"id": "1001",
+"num": 1,
+"width": 1
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(1, 1),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 1,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(12, 1),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(14, 1),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(0, 2),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(2, 2),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(4, 2),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(6, 2),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(8, 2),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 1,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(10, 2),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}, {
+"extra_args": {
+"gender": 2,
+"growth": 100.0,
+"item_level": 1,
+"orientation": 0
+},
+"head_position": Vector2(12, 2),
+"height": 1,
+"id": "1002",
+"num": 1,
+"width": 2
+}]),
+"node_path": NodePath("/root/Main/Player/Components/InventoryComponent")
+}, {
+"items": Array[Dictionary]([{
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(27, 0),
+"height": 4,
+"id": "9017",
+"num": 1,
+"width": 6
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(20, 0),
+"height": 2,
+"id": "9018",
+"num": 1,
+"width": 3
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 0.0,
+"item_level": 0,
+"orientation": 0
+},
+"head_position": Vector2(25, 12),
+"height": 4,
+"id": "9001",
+"num": 1,
+"width": 6
+}, {
+"extra_args": {
+"gender": 0,
+"growth": 100.0,
+"item_level": 3,
+"orientation": 0
+},
+"foods_data": Array[Dictionary]([]),
+"head_position": Vector2(24, 5),
+"height": 6,
+"id": "6004",
+"landscape_data": Array[Dictionary]([]),
+"num": 1,
+"pets_data": Array[Dictionary]([]),
+"wall_paper": null,
+"width": 10
+}]),
+"node_path": NodePath("/root/Main/Player/Components/WorldMapComponent")
+}, {
+"items": Array[Dictionary]([{
+"extra_args": {
+"gender": 0,
+"growth": 100.0,
+"item_level": 3,
+"orientation": 0
+},
+"head_position": Vector2(-1, -1),
+"id": "6004",
+"num": 1
+}]),
+"node_path": NodePath("/root/Main/Player/Components/LandscpeComponent")
+}])

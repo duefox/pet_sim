@@ -1,9 +1,11 @@
 extends MarginContainer
 class_name CMDLine
 
+@onready var bag_option: OptionButton = $HBoxContainer/BagMargin/BagOption
+
 #region 命令行相关变量
 ## 当前要添加物品的背包
-var _cur_index: int
+@export var cur_index: int = 0
 ## 物品id
 var _item_id: String = ""
 ## 物品数量
@@ -17,15 +19,14 @@ var _item_grow: float = 100.0
 
 
 func _ready() -> void:
-	# 命令行设置为当前背包
-	_cur_index = 1
+	bag_option.selected = cur_index
 
 
 #region 命令行事件
 
 
 func _on_bag_option_item_selected(index: int) -> void:
-	_cur_index = index
+	cur_index = index
 
 
 func _on_level_option_item_selected(index: int) -> void:
@@ -73,16 +74,16 @@ func _cmd_add_item(item_id: String, item_num: int, item_level: int, item_grow: f
 	}
 	if not GlobalData.player:
 		return
-		
-	print("item_id:",item_id,",_cur_index:",_cur_index)
 
-	if _cur_index == 0:
+	print("item_id:", item_id, ",cur_index:", cur_index)
+
+	if cur_index == 0:
 		GlobalData.player.quick_tools_comp.add_item(item_id, item_num, extra_args)
-	elif _cur_index == 1:
+	elif cur_index == 1:
 		GlobalData.player.backpack_comp.add_item(item_id, item_num, extra_args)
-	elif _cur_index == 2:
+	elif cur_index == 2:
 		GlobalData.player.inventory_comp.add_item(item_id, item_num, extra_args)
-	elif _cur_index == 3:
+	elif cur_index == 3:
 		GlobalData.player.world_map_comp.add_item(item_id, item_num, extra_args)
-	elif _cur_index == 4:
+	elif cur_index == 4:
 		GlobalData.player.landscape_comp.add_item(item_id, item_num, extra_args)

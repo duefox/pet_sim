@@ -87,7 +87,7 @@ func add_pet(room_id: String, head_pos: Vector2, data: Dictionary) -> bool:
 	# 计算改房间还能放置宠物的空间大小
 	var left_space: int = _comput_left_room_space(item_data)
 	var space: int = data["width"] * data["height"]
-	print("left_space:",left_space)
+	#print("left_space:", left_space)
 	if left_space >= space:
 		pets_data.append(data)
 		# 通知更新数据
@@ -117,8 +117,8 @@ func initialize(map_seed: int) -> void:
 	_generate_item_data()
 	# 构建固定的世界物品
 	_generate_regular_world()
-	# 构建世界数据
-	_generate_world()
+	# 构建世界数据 #### 测试
+	#_generate_world()
 	#print("World generation complete. Total items: ", items_data.size())
 	# 通知地块更新数据
 	emit_changed_event(items_data)
@@ -278,11 +278,11 @@ func _try_place_item(item_data: Dictionary, head_pos: Vector2) -> bool:
 func _comput_left_room_space(item_data: Dictionary) -> int:
 	var pets_data: Array = item_data.get("pets_data", [])
 	var room_size: int = item_data["width"] * item_data["height"]
-	print("room_size:",room_size)
+	#print("room_size:",room_size)
 	var left_space: int = room_size
 	for data: Dictionary in pets_data:
 		var space: int = data["width"] * data["height"]
-		print("space:",space)
+		#print("space:",space)
 		left_space -= space
 
 	return max(left_space, 0)

@@ -4,7 +4,7 @@ extends Node
 ## 物品级别背景色
 const LEVEL_BG_COLOR: Dictionary = {
 	0: Color("ffffff00"),  # 普通
-	1: Color("F0C050"),  # 稀有  #FFFF00
+	1: Color("FFFF00"),  # 稀有  #FFFF00,F0C050
 	2: Color("00BFFF"),  # 罕见
 	3: Color("A335EE"),  # 传说
 }

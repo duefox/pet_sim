@@ -73,7 +73,7 @@ enum WanderLayer { TOP, MIDDLE, BOTTOM, ALL }
 ## 排泄和繁殖
 @export_group("Waste & Mating")
 ## 排泄间隔，单位为秒，60秒
-@export var excretion_interval: float = 10.0
+@export var excretion_interval: float = 60.0
 ## 是否交配
 @export var is_mating: bool = false
 ## 交配时间

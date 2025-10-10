@@ -35,7 +35,7 @@ layout_mode = 1
 
 [node name="GoldBar" parent="." instance=ExtResource("1_atan1")]
 unique_name_in_owner = true
-z_index = 2
+z_index = 29
 layout_mode = 1
 
 [node name="NavigationBar" parent="." instance=ExtResource("6_hlcy5")]

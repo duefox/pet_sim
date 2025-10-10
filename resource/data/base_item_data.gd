@@ -26,15 +26,16 @@ enum ItemLevel {
 ##  性别
 enum Gender {
 	NONE,  ## 无性别
-	MALE,  ## 雄性
 	FEMALE,  ## 雌性
+	MALE,  ## 雄性
 }
 
 ##  体型大小
 enum BodySize { SMALL, MIDDLE, BIG }
-
 ## 唯一id
 @export var id: StringName = &"1000"
+## 内部私有id，主要用于放置到房间内相同物品的区分
+@export var private_id: int
 ## 物品类型
 @export var item_type: ItemType
 ## 物品级别

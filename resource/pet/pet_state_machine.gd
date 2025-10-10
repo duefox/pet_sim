@@ -7,14 +7,16 @@ enum State { IDLE, EATING, PLAYING, SLEEPING, WANDERING, MATING, EXCRETING }
 ## 宠物漫游的水域层级
 enum WanderLayer { TOP, MIDDLE, BOTTOM, ALL }
 
-# 将待机时间作为导出变量，默认值为3秒
+## 将待机时间作为导出变量，默认值为3秒
 @export var idle_duration: float = 1.5
-# 排泄时的持续时间
+## 排泄时的持续时间
 @export var excreting_duration: float = 0.5
-# 觅食时的加速倍率
+## 觅食时的加速倍率
 @export var sprint_speed_multiplier: float = 2.0
-@export var mating_duration: float = 3.0  # 交配持续时间，可按需修改
-@export var mating_timeout: float = 10.0  # 交配超时时间，防止卡死，时长至少大于mating_duration的2倍
+## 交配持续时间，可按需修改
+@export var mating_duration: float = 3.0 
+## 交配超时时间，防止卡死，时长至少大于mating_duration的2倍 
+@export var mating_timeout: float = 10.0  
 
 #region 共有变量
 #当前宠物的状态
@@ -55,7 +57,7 @@ func initialize(pet_node: Pet):
 	_state_functions[State.EXCRETING] = _state_excreting
 	if _parent_pet and _parent_pet.pet_data:
 		# 觅食最小距离是漫游范围的50%
-		_food_detection_distance = _parent_pet.wander_rank.size.x * 0.5
+		_food_detection_distance = _parent_pet.wander_area.size.x * 0.5
 		# 初始化：默认进入漫游状态，速度为正常速度
 		_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
 
@@ -149,7 +151,7 @@ func _state_wandering(_delta: float):
 	if _parent_pet.hunger_comp.hunger_level >= _parent_pet.hunger_comp.hunger_threshold:
 		var closest_food = _parent_pet.find_closest_food()
 		if is_instance_valid(closest_food):
-			_parent_pet.target = closest_food
+			_parent_pet.food_target = closest_food
 			change_state(State.EATING)
 			#print("Pet is hungry and found food! Now going to eat.")
 
@@ -161,16 +163,16 @@ func _state_wandering(_delta: float):
 
 ## 觅食状态
 func _state_eating(_delta: float):
-	if _parent_pet.target and is_instance_valid(_parent_pet.target):
-		_parent_pet.movement_comp.set_target(_parent_pet.target.position)
+	if _parent_pet.food_target and is_instance_valid(_parent_pet.food_target):
+		_parent_pet.movement_comp.set_target(_parent_pet.food_target.position)
 		# 检查是否到达食物位置
-		if _parent_pet.position.distance_to(_parent_pet.target.position) < _parent_pet.target_collision_distance * 1.5:
+		if _parent_pet.position.distance_to(_parent_pet.food_target.position) < _parent_pet.target_collision_distance * 1.5:
 			# 喂食，增加饥饿度
 			# 直接从 DroppableObject 获取 data
-			_parent_pet.hunger_comp.feed(_parent_pet.target.data)
+			_parent_pet.hunger_comp.feed(_parent_pet.food_target.data)
 			# 宠物吃掉食物，移除食物节点
-			_parent_pet.target.queue_free()
-			_parent_pet.target = null
+			_parent_pet.food_target.queue_free()
+			_parent_pet.food_target = null
 			# 宠物吃掉食物后还原速度
 			_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
 			# 吃完食物后，清空运动组件的目标位置
@@ -182,7 +184,7 @@ func _state_eating(_delta: float):
 		_parent_pet.movement_comp.speed = _parent_pet.pet_data.speed
 		# 吃完食物后，清空运动组件的目标位置
 		_parent_pet.movement_comp.clear_target()
-		_parent_pet.target = null
+		_parent_pet.food_target = null
 		# 吃完食物后，直接切换回漫游状态，而不是上一个状态
 		change_state(State.WANDERING)
 

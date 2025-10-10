@@ -159,8 +159,11 @@ func init_data(_gird_size: Vector2 = Vector2.ZERO) -> void:
 
 
 ## 根据id和head_pos查找数据
-func find_item_data(item_id: String, head_pos: Vector2) -> Dictionary:
-	for data: Dictionary in items_data:
+func find_item_data(item_id: String, head_pos: Vector2, find_arr: Array = []) -> Dictionary:
+	if find_arr.is_empty():
+		find_arr = items_data
+
+	for data: Dictionary in find_arr:
 		if data["id"] == item_id and data["head_position"] == head_pos:
 			return data
 	return {}

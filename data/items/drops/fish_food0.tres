@@ -5,25 +5,16 @@
 
 [resource]
 script = ExtResource("1_1guqx")
-food_type = 0
 hunger_restore_amount = 100.0
 growth_points = 50.0
-kind = 0
 lifetime = -1.0
 id = &"3001"
 item_type = 2
-item_level = 0
 nickname = "鱼饲料"
 descrip = "很容易获得的鱼饲料，能提供少量成长度。"
-growth = 0.0
-base_price = 1.0
 texture = ExtResource("2_w8wuv")
 hframes = 4
 vframes = 2
-frame = 0
-width = 1
-height = 1
-orientation = 0
 stackable = true
 max_stack_size = 99
 metadata/_custom_type_script = "uid://cv102g7jtrdtl"

@@ -7,6 +7,9 @@ const ROUNDED_SHDER = preload("res://shaders/rounded_rect.gdshader")
 @onready var texture_margin: MarginContainer = %TextureMargin
 @onready var item_border: NinePatchRect = %ItemBorder
 
+## 显示图片的真实大小
+var real_size: Vector2
+
 ## 拖动缩放系数
 var _drag_scale: float = 0.85
 
@@ -17,7 +20,7 @@ func _ready() -> void:
 
 ## 设置物品贴图
 ## @param texture_data ：贴图数据
-## @param extra_param  ：贴图额外参数
+## @param extra_param  ：额外参数
 func set_texture(texture_data: Variant) -> void:
 	#print("---------------->texture_data:", texture_data)
 	# 设置贴图
@@ -33,11 +36,17 @@ func set_texture(texture_data: Variant) -> void:
 		var cell_size: int = mini(atlas_cell_size, GlobalData.cell_size)
 		# 纹理裁剪位置
 		var region_coords: Vector2 = Vector2(atlas_cell_size * (texture_data.frame % texture_data.hframes), atlas_cell_size * (texture_data.frame / texture_data.hframes))
-		var region: Rect2 = Rect2(region_coords, Vector2(texture_data.width, texture_data.height) * Vector2(cell_size, cell_size))
+		real_size = Vector2(texture_data.width, texture_data.height) * Vector2(cell_size, cell_size)
+		var region: Rect2 = Rect2(region_coords, real_size)
 		atlas_texture.region = region
 	# 单图
 	elif texture_data is CompressedTexture2D:
 		item_texture.texture = texture_data
+
+
+## 容器大小
+func get_item_size() -> Vector2:
+	return real_size
 
 
 ## 设置边框
@@ -103,12 +112,12 @@ func set_material_shader(extra_param: Dictionary = {}) -> void:
 ## 缩放纹理贴图（适配多格物品拖放到单格容器中）
 func scale_texture(container_size: Vector2, item: WItem) -> void:
 	# 纹理实际的大小
-	var real_size: Vector2 = item_texture.size * Vector2(item.width, item.height)
+	var item_size: Vector2 = item_texture.size * Vector2(item.width, item.height)
 	# 等比缩放，取最小的一边
-	var scale_size: Vector2 = container_size / real_size
+	var scale_size: Vector2 = container_size / item_size
 	var min_size: float = minf(scale_size.x, scale_size.y)
 	texture_margin.scale = Vector2(min_size, min_size)
-	texture_margin.position = (container_size - real_size * texture_margin.scale) / 2.0
+	texture_margin.position = (container_size - item_size * texture_margin.scale) / 2.0
 
 
 ## 设置拖动缩放，使得纹理略小于绿色区域

@@ -105,7 +105,7 @@ func initialize_fish_population():
 		## 随机选择一个鱼类数据
 		#var random_data = all_fish_data[randi() % all_fish_data.size()]
 		## 漫游的范围
-		#var bounds: Rect2 = fish_tank.wander_rank
+		#var bounds: Rect2 = fish_tank.wander_area
 		## 随机生成一个位置
 		#var random_pos = Vector2(randf_range(bounds.position.x, bounds.position.x + bounds.size.x), randf_range(bounds.position.y, bounds.position.y + bounds.size.y))
 		## 调用 PetManager 的方法创建宠物

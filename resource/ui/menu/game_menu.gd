@@ -4,6 +4,7 @@ class_name GameMenu
 
 @onready var grid_box_bar: GridBoxBar = %GridBoxBar
 @onready var gold_bar: GoldBar = %GoldBar
+@onready var info_bar: InfoBar = %InfoBar
 @onready var game_world: GameWorld = %GameWorld
 ## 游戏主场景的二级状态机
 @onready var bar_state_machine: BarStateMachine = %BarStateMachine
@@ -23,11 +24,11 @@ var held_item: WItem
 var held_item_from: MultiGridContainer
 ## 滚动条的偏移量
 var sroll_offset: Vector2 = Vector2.ZERO
+## 建筑房间内部
+var current_room: PetRoom
 
 ## 地形详细信息
 var _terrian_attribute: WTerrianAttribute
-## 建筑房间内部
-var _current_room: PetRoom
 
 
 func _ready() -> void:
@@ -37,6 +38,8 @@ func _ready() -> void:
 	# 订阅事件
 	EventManager.subscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
 	EventManager.subscribe(UIEvent.OPEN_INVENTORY, _on_open_inventory)  # 打开仓库
+	EventManager.subscribe(UIEvent.PUTBACK_TO_BLACKPACK, _on_putback_to_blackpack)  # 房间物品放回背包
+	EventManager.subscribe(UIEvent.PUTBACK_TO_INVENTORY, _on_putback_to_inventory)  # 房间物品放回仓库
 	## 连接鼠标操作相关的信号
 	if not InputManager.mouse_left_released.is_connected(on_mouse_left_released):
 		InputManager.mouse_left_released.connect(on_mouse_left_released)
@@ -47,13 +50,15 @@ func _ready() -> void:
 		InputManager.rotation_item_pressed.connect(on_rotation_item_pressed)
 
 	# 二级菜单信号事件
-	gold_bar.reset_world_scale.connect(_on_reset_world_scale)
+	info_bar.reset_world_scale.connect(_on_reset_world_scale)
 
 
 ## 退出处理订阅事件
 func _exit_tree() -> void:
-	EventManager.unsubscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)  # 物品、仓库栏满了
+	EventManager.unsubscribe(UIEvent.INVENTORY_FULL, _on_inventory_full)
 	EventManager.unsubscribe(UIEvent.OPEN_INVENTORY, _on_open_inventory)
+	EventManager.unsubscribe(UIEvent.PUTBACK_TO_BLACKPACK, _on_putback_to_blackpack)
+	EventManager.unsubscribe(UIEvent.PUTBACK_TO_INVENTORY, _on_putback_to_inventory)
 
 
 func initialize(my_state_machine: UIStateMachine) -> void:
@@ -166,12 +171,10 @@ func placement_overlay_process() -> void:
 func enter_build(data: Dictionary, head_pos: Vector2) -> void:
 	if data.is_empty() or not data.has("item_info"):
 		return
-	if not _current_room:
+	if not current_room:
 		# 水族箱
 		if data["item_info"].get("build_type", BuildData.BuildType.NONE) == BuildData.BuildType.AQUATIC:
-			_current_room = ResManager.get_cached_resource(ResPaths.SCENE_RES.aquatic_room).instantiate()
-			add_child(_current_room)
-			_current_room.z_index = 19
+			current_room = ResManager.get_cached_resource(ResPaths.SCENE_RES.aquatic_room).instantiate()
 		# 生态缸
 		elif data["item_info"].get("build_type", BuildData.BuildType.NONE) == BuildData.BuildType.ECOLOGICAL:
 			pass
@@ -181,10 +184,13 @@ func enter_build(data: Dictionary, head_pos: Vector2) -> void:
 		# 生态温室
 		elif data["item_info"].get("build_type", BuildData.BuildType.NONE) == BuildData.BuildType.GREEN_HOUSE:
 			pass
+		# 添加到显示列表
+		add_child(current_room)
+		current_room.z_index = 19
 	# 等一帧再执行，确保画面相关的参数已设定完成
 	await get_tree().process_frame
 	# 设置房间内的数据
-	_current_room.update_pet_view(data, head_pos)
+	current_room.update_pet_view(data, head_pos)
 
 
 ## 显示地形详细数据
@@ -263,6 +269,7 @@ func on_mouse_right_released() -> void:
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		MouseEvent.mouse_position = event.position
+		MouseEvent.global_position = event.global_position
 		# 当鼠标按下且鼠标状态为抓取物品时执行
 		if MouseEvent.is_mouse_down and MouseEvent.is_mouse_drag():
 			# 将抓取物品的中心点与鼠标进行跟随(显示层)
@@ -316,40 +323,9 @@ func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 	# 获取鼠标所在的格子容器内的单个格子映射表数据
 	var mouse_item_data: WItemData = mouse_cell_matrix.get_grid_map_item(mouse_cell_pos)
 	# 如果是房间内部
-	if _current_room and _current_room.mouse_in_room:
-		var item_data: Dictionary = held_item.get_data(false)
-		var success: bool = false
-		var food_left: int = 0
-		# 添加食物
-		if item_data.get("item_type", BaseItemData.ItemType.OTHERS) == BaseItemData.ItemType.FOOD:
-			food_left = GlobalData.player.world_map_comp.add_food(_current_room.room_id, _current_room.head_position, item_data)
-			if food_left == item_data["num"]:
-				_item_put_back(cur_item)
-				# 提示房间满了
-			# 达到放置食物的上限后还剩余食物量
-			elif food_left > 0:
-				# 放回原出处并修改剩余数量
-				_item_put_back(cur_item)
-				cur_item.num = food_left
-			# 放置成功后,没有任何剩余则移除原节点
-			else:
-				GlobalData.previous_cell_matrix.remove_item(cur_item)
-				hide_held_item()
-
-		# 添加宠物数据
-		elif item_data.get("item_type", BaseItemData.ItemType.OTHERS) == BaseItemData.ItemType.ANIMAL:
-			success = GlobalData.player.world_map_comp.add_pet(_current_room.room_id, _current_room.head_position, item_data)
-			# 添加成功后
-			if success:
-				# 放置成功后,移除原节点
-				GlobalData.previous_cell_matrix.remove_item(cur_item)
-				hide_held_item()
-				print("宠物放置成功")
-			else:
-				_item_put_back(cur_item)
-				# 提示房间满了
-				print("宠物放置失败，房间满了")
-
+	if current_room and current_room.mouse_in_room:
+		## 建筑内放置物品
+		_drop_item_to_room(cur_item)
 		return
 	# 判定是否是否相同容器的来源
 	if not held_item_from.container_type == mouse_cell_matrix.container_type:
@@ -405,9 +381,49 @@ func _handle_drop_item(_mouse_cell_pos: Vector2 = Vector2.ZERO) -> void:
 	hide_held_item()
 
 
+## 建筑内放置物品
+func _drop_item_to_room(cur_item: WItem) -> void:
+	var item_data: Dictionary = held_item.get_data(false)
+	var success: bool = false
+	var food_left: int = 0
+	# 添加食物
+	if item_data.get("item_type", BaseItemData.ItemType.OTHERS) == BaseItemData.ItemType.FOOD:
+		food_left = GlobalData.player.world_map_comp.add_food(current_room.room_id, current_room.head_position, item_data)
+		if food_left == item_data["num"]:
+			_item_put_back(cur_item)
+			# 提示房间满了
+			print("放置失败，食物已达上限！")
+		# 达到放置食物的上限后还剩余食物量
+		elif food_left > 0:
+			# 放回原出处并修改剩余数量
+			_item_put_back(cur_item)
+			cur_item.num = food_left
+		# 放置成功后,没有任何剩余则移除原节点
+		else:
+			GlobalData.previous_cell_matrix.remove_item(cur_item)
+			hide_held_item()
+
+	# 添加宠物数据
+	elif item_data.get("item_type", BaseItemData.ItemType.OTHERS) == BaseItemData.ItemType.ANIMAL:
+		success = GlobalData.player.world_map_comp.add_pet(current_room.room_id, current_room.head_position, item_data)
+		# 添加成功后
+		if success:
+			# 放置成功后,移除原节点
+			GlobalData.previous_cell_matrix.remove_item(cur_item)
+			hide_held_item()
+			print("宠物放置成功")
+			# 向房间添加实体
+			current_room.append_pet(item_data, MouseEvent.global_position)
+
+		else:
+			_item_put_back(cur_item)
+			# 提示房间满了
+			print("宠物放置失败，房间满了")
+
+
 ## 物品摆放回原位
 func _item_put_back(cur_item: WItem) -> void:
-	print("_item_put_back,",GlobalData.previous_cell_matrix)
+	print("_item_put_back,", GlobalData.previous_cell_matrix)
 	#放置失败时，将原物品可见设为真，且将其在映射表中的所在区域设置回"已占用"
 	if cur_item != null:
 		cur_item.visible = true
@@ -459,6 +475,44 @@ func _on_inventory_full(container: MultiGridContainer) -> void:
 ## 打开仓库
 func _on_open_inventory() -> void:
 	bar_state_machine.on_inventory_pressed()
+
+
+## 批量房间物品放回背包
+func _on_putback_to_blackpack(msg: Dictionary) -> void:
+	var pets_data: Array = msg.get("data", [])
+	if pets_data.is_empty():
+		return
+	var extra_args: Dictionary = {
+		"item_level": 0,
+		"growth": 0.0,
+	}
+	for data: PetData in pets_data:
+		extra_args["item_level"] = data.item_level
+		extra_args["growth"] = data.growth
+		GlobalData.player.backpack_comp.add_item(data.id, 1, extra_args)
+
+	# 通知 PetRoom 移除该宠物的实体和面板
+	if current_room:
+		current_room.remove_pet(msg)
+
+
+## 批量房间物品放回仓库
+func _on_putback_to_inventory(msg: Dictionary) -> void:
+	var pets_data: Array = msg.get("data", [])
+	if pets_data.is_empty():
+		return
+	var extra_args: Dictionary = {
+		"item_level": 0,
+		"growth": 0.0,
+	}
+	for data: PetData in pets_data:
+		extra_args["item_level"] = data.item_level
+		extra_args["growth"] = data.growth
+		GlobalData.player.inventory_comp.add_item(data.id, 1, extra_args)
+
+	# 通知 PetRoom 移除该宠物的实体和面板
+	if current_room:
+		current_room.remove_pet(msg)
 
 
 ## 重置世界缩放

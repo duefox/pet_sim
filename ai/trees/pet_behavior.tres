@@ -1,0 +1,144 @@
+[gd_resource type="BehaviorTree" load_steps=37 format=3 uid="uid://cymn67mth2j0n"]
+
+[ext_resource type="Script" uid="uid://dhfpoqspxdyij" path="res://ai/tasks/fish_wander_action.gd" id="1_meer0"]
+[ext_resource type="Script" uid="uid://chocx2k3dc7c3" path="res://ai/tasks/find_food_action.gd" id="1_rigdi"]
+[ext_resource type="Script" uid="uid://dgd1w7su7xrv7" path="res://ai/tasks/move_to_target_action.gd" id="2_i1n37"]
+[ext_resource type="Script" uid="uid://lbngrnhmnn7" path="res://ai/tasks/excrete_action.gd" id="2_nflgj"]
+[ext_resource type="Script" uid="uid://bjgd6j5x1k8ao" path="res://ai/tasks/eate_action.gd" id="3_cc6f3"]
+[ext_resource type="Script" uid="uid://bralb0ks1cje" path="res://ai/tasks/find_mate_action.gd" id="5_nflgj"]
+[ext_resource type="Script" uid="uid://dp3xg0isbsiej" path="res://ai/tasks/move_to_mate_action.gd" id="6_0twhp"]
+[ext_resource type="Script" uid="uid://bmei52ubr1gkf" path="res://ai/tasks/mate_action.gd" id="7_oqyrf"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_8fody"]
+var/is_dead/name = &"is_dead"
+var/is_dead/type = 1
+var/is_dead/value = false
+var/is_dead/hint = 0
+var/is_dead/hint_string = ""
+var/needs_to_excrete/name = &"needs_to_excrete"
+var/needs_to_excrete/type = 1
+var/needs_to_excrete/value = false
+var/needs_to_excrete/hint = 0
+var/needs_to_excrete/hint_string = ""
+var/is_hungry/name = &"is_hungry"
+var/is_hungry/type = 1
+var/is_hungry/value = false
+var/is_hungry/hint = 0
+var/is_hungry/hint_string = ""
+var/is_low_mod/name = &"is_low_mod"
+var/is_low_mod/type = 1
+var/is_low_mod/value = false
+var/is_low_mod/hint = 0
+var/is_low_mod/hint_string = ""
+var/can_mate/name = &"can_mate"
+var/can_mate/type = 1
+var/can_mate/value = false
+var/can_mate/hint = 0
+var/can_mate/hint_string = ""
+
+[sub_resource type="BBVariant" id="BBVariant_meer0"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_rigdi"]
+variable = &"is_dead"
+value = SubResource("BBVariant_meer0")
+
+[sub_resource type="BTSequence" id="BTSequence_meer0"]
+custom_name = "Death"
+children = [SubResource("BTCheckVar_rigdi")]
+
+[sub_resource type="BBVariant" id="BBVariant_rigdi"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_i1n37"]
+variable = &"needs_to_excrete"
+value = SubResource("BBVariant_rigdi")
+
+[sub_resource type="BTAction" id="BTAction_0twhp"]
+script = ExtResource("2_nflgj")
+
+[sub_resource type="BTWait" id="BTWait_nflgj"]
+duration = 0.1
+
+[sub_resource type="BTSequence" id="BTSequence_8fody"]
+custom_name = "Excrete"
+children = [SubResource("BTCheckVar_i1n37"), SubResource("BTAction_0twhp"), SubResource("BTWait_nflgj")]
+
+[sub_resource type="BBVariant" id="BBVariant_i1n37"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_cc6f3"]
+variable = &"is_hungry"
+value = SubResource("BBVariant_i1n37")
+
+[sub_resource type="BTAction" id="BTAction_i1n37"]
+script = ExtResource("1_rigdi")
+
+[sub_resource type="BTAction" id="BTAction_cc6f3"]
+script = ExtResource("2_i1n37")
+
+[sub_resource type="BTAction" id="BTAction_hbgl5"]
+script = ExtResource("3_cc6f3")
+
+[sub_resource type="BTSequence" id="BTSequence_y08t5"]
+custom_name = "Eate"
+children = [SubResource("BTCheckVar_cc6f3"), SubResource("BTAction_i1n37"), SubResource("BTAction_cc6f3"), SubResource("BTAction_hbgl5")]
+
+[sub_resource type="BBVariant" id="BBVariant_hbgl5"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_nflgj"]
+variable = &"is_low_mod"
+value = SubResource("BBVariant_hbgl5")
+
+[sub_resource type="BTSequence" id="BTSequence_rigdi"]
+custom_name = "Mood"
+children = [SubResource("BTCheckVar_nflgj")]
+
+[sub_resource type="BBVariant" id="BBVariant_cc6f3"]
+type = 1
+saved_value = true
+resource_name = "true"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_hbgl5"]
+variable = &"can_mate"
+value = SubResource("BBVariant_cc6f3")
+
+[sub_resource type="BTAction" id="BTAction_oqyrf"]
+script = ExtResource("5_nflgj")
+
+[sub_resource type="BTAction" id="BTAction_stjhk"]
+script = ExtResource("6_0twhp")
+
+[sub_resource type="BTAction" id="BTAction_yp6aq"]
+script = ExtResource("7_oqyrf")
+
+[sub_resource type="BTSequence" id="BTSequence_n6gme"]
+custom_name = "MaleMate"
+children = [SubResource("BTCheckVar_hbgl5"), SubResource("BTAction_oqyrf"), SubResource("BTAction_stjhk"), SubResource("BTAction_yp6aq")]
+
+[sub_resource type="BTAction" id="BTAction_rigdi"]
+script = ExtResource("1_meer0")
+
+[sub_resource type="BTSequence" id="BTSequence_43i5v"]
+custom_name = "Wander"
+children = [SubResource("BTAction_rigdi")]
+
+[sub_resource type="BTSelector" id="BTSelector_meer0"]
+custom_name = "MateSelector"
+children = [SubResource("BTSequence_n6gme"), SubResource("BTSequence_43i5v")]
+
+[sub_resource type="BTSelector" id="BTSelector_43i5v"]
+children = [SubResource("BTSequence_meer0"), SubResource("BTSequence_8fody"), SubResource("BTSequence_y08t5"), SubResource("BTSequence_rigdi"), SubResource("BTSelector_meer0")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_8fody")
+root_task = SubResource("BTSelector_43i5v")

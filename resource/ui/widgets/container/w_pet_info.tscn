@@ -1,13 +1,14 @@
-[gd_scene load_steps=17 format=3 uid="uid://yk82qpfhmcau"]
+[gd_scene load_steps=27 format=3 uid="uid://yk82qpfhmcau"]
 
 [ext_resource type="Script" uid="uid://b5tfkhsk05csu" path="res://resource/ui/widgets/container/w_pet_info.gd" id="1_7db1o"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_nbiwa"]
 [ext_resource type="Shader" uid="uid://b7boqp8rlslle" path="res://shaders/rounded_rect.gdshader" id="2_7db1o"]
-[ext_resource type="Texture2D" uid="uid://m8m8ywh10fyi" path="res://assets/textures/aquatic/water/bubblefish_adult_96x96.png" id="3_sy5i1"]
 [ext_resource type="Texture2D" uid="uid://b8qewc5715p8w" path="res://assets/ui/icons/icon_32.png" id="4_p5s6t"]
+[ext_resource type="PackedScene" uid="uid://1x07fx41u2or" path="res://resource/ui/widgets/container/w_item_texture.tscn" id="4_sy5i1"]
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="5_qktof"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="6_pxyv2"]
 [ext_resource type="LabelSettings" uid="uid://b3kwt3au4hh4x" path="res://assets/label_small_setting.tres" id="7_jq5c3"]
+[ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="7_sy5i1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lkka7"]
 atlas = ExtResource("1_nbiwa")
@@ -15,20 +16,26 @@ region = Rect2(894, 429, 90, 91)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lkka7"]
 shader = ExtResource("2_7db1o")
-shader_parameter/corner_radius = 8.0
+shader_parameter/corner_radius = 14.0
 shader_parameter/rect_size = Vector2(100, 100)
-shader_parameter/margin_top = 0.0
-shader_parameter/margin_bottom = 0.0
+shader_parameter/margin_top = 14.0
+shader_parameter/margin_bottom = 14.0
 shader_parameter/margin_left = 0.0
 shader_parameter/margin_right = 0.0
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wtts1"]
-atlas = ExtResource("3_sy5i1")
-region = Rect2(0, 0, 96, 96)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_6mx6h"]
 atlas = ExtResource("4_p5s6t")
 region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sy5i1"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p5s6t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qktof"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pxyv2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jq5c3"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
 texture = ExtResource("5_qktof")
@@ -37,7 +44,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jckig"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1kw4x"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -50,12 +57,22 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7db1o"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1ndx6"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sy5i1"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hiq5f"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vpk4w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jfqcl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dvrre"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_phown"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_dlsdh"]
 
 [node name="WPetInfo" type="MarginContainer"]
-custom_minimum_size = Vector2(320, 120)
+custom_minimum_size = Vector2(350, 120)
 theme_override_constants/margin_left = 8
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_right = 8
@@ -75,9 +92,8 @@ patch_margin_top = 10
 patch_margin_right = 10
 patch_margin_bottom = 10
 
-[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
+[node name="GridContainer" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
-columns = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/GridContainer"]
 layout_mode = 2
@@ -94,25 +110,22 @@ show_behind_parent = true
 material = SubResource("ShaderMaterial_lkka7")
 layout_mode = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect"]
+[node name="ItemPanel" type="PanelContainer" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -48.0
-offset_top = -48.0
-offset_right = 48.0
-offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ItemTexture" type="TextureRect" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect/CenterContainer"]
+[node name="ItemTexture" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect/ItemPanel" instance=ExtResource("4_sy5i1")]
 unique_name_in_owner = true
 layout_mode = 2
-texture = SubResource("AtlasTexture_wtts1")
-stretch_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [node name="PriceMargin" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect"]
 layout_mode = 1
@@ -141,6 +154,7 @@ size_flags_vertical = 4
 [node name="PriceLabel" type="Label" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect/PriceMargin/HBoxContainer2/MarginContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
+theme_override_font_sizes/font_size = 20
 text = "9999"
 vertical_alignment = 1
 
@@ -157,7 +171,6 @@ offset_right = 20.0
 grow_horizontal = 2
 grow_vertical = 0
 theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
 theme_override_constants/margin_right = 4
 
 [node name="NicknameLabel" type="Label" parent="MarginContainer/GridContainer/MarginContainer/BGColorRect/MarginContainer"]
@@ -172,9 +185,9 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/margin_left = 8
+theme_override_constants/margin_left = 4
 theme_override_constants/margin_top = 12
-theme_override_constants/margin_right = 8
+theme_override_constants/margin_right = 4
 theme_override_constants/margin_bottom = 12
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/GridContainer/MarginContainer2"]
@@ -183,34 +196,76 @@ alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
 
-[node name="BtnToBackpack" type="Button" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="BtnDirLeft" type="Button" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_sy5i1")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_p5s6t")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_qktof")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_pxyv2")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jq5c3")
+text = "<"
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("7_sy5i1")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
+
+[node name="BtnToBag" type="Button" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_7db1o")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_1ndx6")
 text = "放回仓库"
 script = ExtResource("6_pxyv2")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
+[node name="BtnDirRight" type="Button" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxEmpty_hiq5f")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_vpk4w")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jfqcl")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_dvrre")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_phown")
+text = ">"
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("7_sy5i1")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
+
 [node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
-[node name="BtnToInventory" type="Button" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer2"]
+[node name="BtnSell" type="Button" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer2"]
+custom_minimum_size = Vector2(92, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 18
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_sy5i1")
-text = "放回背包"
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_dlsdh")
+text = "出售"
 script = ExtResource("6_pxyv2")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
 [node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer3"]
 layout_mode = 2
@@ -287,5 +342,7 @@ tooltip_text = "当前的心情值"
 value = 10.0
 show_percentage = false
 
-[connection signal="pressed" from="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer/BtnToBackpack" to="." method="_on_btn_to_backpack_pressed"]
-[connection signal="pressed" from="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer2/BtnToInventory" to="." method="_on_btn_to_inventory_pressed"]
+[connection signal="pressed" from="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/BtnDirLeft" to="." method="_on_btn_dir_left_pressed"]
+[connection signal="pressed" from="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/BtnToBag" to="." method="_on_btn_to_bag_pressed"]
+[connection signal="pressed" from="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer/HBoxContainer/BtnDirRight" to="." method="_on_btn_dir_right_pressed"]
+[connection signal="pressed" from="MarginContainer/GridContainer/MarginContainer2/VBoxContainer/MarginContainer2/BtnSell" to="." method="_on_btn_sell_pressed"]

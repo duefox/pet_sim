@@ -231,7 +231,7 @@ func set_data(data: Dictionary, extra_args: Dictionary = {}) -> void:
 		var pet_growth: float = growth
 		if not extra_args.is_empty() and extra_args.has("growth"):
 			pet_growth = extra_args["growth"]
-		var pet_texture_data: Dictionary = _get_texture_by_growth(item_info, pet_growth)
+		var pet_texture_data: Dictionary = Utils.get_texture_by_growth(item_info, pet_growth)
 		texture_data = texture_data.merged(pet_texture_data, true)
 		# 设置成长值
 		growth = pet_growth
@@ -265,11 +265,14 @@ func get_data(show_more: bool = true) -> Dictionary:
 		"stackable": stackable,  # 物品是否可堆叠
 		"num": num,  # 物品数量
 		"max_stack_size": max_stack_size,  # 物品最大堆叠数量
-		"texture_data": texture_data,  #更多详细的物品信息数据
+		#"texture_data": texture_data,  # 贴图信息
 	}
 	if show_more:
-		#更多详细的物品信息数据
+		# 贴图信息
+		result.set("texture_data", texture_data)
+		# 更多详细的物品信息数据
 		result.set("item_info", item_info)
+		
 	# 建筑类特殊属性
 	if item_type == BaseItemData.ItemType.BUILD:
 		result.set("wall_paper", wall_paper)
@@ -334,38 +337,6 @@ func fit_to_container(container_size: Vector2) -> void:
 	# 缩放纹理
 	item_offset = Vector2(8.0, 8.0)
 	item_texture.scale_texture(container_size - item_offset, self)
-
-
-## 根据成长值获取贴图
-func _get_texture_by_growth(data_info: Dictionary, pet_growth: float) -> Dictionary:
-	var result_dic: Dictionary = {}
-	# 贴图和占用空间
-	var adult_threshold: float = data_info.adult_growth_threshold
-	var space_width: int = data_info.width
-	var space_height: int = data_info.height
-	# 默认贴图
-	var default_texture: CompressedTexture2D = data_info.texture
-	# 成年了
-	if pet_growth == adult_threshold:
-		default_texture = data_info.adult_texture
-	# 有的宠物有第二阶段，比如蝴蝶的虫蛹状态，这种动物的成年阈值为200
-	elif pet_growth >= 100 and pet_growth < adult_threshold:
-		default_texture = data_info.pupa_texture
-		## 重置占用空间大小
-		space_width = Utils.get_juvenile_space(data_info.width)
-		space_height = Utils.get_juvenile_space(data_info.height)
-	# 幼年
-	else:
-		default_texture = data_info.texture
-		## 重置占用空间大小
-		space_width = Utils.get_juvenile_space(data_info.width)
-		space_height = Utils.get_juvenile_space(data_info.height)
-
-	result_dic.set("width", space_width)
-	result_dic.set("height", space_height)
-	result_dic.set("texture", default_texture)
-
-	return result_dic
 
 
 ## 改变num的值

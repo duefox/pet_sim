@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://bm7nist6yg0i7"]
+[gd_scene load_steps=41 format=3 uid="uid://bm7nist6yg0i7"]
 
 [ext_resource type="Script" uid="uid://co1f8yjfmvalr" path="res://resource/ui/container/pet_room.gd" id="1_cm27a"]
 [ext_resource type="Texture2D" uid="uid://d0tkwo2kqoupu" path="res://assets/ui/ui.png" id="1_ea1jk"]
@@ -8,11 +8,11 @@
 [ext_resource type="PackedScene" uid="uid://cop0dx6iw1nka" path="res://resource/pet/aquatic_fish.tscn" id="2_kj554"]
 [ext_resource type="Texture2D" uid="uid://3ahyibf0wao7" path="res://assets/textures/builds/borders/tank10.png" id="2_wxuac"]
 [ext_resource type="Resource" uid="uid://nc4ypekgcowp" path="res://data/items/drops/fish_food0.tres" id="3_8dmwt"]
-[ext_resource type="PackedScene" uid="uid://yk82qpfhmcau" path="res://resource/ui/widgets/container/w_pet_info.tscn" id="4_obem3"]
 [ext_resource type="Shader" uid="uid://b7boqp8rlslle" path="res://shaders/rounded_rect.gdshader" id="6_eyqg6"]
 [ext_resource type="Texture2D" uid="uid://b8asnwa4cvbfk" path="res://themes/wood/graphics/smallBtnNormalSingle.png" id="7_wtts1"]
 [ext_resource type="Script" uid="uid://cj1xykbtsmsri" path="res://resource/components/ui/buttons/button_small.gd" id="8_lkka7"]
 [ext_resource type="Texture2D" uid="uid://bv30cet0fkste" path="res://assets/textures/builds/foregounded1.png" id="9_djo6v"]
+[ext_resource type="Script" uid="uid://hmattcwq4j3c" path="res://resource/components/ui/buttons/button_empty.gd" id="10_khxnp"]
 [ext_resource type="Texture2D" uid="uid://vssvaih5jx2n" path="res://assets/ui/icons/icon_small.png" id="13_g5ho4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8dmwt"]
@@ -31,6 +31,16 @@ region = Rect2(96, 32, 32, 32)
 atlas = ExtResource("1_ea1jk")
 region = Rect2(9, 301, 481, 157)
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kj554"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_khxnp"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jetnl"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_psrny"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5x23r"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wi548"]
 texture = ExtResource("7_wtts1")
 texture_margin_left = 10.0
@@ -38,7 +48,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ftu1"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1kw4x"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -51,11 +61,19 @@ border_width_right = 2
 border_width_bottom = 2
 corner_detail = 1
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_kj554"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8edas"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_khxnp"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x0xs8"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jetnl"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6183m"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2sjm5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_lc641"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ejs5n"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0oucg"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_djo6v"]
 shader = ExtResource("6_eyqg6")
@@ -67,20 +85,23 @@ shader_parameter/margin_left = 1.0
 shader_parameter/margin_right = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2ftja"]
-size = Vector2(14.5, 844)
+size = Vector2(22, 844)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q662t"]
-size = Vector2(14, 846.5)
+size = Vector2(23, 846.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ew36n"]
 size = Vector2(1480, 68)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kkqib"]
-size = Vector2(1479.5, 38.5)
+size = Vector2(1479.5, 97.5)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_psrny"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5x23r"]
+size = Vector2(1405, 683)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5x23r"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_qpb5k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_05kct"]
 
 [node name="PetRoom" type="Control"]
 layout_mode = 3
@@ -133,6 +154,7 @@ mouse_filter = 2
 alignment = 1
 
 [node name="BufferMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -218,30 +240,63 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 12
 
-[node name="FilterContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin"]
+layout_mode = 2
+
+[node name="GrowthMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer"]
+layout_mode = 2
+
+[node name="FilterContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/GrowthMargin"]
 layout_mode = 2
 columns = 3
 
-[node name="AllCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/FilterContainer"]
+[node name="YoungCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/GrowthMargin/FilterContainer"]
+custom_minimum_size = Vector2(126, 0)
 layout_mode = 2
-text = "ALL
-"
+button_pressed = true
+text = "YOUNG"
 
-[node name="BasicCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/FilterContainer"]
+[node name="AdultCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/GrowthMargin/FilterContainer"]
+custom_minimum_size = Vector2(126, 0)
 layout_mode = 2
+button_pressed = true
+text = "ADULT"
+
+[node name="SplitMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer"]
+layout_mode = 2
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/SplitMargin"]
+layout_mode = 2
+
+[node name="LevelMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer"]
+layout_mode = 2
+
+[node name="FilterContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/LevelMargin"]
+layout_mode = 2
+columns = 3
+
+[node name="BasicCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/LevelMargin/FilterContainer"]
+layout_mode = 2
+button_pressed = true
 text = "BASIC
 "
 
-[node name="MagicCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/FilterContainer"]
+[node name="MagicCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/LevelMargin/FilterContainer"]
+custom_minimum_size = Vector2(126, 0)
 layout_mode = 2
+button_pressed = true
 text = "MAGIC"
 
-[node name="EpicCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/FilterContainer"]
+[node name="EpicCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/LevelMargin/FilterContainer"]
+custom_minimum_size = Vector2(126, 0)
 layout_mode = 2
+button_pressed = true
 text = "EPIC"
 
-[node name="MythicCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/FilterContainer"]
+[node name="MythicCheck" type="CheckBox" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/LevelMargin/FilterContainer"]
+custom_minimum_size = Vector2(126, 0)
 layout_mode = 2
+button_pressed = true
 text = "MYTHIC"
 
 [node name="SeparatorMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer"]
@@ -269,18 +324,6 @@ vertical_scroll_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="WPetInfo" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/PetMargin/ScrollContainer/PetsContainer" instance=ExtResource("4_obem3")]
-layout_mode = 2
-
-[node name="WPetInfo2" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/PetMargin/ScrollContainer/PetsContainer" instance=ExtResource("4_obem3")]
-layout_mode = 2
-
-[node name="WPetInfo3" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/PetMargin/ScrollContainer/PetsContainer" instance=ExtResource("4_obem3")]
-layout_mode = 2
-
-[node name="WPetInfo4" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/PetMargin/ScrollContainer/PetsContainer" instance=ExtResource("4_obem3")]
-layout_mode = 2
-
 [node name="BtnsMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 24
@@ -294,43 +337,62 @@ layout_mode = 2
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer"]
 layout_mode = 2
 
-[node name="ButtonSmall" type="Button" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="BtnDirLeft" type="Button" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxEmpty_kj554")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_khxnp")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jetnl")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_psrny")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_5x23r")
+text = "<"
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("10_khxnp")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
+
+[node name="BtnToBag" type="Button" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_kj554")
-text = "批量放回
-仓库"
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_8edas")
+text = "批量放回仓库"
 script = ExtResource("8_lkka7")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer"]
+[node name="BtnDirRight" type="Button" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
-
-[node name="ButtonSmall" type="Button" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer2"]
-layout_mode = 2
-theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_khxnp")
-text = "批量放回
-背包"
-script = ExtResource("8_lkka7")
-metadata/_custom_type_script = "uid://cj1xykbtsmsri"
+theme_override_font_sizes/font_size = 48
+theme_override_styles/normal = SubResource("StyleBoxEmpty_x0xs8")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_6183m")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_2sjm5")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_lc641")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ejs5n")
+text = ">"
+icon_alignment = 1
+expand_icon = true
+script = ExtResource("10_khxnp")
+metadata/_custom_type_script = "uid://hmattcwq4j3c"
 
 [node name="MarginContainer3" type="MarginContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer"]
 layout_mode = 2
 
-[node name="ButtonSmall" type="Button" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer3"]
+[node name="BtnSell" type="Button" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer3"]
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_jetnl")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_0oucg")
 text = "批量出售"
 script = ExtResource("8_lkka7")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
@@ -362,18 +424,17 @@ patch_margin_top = 20
 patch_margin_right = 6
 patch_margin_bottom = 5
 
-[node name="ContentsNode" type="Node2D" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin"]
-unique_name_in_owner = true
-y_sort_enabled = true
-position = Vector2(48, 64)
-metadata/_edit_lock_ = true
-
 [node name="ContentMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin"]
 layout_mode = 2
-theme_override_constants/margin_left = 12
+theme_override_constants/margin_left = 14
 theme_override_constants/margin_top = 40
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 10
+
+[node name="ContentsNode" type="Node2D" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/ContentMargin"]
+unique_name_in_owner = true
+y_sort_enabled = true
+position = Vector2(40, 114)
 
 [node name="ContentsRank" type="ColorRect" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/ContentMargin"]
 unique_name_in_owner = true
@@ -389,7 +450,7 @@ collision_layer = 4
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/Walls/WallLeft"]
-position = Vector2(15.25, 430.5)
+position = Vector2(19, 430.5)
 shape = SubResource("RectangleShape2D_2ftja")
 debug_color = Color(0.560784, 0.407843, 0.968627, 0.419608)
 
@@ -399,7 +460,7 @@ collision_layer = 4
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/Walls/WallRight"]
-position = Vector2(1481, 431.25)
+position = Vector2(1476.5, 431.25)
 shape = SubResource("RectangleShape2D_q662t")
 debug_color = Color(0.560784, 0.407843, 0.968627, 0.419608)
 
@@ -408,7 +469,7 @@ collision_layer = 4
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/Walls/WallBottom"]
-position = Vector2(748, 819.5)
+position = Vector2(748, 849.5)
 shape = SubResource("RectangleShape2D_ew36n")
 debug_color = Color(0.95613784, 0.028500143, 0.5157807, 0.41960785)
 
@@ -417,10 +478,19 @@ collision_layer = 4
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/Walls/WallTop"]
-position = Vector2(747.25, 15.75)
+position = Vector2(747.25, 45.25)
 shape = SubResource("RectangleShape2D_kkqib")
 
+[node name="Area2D" type="Area2D" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/Walls"]
+
+[node name="WanderShape" type="CollisionShape2D" parent="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/Walls/Area2D"]
+unique_name_in_owner = true
+position = Vector2(748.5, 454.5)
+shape = SubResource("RectangleShape2D_5x23r")
+disabled = true
+
 [node name="StateMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
 size_flags_horizontal = 8
 
@@ -442,10 +512,10 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(96, 64)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_psrny")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_qpb5k")
 toggle_mode = true
 text = "清洁"
 script = ExtResource("8_lkka7")
@@ -460,14 +530,24 @@ theme_override_constants/margin_right = 16
 custom_minimum_size = Vector2(96, 64)
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/hover = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_0ftu1")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_5x23r")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/hover = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_1kw4x")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_05kct")
 text = "返回"
 script = ExtResource("8_lkka7")
 metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/GrowthMargin/FilterContainer/YoungCheck" to="." method="_on_young_check_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/GrowthMargin/FilterContainer/AdultCheck" to="." method="_on_adult_check_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/LevelMargin/FilterContainer/BasicCheck" to="." method="_on_basic_check_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/LevelMargin/FilterContainer/MagicCheck" to="." method="_on_magic_check_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/LevelMargin/FilterContainer/EpicCheck" to="." method="_on_epic_check_toggled"]
+[connection signal="toggled" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/FilterMargin/VBoxContainer/LevelMargin/FilterContainer/MythicCheck" to="." method="_on_mythic_check_toggled"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer/HBoxContainer/BtnDirLeft" to="." method="_on_btn_dir_left_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer/HBoxContainer/BtnToBag" to="." method="_on_btn_to_bag_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer/HBoxContainer/BtnDirRight" to="." method="_on_btn_dir_right_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/MarginContainer/VBoxContainer/BtnsMargin/HBoxContainer/MarginContainer3/BtnSell" to="." method="_on_btn_sell_pressed"]
 [connection signal="gui_input" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/ContentMargin/ContentsRank" to="." method="_on_contents_rank_gui_input"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/ContentMargin/ContentsRank" to="." method="_on_rank_mouse_entered"]
 [connection signal="mouse_exited" from="MarginContainer/VBoxContainer/HouseMargin/HBoxContainer/BuildMargin/ContentMargin/ContentsRank" to="." method="_on_rank_mouse_exited"]

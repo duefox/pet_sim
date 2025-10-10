@@ -1,7 +1,6 @@
-[gd_scene load_steps=17 format=3 uid="uid://dl7tlg6w0eyas"]
+[gd_scene load_steps=19 format=3 uid="uid://dl7tlg6w0eyas"]
 
 [ext_resource type="Script" uid="uid://bhnyru0q25l3n" path="res://resource/pet/Pet.gd" id="1_bpwwj"]
-[ext_resource type="Script" uid="uid://dqbx4m2xcx2bt" path="res://resource/pet/pet_state_machine.gd" id="1_fm2pq"]
 [ext_resource type="PackedScene" uid="uid://dfkq8j2ktl5js" path="res://resource/droppable/excrement.tscn" id="2_bte7q"]
 [ext_resource type="Resource" uid="uid://dp85ytsnwka4m" path="res://data/items/drops/fish_excrement00.tres" id="2_nfquc"]
 [ext_resource type="Script" uid="uid://dkuu5mtkv38wx" path="res://resource/components/behavior/movement_component.gd" id="2_wcy08"]
@@ -12,6 +11,7 @@
 [ext_resource type="Script" uid="uid://cai0eti3te8xw" path="res://resource/components/behavior/mating_component.gd" id="9_1ifs6"]
 [ext_resource type="Script" uid="uid://dlcjktsytxj1m" path="res://resource/components/behavior/mood_component.gd" id="11_5t5te"]
 [ext_resource type="PackedScene" uid="uid://4ehirhktmcia" path="res://resource/animate/mating.tscn" id="11_g0k6o"]
+[ext_resource type="BehaviorTree" uid="uid://cymn67mth2j0n" path="res://ai/trees/pet_behavior.tres" id="12_nu6g7"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qicqd"]
 radius = 13.0
@@ -19,6 +19,21 @@ height = 40.0
 
 [sub_resource type="Animation" id="Animation_307r2"]
 length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_5s2bv"]
+length = 0.03333667
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -53,8 +68,11 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_307r2"]
 _data = {
 &"RESET": SubResource("Animation_307r2"),
+&"idle": SubResource("Animation_5s2bv"),
 &"move": SubResource("Animation_nu6g7")
 }
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_nu6g7"]
 
 [node name="Pet" type="CharacterBody2D"]
 collision_mask = 4
@@ -73,7 +91,7 @@ debug_color = Color(0.937255, 0, 0, 0.419608)
 texture = ExtResource("4_nu6g7")
 hframes = 3
 
-[node name="Mating" parent="." instance=ExtResource("11_g0k6o")]
+[node name="MatingAnimate" parent="." instance=ExtResource("11_g0k6o")]
 visible = false
 position = Vector2(0, -19)
 
@@ -103,9 +121,6 @@ script = ExtResource("9_1ifs6")
 [node name="MoodComponent" type="Node" parent="Components"]
 script = ExtResource("11_5t5te")
 
-[node name="PetStateMachine" type="Node" parent="."]
-script = ExtResource("1_fm2pq")
-
 [node name="InfoLabel" type="Label" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
@@ -117,8 +132,14 @@ offset_bottom = -18.0
 grow_horizontal = 2
 size_flags_horizontal = 4
 size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("12_nu6g7")
+blackboard_plan = SubResource("BlackboardPlan_nu6g7")
+unique_name_in_owner = true
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]

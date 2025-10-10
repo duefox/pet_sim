@@ -17,6 +17,11 @@ const OPEN_INVENTORY := "open_inventory"  # 打开仓库
 #const ADD_ITEM := "add_item"  # 增加物品
 #const MOVE_ITEM := "move_item"  # 物品移动
 #const DELETE_ITEM := "delete_item"  # 物品删除
+## 房间相关事件
+const PUTBACK_TO_INVENTORY := "putback_to_inventory"  # 放回仓库
+const PUTBACK_TO_BLACKPACK := "putback_to_blackpack"  # 放回背包
+const SELL_ROOM_ITEM := "sell_room_item"  # 出售房间物品
+const ROOM_ITEM_CHANGED := "room_item_changed"  # 房间物品变化
 
 ## 存档相关
 const CREATE_NEW_SAVE := "create_new_save"  # 创建新档

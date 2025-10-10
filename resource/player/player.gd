@@ -35,12 +35,14 @@ func _ready() -> void:
 	SaveSystem.register_saveable_node(landscape_comp)
 	# 订阅事件
 	EventManager.subscribe(UIEvent.ITEMS_CHANGED, _on_items_changed)
+	EventManager.subscribe(UIEvent.ROOM_ITEM_CHANGED, _on_room_items_changed)
 	EventManager.subscribe(UIEvent.CREATE_NEW_SAVE, _on_create_new_save)
 	EventManager.subscribe(UIEvent.OVERWRITE_SAVE, _on_overwrite_save)
 
 
 func _exit_tree() -> void:
 	EventManager.unsubscribe(UIEvent.ITEMS_CHANGED, _on_items_changed)
+	EventManager.unsubscribe(UIEvent.ROOM_ITEM_CHANGED, _on_room_items_changed)
 	EventManager.unsubscribe(UIEvent.CREATE_NEW_SAVE, _on_create_new_save)
 	EventManager.unsubscribe(UIEvent.OVERWRITE_SAVE, _on_overwrite_save)
 
@@ -95,6 +97,29 @@ func _on_create_new_save() -> void:
 ## 覆盖存档
 func _on_overwrite_save() -> void:
 	SaveSystem.overwrite_save(GlobalData.save_name)
+
+
+## 世界地图中的建筑房间内的物品变更了，同步数据给玩家的数据组件（保证玩家数据的一致性）
+func _on_room_items_changed(msg: Dictionary) -> void:
+	if msg.is_empty():
+		return
+	var room_id: String = msg.get("room_id", "")
+	var head_position: Vector2 = msg.get("head_position", -Vector2.ONE)
+	var pets: Dictionary = msg.get("pets", {})
+	if room_id == "" or head_position == -Vector2.ONE:
+		return
+	# 查找到建筑房间的数据
+	var room_data: Dictionary = world_map_comp.find_item_data(room_id, head_position)
+	var pets_data: Array = room_data.get("pets_data", [])
+	# 重置pets_data为pets的关联数据
+	pets_data.clear()
+
+	for pet: Pet in pets.values():
+		var data: Dictionary = pet.get_data()
+		pets_data.append(data)
+
+	# 更新建筑数据
+	world_map_comp.emit_changed_event(world_map_comp.items_data)
 
 
 ## 物品容器发生变化，同步数据给玩家的数据组件（保证玩家数据的一致性）

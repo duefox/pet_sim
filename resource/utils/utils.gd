@@ -68,6 +68,41 @@ func get_juvenile_space(space: int = 1, max_space: int = 4) -> int:
 	return clamp(space, 1, max_space)
 
 
+## 根据成长值获取贴图
+## @param data_info: 宠物信息
+## @param pet_growth: 宠物成长值
+## return 返回一个数据字典
+func get_texture_by_growth(data_info: Dictionary, pet_growth: float) -> Dictionary:
+	var result_dic: Dictionary = {}
+	# 贴图和占用空间
+	var adult_threshold: float = data_info.adult_growth_threshold
+	var space_width: int = data_info.width
+	var space_height: int = data_info.height
+	# 默认贴图
+	var default_texture: CompressedTexture2D = data_info.texture
+	# 成年了
+	if pet_growth == adult_threshold:
+		default_texture = data_info.adult_texture
+	# 有的宠物有第二阶段，比如蝴蝶的虫蛹状态，这种动物的成年阈值为200
+	elif pet_growth >= 100 and pet_growth < adult_threshold:
+		default_texture = data_info.pupa_texture
+		## 重置占用空间大小
+		space_width = Utils.get_juvenile_space(data_info.width)
+		space_height = Utils.get_juvenile_space(data_info.height)
+	# 幼年
+	else:
+		default_texture = data_info.texture
+		## 重置占用空间大小
+		space_width = Utils.get_juvenile_space(data_info.width)
+		space_height = Utils.get_juvenile_space(data_info.height)
+
+	result_dic.set("width", space_width)
+	result_dic.set("height", space_height)
+	result_dic.set("texture", default_texture)
+
+	return result_dic
+
+
 ## 读取文件夹
 ## [param:path] 文件夹路径
 ## [return] 所有文件的数组
@@ -142,22 +177,39 @@ func get_res_to_dic(path_folder: String) -> Dictionary[StringName,String]:
 	return tmp_dic
 
 
-## 获取两个数组的对称差集：在 A 或 B 中，但不在交集中的所有元素
+## 获取两个数组的“多重集合对称差集” (Symmetric Multiset Difference)。
+## 元素满足：在 A 和 B 中数量不一致的所有元素。
+## 示例：A=[1, 2], B=[1, 2, 2] -> [2]
+## 示例：A=[1, 2, 2], B=[1, 3, 3, 3] -> [2, 2, 3, 3, 3]
 func get_array_difference(array_a: Array, array_b: Array) -> Array:
-	var diff_set: Dictionary = {}  # 用字典模拟 HashSet (O(1) 查找)
-
-	# 1. 将数组 A 的元素添加到字典中
+	# 1. 统计 array_a 中每个元素的数量
+	var count_a: Dictionary = {}
 	for item in array_a:
-		diff_set[item] = true
+		# 使用 get(key, default) 确保安全地增加计数
+		count_a[item] = count_a.get(item, 0) + 1
 
-	# 2. 遍历数组 B，如果是交集就移除，不是交集就添加
+	# 2. 统计 array_b 中每个元素的数量
+	var count_b: Dictionary = {}
 	for item in array_b:
-		if diff_set.has(item):
-			# 元素在 A 中也存在，说明是交集，从字典中移除
-			diff_set.erase(item)
-		else:
-			# 元素只在 B 中存在，添加到字典中
-			diff_set[item] = true
+		count_b[item] = count_b.get(item, 0) + 1
 
-	# 3. 字典中剩下的 Key 就是差异元素
-	return diff_set.keys()
+	var result_array: Array = []
+
+	# 3. 找出所有唯一的元素（A 和 B 中出现过的所有键）
+	var unique_elements: Dictionary = count_a.duplicate()
+	for key in count_b.keys():
+		unique_elements[key] = true  # 只需要收集键，值不重要
+
+	# 4. 遍历所有唯一元素，计算绝对差值
+	for item in unique_elements.keys():
+		var count_in_a: int = count_a.get(item, 0)
+		var count_in_b: int = count_b.get(item, 0)
+
+		# 绝对差值就是该元素在结果中需要保留的数量
+		var diff_count: int = abs(count_in_a - count_in_b)
+
+		# 5. 将该元素添加 diff_count 次到结果数组
+		for _i in range(diff_count):
+			result_array.append(item)
+
+	return result_array

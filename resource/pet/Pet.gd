@@ -2,19 +2,33 @@ extends CharacterBody2D
 class_name Pet
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
-@onready var mating: Node2D = $Mating
+@onready var mating_animate: Node2D = $MatingAnimate
+@onready var bt_player: BTPlayer = %BTPlayer
 
 ##描边着色器效果
 const OUTLINE_SHDER = preload("res://shaders/outer_line.gdshader")
 
 #region 导出变量区块
+## 资源属性集合
+@export var excrement_scene: PackedScene
+@export var excrement_data: DroppableData
+## 性别
+@export var gender: PetData.Gender
 ## 定义宠物的漫游范围
-@export var wander_rank: Rect2
+@export var wander_area: Rect2
+## 将待机时间作为导出变量，默认值为3秒
+@export var idle_duration: float = 1.5
+## 排泄时的持续时间
+@export var excreting_duration: float = 0.5
+## 觅食时的速度冲刺系数
+@export var sprint_speed_multiplier: float = 2.0
+## 交配持续时间，可按需修改
+@export var mating_duration: float = 3.0
+## 交配超时时间，时长至少大于mating_duration的2倍
+@export var mating_timeout: float = 10.0
 #endregion
 
 #region 共有变量区块
-#宠物状态机
-var state_machine: PetStateMachine
 #运动组件
 var movement_comp: MovementComponent
 #饥饿度组件
@@ -30,7 +44,7 @@ var mood_comp: MoodComponent
 #宠物贴图
 var pet_sprite: Sprite2D
 #食物目标
-var target: Food = null
+var food_target: Food = null
 #交配繁殖目标
 var mate_target: Pet = null
 #交配锁定
@@ -47,21 +61,19 @@ var info_label: Label
 
 #region 公有变量
 ## 宠物容器内置计数id
-var pet_id: int
-## 资源属性集合
-@export var excrement_scene: PackedScene
-@export var excrement_data: DroppableData
-## 性别
-@export var gender: PetData.Gender
+var private_id: int
 ## 宠物id,唯一标识id
 var id: StringName
+## 宠物的资源属性
 var pet_data: PetData
-## 成长时期标志，juvenile, adult
-var life_stage: int = PetData.LifeStage.JUVENILE
 ## 宠物当前的成长值
 var growth_points: float = 0.0
+## 宠物级别
+var pet_level: int
 ## 宠物的房间
 var pet_room: PetRoom
+## 黑板
+var blackboard: Blackboard
 #endregion
 
 #region 私有变量区块
@@ -79,8 +91,8 @@ func _ready():
 	excretion_comp = find_child("ExcretionComponent")
 	mating_comp = find_child("MatingComponent")
 	mood_comp = find_child("MoodComponent")
-	#宠物状态机
-	state_machine = find_child("PetStateMachine")
+	# 设置行为树的黑板
+	blackboard = bt_player.blackboard
 	#宠物属性
 	pet_sprite = find_child("Sprite2D")
 	info_label = find_child("InfoLabel")
@@ -99,19 +111,18 @@ func _exit_tree() -> void:
 	set_meta("last_growth_timestamp", Time.get_unix_time_from_system())
 
 
+## 物理帧更新宠物的行为
 func _physics_process(delta: float) -> void:
-	#更新移动
-	if movement_comp:
-		movement_comp.update_movement(delta)
-	#更新饥饿度
+	# 更新饥饿度
 	if hunger_comp:
 		hunger_comp.update_hunger(delta)
-	#更新排泄组件
+	# 更新排泄组件
 	if excretion_comp:
 		excretion_comp.update_excretion(delta)
-	#更新状态机，它会决定宠物的行为
-	if state_machine:
-		state_machine.update_state(delta)
+	# 更新交配组件
+	if mating_comp:
+		mating_comp.update_mating(delta)
+
 	#测试
 	update_info()
 	check_for_offline_growth()
@@ -122,10 +133,6 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 	# 检查事件是否为定义的 "mouse_left" 动作
 	if event.is_action_pressed("mouse_left"):
 		print("Pet clicked! Changing state to IDLE.")
-		# 调用状态机的change_state函数，将状态切换为IDLE
-		state_machine.change_state(state_machine.State.IDLE)
-		# 设置待机时长
-		state_machine.idle_timer = state_machine.idle_duration
 		# 设置移动组件的速度为0
 		movement_comp.speed = 0.0
 		# 广播弹出宠物属性面板事件
@@ -139,31 +146,38 @@ func set_container_id(cid: String):
 
 ## 显示一些信息，方便查看调试
 func update_info() -> void:
-	var state_label: String = str(state_machine.State.keys()[state_machine.current_state])
-	state_label = state_label.to_lower()
-	info_label.text = " g:" + str(gender) + " s:" + state_label
+	info_label.text = " g:" + str(gender)
 
 
 ## 新的初始化函数
-## @param assigned_id:宠物的id
+## @param assigned_id:宠物的内部id
 ## @param data:宠物数据字典，包含资源和资源的路径
 ## @param assigned_gender:宠物的性别
 ## @param wander_bounds:漫游范围
 func initialize_pet(assigned_id: int, data: Dictionary, wander_bounds: Rect2):
-	#初始化数据
-	pet_id = assigned_id
-	pet_data = GlobalData.items_res[data["id"]]
+	#print("assigned_id:", assigned_id)
+	# 初始化数据
+	private_id = assigned_id
+	pet_data = GlobalData.items_res[data["id"]].duplicate(true)
+	# 宠物内部id
+	pet_data.private_id = private_id
 	if not is_instance_valid(pet_data):
 		push_warning("无效的资源.")
 		return
 	id = data.get("id", "")
 	gender = data.get("gender", BaseItemData.Gender.MALE)
-	wander_rank = wander_bounds
+	# 设置黑板数据，关联行为树
+	blackboard.set_var("is_male", bool(gender - 1))
+	# 漫游范围
+	wander_area = wander_bounds
 	#贴图和动画
-	pet_sprite.texture = data["texture_data"].get("texture", pet_data.texture)
-	# 初始化成长值
+	#pet_sprite.texture = data["texture_data"].get("texture", pet_data.texture)
+	# 当前宠物的成长值
 	growth_points = data.get("growth", 0.0)
-	life_stage = PetData.LifeStage.JUVENILE
+	pet_data.growth = growth_points
+	# 当前宠物的级别
+	pet_level = data.get("item_level", 0)
+	pet_data.item_level = pet_level as BaseItemData.ItemLevel
 
 	#初始化运动组件
 	if movement_comp:
@@ -173,6 +187,7 @@ func initialize_pet(assigned_id: int, data: Dictionary, wander_bounds: Rect2):
 		hunger_comp.initialize(self)
 	#初始生命周期组件
 	if lifecycle_comp:
+		lifecycle_comp.life_stage = PetData.LifeStage.JUVENILE
 		lifecycle_comp.initialize(self)
 	#初始化排泄组件
 	if excretion_comp:
@@ -183,19 +198,16 @@ func initialize_pet(assigned_id: int, data: Dictionary, wander_bounds: Rect2):
 	#初始化心情组件
 	if mood_comp:
 		mood_comp.initialize(self)
-	#初始化状态机
-	if state_machine:
-		state_machine.initialize(self)
 
 	# 在创建新宠物时，保存初始时间戳到元数据
 	set_meta("last_growth_timestamp", Time.get_unix_time_from_system())
-	#在所有组件初始化后，检查离线成长
+	# 在所有组件初始化后，检查离线成长
 	check_for_offline_growth()
 
 
 ## 宠物成长动画,切换贴图
 func grow_up() -> void:
-	if life_stage == PetData.LifeStage.JUVENILE:
+	if lifecycle_comp.life_stage == PetData.LifeStage.JUVENILE:
 		pet_sprite.texture = pet_data.texture
 	else:
 		pet_sprite.texture = pet_data.adult_texture
@@ -203,7 +215,7 @@ func grow_up() -> void:
 
 ## 是否显示交配动画
 func show_mate_animate(is_show: bool = false) -> void:
-	mating.visible = is_show
+	mating_animate.visible = is_show
 
 
 ## 生成宠物坐标位置
@@ -214,6 +226,33 @@ func create_position() -> Vector2:
 		return _create_aquatic_coords()
 
 	return coords
+
+
+## 获取基本数据
+func get_data() -> Dictionary:
+	var result: Dictionary = {
+		"id": pet_data.id,  # 唯一标识符
+		"item_name": pet_data.nickname,  # 物品名称
+		"item_type": pet_data.item_type,  # 物品类型
+		"item_level": pet_data.item_level,  # 物品级别
+		"growth": pet_data.growth,  # 物品的成长值
+		"gender": pet_data.gender,  # 性别
+		"base_price": pet_data.base_price,  # 物品的基础价格
+		"descrip": pet_data.descrip,  # 物品描述
+		"width": pet_data.width,  # 物品的宽度
+		"height": pet_data.height,  # 物品的高度
+		"orientation": pet_data.orientation,  # 初始方向为竖着
+		"stackable": pet_data.stackable,  # 物品是否可堆叠
+		"num": 1,  # 物品数量
+		"max_stack_size": pet_data.max_stack_size,  # 物品最大堆叠数量
+	}
+	# 根据成长值更新占用宽高
+	var item_info: Dictionary = Utils.get_properties_from_res(pet_data).duplicate(true)
+	var pet_texture_data: Dictionary = Utils.get_texture_by_growth(item_info, growth_points)
+	result.set("width", pet_texture_data.get("width", 1))
+	result.set("height", pet_texture_data.get("height", 1))
+
+	return result
 
 
 ## 宠物死亡
@@ -240,27 +279,12 @@ func check_for_offline_growth():
 	var days_passed = floor(elapsed_time / game_day_duration)
 
 	if days_passed > 0:
-		if life_stage == PetData.LifeStage.JUVENILE:
+		if lifecycle_comp.life_stage == PetData.LifeStage.JUVENILE:
 			var total_growth = days_passed * pet_data.daily_growth_points
 			lifecycle_comp.add_growth_points(total_growth)
-			print("Pet %s was offline for %d game days and gained %f growth points." % [pet_id, days_passed, total_growth])
+			print("Pet %s was offline for %d game days and gained %f growth points." % [private_id, days_passed, total_growth])
 		# 更新元数据，记录新的时间戳，避免重复计算
 		set_meta("last_growth_timestamp", last_timestamp + days_passed * game_day_duration)
-
-
-# 处理饥饿事件，开始觅食
-func on_pet_is_hungry():
-	# 只有在漫游状态下才会去进食
-	if state_machine.current_state == PetStateMachine.State.WANDERING:
-		var closest_food = find_closest_food()
-		if closest_food and is_instance_valid(closest_food):
-			self.target = closest_food
-			movement_comp.speed = pet_data.speed * state_machine.sprint_speed_multiplier
-			state_machine.change_state(PetStateMachine.State.EATING)
-			#print("Pet is hungry and found food!")
-		else:
-			#print("Pet is hungry but no food found in its container.")
-			pass
 
 
 ## 查找范围限定在宠物所在的父节点（即容器）下
@@ -286,23 +310,18 @@ func find_closest_food() -> Node2D:
 	return closest_food
 
 
-## 宠物排泄逻辑
-func on_pet_excrete():
-	state_machine.change_state(PetStateMachine.State.EXCRETING)
-
-
-## 排泄动作，由状态机调用
+## 排泄动作，由行为树调用
 func spawn_excrement():
 	# 使用容器的通用方法生成排泄物
 	var container = pet_room  # 获取 PetRoom 节点
 	if container is PetRoom:
 		container.spawn_droppable_object(position, excrement_data)
 
-	print("Pet %s just pooped!" % self.pet_id)
+	print("Pet %s just pooped!" % self.private_id)
 
 
 ## 查找容器内合适的交配对象
-func find_mate() -> Pet:
+func find_closest_mate() -> Pet:
 	# 1. 确保自己能交配，并且没有被锁定
 	if not mating_comp.can_mate() or mate_lock:
 		return null
@@ -323,7 +342,7 @@ func find_mate() -> Pet:
 			and pet_candidate.mating_comp.can_mate()
 			and pet_candidate.gender != self.gender
 			and pet_candidate.mate_target == null
-			and pet_candidate.id == id  #物种相同，同一个资源
+			and pet_candidate.id == id  #物种相同，同一个资源类型
 			and not pet_candidate.mate_lock
 		):
 			var distance = position.distance_to(pet_candidate.position)
@@ -341,12 +360,12 @@ func spawn_egg():
 	if container is PetRoom:
 		container.spawn_droppable_object(position, pet_data.descendant_res, pet_data)
 
-	print(">>>Pet %s is spawning an egg!" % self.pet_id)
+	print(">>>Pet %s is spawning an egg!" % self.private_id)
 
 
 ## 创建水生动物漫游位置
 func _create_aquatic_coords() -> Vector2:
-	var bounds = wander_rank
+	var bounds = wander_area
 	var new_pos: Vector2
 	# 根据当前漫游层级设置 Y 轴范围
 	var y_min: float

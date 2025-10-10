@@ -19,7 +19,7 @@ texture_margin_top = 10.0
 texture_margin_right = 10.0
 texture_margin_bottom = 10.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jckig"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kj554"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
@@ -65,7 +65,7 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 grow_vertical = 0
 size_flags_vertical = 8
-mouse_filter = 1
+mouse_filter = 2
 script = ExtResource("1_hkbts")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -86,7 +86,6 @@ layout_mode = 2
 
 [node name="BuildsMargin" type="MarginContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_constants/margin_bottom = 4
@@ -124,9 +123,14 @@ max_scroll_grid = 10
 container_type = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer"]
+z_index = 199
 layout_mode = 2
 theme_override_constants/margin_top = 8
 theme_override_constants/margin_bottom = 8
+
+[node name="ColorRect" type="ColorRect" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer/MarginContainer"]
+layout_mode = 2
+color = Color(1, 1, 1, 0)
 
 [node name="TabBarBox" type="VBoxContainer" parent="MarginContainer/VBoxContainer/BuildsMargin/HBoxContainer/MarginContainer"]
 unique_name_in_owner = true
@@ -137,9 +141,9 @@ alignment = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kj554")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kj554")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_kj554")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_jckig")
 toggle_mode = true
 icon = SubResource("AtlasTexture_u3b0f")
@@ -151,9 +155,9 @@ metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kj554")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kj554")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_kj554")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_gaguq")
 toggle_mode = true
 icon = SubResource("AtlasTexture_jckig")
@@ -165,9 +169,9 @@ metadata/_custom_type_script = "uid://cj1xykbtsmsri"
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kj554")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kj554")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_kj554")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_u3b0f")
 toggle_mode = true
 button_pressed = true
@@ -195,9 +199,9 @@ tooltip_text = "布局建筑、设备和造景
 快捷键 [b][color=white]L[/color][/b]ayout
 "
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kj554")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kj554")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_kj554")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_llukx")
 icon = SubResource("AtlasTexture_8vwas")
 icon_alignment = 1
@@ -216,9 +220,9 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxTexture_wi548")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/hover = SubResource("StyleBoxFlat_jckig")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_jckig")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_kj554")
+theme_override_styles/hover = SubResource("StyleBoxFlat_kj554")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_kj554")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_3auqv")
 text = "整理"
 script = ExtResource("7_g5rs6")

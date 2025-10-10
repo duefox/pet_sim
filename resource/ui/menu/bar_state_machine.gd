@@ -200,6 +200,12 @@ func on_escape_pressed() -> void:
 		if layout_bar.builds_visible:
 			layout_bar.builds_visible = false
 			return
+		# 退出房间
+		if is_instance_valid(GlobalData.ui.current_room):
+			PetManager.clear_pets()
+			GlobalData.ui.current_room.queue_free()
+			GlobalData.ui.current_room = null
+			return
 		# 通知父状态机切换到加载存档菜单
 		parent_state_machine.change_state(parent_state_machine.State.SAVE_LOAD_MENU)
 		return
